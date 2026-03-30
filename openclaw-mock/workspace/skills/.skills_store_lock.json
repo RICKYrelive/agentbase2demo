@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "gog": {
+      "name": "Gog",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=gog",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "gogcli": {
+      "name": "gogcli - Google Workspace CLI",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=gogcli",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "hotsearch": {
+      "name": "微博百度热搜榜单 - Weibo, Baidu, Douyin Hot Search List",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=hotsearch",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "weibo-hot-search-anonymous": {
+      "name": "Weibo Hot Search Anonymous",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=weibo-hot-search-anonymous",
+      "source": "skillhub",
+      "version": "1.0.3"
+    },
+    "feishu-group-ops": {
+      "name": "Feishu Group Ops",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=feishu-group-ops",
+      "source": "skillhub",
+      "version": "1.0.1"
+    },
+    "baidu-search": {
+      "name": "baidu web search",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=baidu-search",
+      "source": "skillhub",
+      "version": "1.1.0"
+    },
+    "searxng-local": {
+      "name": "SearXNG Local",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=searxng-local",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "skill-vetter": {
+      "name": "Skill Vetter",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=skill-vetter",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "self-improving-agent": {
+      "name": "self-improving-agent",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=self-improving-agent",
+      "source": "skillhub",
+      "version": "1.0.11"
+    }
+  }
+}

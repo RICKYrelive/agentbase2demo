@@ -1,0 +1,181 @@
+{
+  "collector_id": "competitors",
+  "collected_at": "2026-03-27T00:11:08.461Z",
+  "items": [
+    {
+      "title": "千问AI-阿里云",
+      "link": "https://www.aliyun.com/sswb/1769583.html",
+      "summary": "2025年8月27日 - 通义千问开源的QwQ模型,一个会思考的AI,阿里云百炼邀您第一时间体验思考、质疑、理解,是人类探索未知的永恒追求.阿里云通义千问发布多款AI大模型 多模...",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-27T00:10:28.424Z"
+    },
+    {
+      "title": "使用阿里云百炼与通义千问构建AI法律咨询助手-开发者社区-阿里云",
+      "link": "https://developer.aliyun.com/article/1648971",
+      "summary": "这个视频基于通义千问大模型和阿里云百炼平台实现agent。.这次用到的是通义千问的 max版,因为是基于模板构建的,所以自动生成prompt .如果从头开始前期需要投入的成本太高,好在有阿里云百炼的大...",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-27T00:10:28.424Z"
+    },
+    {
+      "title": "用AI Agent做一个法律咨询助手,罗老看了都直呼内行 feat.通义千问大模型&...",
+      "link": "https://www.bilibili.com/video/BV1nf42127MW/",
+      "summary": "2024年5月21日 - 科技猎手知识教程通义千问大模型AI AgentAI法律咨询阿里云百炼AI律师科技猎手2024新品出击科技猎手召集令!投稿赢奖金 .5分钟做一个AI法律咨询小助手,...",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-27T00:10:28.424Z"
+    },
+    {
+      "title": "日常工作中的AI助手_阿里云百炼和通义千问的区别-CSDN博客",
+      "link": "https://blog.csdn.net/m0_57340659/article/details/141788211",
+      "summary": "2026年3月6日 - 文章浏览阅读893次,点赞10次,收藏2次。兼容 Visual Studio Code、Visual Studio、JetBrains IDEs 等IDE,支持 Java、Python、Go、JavaScript、TypeScri...",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-27T00:10:28.424Z"
+    },
+    {
+      "title": "使用百炼构建AI Agent和工作流应用-在线部署-技术解决方案-阿里云",
+      "link": "https://www.aliyun.com/solution/tech-solution-deploy/2878136.html",
+      "summary": "本教程依托阿里云百炼,运用智能体(Agent)与工作流,构建能进行知识库问答、订单查询及退款的AI客服,助您掌握从简单对话到复杂任务处理的构建能力。",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-27T00:10:28.424Z"
+    },
+    {
+      "title": "豆包 - 字节跳动推出的免费AI对话助手 | AI工具集",
+      "link": "https://ai-bot.cn/sites/4189.html",
+      "summary": "豆包具备文案创作、PDF问答、长文本分析、学习辅助、图像生成/智能编辑、视频生成、信息搜索与整合、AI智能体等能力,能理解用户需求并提供个性化服务.豆包通过其强大的自然语言处理技术,帮助用...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-27T00:10:38.434Z"
+    },
+    {
+      "title": "豆包 - 字节跳动旗下 AI 智能助手",
+      "link": "https://www.doubao.com/chat/",
+      "summary": "Seedance 2.0 视频生成模型现已全面接入豆包,现在登录即可免费使用!豆包 是你的 AI 聊天智能对话问答助手,写作文案翻译编程工具。豆包为你答疑解惑,提供灵感,辅助创作,也可以和你畅聊任何...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-27T00:10:38.434Z"
+    },
+    {
+      "title": "字节跳动扣子(Coze)与豆包 AI 全维度比对分析 - 今日头条",
+      "link": "https://www.toutiao.com/article/7564013953257390607/",
+      "summary": "基于多份权威信息(含功能实测、官方定位及场景案例),扣子与豆包虽同属字节跳动旗下 AI 产品,但核心定位与价值完全不同 ——扣子是 AI 智能体开发平台 ,聚焦 定制化与自动化 ;豆包是 通用 AI 对...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-27T00:10:38.434Z"
+    },
+    {
+      "title": "豆包 vs Coze(扣子):字节跳动两大AI平台如何选择?-人工智能-PHP中文网",
+      "link": "https://www.php.cn/faq/2104081.html",
+      "summary": "豆包是面向普通用户的开箱即用型AI对话助手,Coze(扣子)是面向开发者与企业用户的可视化AI智能体开发平台;二者定位互补,非竞品关系。 豆包是面向普通用...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-27T00:10:38.434Z"
+    },
+    {
+      "title": "Coze Studio - 字节跳动开源的AI Agent开发平台 | AI工具集",
+      "link": "https://ai-bot.cn/coze-studio/",
+      "summary": "Github仓库:https://github.com/coze-dev/coze-studio.配置模型进入克隆后的项目目录:cd coze-studio...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-27T00:10:38.434Z"
+    },
+    {
+      "title": "腾讯混元突破:全能AI助手实现积木式3D创作编辑",
+      "link": "https://www.360kuai.com/pc/93c0adc2ff11a7124?cota=3&kuai_so=1&sign=360_57c3bbd1&refer_scene=so_1",
+      "summary": "现在,腾讯混元团队带来了一个革命性的解决方案——Part-X-MLLM,这是一个能够像人类一样理解三维物体各个组成部分,并能根据自然语言指令进...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-27T00:10:48.443Z"
+    },
+    {
+      "title": "媲美DeepSeek!腾讯开源新版混元模型:AI Agent强化,超30种智能体指令|...",
+      "link": "https://www.163.com/dy/article/K3E3P3GH055240KW.html",
+      "summary": "腾讯,智能体,混元模型,知名企业,agent,深度思考模型,deepseek 腾讯开源了混元大模型的最新版本... 值得一提的是,Hunyuan-A13B特意针对AI Agent...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-27T00:10:48.443Z"
+    },
+    {
+      "title": "腾讯混元",
+      "link": "https://hunyuan.tencent.com/",
+      "summary": "腾讯混元大模型是由腾讯研发的大语言模型,具备跨领域知识和自然语言理解能力,实现基于人机自然语言对话的方式,理解用户指令并执行任务,帮助用户实现人获取信息,知识和灵感。",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-27T00:10:48.443Z"
+    },
+    {
+      "title": "媲美DeepSeek!腾讯开源新版混元模型:AI Agent强化,超30种智能体指令-...",
+      "link": "https://www.51cto.com/article/819395.html",
+      "summary": "Hunyuan-A13B特意针对AI Agent进行了强化,打造了应对不同场景变化的 自适应大脑 ,设计超过30种智能体指令,并组合工具、动作、响应的格式变...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-27T00:10:48.443Z"
+    },
+    {
+      "title": "腾讯云官宣混元模型Token涨价 AI Agent驱动Token消耗量激增 国产算力受...",
+      "link": "http://stock.10jqka.com.cn/20260312/c675232209.shtml",
+      "summary": "另一变化则是对混元系列模型Tencent HY2.0 Instruct与Tencent HY2.0 Think服务进行涨价.根据腾讯云披露的调整详情:Tencent HY2.0 Instruct...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-27T00:10:48.443Z"
+    },
+    {
+      "title": "深度研究赛道的中国冠军:百度千帆深度研究Agent,让国产AI领跑全球! - 哔哩...",
+      "link": "https://www.bilibili.com/opus/1165913295406759957",
+      "summary": "2026年2月5日 - 针对这个问题,百度千帆深度研究 Agent 给出了肯定答案: 在DeepResearch Bench权威榜单中全面领先国际巨头,登顶榜首!.刚刚给百度千帆深度研究 Agent的...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-27T00:10:58.452Z"
+    },
+    {
+      "title": "百度千帆将一系列核心AI能力与官方Agent,... 来自百度智能云 - 微博",
+      "link": "https://www.weibo.com/2711736393/Qr5nN3BA7?mod=weibotime",
+      "summary": "2026年2月9日 - °7款百度官方Skills上新,让你的OpenClaw秒变...​​​​.微博 weibo.com百度千帆将一系列核心AI能力与官方Agent,以标准化Skill形式正式上架OpenClaw...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-27T00:10:58.452Z"
+    },
+    {
+      "title": "视频AI笔记 - 百度千帆·大模型服务及Agent开发平台",
+      "link": "https://cloud.baidu.com/doc/qianfan/s/qmhcvrqt4",
+      "summary": "2025年12月18日 - 百度智能云2.0云智技术论坛行业白皮书智能云公告最新资讯客户案例服务案例方案手册产品手册热门产品.百度智能云文档中心帮助大家了解百度智能云视频AI...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-27T00:10:58.452Z"
+    },
+    {
+      "title": "AI Agent来了 企业级开发平台加速落地进程|百度智能云|AIAgent|千帆App...",
+      "link": "https://k.sina.com.cn/article_3876353431_me70c759700101ilus.html",
+      "summary": "简介：AI Agent来了!不需你懂写代码,一天完成应用开发!百度智能云千帆AppBuilder,提供企业级AI Agent开发平台,让开...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-27T00:10:58.452Z"
+    },
+    {
+      "title": "文心5.0正式版上线百度千帆 助力产业落地构建全栈AI云新生态-业界动态-IT...",
+      "link": "https://www.itbear.com.cn/html/2026-01/1105149.html",
+      "summary": "2026年1月23日 - 为推动大模型产业落地,百度千帆平台推出完整的Agent开发基础设施.在模型服务层面,除文心5.0外,平台还集成150余个场景化SOTA模型,并针对Agent开发提供...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-27T00:10:58.452Z"
+    },
+    {
+      "title": "讯飞星火-懂我的AI助手 | 学习AIGC",
+      "link": "https://www.xuexiaigc.com/sites/10918.html",
+      "summary": "2025年11月17日 - 讯飞星辰Agent开发平台-官网.讯飞星火大模型,是由科大讯飞推出的新一代认知智能大模型,拥有跨领域的知识和语言理解能力,能够基于自然对话方式理解与执...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-27T00:11:08.461Z"
+    },
+    {
+      "title": "讯飞星火app下载 讯飞星火(AI助手软件) v5.4.0 安卓手机版 下载-脚本之家",
+      "link": "https://www.jb51.net/softs/892616.html",
+      "summary": "2026年3月8日 - 讯飞星火(AI助手软件) v5.4.0 安卓手机版生活服务/ 128.33MB.科大讯飞星火(智能助手软件) v5.4.0 安卓版生活服务/ 128.33MB...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-27T00:11:08.461Z"
+    },
+    {
+      "title": "讯飞星火官网网页版入口,讯飞星火AI助手-办公人导航",
+      "link": "https://www.bgrdh.com/sites/56368.html",
+      "summary": "2025年5月4日 - https://xinghuo.xfyun.cn/讯飞星火的主要功能和特点包括:.此外,讯飞星火还提供了多种智能服务,如:...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-27T00:11:08.461Z"
+    },
+    {
+      "title": "讯飞星火ai助手官网,免费ai写作、绘画、搜索、问答、翻译、阅读、灵感|非...",
+      "link": "https://feizhuke.com/sites/xunfeixinghuo-ai-zhushou.html",
+      "summary": "2024年10月26日 - 最新发布的讯飞星火 4.0 Turbo 在七大核心能力上全面超越GPT-4Turbo,打造更懂你的 AI助手。.讯飞星火ai助手官网:...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-27T00:11:08.461Z"
+    },
+    {
+      "title": "讯飞星火AI助手官方版下载-讯飞星火AI助手下载 v1.3.04-KK下载站",
+      "link": "http://www.kkx.net/az/85099.html",
+      "summary": "2025年12月30日 - 讯飞星火AI助手是一款非常方便的数字手机助手软件,拥有非常强大丰富的功能,采用先进的人工智能技术,能够更好的处理并执行用户的各种命令,还可以根据用...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-27T00:11:08.461Z"
+    }
+  ]
+}

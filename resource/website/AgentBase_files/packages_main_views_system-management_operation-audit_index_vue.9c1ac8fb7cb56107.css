@@ -1,0 +1,14 @@
+.container[data-v-3a72d14c] {
+  padding-left: var(--spacing-mini);
+}
+.text-value[data-v-3a72d14c] {
+  line-height: 20px;
+  color: var(--color-gray-d50);
+}
+.align-center[data-v-3a72d14c] {
+  align-items: center;
+}
+.just-end[data-v-3a72d14c] {
+  justify-content: flex-end;
+}
+

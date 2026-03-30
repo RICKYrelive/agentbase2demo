@@ -1,0 +1,74 @@
+{
+  "REDACTED_DEVICE_ID_1": {
+    "deviceId": "REDACTED_DEVICE_ID_1",
+    "publicKey": "REDACTED_PUBLIC_KEY",
+    "platform": "linux",
+    "clientId": "cli",
+    "clientMode": "cli",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.read",
+      "operator.admin",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.read",
+      "operator.admin"
+    ],
+    "tokens": {
+      "operator": {
+        "token": "REDACTED_TOKEN_1",
+        "role": "operator",
+        "scopes": [
+          "operator.admin"
+        ],
+        "createdAtMs": 1773062213207,
+        "rotatedAtMs": 1773062386887,
+        "lastUsedAtMs": 1773226933738
+      }
+    },
+    "createdAtMs": 1773062213207,
+    "approvedAtMs": 1773062386887
+  },
+  "REDACTED_DEVICE_ID_2": {
+    "deviceId": "REDACTED_DEVICE_ID_2",
+    "publicKey": "REDACTED_PUBLIC_KEY",
+    "platform": "MacIntel",
+    "clientId": "openclaw-control-ui",
+    "clientMode": "webchat",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "tokens": {
+      "operator": {
+        "token": "REDACTED_TOKEN_2",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing"
+        ],
+        "createdAtMs": 1773108293114,
+        "lastUsedAtMs": 1773218577326
+      }
+    },
+    "createdAtMs": 1773108293114,
+    "approvedAtMs": 1773108293114
+  }
+}

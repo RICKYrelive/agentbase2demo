@@ -1,0 +1,146 @@
+{
+  "collector_id": "arxiv-papers",
+  "collected_at": "2026-03-26T00:00:12.936Z",
+  "items": [
+    {
+      "title": "AgentRVOS: Reasoning over Object Tracks for Zero-Shot Referring Video Object Segmentation",
+      "link": "http://arxiv.org/abs/2603.23489v1",
+      "summary": "Referring Video Object Segmentation (RVOS) aims to segment a target object throughout a video given a natural language query. Training-free methods fo…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "Failure of contextual invariance in gender inference with large language models",
+      "link": "http://arxiv.org/abs/2603.23485v1",
+      "summary": "Standard evaluation practices assume that large language model (LLM) outputs are stable under contextually equivalent formulations of a task. Here, we…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning",
+      "link": "http://arxiv.org/abs/2603.23483v1",
+      "summary": "Agentic multimodal large language models (MLLMs) (e.g., OpenAI o3 and Gemini Agentic Vision) achieve remarkable reasoning capabilities through iterati…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "ReqFusion: A Multi-Provider Framework for Automated PEGS Analysis Across Software Domains",
+      "link": "http://arxiv.org/abs/2603.23482v1",
+      "summary": "Requirements engineering is a vital, yet labor-intensive, stage in the software development process. This article introduces ReqFusion: an AI-enhanced…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "UniFunc3D: Unified Active Spatial-Temporal Grounding for 3D Functionality Segmentation",
+      "link": "http://arxiv.org/abs/2603.23478v1",
+      "summary": "Functionality segmentation in 3D scenes requires an agent to ground implicit natural-language instructions into precise masks of fine-grained interact…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "Evidence of political bias in search engines and language models before major elections",
+      "link": "http://arxiv.org/abs/2603.23474v1",
+      "summary": "Search engines (SEs) and large language models (LLMs) are central to political information access, yet their algorithmic decisions and potential under…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "Regulating AI Agents",
+      "link": "http://arxiv.org/abs/2603.23471v1",
+      "summary": "AI agents -- systems that can independently take actions to pursue complex goals with only limited human oversight -- have entered the mainstream. The…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "ConceptCoder: Improve Code Reasoning via Concept Learning",
+      "link": "http://arxiv.org/abs/2603.23470v1",
+      "summary": "Large language models (LLMs) have shown promising results for software engineering applications, but still struggle with code reasoning tasks such as …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "DetPO: In-Context Learning with Multi-Modal LLMs for Few-Shot Object Detection",
+      "link": "http://arxiv.org/abs/2603.23455v1",
+      "summary": "Multi-Modal LLMs (MLLMs) demonstrate strong visual grounding capabilities on popular object detection benchmarks like OdinW-13 and RefCOCO. However, s…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "Code Review Agent Benchmark",
+      "link": "http://arxiv.org/abs/2603.23448v1",
+      "summary": "Software engineering agents have shown significant promise in writing code. As AI agents permeate code writing, and generate huge volumes of code auto…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.934Z"
+    },
+    {
+      "title": "3DCity-LLM: Empowering Multi-modality Large Language Models for 3D City-scale Perception and Understanding",
+      "link": "http://arxiv.org/abs/2603.23447v1",
+      "summary": "While multi-modality large language models excel in object-centric or indoor scenarios, scaling them to 3D city-scale environments remains a formidabl…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.935Z"
+    },
+    {
+      "title": "Evaluating LLM-Based Test Generation Under Software Evolution",
+      "link": "http://arxiv.org/abs/2603.23443v1",
+      "summary": "Large Language Models (LLMs) are increasingly used for automated unit test generation. However, it remains unclear whether these tests reflect genuine…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.935Z"
+    },
+    {
+      "title": "Mecha-nudges for Machines",
+      "link": "http://arxiv.org/abs/2603.23433v1",
+      "summary": "Nudges are subtle changes to the way choices are presented to human decision-makers (e.g., opt-in vs. opt-out by default) that shift behavior without …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.935Z"
+    },
+    {
+      "title": "Bilevel Autoresearch: Meta-Autoresearching Itself",
+      "link": "http://arxiv.org/abs/2603.23420v1",
+      "summary": "If autoresearch is itself a form of research, then autoresearch can be applied to research itself. We take this idea literally: we use an autoresearch…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.935Z"
+    },
+    {
+      "title": "Biased Error Attribution in Multi-Agent Human-AI Systems Under Delayed Feedback",
+      "link": "http://arxiv.org/abs/2603.23419v1",
+      "summary": "Human decision-making is strongly influenced by cognitive biases, particularly under conditions of uncertainty and risk. While prior work has examined…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    },
+    {
+      "title": "SortedRL: Accelerating RL Training for LLMs through Online Length-Aware Scheduling",
+      "link": "http://arxiv.org/abs/2603.23414v1",
+      "summary": "Scaling reinforcement learning (RL) has shown strong promise for enhancing the reasoning abilities of large language models (LLMs), particularly in ta…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    },
+    {
+      "title": "Beyond Preset Identities: How Agents Form Stances and Boundaries in Generative Societies",
+      "link": "http://arxiv.org/abs/2603.23406v1",
+      "summary": "While large language models simulate social behaviors, their capacity for stable stance formation and identity negotiation during complex intervention…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    },
+    {
+      "title": "Planning over MAPF Agent Dependencies via Multi-Dependency PIBT",
+      "link": "http://arxiv.org/abs/2603.23405v1",
+      "summary": "Modern Multi-Agent Path Finding (MAPF) algorithms must plan for hundreds to thousands of agents in congested environments within a second, requiring h…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    },
+    {
+      "title": "Rectify, Don't Regret: Avoiding Pitfalls of Differentiable Simulation in Trajectory Prediction",
+      "link": "http://arxiv.org/abs/2603.23393v1",
+      "summary": "Current open-loop trajectory models struggle in real-world autonomous driving because minor initial deviations often cascade into compounding errors, …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    },
+    {
+      "title": "A Joint Reinforcement Learning Scheduling and Compression Framework for Teleoperated Driving",
+      "link": "http://arxiv.org/abs/2603.23387v1",
+      "summary": "Teleoperated driving (TD) is envisioned as a key application of future sixth generation (6G) networks. In this paradigm, connected vehicles transmit s…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-26T00:00:12.936Z"
+    }
+  ]
+}

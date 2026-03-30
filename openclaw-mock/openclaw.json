@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.23",
+    "lastTouchedAt": "2026-03-27T08:53:11.965Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-11T11:45:18.122Z",
+    "lastRunVersion": "2026.3.8",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "zai:default": {
+        "provider": "zai",
+        "mode": "api_key"
+      }
+    }
+  },
+  "acp": {
+    "enabled": true
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "zai": {
+        "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "glm-5-turbo",
+            "name": "GLM-5-TURBO",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 131072
+          },
+          {
+            "id": "glm-5",
+            "name": "GLM-5",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 131072
+          },
+          {
+            "id": "glm-4.7",
+            "name": "GLM-4.7",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 131072
+          },
+          {
+            "id": "glm-4.7-flash",
+            "name": "GLM-4.7 Flash",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 131072
+          },
+          {
+            "id": "glm-4.7-flashx",
+            "name": "GLM-4.7 FlashX",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 131072
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "zai/glm-5-turbo"
+      },
+      "models": {
+        "zai/glm-5-turbo": {
+          "alias": "GLM"
+        }
+      },
+      "workspace": "/home/sangfor_cloud_bg/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "claude",
+        "runtime": {
+          "type": "acp",
+          "acp": {
+            "agent": "claude",
+            "backend": "acpx",
+            "mode": "persistent"
+          }
+        }
+      }
+    ]
+  },
+  "tools": {
+    "profile": "coding",
+    "web": {
+      "search": {
+        "enabled": true,
+        "provider": "brave"
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "feishu",
+        "accountId": "default"
+      }
+    }
+  ],
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        },
+        "self-improvement": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "streaming": true,
+      "blockStreaming": true,
+      "replyToMode": "all",
+      "connectionMode": "websocket",
+      "domain": "feishu",
+      "defaultAccount": "backup",
+      "accounts": {
+        "backup": {
+          "appId": "YOUR_FEISHU_APP_ID",
+          "appSecret": "YOUR_FEISHU_APP_SECRET",
+          "botName": "群机器人"
+        },
+        "default": {
+          "groupPolicy": "open",
+          "dmPolicy": "open",
+          "allowFrom": [
+            "*"
+          ]
+        }
+      },
+      "footer": {
+        "elapsed": true,
+        "status": true
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789",
+        "http://YOUR_SERVER_IP:55589",
+        "*"
+      ],
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_AUTH_TOKEN"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "calendar.add",
+        "reminders.add",
+        "sms.send"
+      ]
+    }
+  },
+  "plugins": {
+    "allow": [
+      "lossless-claw",
+      "feishu",
+      "diagnostics-otel",
+      "openclaw-weixin",
+      "acpx"
+    ],
+    "slots": {
+      "contextEngine": "lossless-claw"
+    },
+    "entries": {
+      "feishu": {
+        "enabled": true
+      },
+      "lossless-claw": {
+        "enabled": true
+      },
+      "diagnostics-otel": {
+        "enabled": true
+      },
+      "brave": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": "YOUR_BRAVE_API_KEY"
+          }
+        }
+      },
+      "acpx": {
+        "enabled": true
+      }
+    },
+    "installs": {
+      "lossless-claw": {
+        "source": "npm",
+        "spec": "@martian-engineering/lossless-claw",
+        "installPath": "/home/sangfor_cloud_bg/.openclaw/extensions/lossless-claw",
+        "version": "0.3.0",
+        "resolvedName": "@martian-engineering/lossless-claw",
+        "resolvedVersion": "0.3.0",
+        "resolvedSpec": "@martian-engineering/lossless-claw@0.3.0",
+        "integrity": "sha512-SsY0bp3SoSzEu+KB8fOBke46MFhTmslfWg6OvC4pShq34ig2+V+jkTFAHib8PTZ0MoethAddR+ZmRN9OASorAA==",
+        "shasum": "bc9725d6d59d9b1523128ab528f1258c4258fa3f",
+        "resolvedAt": "2026-03-16T00:25:00.128Z",
+        "installedAt": "2026-03-16T00:26:02.207Z"
+      }
+    }
+  }
+}

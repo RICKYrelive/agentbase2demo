@@ -1,0 +1,216 @@
+{
+  "collector_id": "general-rss",
+  "collected_at": "2026-03-20T00:00:32.403Z",
+  "items": [
+    {
+      "title": "Amazon acquires Rivr, maker of a stair-climbing delivery robot",
+      "link": "https://techcrunch.com/2026/03/19/amazon-acquires-rivr-maker-of-a-stair-climbing-delivery-robot/",
+      "summary": "Amazon and Jeff Bezos had previously invested in the startup.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Jeff Bezos reportedly wants $100 billion to buy and transform old manufacturing firms with AI",
+      "link": "https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/",
+      "summary": "The Amazon magnate has a new project centered around acquiring industrial firms and revamping them with AI technology.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Employees had to restrain a dancing humanoid robot after it went wild at a California restaurant",
+      "link": "https://techcrunch.com/2026/03/19/restaurant-dancing-robot-went-wild-hot-pot-cupertino-haidilao-agibot/",
+      "summary": "A dancing robot in a Haidilao hot pot restaurant boogied down a little too hard.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Polymarket continues its partnership spree with a Major League Baseball deal",
+      "link": "https://techcrunch.com/2026/03/19/polymarket-continues-its-partnership-spree-with-a-major-league-baseball-deal/",
+      "summary": "MLB is only the latest in a string of recently announced partnerships involving the prediction market.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Online bot traffic will exceed human traffic by 2027, Cloudflare CEO says",
+      "link": "https://techcrunch.com/2026/03/19/online-bot-traffic-will-exceed-human-traffic-by-2027-cloudflare-ceo-says/",
+      "summary": "AI bots may outnumber humans online by 2027, says Cloudflare CEO Matthew Prince, as generative AI agents dramatically increase web traffic and infrast…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Bluesky announces $100M Series B after CEO transition",
+      "link": "https://techcrunch.com/2026/03/19/bluesky-announces-100m-series-b-after-ceo-transition/",
+      "summary": "The additional funds have been used to scale Bluesky's team, while the company continues to develop Bluesky's app and the underlying ATProto that powe…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Geothermal startup Fervo catapults itself over the ‘valley of death’",
+      "link": "https://techcrunch.com/2026/03/19/geothermal-startup-fervo-catapults-itself-over-the-valley-of-death/",
+      "summary": "Fervo landed a large new loan with terms that strongly suggest the company's most turbulent days are behind it.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Meta rolls out new AI content enforcement systems while reducing reliance on third-party vendors",
+      "link": "https://techcrunch.com/2026/03/19/meta-rolls-out-new-ai-content-enforcement-systems-while-reducing-reliance-on-third-party-vendors/",
+      "summary": "Meta believes these AI systems can detect more violations with greater accuracy, better prevent scams, respond more quickly to real-world events, and …",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Google introduces a new way for users to sideload Android apps that still protects against scams",
+      "link": "https://techcrunch.com/2026/03/19/google-introduces-a-new-way-for-users-to-sideload-android-apps-that-still-protects-against-scams/",
+      "summary": "Google is making Android sideloading easier with a new advanced setting that lets users disable app verification after a multistep security process.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "DoorDash launches a new ‘Tasks’ app that pays couriers to submit videos to train AI",
+      "link": "https://techcrunch.com/2026/03/19/doordash-launches-a-new-tasks-app-that-pays-couriers-to-submit-videos-to-train-ai/",
+      "summary": "Delivery couriers will be able to earn money by completing activities like filming everyday tasks or recording themselves speaking in another language…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Meta decides not to shut down Horizon Worlds on VR after all",
+      "link": "https://techcrunch.com/2026/03/19/meta-decides-not-to-shut-down-horizon-worlds-on-vr-after-all/",
+      "summary": "Horizon Worlds was once a cornerstone of Meta's plans to build a social metaverse -- four years later, the company almost shut it down.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "FBI seizes pro-Iranian hacking group’s websites after destructive Stryker hack",
+      "link": "https://techcrunch.com/2026/03/19/fbi-seizes-pro-iranian-hacking-groups-websites-after-destructive-stryker-hack/",
+      "summary": "The FBI and the Justice Department took down two websites linked to the pro-Iranian hacktivist group Handala, which last week hacked medical tech gian…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "CISA urges companies to secure Microsoft Intune systems after hackers mass-wipe Stryker devices",
+      "link": "https://techcrunch.com/2026/03/19/cisa-urges-companies-to-secure-microsoft-intune-systems-after-hackers-mass-wipe-stryker-devices/",
+      "summary": "The U.S. cybersecurity agency urged companies to prevent access to systems used for remotely managing their fleets of employee devices after hackers b…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "TechCrunch Startup Battlefield 200 nominations are still open",
+      "link": "https://techcrunch.com/2026/03/19/techcrunch-startup-battlefield-200-nominations-are-still-open/",
+      "summary": "Nominate your startup, or one you know, for TechCrunch Startup Battlefield 200 before May 27. Chance to win $100,000 equity-free funding and VC access…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Rivian sacrifices 2027 profit goal to push deeper into autonomy",
+      "link": "https://techcrunch.com/2026/03/19/rivian-sacrifices-2027-profit-goal-to-push-deeper-into-autonomy/",
+      "summary": "Rivian admitted in a regulatory filing that it is delaying its goal of reaching \"positive EBITDA\" next year because of how much it is spending on deve…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "K2 to launch its first high-powered satellite for space compute",
+      "link": "https://techcrunch.com/2026/03/19/k2-to-launch-its-first-high-powered-satellite-for-space-compute/",
+      "summary": "K2's Gravitas is an ambitious project that aims to demonstrate the tech needed to build data centers in space.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Tools for founders to navigate and move past conflict",
+      "link": "https://techcrunch.com/2026/03/19/tools-for-founders-to-navigate-and-move-past-conflict/",
+      "summary": "Founders can create frameworks for working through conflict and change when the team is just two or three people, and if done correctly, it can scale …",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Alphabet’s X has a new spinout, and it’s going after one of the world’s most expensive bureaucratic nightmares",
+      "link": "https://techcrunch.com/2026/03/19/alphabets-x-has-a-new-spinout-and-its-going-after-one-of-the-worlds-most-expensive-bureaucratic-nightmares/",
+      "summary": "Anori aims to shrink the pre-development process by getting all parties, including the city, on a unified platform from the start so that compliance c…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Consumer-focused privacy company Cloaked raises $375M as it expands to enterprise",
+      "link": "https://techcrunch.com/2026/03/19/consumer-focused-privacy-company-cloaked-raises-375m-as-it-expands-to-enterprise/",
+      "summary": "Cloaked's latest round is a mix of equity and growth funding.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "Tubi joins forces with popular TikTokers to create original streaming content",
+      "link": "https://techcrunch.com/2026/03/19/tubi-joins-forces-with-popular-tiktokers-to-create-original-streaming-content/",
+      "summary": "Tubi launched its “Creatorverse Incubator” to help TikTokers create original shows exclusively for the streaming service.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-20T00:00:31.838Z"
+    },
+    {
+      "title": "‘Uncanny Valley’: Nvidia’s ‘Super Bowl of AI,’ Tesla Disappoints, and Meta’s VR Metaverse ‘Shutdown’",
+      "link": "https://www.wired.com/story/uncanny-valley-podcast-nvidia-gtc-tesla-disappointed-fans-meta-horizon-worlds/",
+      "summary": "In this episode, we dive into Nvidia’s annual developer conference and what CEO Jensen Huang is saying about the future of the company.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "FCC Enforcement Chief Offered to Help Brendan Carr Target Disney, Records Show",
+      "link": "https://www.wired.com/story/fcc-enforcement-chief-offered-to-help-brendan-carr-target-disney-records-show/",
+      "summary": "Last year, as FCC chair Brendan Carr threatened ABC over a Jimmy Kimmel monolog, a civil servant overseeing West Coast stations privately pledged supp…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "Google Shakes Up Its Browser Agent Team Amid OpenClaw Craze",
+      "link": "https://www.wired.com/story/google-shakes-up-project-mariner-team-web-browsing-agents/",
+      "summary": "As Silicon Valley obsesses over a new wave of AI coding agents, Google and other AI labs are shifting their bets.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "The Original AirPods Max Are $100 Off",
+      "link": "https://www.wired.com/story/airpods-max-deal-326/",
+      "summary": "Save big on Apple’s previous-generation premium over-ear headset.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "Meta Will Keep Horizon Worlds Alive in VR ‘for the Foreseeable Future’",
+      "link": "https://www.wired.com/story/meta-will-keep-horizon-worlds-alive-in-vr-for-the-foreseeable-future/",
+      "summary": "A day after saying it would shut down its metaverse, Meta CTO Andrew Bosworth announced the service will remain available in VR—with limited support.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "A New Game Turns the H-1B Visa System Into a Surreal Simulation",
+      "link": "https://www.wired.com/story/made-in-china-a-new-game-turns-the-h-1b-visa-system-into-a-surreal-simulation/",
+      "summary": "Inspired by real immigrant stories, H1B.Life captures the uncertainty, trade-offs, and pure luck that shape the lives of people trying to build a futu…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "ChatGPT’s ‘Adult Mode’ Could Spark a New Era of Intimate Surveillance",
+      "link": "https://www.wired.com/story/chatgpt-adult-mode-new-era-of-intimate-surveillance/",
+      "summary": "OpenAI plans to allow sexting with ChatGPT. A human-AI interaction expert warns of a privacy nightmare.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "Signal’s Creator Is Helping Encrypt Meta AI",
+      "link": "https://www.wired.com/story/signals-creator-is-helping-encrypt-meta-ai/",
+      "summary": "Moxie Marlinspike says the technology powering his encrypted AI chatbot, Confer, will be integrated into Meta AI. The move could help protect the AI c…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "Should You Hike in Boots or Trail Runners? (2026)",
+      "link": "https://www.wired.com/story/should-you-hike-in-boots-or-trail-runners/",
+      "summary": "Lightweight shoes now dominate the trails, so do you still need boots? Here’s how to choose the right footwear for your outdoor adventures.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    },
+    {
+      "title": "Soundcore Nebula X1 Pro Dolby Atmos Projector Review: Big, Brilliant",
+      "link": "https://www.wired.com/review/anker-soundcore-nebula-x1-projector/",
+      "summary": "Ever wanted a complete Dolby Atmos cinema packed into a big wheelie case?",
+      "source_name": "Wired",
+      "collected_at": "2026-03-20T00:00:32.403Z"
+    }
+  ]
+}

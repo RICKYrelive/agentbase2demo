@@ -1,0 +1,216 @@
+{
+  "collector_id": "general-rss",
+  "collected_at": "2026-03-27T00:10:18.124Z",
+  "items": [
+    {
+      "title": "You can now transfer your chats and personal information from other chatbots directly into Gemini",
+      "link": "https://techcrunch.com/2026/03/26/you-can-now-transfer-your-chats-and-personal-information-from-other-chatbots-directly-into-gemini/",
+      "summary": "Google is launching \"switching tools\" that, just as it sounds, will make it easier for users of other chatbots to switch to Gemini.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Wikipedia cracks down on the use of AI in article writing",
+      "link": "https://techcrunch.com/2026/03/26/wikipedia-cracks-down-on-the-use-of-ai-in-article-writing/",
+      "summary": "The site, whose policies are subject to change, has struggled with the issue of AI-generated writing.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Mastodon is making its decentralized social network easier to use with its latest revamp",
+      "link": "https://techcrunch.com/2026/03/26/mastodon-is-making-its-decentralized-social-network-easier-to-use-with-its-latest-revamp/",
+      "summary": "Mastodon is redesigning user profiles to simplify the experience and better appeal to mainstream users and organizations.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Netflix confirms it’s raising prices again",
+      "link": "https://techcrunch.com/2026/03/26/netflix-confirms-its-raising-prices-again/",
+      "summary": "The standard plan without ads now costs $19.99 per month, a $2 increase from the previous $17.99 subscription fee, while the premium plan is also goin…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "16 of the most interesting startups from YC W26 Demo Day",
+      "link": "https://techcrunch.com/2026/03/26/16-of-the-most-interesting-startups-from-yc-w26-demo-day/",
+      "summary": "From redirecting doomscrolling to training humanoid robots, these 16 startups stood out as the most interesting ones from an overflowing YC cohort.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Google Translate’s real-time headphone translations feature expands to iOS and more countries",
+      "link": "https://techcrunch.com/2026/03/26/google-translates-real-time-headphone-translations-feature-expands-to-ios-and-more-countries/",
+      "summary": "The real-time headphone translations experience keeps each speaker’s tone, emphasis, and cadence intact, so it’s easier to follow the conversation and…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "OpenAI abandons yet another side quest: ChatGPT’s erotic mode",
+      "link": "https://techcrunch.com/2026/03/26/openai-abandons-yet-another-side-quest-chatgpts-erotic-mode/",
+      "summary": "It's only the latest of several side projects that the AI startup has ditched over the past week.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Data centers get ready — the Senate wants to see your power bills",
+      "link": "https://techcrunch.com/2026/03/26/data-centers-get-ready-the-senate-wants-to-see-your-power-bills/",
+      "summary": "Senators Josh Hawley and Elizabeth Warren want the Energy Information Administration to gather more details about how data centers use power — and how…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Defense startup Shield AI lands $12.7B valuation, up 140%, after US Air Force deal",
+      "link": "https://techcrunch.com/2026/03/26/defense-startup-shield-ai-lands-12-7b-valuation-up-140-after-u-s-air-force-deal/",
+      "summary": "In one year, Shield AI's value has leaped 140%. This after it won a contract to be the software provider to Anduril's Fury fighter jet for the U.S. Ai…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Apple made strides with iOS 26 security, but leaked hacking tools still leave millions exposed to spyware attacks",
+      "link": "https://techcrunch.com/2026/03/26/apple-made-strides-with-ios-26-security-but-leaked-hacking-tools-still-leave-millions-exposed-to-spyware-attacks/",
+      "summary": "Leaked hacking tools threaten the security of millions of older iPhones. Cybersecurity experts weigh in.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Google is launching Search Live globally",
+      "link": "https://techcrunch.com/2026/03/26/google-is-launching-search-live-globally/",
+      "summary": "Search Live allows users to point their phone camera at objects to get real-time assistance, enabling back-and-forth conversations that draw on the vi…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Silicon Valley’s two biggest dramas have intersected: LiteLLM and Delve",
+      "link": "https://techcrunch.com/2026/03/26/delve-did-the-security-compliance-on-litellm-an-ai-project-hit-by-malware/",
+      "summary": "LiteLLM offers an AI open source project used by millions that was infected by credential harvesting malware.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "ByteDance’s new AI video generation model, Dreamina Seedance 2.0, comes to CapCut",
+      "link": "https://techcrunch.com/2026/03/26/bytedances-new-ai-video-generation-model-dreamina-seedance-2-0-comes-to-capcut/",
+      "summary": "The new model in CapCut will have built-in protections for making video from real faces or unauthorized intellectual property.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Why hiring the weirdos works",
+      "link": "https://techcrunch.com/2026/03/26/why-hiring-the-weirdos-works/",
+      "summary": "When you’re building at breakneck speed, hiring a trusted team is crucial for an early-stage startup. Bland CEO and co-founder Isaiah Granet has tacti…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "A major hacking tool has leaked online, putting millions of iPhones at risk. Here’s what you need to know.",
+      "link": "https://techcrunch.com/2026/03/26/a-major-hacking-tool-has-leaked-online-putting-millions-of-iphones-at-risk-heres-what-you-need-to-know/",
+      "summary": "Here’s what we know, and what you need to know, about Coruna and DarkSword, two advanced iPhone hacking tools discovered by security researchers. Dark…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Conntour raises $7M from General Catalyst, YC to build an AI search engine for security video systems",
+      "link": "https://techcrunch.com/2026/03/26/conntour-raises-7m-from-general-catalyst-yc-to-build-an-ai-search-engine-for-security-video-systems/",
+      "summary": "Conntour uses AI models to let security teams query camera feeds using natural language to find any object, person, or situation.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Cohere launches an open source voice model specifically for transcription",
+      "link": "https://techcrunch.com/2026/03/26/cohere-launches-an-open-source-voice-model-specifically-for-transcription/",
+      "summary": "Relatively light at just 2 billion parameters, the model is meant for use with consumer-grade GPUs for those who want to self-host it. It currently su…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "WhatsApp can now draft AI-generated responses based on your conversations",
+      "link": "https://techcrunch.com/2026/03/26/whatsapp-can-now-draft-ai-generated-responses-based-on-your-conversations/",
+      "summary": "The Meta-owned messaging platform is also launching a way to free up space, the ability to touch up photos with Meta AI, and more.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "A ‘pound of flesh’ from data centers: one senator’s answer to AI job losses",
+      "link": "https://techcrunch.com/2026/03/26/a-pound-of-flesh-from-data-centers-one-senators-answer-to-ai-job-losses/",
+      "summary": "Fears of AI-driven job loss are growing fast, and they’re fueling backlash against data centers. Sen. Mark Warner suggests taxing them to help workers…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Mistral releases a new open source model for speech generation",
+      "link": "https://techcrunch.com/2026/03/26/mistral-releases-a-new-open-source-model-for-speech-generation/",
+      "summary": "The model, which lets enterprises build voice agents for sales and customer engagement, puts Mistral in direct competition with the likes of ElevenLab…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-27T00:10:17.586Z"
+    },
+    {
+      "title": "Anthropic Supply-Chain Risk Designation Halted By Judge",
+      "link": "https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/",
+      "summary": "A judge temporarily blocked the Trump administration's designation, clearing the way for Anthropic to keep doing business without the label starting n…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "How Trump’s Plot to Grab Iran's Nuclear Fuel Would Actually Work",
+      "link": "https://www.wired.com/story/us-iran-war-nuclear-extraction-ground-operation/",
+      "summary": "Experts say that an American ground operation targeting nuclear sites in Iran would be incredibly complicated, put troops’ lives at great risk—and mig…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "You Can Skip a Lot of Amazon’s Spring Sale, but Don’t Skip This Travel Upgrade",
+      "link": "https://www.wired.com/story/cadence-capsules-amazon-spring-sale-2026/",
+      "summary": "This viral magnetic travel-toiletry system is rarely on sale, and this discount is legitimately good.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "These 35 Amazon Spring Sale Tech Deals Are Actually Good. We Checked the Price History (2026)",
+      "link": "https://www.wired.com/story/the-amazon-spring-sale-2026-1/",
+      "summary": "This sale spans almost an entire week, and it’s full of fake “deals.” We hunted to find truly good prices on gear we’ve tested.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "Meet the Tech Reporters Using AI to Help Write and Edit Their Stories",
+      "link": "https://www.wired.com/story/tech-reporters-using-ai-write-edit-stories/",
+      "summary": "Independent writers are using AI agents all throughout their reporting process. What’s the value of a human journalist, anyway?",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "Which E-Readers I'd Recommend Buying in Amazon's Spring Sale",
+      "link": "https://www.wired.com/story/e-reader-deals-amazon-spring-sale/",
+      "summary": "Amazon's Spring Sale has multiple of our favorite e-readers discounted, including one that's now under $100.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "This Premium Gaming Headset Is $80 Off on Amazon",
+      "link": "https://www.wired.com/story/steelseries-arctis-nova-pro-deal-326/",
+      "summary": "The SteelSeries Arctis Nova Pro is feature-packed, with endless battery life, a comfortable fit, and ANC.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "A $20 Billion Crypto Scam Market Faces a New Government Crackdown",
+      "link": "https://www.wired.com/story/20-billion-xinbi-guarantee-uk-sanctions/",
+      "summary": "The Telegram-based Xinbi Guarantee black market sells services that help prop up scam operations. British officials just hit the highly lucrative mark…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "The Sony Afeela Was Doomed to Fail",
+      "link": "https://www.wired.com/story/sony-afeela-was-doomed-to-fail/",
+      "summary": "A six-year EV rollout ends with a thud.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    },
+    {
+      "title": "Using a VPN May Subject You to NSA Spying",
+      "link": "https://www.wired.com/story/using-a-vpn-may-subject-you-to-nsa-spying/",
+      "summary": "US lawmakers are pressing Tulsi Gabbard to reveal whether using a VPN can strip Americans of their constitutional protections against warrantless surv…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-27T00:10:18.123Z"
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "collector_id": "competitors",
+  "collected_at": "2026-03-24T00:01:00.180Z",
+  "items": [
+    {
+      "title": "通义实验室",
+      "link": "https://tongyi.aliyun.com/",
+      "summary": "遇见,通义 Meet Tongyi, Ask me anything. 通义实验室官网重磅升级,汇聚全系列大模型、最新行业资讯与前沿应用,一览无余,尽在掌握。通义千问具备自然语言理解、文本生成、视觉理解、音频理解等多种能力。",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-24T00:00:20.142Z"
+    },
+    {
+      "title": "阿里云 AI 产品免费试用",
+      "link": "https://free.aliyun.com/product/ai",
+      "summary": "全能力 AI Agent 开发平台,100+Agent 模板/服务一键复制、开箱即用,满足 AI Agent 开发需求 查看更多 开通百炼领千万 tokens 开发兼容、灵活配置、高性价比的企业级大模型服务平台,助力轻松构建 AI 应用。 查看更多 通义千问-Image,免费体验100张 通义千问系…",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-24T00:00:20.142Z"
+    },
+    {
+      "title": "阿里云AI三剑客:通义千问、百炼、魔搭,谁才是你的 真命天子 ?_什么值得买",
+      "link": "https://post.smzdm.com/zz/p/azzd52d5/",
+      "summary": "2025年12月25日 - 阿里云AI三剑客各有所长:通义千问是AI基础能力提供者,适合个人和企业使用;百炼平台是企业级AI应用一站式工厂,便于企业快速部署AI应用;魔搭平台则是AI...",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-24T00:00:20.142Z"
+    },
+    {
+      "title": "百炼(阿里云通义千问)快速接入",
+      "link": "https://page.sm.cn/blm/video-page-710/video?h=www.bilibili.com&id=26_2102552ee820996b7f8077d3003c1a50&uc_param_str=dnntnwvepffrbijbprsvchgputdemennosstodcaaagidsdieini&q=%E9%98%BF%E9%87%8C%E4%BA%91+%E9%80%9A%E4%B9%89%E5%8D%83%E9%97%AE+%E7%99%BE%E7%82%BC+AI+Agent&title=%E7%99%BE%E7%82%BC%28%E9%98%BF%E9%87%8C%E4%BA%91%E9%80%9A%E4%B9%89%E5%8D%83%E9%97%AE%29%E5%BF%AB%E9%80%9F%E6%8E%A5%E5%85%A5&bucket=medical_bs2%3Don%26medical_l4_model%3Dmodel1%26medical_qcot%3Dbase%26medical_query_recommend%3Dbucket_9%26medical_sgs%3Dnew%26",
+      "summary": "接下来我们介绍一下怎么样接入大模型。我们可以看到左边这样一个菜单，它这里有一个模型，然后这个页面就列出了我们这个产品可以接入了所有的大模型的一个配置的一个入口。然后可以看到这里有个百炼阿里云，我们点这个配置，可以看到它需要这样一些参数：首先是一个URL，然后是API key。接下来我们就需要到阿里云…",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-24T00:00:20.142Z"
+    },
+    {
+      "title": "阿里云百炼 - 零基础快速上手AI应用搭建 - 阿里云",
+      "link": "https://www.aliyun.com/benefit/aihands-on/beginner",
+      "summary": "阿里云百炼 实训专属省心包 大模型推理省心包+函数计算 FC最低20元起 通义千问大语言模型(LLM) 可以抵扣超3000万tokens 大语言模型推理节省计划 询价中... 开通时间:下单后立即生效 购买时长:3个月 函数计算资源包 120万CU 搭建网站、AIGC应用、音视频转码、数据处理 ..…",
+      "source_name": "搜索:阿里云",
+      "collected_at": "2026-03-24T00:00:20.142Z"
+    },
+    {
+      "title": "下载豆包电脑版 - 豆包- 字节跳动旗下 AI 智能助手",
+      "link": "https://www.doubao.com/chat/?channel=baidu_pz&keywordid=weizhi13",
+      "summary": "Seedance 2.0 视频生成模型现已全面接入豆包,现在登录即可免费使用!豆包 是你的 AI 聊天智能对话问答助手,写作文案翻译编程工具。豆包为你答疑解惑,提供灵感,辅助创作,也可以和你畅聊任何你感兴趣的话题",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-24T00:00:30.152Z"
+    },
+    {
+      "title": "扣子Coze - 字节跳动推出的AI机器人和智能体创建平台 | AI工具集",
+      "link": "https://ai-bot.cn/sites/6791.html",
+      "summary": "2026年2月12日 - 扣子Coze是字节跳动推出的零代码 AI 应用开发平台,可以理解为字节跳动版的GPTs。无论用户是否有编程经验,都可以通过该平台快速创建各种类型的聊天机器...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-24T00:00:30.152Z"
+    },
+    {
+      "title": "豆包- 字节跳动旗下 AI 智能助手",
+      "link": "https://doubao.com/chat",
+      "summary": "Seedance 2.0 视频生成模型现已全面接入豆包,现在登录即可免费使用!豆包 是你的 AI 聊天智能对话问答助手,写作文案翻译编程工具。豆包为你答疑解惑,提供灵感,辅助创作,也可以和你畅聊任何你感兴趣的话题",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-24T00:00:30.152Z"
+    },
+    {
+      "title": "字节跳动扣子(Coze)与豆包 AI 全维度比对分析 - 今日头条",
+      "link": "https://www.toutiao.com/article/7564013953257390607/",
+      "summary": "2025年10月22日 - 基于多份权威信息(含功能实测、官方定位及场景案例),扣子与豆包虽同属字节跳动旗下 AI 产品,但核心定位与价值完全不同 ——扣子是 AI 智能体开发平台 ...",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-24T00:00:30.152Z"
+    },
+    {
+      "title": "大模型喂饭教程:教你用扣子搭建你的第一个AI Agent(智能体)! - 知乎",
+      "link": "https://zhuanlan.zhihu.com/p/1904249313984516855",
+      "summary": "简单介绍一下它:扣子(Coze)是字节跳动出的一个一站式AI Agent搭建平台。 你不需要懂编程,就能在扣子平台上快速搭建出基于AI大模型的各种AI Agent,而且你还能将搭建出来的智能体发布到各类社交平台,如公众号、飞书、抖音、豆包等,从而让你的AI Agent获取更多用户。 扣子的功能与优势…",
+      "source_name": "搜索:字节跳动",
+      "collected_at": "2026-03-24T00:00:30.152Z"
+    },
+    {
+      "title": "...高权限 AI Agent 的隔离运行方案|腾讯云|Linux|腾讯混元|进程|系统_新浪新闻",
+      "link": "http://k.sina.com.cn/article_7857201856_1d45362c001902y7gg.html",
+      "summary": "基于腾讯云Lighthouse的一键部署、常驻运行与IMChannel接入0.问题背景:为什么OpenClaw的部署方式..._新浪网 ... 部署完成并不等于 Agent 可...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-24T00:00:40.161Z"
+    },
+    {
+      "title": "[硬核实测] 2026 腾讯云开发者提效指南:当“混元”遇上“Agent...",
+      "link": "https://cloud.tencent.com/developer/article/2617847",
+      "summary": "No.1 腾讯云 AI 代码助手 (Tencent Cloud AI Code Assistant) 生态定位:微信小程序与后端开发的“御用辅助” 推荐指数:★★★★★ (腾讯生态必选) 核心优势: 混元内核加持:依托腾讯自研的混元大模型,它在 Go 语言和C++(腾讯内部主流技术栈)上的代码生成质…",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-24T00:00:40.161Z"
+    },
+    {
+      "title": "腾讯AI全景图亮相!混元3D模型开源,智能体开发门槛大降|腾讯云|AI技术|开源...",
+      "link": "http://k.sina.com.cn/article_5953189932_162d6782c06702zi5w.html",
+      "summary": "首次对外展示面向AI时代的产品应用全景图。. 7月27日,在2025世界人工智能大会腾讯论坛上,腾讯云副总裁、腾讯云智能负责人、腾讯优图实验室...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-24T00:00:40.161Z"
+    },
+    {
+      "title": "利用腾讯混元+元器,构建多 Agent 的股票分析助手-腾讯云开发者...",
+      "link": "https://cloud.tencent.com/developer/article/2558562",
+      "summary": "股价分析师Agent:分析当前股票的股价、基本面等信息 市场和新闻分析师Agent:获取当前股票的最近几天的新闻,然后进行分析 决策分析师 Agent:综合上面找到的信息进行判定 别看这三个 Agent 好像很复杂,其实利用腾讯元器的工作流,就可以很简单的构建出一个多 Agent 协同的 AI 出来…",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-24T00:00:40.161Z"
+    },
+    {
+      "title": "腾讯云升级混元3D 3.0模型 推出Agent Runtime解决方案",
+      "link": "https://www.yicai.com/news/102826335.html",
+      "summary": "据腾讯云消息,腾讯云提供模型、算力、数据工具等一整套底座,今年升级了混元3D 3.0模型,建模精度提升3倍,几何分辨率达到了1536³;全新发布A...",
+      "source_name": "搜索:腾讯云",
+      "collected_at": "2026-03-24T00:00:40.161Z"
+    },
+    {
+      "title": "百度千帆平台品牌升级 整合百度系全域AI能力|智能云|技术实力|知名企 ...",
+      "link": "https://www.163.com/dy/article/KC0GV3U0053469RG.html",
+      "summary": "人民财讯10月16日电,10月16日,百度Agent大会在深圳召开,会上“百度智能云千帆”品牌升级为“百度千帆”,平台将更开放地整合百度系全域优质AI能力,专注于服务企业在Agent开发、应用和大模型服务上的需求。截至目前,千帆平台已累计服务超过46万家企业客户,平台上开发的Agent数量突破130…",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-24T00:00:50.170Z"
+    },
+    {
+      "title": "百度千帆,驱动Agent从 尝鲜 走向 实战 _服务软件_什么值得买",
+      "link": "https://post.smzdm.com/p/ad7q695x/",
+      "summary": "百度千帆平台已累计开发超130万个智能体。.百度千帆构建了包含模型服务、工具服务、开发服务、数据服务及运行环境的五大核心能力,全面驱动...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-24T00:00:50.170Z"
+    },
+    {
+      "title": "百度AI开放平台-全球领先的人工智能服务平台",
+      "link": "https://ai.baidu.com/",
+      "summary": "百度AI开放平台提供全球领先的语音、图像、NLP等多项人工智能技术,开放对话式人工智能系统、智能驾驶系统两大行业生态,共享AI领域最新的应用场景和解决方案,帮您提升...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-24T00:00:50.170Z"
+    },
+    {
+      "title": "百度千帆披露AI落地成绩:累计支持130万智能体|知名企业|大语言模型...",
+      "link": "https://www.163.com/dy/article/KL2U2QCC0512D3VJ.html",
+      "summary": "新京报贝壳财经讯(记者罗亦丹)2月5日,百度千帆公布最新成绩单:平台已累计支持企业构建超130万个Agents(智能体),工具日均调用次数达到数千万级,支撑智能硬件、制造、交通、能源等主流行业创新,并沉淀出包含获客营销、错题批改等在内的100多个高频场景。 值得注意的是,百度千帆扩大了开放模型生态。…",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-24T00:00:50.170Z"
+    },
+    {
+      "title": "深度研究赛道的中国冠军:百度千帆深度研究Agent,让国产AI领跑全球! - 哔哩...",
+      "link": "https://www.bilibili.com/opus/1165913295406759957",
+      "summary": "2026年2月5日 - 针对这个问题,百度千帆深度研究 Agent 给出了肯定答案: 在DeepResearch Bench权威榜单中全面领先国际巨头,登顶榜首!.刚刚给百度千帆深度研究 Agent的...",
+      "source_name": "搜索:百度",
+      "collected_at": "2026-03-24T00:00:50.170Z"
+    },
+    {
+      "title": "讯飞星辰Agent平台 - 一站式智能体开发平台",
+      "link": "https://xinghuo.xfyun.cn/botcenter/createbot",
+      "summary": "新一代智能体Agent开发平台,支持通过提示词Prompt、工作流Workflow灵活创建专业智能体。平台已整合丰富的模型、插件、MCP Server,支持一站式效果测评,助力开发者快速搭建生产级智能体。创建后可发布到讯飞星火App、微信公众号,或发布成API、MCP Server。",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-24T00:01:00.180Z"
+    },
+    {
+      "title": "OpenClaw接入讯飞星火,AI助手免费时代真的来了吗?全网观点大PK_服务...",
+      "link": "https://post.smzdm.com/p/aqr8glv7/",
+      "summary": "3. 星火X2赋能!讯飞星火AIPC × OpenClaw.29. 探访科大讯飞这家 技术宅 公司,它真的是把各行各业得需求全拿捏了,一边 全栈自主可控 星火大模...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-24T00:01:00.180Z"
+    },
+    {
+      "title": "讯飞星火app官方下载2026最新版本",
+      "link": "https://agents.baidu.com/content/question/357869048052d8e5af7e6636",
+      "summary": "点击链接获取资源:[讯飞飞星计划] 【版本】讯飞星火app是一款智能AI助手软件,当前版本为v4.5.1安卓版。 【功能】该软件在数学推理、代码生成、多模态创作等领域表现突出,内置7.5万+公开智能体,涵盖职场、学习、生活、创作等场景,支持用户创建和官方提供的双轨智能体生态,覆盖36个垂直领域知识库…",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-24T00:01:00.180Z"
+    },
+    {
+      "title": "讯飞大模型助手下载 讯飞星火大模型AI助手(AI搜索/PPT生成/图像生成/写作...",
+      "link": "https://www.jb51.net/softs/973404.html",
+      "summary": "2026年3月9日 - AI助手讯飞星火下载地址.MiniMax agent(AI智能软件)V3.0.12 官方安装版MiniMax桌面版提供了 专家Agent 功能,用户可创建财务分析、编程开发等垂直领域...",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-24T00:01:00.180Z"
+    },
+    {
+      "title": "讯飞星火-懂我的AI助手",
+      "link": "https://xinghuo.xfyun.cn/?__from__=ux58",
+      "summary": "依托讯飞星火App,面向医疗、翻译、创作等垂直场景,构建无需安装的轻量级应用。已接入智文、晓医、智作、语伴等专业助手。 立即进入智能体创建中心 星火API接入 让您的应用快速拥有领先的AI大模型能力,接口丰富,价格灵活,支持在线调试 快速响应,高效处理 采用流式的接口设计,首帧响应最快可达毫秒级。借…",
+      "source_name": "搜索:讯飞",
+      "collected_at": "2026-03-24T00:01:00.180Z"
+    }
+  ]
+}

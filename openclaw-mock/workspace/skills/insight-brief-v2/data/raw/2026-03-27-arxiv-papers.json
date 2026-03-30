@@ -1,0 +1,146 @@
+{
+  "collector_id": "arxiv-papers",
+  "collected_at": "2026-03-27T00:10:18.407Z",
+  "items": [
+    {
+      "title": "Vibe Coding XR: Accelerating AI + XR Prototyping with XR Blocks and Gemini",
+      "link": "http://arxiv.org/abs/2603.24591v1",
+      "summary": "While large language models have accelerated software development through \"vibe coding\", prototyping intelligent Extended Reality (XR) experiences rem…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "Comparing Developer and LLM Biases in Code Evaluation",
+      "link": "http://arxiv.org/abs/2603.24586v1",
+      "summary": "As LLMs are increasingly used as judges in code applications, they should be evaluated in realistic interactive settings that capture partial context …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "The Stochastic Gap: A Markovian Framework for Pre-Deployment Reliability and Oversight-Cost Auditing in Agentic Artificial Intelligence",
+      "link": "http://arxiv.org/abs/2603.24582v1",
+      "summary": "Agentic artificial intelligence (AI) in organizations is a sequential decision problem constrained by reliability and oversight cost. When determinist…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination",
+      "link": "http://arxiv.org/abs/2603.24579v1",
+      "summary": "Hallucination remains a critical bottleneck for large language models (LLMs), undermining their reliability in real-world applications, especially in …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "Chameleon: Episodic Memory for Long-Horizon Robotic Manipulation",
+      "link": "http://arxiv.org/abs/2603.24576v1",
+      "summary": "Robotic manipulation often requires memory: occlusion and state changes can make decision-time observations perceptually aliased, making action select…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "Infrastructure for Valuable, Tradable, and Verifiable Agent Memory",
+      "link": "http://arxiv.org/abs/2603.24564v1",
+      "summary": "Every API token you spend is your accumulated wealth; once you can prove its value and the effort behind it, you can resell it. As autonomous agents r…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.405Z"
+    },
+    {
+      "title": "Boosting LLMs for Mutation Generation",
+      "link": "http://arxiv.org/abs/2603.24560v1",
+      "summary": "LLM-based mutation testing is a promising testing technology, but existing approaches typically rely on a fixed set of mutations as few-shot examples …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "The Free-Market Algorithm: Self-Organizing Optimization for Open-Ended Complex Systems",
+      "link": "http://arxiv.org/abs/2603.24559v1",
+      "summary": "We introduce the Free-Market Algorithm (FMA), a novel metaheuristic inspired by free-market economics. Unlike Genetic Algorithms, Particle Swarm Optim…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "LensWalk: Agentic Video Understanding by Planning How You See in Videos",
+      "link": "http://arxiv.org/abs/2603.24558v1",
+      "summary": "The dense, temporal nature of video presents a profound challenge for automated analysis. Despite the use of powerful Vision-Language Models, prevaili…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "Evaluating Chunking Strategies For Retrieval-Augmented Generation in Oil and Gas Enterprise Documents",
+      "link": "http://arxiv.org/abs/2603.24556v1",
+      "summary": "Retrieval-Augmented Generation (RAG) has emerged as a framework to address the constraints of Large Language Models (LLMs). Yet, its effectiveness fun…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "Analysing the Safety Pitfalls of Steering Vectors",
+      "link": "http://arxiv.org/abs/2603.24543v1",
+      "summary": "Activation steering has emerged as a powerful tool to shape LLM behavior without the need for weight updates. While its inherent brittleness and unrel…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "UI-Voyager: A Self-Evolving GUI Agent Learning via Failed Experience",
+      "link": "http://arxiv.org/abs/2603.24533v1",
+      "summary": "Autonomous mobile GUI agents have attracted increasing attention along with the advancement of Multimodal Large Language Models (MLLMs). However, exis…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "TuneShift-KD: Knowledge Distillation and Transfer for Fine-tuned Models",
+      "link": "http://arxiv.org/abs/2603.24518v1",
+      "summary": "To embed domain-specific or specialized knowledge into pre-trained foundation models, fine-tuning using techniques such as parameter efficient fine-tu…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "AVO: Agentic Variation Operators for Autonomous Evolutionary Search",
+      "link": "http://arxiv.org/abs/2603.24517v1",
+      "summary": "Agentic Variation Operators (AVO) are a new family of evolutionary variation operators that replace the fixed mutation, crossover, and hand-designed h…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.406Z"
+    },
+    {
+      "title": "Claudini: Autoresearch Discovers State-of-the-Art Adversarial Attack Algorithms for LLMs",
+      "link": "http://arxiv.org/abs/2603.24511v1",
+      "summary": "LLM agents like Claude Code can not only write code but also be used for autonomous AI research and engineering \\citep{rank2026posttrainbench, novikov…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    },
+    {
+      "title": "Communication-Aware Dissipative Output Feedback Control",
+      "link": "http://arxiv.org/abs/2603.24509v1",
+      "summary": "Communication-aware control is essential to reduce costs and complexity in large-scale networks. This work proposes a method to design dissipativity-a…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    },
+    {
+      "title": "Video-Only ToM: Enhancing Theory of Mind in Multimodal Large Language Models",
+      "link": "http://arxiv.org/abs/2603.24484v1",
+      "summary": "As large language models (LLMs) continue to advance, there is increasing interest in their ability to infer human mental states and demonstrate a huma…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    },
+    {
+      "title": "Multi-Agent Reasoning with Consistency Verification Improves Uncertainty Calibration in Medical MCQA",
+      "link": "http://arxiv.org/abs/2603.24481v1",
+      "summary": "Miscalibrated confidence scores are a practical obstacle to deploying AI in clinical settings. A model that is always overconfident offers no useful s…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    },
+    {
+      "title": "Composer 2 Technical Report",
+      "link": "http://arxiv.org/abs/2603.24477v1",
+      "summary": "Composer 2 is a specialized model designed for agentic software engineering. The model demonstrates strong long-term planning and coding intelligence …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    },
+    {
+      "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
+      "link": "http://arxiv.org/abs/2603.24472v1",
+      "summary": "Self-distillation has emerged as an effective post-training paradigm for LLMs, often improving performance while shortening reasoning traces. However,…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-27T00:10:18.407Z"
+    }
+  ]
+}

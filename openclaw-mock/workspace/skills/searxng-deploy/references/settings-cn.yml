@@ -1,0 +1,104 @@
+# SearXNG 国内搜索引擎配置片段
+# ====================================
+# 这些是与默认配置不同的关键修改项。
+# 不要用此文件替换完整 settings.yml，只需将对应部分合并进去。
+
+# ── search 部分 ──
+search:
+  autocomplete: "baidu"    # 默认为空，改为百度自动补全
+  formats:
+    - html
+    - json
+    - csv
+    - rss
+
+# ── server 部分 ──
+server:
+  limiter: false            # 关闭限流（私有部署不需要）
+
+# ── engines 部分：启用的国内引擎 ──
+# 默认配置中这些引擎 disabled: true，需改为 false
+
+engines:
+  # 360 搜索
+  - name: 360search
+    engine: 360search
+    shortcut: 360so
+    timeout: 10.0
+    disabled: false
+
+  - name: 360search videos
+    engine: 360search_videos
+    shortcut: 360sov
+    disabled: false
+
+  # 百度
+  - name: baidu
+    baidu_category: general
+    categories: [general]
+    engine: baidu
+    shortcut: bd
+    disabled: false
+
+  - name: baidu images
+    baidu_category: images
+    categories: [images]
+    engine: baidu
+    shortcut: bdi
+    disabled: false
+
+  - name: baidu kaifa
+    baidu_category: it
+    categories: [it]
+    engine: baidu
+    shortcut: bdk
+    disabled: false
+
+  # B 站
+  - name: bilibili
+    engine: bilibili
+    shortcut: bil
+    disabled: false
+
+  # 搜狗
+  - name: sogou
+    engine: sogou
+    shortcut: sogou
+    disabled: false
+
+  - name: sogou images
+    engine: sogou_images
+    shortcut: sogoui
+    disabled: false
+
+  - name: sogou videos
+    engine: sogou_videos
+    shortcut: sogouv
+    disabled: false
+
+  - name: sogou wechat
+    engine: sogou_wechat
+    shortcut: sogouw
+    disabled: false
+
+  # 夸克
+  - name: quark
+    quark_category: general
+    categories: [general]
+    engine: quark
+    shortcut: qk
+    disabled: false
+
+  - name: quark images
+    quark_category: images
+    categories: [images]
+    engine: quark
+    shortcut: qki
+    disabled: false
+
+# ── 建议禁用（disabled: true）的国外引擎 ──
+# bing, duckduckgo, google 等在国内可能无法直接访问
+# 根据实际网络环境决定是否禁用
+
+# ── docker-compose.yaml 中的环境变量 ──
+# SEARXNG_LIMITER=false  # 等同于 server.limiter: false

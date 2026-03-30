@@ -1,0 +1,216 @@
+{
+  "collector_id": "general-rss",
+  "collected_at": "2026-03-26T00:00:03.827Z",
+  "items": [
+    {
+      "title": "The AI skills gap is here, says AI company, and power users are pulling ahead",
+      "link": "https://techcrunch.com/2026/03/25/the-ai-skills-gap-is-here-says-ai-company-and-power-users-are-pulling-ahead/",
+      "summary": "Anthropic finds AI isn’t replacing jobs yet, but early data shows growing inequality as experienced users gain an edge, raising concerns about future …",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Convicted spyware chief hints that Greece’s government was behind dozens of phone hacks",
+      "link": "https://techcrunch.com/2026/03/25/convicted-spyware-chief-hints-that-greeces-government-was-behind-dozens-of-phone-hacks/",
+      "summary": "The spyware founder's comments are the most direct suggestion yet from anyone inside Intellexa that the Mitsotakis government authorized the hacking o…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Who’s driving Waymo’s self-driving cars? Sometimes, the police.",
+      "link": "https://techcrunch.com/2026/03/25/waymo-robotaxi-roadside-assistance-emergency-first-responders/",
+      "summary": "First responders have had to take control of Waymo vehicles and move them during emergency situations, including in at least two active crime scenes, …",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Google unveils TurboQuant, a new AI memory compression algorithm — and yes, the internet is calling it ‘Pied Piper’",
+      "link": "https://techcrunch.com/2026/03/25/google-turboquant-ai-memory-compression-silicon-valley-pied-piper/",
+      "summary": "Google’s TurboQuant has the internet joking about Pied Piper from HBO's \"Silicon Valley.\" The compression algorithm promises to shrink AI’s “working m…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Melania Trump wants a robot to homeschool your child",
+      "link": "https://techcrunch.com/2026/03/25/melania-trump-wants-a-robot-to-homeschool-your-child/",
+      "summary": "The first lady sees AI and robotics playing a prominent role in the future of American education.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Riding the GLP-1 boom, VITL lands $7.5M to overhaul cash-pay clinic prescribing",
+      "link": "https://techcrunch.com/2026/03/25/riding-the-glp-1-boom-vitl-lands-7-5m-to-overhaul-cash-pay-clinic-prescribing/",
+      "summary": "The startup provides an e-prescribing marketplace for the booming cash-pay clinic market.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Jury finds Meta and Google negligent in landmark social media addiction trial",
+      "link": "https://techcrunch.com/2026/03/25/jury-finds-meta-and-youtube-negligent-in-landmark-social-media-addiction-trial/",
+      "summary": "Evidence presented at the trial swayed the jury to the plaintiff's side, demonstrating that Meta understood how addictive its platforms could be among…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Meta is cutting several hundred jobs",
+      "link": "https://techcrunch.com/2026/03/25/meta-is-cutting-several-hundred-jobs/",
+      "summary": "Meta is laying off several hundred employees across multiple teams, including sales, recruiting, and the Reality Labs division. The cuts will impact e…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Apple overhauls its app developer platform with 100 new metrics, more tools",
+      "link": "https://techcrunch.com/2026/03/25/apple-overhauls-its-app-developer-platform-with-100-new-metrics-more-tools/",
+      "summary": "Apple is adding 100+ new App Store Connect metrics, giving developers deeper, first-party insights into monetization, subscriptions, and user behavior…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Bernie Sanders and AOC propose a ban on data center construction",
+      "link": "https://techcrunch.com/2026/03/25/bernie-sanders-and-aoc-propose-a-ban-on-data-center-construction/",
+      "summary": "Senator Bernie Sanders and Rep. Alexandria Ocasio-Cortez introduced companion legislation to halt construction on new data centers until Congress pass…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "DeleteMe acquires social media security tool Block Party",
+      "link": "https://techcrunch.com/2026/03/25/deleteme-acquires-social-media-security-tool-block-party/",
+      "summary": "Tracey Chou founded Block Party in 2018 as a tool to help people stay safe from targeted harassment on Twitter, inspired by her own experiences.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Google launches Lyria 3 Pro music generation model",
+      "link": "https://techcrunch.com/2026/03/25/google-launches-lyria-3-pro-music-generation-model/",
+      "summary": "Google is launching Lyria 3 Pro, an upgraded music model that generates longer, more customizable tracks, as it expands AI music tools across Gemini, …",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Russia arrests alleged owner of cybercrime forum LeakBase, report says",
+      "link": "https://techcrunch.com/2026/03/25/russia-arrests-alleged-owner-of-cybercrime-forum-leakbase-report-says/",
+      "summary": "Russian state-owned media reported that police in Russia arrested the administrator of LeakBase, a large hacking forum.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Reddit takes on the bots with new ‘human verification’ requirements for fishy behavior",
+      "link": "https://techcrunch.com/2026/03/25/reddit-bots-new-human-verification-requirements/",
+      "summary": "Reddit will require suspected automated accounts to verify they’re human, as it ramps up efforts to curb bot-driven spam and manipulation.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "How soap opera-TikTok hybrids became a billion-dollar business",
+      "link": "https://techcrunch.com/video/how-soap-opera-tiktok-hybrids-became-a-billion-dollar-business/",
+      "summary": "Over the past few years, a new category of mobile apps has quietly exploded into a multi-billion dollar business. They’re called “micro dramas” — shor…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Harvey confirms $11B valuation: Sequoia triples down",
+      "link": "https://techcrunch.com/2026/03/25/harvey-confirms-11b-valuation-sequoia-triples-down/",
+      "summary": "Investors like Sequoia, Andreessen Horowitz, Kleiner Perkins, and Elad Gil can't get enough of AI legal tech startup Harvey.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Granola raises $125M, hits $1.5B valuation as it expands from meeting notetaker to enterprise AI app",
+      "link": "https://techcrunch.com/2026/03/25/granola-raises-125m-hits-1-5b-valuation-as-it-expands-from-meeting-notetaker-to-enterprise-ai-app/",
+      "summary": "Granola's valuation jumped from $250 million to $1.5 billion with this round, and it has added more support for AI agents after users previously compl…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Meta launches new initiative to support entrepreneurship, drive AI adoption",
+      "link": "https://techcrunch.com/2026/03/25/meta-launches-new-initiative-to-support-entrepreneurship-drive-ai-adoption/",
+      "summary": "Meta CEO Mark Zuckerberg said in a memo to staff that small businesses have always been a big part of the company's business model, and that while ten…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Arbor Energy just landed a billion-dollar order to bring rocket turbine tech to the power grid",
+      "link": "https://techcrunch.com/2026/03/25/arbor-energy-just-landed-a-billion-dollar-order-to-bring-rocket-turbine-tech-to-the-power-grid/",
+      "summary": "The large deal sees Arbor delivering as many as 200 of its Halcyon turbines, which can burn either natural gas or waste biomass.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Meta turns to AI to make shopping easier on Instagram and Facebook",
+      "link": "https://techcrunch.com/2026/03/25/meta-turns-to-ai-to-make-shopping-easier-on-instagram-and-facebook/",
+      "summary": "Meta is using generative AI to provide more product and brand information to consumers when they're shopping in its apps.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-26T00:00:03.028Z"
+    },
+    {
+      "title": "Amazon Spring Sale Deal: The Typhur Dome 2 Air Fryer Is 30% Off",
+      "link": "https://www.wired.com/story/typhur-dome-2-air-fryer-deal-amazon-spring-sale/",
+      "summary": "I tested more than 30 air fryers this past year. The Typhur Dome 2 is the one I recommend, and it’s uncommonly cheap right now.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "There’s Something Very Dark About a Lot of Those Viral AI Fruit Videos",
+      "link": "https://www.wired.com/story/theres-something-very-dark-about-a-lot-of-those-viral-ai-fruit-videos/",
+      "summary": "With female AI fruit being fart-shamed and even sexually assaulted, there’s a misogynistic undercurrent to the fruit slop microdramas, even as they ap…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "OpenClaw Agents Can Be Guilt-Tripped Into Self-Sabotage",
+      "link": "https://www.wired.com/story/openclaw-ai-agent-manipulation-security-northeastern-study/",
+      "summary": "In a controlled experiment, OpenClaw agents proved prone to panic and vulnerable to manipulation. They even disabled their own functionality when gasl…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "The Comedy Club at the End of the Metaverse",
+      "link": "https://www.wired.com/story/the-last-comedy-club-at-the-end-of-the-metaverse/",
+      "summary": "“This is my home”: At a VR comedy club in Horizon Worlds, users mourn Meta's plans for the platform.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "Save $100 on Our Favorite Soundbar and Subwoofer Combo",
+      "link": "https://www.wired.com/story/jbl-bar500mk2-deal-326/",
+      "summary": "The JBL Bar 500MK2 boasts Dolby Atmos support and easy setup and streaming.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "Best Vacuum Deals for Amazon's Spring Sale: Dyson, Shark, Bissell (2026)",
+      "link": "https://www.wired.com/story/amazon-spring-sale-vacuum-deals/",
+      "summary": "New gear for spring cleaning just got cheaper. Don't miss these discounted robot vacuums, stick vacuums, and hand vacs.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "Amazon’s Spring Sale Is Blooming With Smart Bird Feeders",
+      "link": "https://www.wired.com/story/smart-bird-feeders-amazon-spring-sale-2026/",
+      "summary": "These Amazon Spring Sale picks actually deserve a spot in your yard.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "Ultrahuman Is Back: Can the Ring Pro Beat Oura in the US Market?",
+      "link": "https://www.wired.com/story/ultrahumans-us-comeback-starts-now-with-the-new-ring-pro/",
+      "summary": "Ultrahuman is officially back in the US and looking to disrupt the status quo with its most advanced smart ring yet.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "The Ex-CIA Agent Going Viral Asking for a Trump Pardon",
+      "link": "https://www.wired.com/story/that-ex-cia-agent-in-all-your-feeds-is-after-a-pardon-from-donald-trump/",
+      "summary": "John Kiriakou went to prison after exposing the CIA's torture program. Now he's going viral as he campaigns to get his name cleared and his pension re…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    },
+    {
+      "title": "OpenAI Enters Its Focus Era by Killing Sora",
+      "link": "https://www.wired.com/story/openai-shuts-down-sora-ipo-ai-superapp/",
+      "summary": "As the ChatGPT-maker eyes an IPO, it's ditching Sora in favor of a unified AI assistant and enterprise coding tools.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-26T00:00:03.826Z"
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "curated_at": "2026-03-27T00:15:30.270Z",
+  "categories": {
+    "frontier_tech": {
+      "label": "前沿技术",
+      "emoji": "🔬",
+      "items": [
+        {
+          "title": "全球顶尖大模型一夜惨遭血洗，最难测试人类拿满分，AI第一名得0.2%分",
+          "summary": "ARC-AGI-3基准测试上线，人类满分而顶尖模型仅得0.2%，暴露AI推理瓶颈。",
+          "link": "https://36kr.com/p/3739700584644867?channel=skills",
+          "source": "36氪热榜",
+          "original_collector": "36kr-direct"
+        },
+        {
+          "title": "刚刚，英伟达革了自己的命：智能体自主进化7天，干掉所有算子工程师、GPU专家",
+          "summary": "英伟达推出可自主进化的智能体技术，能替代算子与GPU专家，突破技术瓶颈。",
+          "link": "https://36kr.com/p/3739201554399237?channel=skills",
+          "source": "36氪热榜",
+          "original_collector": "36kr-direct"
+        },
+        {
+          "title": "Coze Studio - 字节跳动开源的AI Agent开发平台 | AI工具集",
+          "summary": "字节跳动开源Coze Studio，提供本地化AI Agent开发平台框架",
+          "link": "https://ai-bot.cn/coze-studio/",
+          "source": "搜索:字节跳动",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "腾讯混元突破:全能AI助手实现积木式3D创作编辑",
+          "summary": "腾讯混元发布Part-X-MLLM模型，实现基于自然语言的3D物体理解与编辑",
+          "link": "https://www.360kuai.com/pc/93c0adc2ff11a7124?cota=3&kuai_so=1&sign=360_57c3bbd1&refer_scene=so_1",
+          "source": "搜索:腾讯云",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "媲美DeepSeek!腾讯开源新版混元模型:AI Agent强化,超30种智能体指令|...",
+          "summary": "腾讯开源混元大模型最新版本，强化AI Agent能力并支持超30种指令",
+          "link": "https://www.163.com/dy/article/K3E3P3GH055240KW.html",
+          "source": "搜索:腾讯云",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "#微博大模型数学能力超DeepSeekR1##微... 来自新浪科技 - 微博",
+          "summary": "微博发布15亿参数自研开源大模型VibeThinker",
+          "link": "https://weibo.com/1642634100/QehXKCKcv",
+          "source": "搜索:微博 大模型 热点",
+          "original_collector": "social-hot"
+        },
+        {
+          "title": "为什么所有国产大模型都不能分析微博热搜?-36氪",
+          "summary": "实测显示四款国产大模型均无法有效分析微博热搜",
+          "link": "https://www.36kr.com/p/2806262869816707",
+          "source": "搜索:微博 大模型 热点",
+          "original_collector": "social-hot"
+        },
+        {
+          "title": "啊?微博7800美元训的大模型,数学能力超了DeepSeek-R1_ZAKER新闻",
+          "summary": "微博以极低成本训练开源模型VibeThinker打破Scaling Law",
+          "link": "http://app.myzaker.com/news/article.php?pk=691c05868e9f097ce2435727",
+          "source": "搜索:微博 大模型 热点",
+          "original_collector": "social-hot"
+        },
+        {
+          "title": "文科生 微博,搞出一个数学学霸大模型|开源模型|DeepSeek|Minimax|OpenAI|...",
+          "summary": "微博推出第二张名片开源大模型VibeThinker展现数学突破",
+          "link": "https://k.sina.com.cn/article_5953740931_162dee08306702d7ju.html",
+          "source": "搜索:微博 大模型 热点",
+          "original_collector": "social-hot"
+        }
+      ]
+    },
+    "competitor": {
+      "label": "竞品动态",
+      "emoji": "🎯",
+      "items": [
+        {
+          "title": "突发！Sora 宣布关停，史上最贵 AI 表情包生成器只撑了七个月",
+          "summary": "OpenAI宣布关停仅运营七个月的Sora视频服务，进行战略收缩与产品线精简。",
+          "link": "https://36kr.com/p/3737580650823945?channel=skills",
+          "source": "36氪热榜",
+          "original_collector": "36kr-direct"
+        },
+        {
+          "title": "豆包 - 字节跳动旗下 AI 智能助手",
+          "summary": "字节跳动将Seedance 2.0视频生成模型全面接入豆包，免费开放使用",
+          "link": "https://www.doubao.com/chat/",
+          "source": "搜索:字节跳动",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "腾讯云官宣混元模型Token涨价 AI Agent驱动Token消耗量激增 国产算力受...",
+          "summary": "腾讯云宣布混元系列模型Token涨价，系AI Agent驱动消耗量激增所致",
+          "link": "http://stock.10jqka.com.cn/20260312/c675232209.shtml",
+          "source": "搜索:腾讯云",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "深度研究赛道的中国冠军:百度千帆深度研究Agent,让国产AI领跑全球! - 哔哩...",
+          "summary": "百度千帆深度研究Agent登顶DeepResearch Bench权威榜单，领跑全球",
+          "link": "https://www.bilibili.com/opus/1165913295406759957",
+          "source": "搜索:百度",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "百度千帆将一系列核心AI能力与官方Agent,... 来自百度智能云 - 微博",
+          "summary": "百度千帆将核心AI能力与官方Agent以标准化Skill形式上架OpenClaw",
+          "link": "https://www.weibo.com/2711736393/Qr5nN3BA7?mod=weibotime",
+          "source": "搜索:百度",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "文心5.0正式版上线百度千帆 助力产业落地构建全栈AI云新生态-业界动态-IT...",
+          "summary": "文心5.0正式版上线百度千帆平台，推出完整Agent开发基础设施",
+          "link": "https://www.itbear.com.cn/html/2026-01/1105149.html",
+          "source": "搜索:百度",
+          "original_collector": "competitors"
+        },
+        {
+          "title": "You can now transfer your chats and personal information from other chatbots directly into Gemini",
+          "summary": "Google推出切换工具，支持用户将其他聊天机器人对话数据导入Gemini。",
+          "link": "https://techcrunch.com/2026/03/26/you-can-now-transfer-your-chats-and-personal-information-from-other-chatbots-directly-into-gemini/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "Google Translate’s real-time headphone translations feature expands to iOS and more countries",
+          "summary": "Google Translate实时耳机翻译功能扩展至iOS及更多国家。",
+          "link": "https://techcrunch.com/2026/03/26/google-translates-real-time-headphone-translations-feature-expands-to-ios-and-more-countries/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "OpenAI abandons yet another side quest: ChatGPT’s erotic mode",
+          "summary": "OpenAI放弃ChatGPT情色模式等多个边缘探索项目。",
+          "link": "https://techcrunch.com/2026/03/26/openai-abandons-yet-another-side-quest-chatgpts-erotic-mode/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "Google is launching Search Live globally",
+          "summary": "Google面向全球推出Search Live实时视觉搜索功能。",
+          "link": "https://techcrunch.com/2026/03/26/google-is-launching-search-live-globally/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        }
+      ]
+    },
+    "academic": {
+      "label": "学术论文",
+      "emoji": "📚",
+      "items": [
+        {
+          "title": "Vibe Coding XR: Accelerating AI + XR Prototyping with XR Blocks and Gemini",
+          "summary": "提出结合XR Blocks与Gemini的方法，加速AI与XR融合的软件原型开发。",
+          "link": "http://arxiv.org/abs/2603.24591v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "Comparing Developer and LLM Biases in Code Evaluation",
+          "summary": "对比开发者与LLM在代码评估中的偏见差异，探讨大模型作为裁判的可靠性。",
+          "link": "http://arxiv.org/abs/2603.24586v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "The Stochastic Gap: A Markovian Framework for Pre-Deployment Reliability and Oversight-Cost Auditing in Agentic Artificial Intelligence",
+          "summary": "提出马尔可夫框架理论，用于智能体AI部署前的可靠性审计与监督成本评估。",
+          "link": "http://arxiv.org/abs/2603.24582v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination",
+          "summary": "提出MARCH多智能体强化自检框架，通过多代理协作有效缓解大模型幻觉问题。",
+          "link": "http://arxiv.org/abs/2603.24579v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "Chameleon: Episodic Memory for Long-Horizon Robotic Manipulation",
+          "summary": "提出Chameleon情景记忆机制，解决机器人长时序操作中的遮挡与状态观测难题。",
+          "link": "http://arxiv.org/abs/2603.24576v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "Infrastructure for Valuable, Tradable, and Verifiable Agent Memory",
+          "summary": "提出一种可验证且可交易的智能体记忆基础设施框架。",
+          "link": "http://arxiv.org/abs/2603.24564v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "Boosting LLMs for Mutation Generation",
+          "summary": "提出基于大语言模型的变异测试生成增强方法。",
+          "link": "http://arxiv.org/abs/2603.24560v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "The Free-Market Algorithm: Self-Organizing Optimization for Open-Ended Complex Systems",
+          "summary": "提出受自由市场经济启发的自组织元启发式优化算法。",
+          "link": "http://arxiv.org/abs/2603.24559v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "LensWalk: Agentic Video Understanding by Planning How You See in Videos",
+          "summary": "提出通过规划视频观看路径增强智能体视频理解的方法。",
+          "link": "http://arxiv.org/abs/2603.24558v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        },
+        {
+          "title": "Evaluating Chunking Strategies For Retrieval-Augmented Generation in Oil and Gas Enterprise Documents",
+          "summary": "评估石油天然气企业文档中RAG的分块策略效果。",
+          "link": "http://arxiv.org/abs/2603.24556v1",
+          "source": "arXiv",
+          "original_collector": "arxiv-papers"
+        }
+      ]
+    },
+    "customer_case": {
+      "label": "客户案例与实践",
+      "emoji": "💼",
+      "items": [
+        {
+          "title": "万亿Tokens破圈2026:一家AI Agent企业跑通了 真AI生产力模型 _ZAKER新闻",
+          "summary": "还原AI Agent企业落地真实面貌，剖析不敢用、不好用等落地瓶颈。",
+          "link": "http://applocal.myzaker.com/news/article.php?pk=695cf0568e9f092ac20b2340",
+          "source": "搜索:AI Agent 落",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "2026 企业级 AI Agent 应用清单:50 个主流落地场景与标杆案例IDC预测,到...",
+          "summary": "盘点2026年企业级AI Agent的50个主流落地场景与标杆案例。",
+          "link": "https://juejin.cn/post/7589262021560909865",
+          "source": "搜索:AI Agent 落",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "AI Agent 企业应用 30个落地 案例拆解_ai落地案例集-CSDN博客",
+          "summary": "拆解30个AI Agent企业商业应用案例，助力技术选型与落地实施。",
+          "link": "https://blog.csdn.net/m0_59235245/article/details/156076319",
+          "source": "搜索:AI Agent 落",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "2026 深度解析:AI 智能体(Agent)逻辑引擎核心与产业落地全工作流-阿里云...",
+          "summary": "解析AI智能体逻辑引擎核心技术与企业产业落地的全工作流。",
+          "link": "https://developer.aliyun.com/article/1707398",
+          "source": "搜索:AI Agent 落",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "52个行业大模型应用案例深度解析_通用大模型的范例-CSDN博客",
+          "summary": "深度解析52个大模型在不同行业与具体场景下的实际应用案例。",
+          "link": "https://blog.csdn.net/2401_85390073/article/details/139952490",
+          "source": "搜索:大模型 企业应用案例",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "2024大模型行业应用十大典范案例集_大模型行业业务分析案例-CSDN博客",
+          "summary": "发布2024大模型行业应用十大典范案例，展示提效与转型成效。",
+          "link": "https://blog.csdn.net/logic1001/article/details/141325302",
+          "source": "搜索:大模型 企业应用案例",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "一些大模型在企业数智化中的实际应用案例_大模型办公日常应用案例-...",
+          "summary": "分享大模型在企业数智化中的实际应用案例，如多源数据销售预测。",
+          "link": "https://blog.csdn.net/alankuo/article/details/141831723",
+          "source": "搜索:大模型 企业应用案例",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "《大模型行业应用十大典范案例集》_平台_智能化_实例",
+          "summary": "汇编大模型行业应用十大典范案例，涵盖企业级AI开发平台等。",
+          "link": "https://www.sohu.com/a/784110866_121754011?scm=1019.20001.0.0.0",
+          "source": "搜索:大模型 企业应用案例",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "大模型应用落地指南!8大行业实战案例拆解!-CSDN博客",
+          "summary": "拆解8大行业AI大模型应用落地实战案例，助力企业商业化决策。",
+          "link": "https://blog.csdn.net/yellowzf3/article/details/142189113",
+          "source": "搜索:大模型 企业应用案例",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "72 个 RAG 实战场景大公开!从医疗到金融,总有一个戳中你的需求(附开源...",
+          "summary": "公开72个RAG实战场景，覆盖医疗诊断到金融等多领域落地需求。",
+          "link": "https://blog.csdn.net/m0_48891301/article/details/148583550",
+          "source": "搜索:RAG 企业实践案例",
+          "original_collector": "customer-cases"
+        }
+      ]
+    },
+    "industry_report": {
+      "label": "行业报告",
+      "emoji": "📊",
+      "items": [
+        {
+          "title": "2026年AI Agent全面爆发:从概念验证到产业重构的规模化元年!|人机交互|...",
+          "summary": "预测2026年为AI Agent规模化元年，技术底座成熟破除落地瓶颈。",
+          "link": "http://k.sina.com.cn/article_7857201856_1d45362c001902p73e.html",
+          "source": "搜索:AI Agent 落",
+          "original_collector": "customer-cases"
+        },
+        {
+          "title": "Data centers get ready — the Senate wants to see your power bills",
+          "summary": "美参议院要求能源署收集数据中心电力账单以评估能耗。",
+          "link": "https://techcrunch.com/2026/03/26/data-centers-get-ready-the-senate-wants-to-see-your-power-bills/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "Defense startup Shield AI lands $12.7B valuation, up 140%, after US Air Force deal",
+          "summary": "防务AI创企Shield AI获美军合同，估值飙升127亿美元。",
+          "link": "https://techcrunch.com/2026/03/26/defense-startup-shield-ai-lands-12-7b-valuation-up-140-after-u-s-air-force-deal/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "Silicon Valley’s two biggest dramas have intersected: LiteLLM and Delve",
+          "summary": "AI开源项目LiteLLM遭凭证窃取软件攻击引发供应链危机。",
+          "link": "https://techcrunch.com/2026/03/26/delve-did-the-security-compliance-on-litellm-an-ai-project-hit-by-malware/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "Conntour raises $7M from General Catalyst, YC to build an AI search engine for security video systems",
+          "summary": "安防AI视频搜索创企Conntour获700万美元融资。",
+          "link": "https://techcrunch.com/2026/03/26/conntour-raises-7m-from-general-catalyst-yc-to-build-an-ai-search-engine-for-security-video-systems/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "A ‘pound of flesh’ from data centers: one senator’s answer to AI job losses",
+          "summary": "美参议员拟对数据中心征税以弥补AI造成的岗位流失。",
+          "link": "https://techcrunch.com/2026/03/26/a-pound-of-flesh-from-data-centers-one-senators-answer-to-ai-job-losses/",
+          "source": "TechCrunch",
+          "original_collector": "general-rss"
+        },
+        {
+          "title": "2025具身智能机器人场景应用白皮书",
+          "summary": "发布2025具身智能机器人场景应用白皮书，剖析技术演进与商用趋势",
+          "link": "https://weixin.sogou.com/link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgS6oxJzOXxTgtJqpE991RuhK1H4bTTR2HlVqXa8Fplpd9Jg4XMVH6mO0hdoV5MyivQ4dWtKAi7p65rO-hGAAisUXVz796nV5eApAhdfDendbum-ZC7tseSIfPO3_6uWFhDosAISFpTp3IBqCxo7p9HGAqUayux3n_5dBuJUyPeWCDCvh3gWlWWad9xicUrYPqmyq7pq1XwMmTXFdoQPFMGNVOJBjQH7pCxQ..&type=2&query=%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD %E6%9C%BA%E5%99%A8%E4%BA%BA",
+          "source": "微信搜索:具身智能 机器人",
+          "original_collector": "wechat-articles"
+        },
+        {
+          "title": "说好的具身智能,怎变成了智能家居?这只机器人第一股首份年报秀\"黑色幽默\"",
+          "summary": "分析卧安机器人上市首份年报，指出其具身智能概念与业务实质的落差",
+          "link": "https://weixin.sogou.com/link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgS6oxJzOXxTgtJqpE991RuhK1H4bTTR2HlVqXa8Fplpd9Lc38D9HHEwaFx8qg81oPGOk5vm8390GE-xPwKenL6X_aJYtfl-XsMYyqmCJlH6g2YUxECwmjSn2tNK7CWr_0QPC5-W7lzrHGoKJT9U1n_-pJfMFMqTZpSEYidIpqONZbT1Zm5IP96Omj02JjEtxKlpWm4KlhHHSHmnGYHQyxhoNQL0Hr9Gyd3Q..&type=2&query=%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD %E6%9C%BA%E5%99%A8%E4%BA%BA",
+          "source": "微信搜索:具身智能 机器人",
+          "original_collector": "wechat-articles"
+        },
+        {
+          "title": "具身智能机器人将有\"身份证\"!杭州出台全国首部专项法规",
+          "summary": "杭州出台全国首部具身智能机器人产业专项法规，强化产业合规管理",
+          "link": "https://weixin.sogou.com/link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgS6oxJzOXxTgtJqpE991RuhK1H4bTTR2HlVqXa8Fplpd9ex9Xtii7WR4bBlodSbM2P50ZHV9e17fvy45sxYlyK9s_jftJYgQPs-qk-PSonEuPsdND5ghasErFXGjZ0fmSi823-9D7cUKzw0uXPBo_C8WouxjqQgT4wacIFdrHVHmF0scUdxxx_7xA8kIKpy6oQEybqyN3RgU7JISUzTS16rMHpHkoPMgL3A..&type=2&query=%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD %E6%9C%BA%E5%99%A8%E4%BA%BA",
+          "source": "微信搜索:具身智能 机器人",
+          "original_collector": "wechat-articles"
+        }
+      ]
+    }
+  }
+}

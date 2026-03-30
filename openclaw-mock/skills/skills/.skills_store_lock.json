@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "arxiv-osiris": {
+      "name": "Arxiv Osiris",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=arxiv-osiris",
+      "source": "skillhub",
+      "version": "1.0.4"
+    }
+  }
+}

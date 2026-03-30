@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "deviceId": "REDACTED_DEVICE_ID",
+  "tokens": {
+    "operator": {
+      "token": "REDACTED_TOKEN",
+      "role": "operator",
+      "scopes": [
+        "operator.admin",
+        "operator.read",
+        "operator.write"
+      ],
+      "updatedAtMs": 1774339842540
+    }
+  }
+}

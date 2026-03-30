@@ -1,0 +1,61 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 40px;
+  min-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  animation: scaleIn 0.25s ease-out;
+}
+
+.modal-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.modal-message {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.modal-btn {
+  width: 120px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-btn:hover {
+  background: #3570e0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

@@ -1,0 +1,146 @@
+{
+  "collector_id": "arxiv-papers",
+  "collected_at": "2026-03-25T00:00:14.711Z",
+  "items": [
+    {
+      "title": "UniMotion: A Unified Framework for Motion-Text-Vision Understanding and Generation",
+      "link": "http://arxiv.org/abs/2603.22282v1",
+      "summary": "We present UniMotion, to our knowledge the first unified framework for simultaneous understanding and generation of human motion, natural language, an…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.708Z"
+    },
+    {
+      "title": "3D-Layout-R1: Structured Reasoning for Language-Instructed Spatial Editing",
+      "link": "http://arxiv.org/abs/2603.22279v1",
+      "summary": "Large Language Models (LLMs) and Vision Language Models (VLMs) have shown impressive reasoning abilities, yet they struggle with spatial understanding…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.708Z"
+    },
+    {
+      "title": "Decoupling Exploration and Policy Optimization: Uncertainty Guided Tree Search for Hard Exploration",
+      "link": "http://arxiv.org/abs/2603.22273v1",
+      "summary": "The process of discovery requires active exploration -- the act of collecting new and informative data. However, efficient autonomous exploration rema…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "TiCo: Time-Controllable Training for Spoken Dialogue Models",
+      "link": "http://arxiv.org/abs/2603.22267v1",
+      "summary": "We propose TiCo, a simple post-training method for enabling spoken dialogue models (SDMs) to follow time-constrained instructions and generate respons…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Greater accessibility can amplify discrimination in generative AI",
+      "link": "http://arxiv.org/abs/2603.22260v1",
+      "summary": "Hundreds of millions of people rely on large language models (LLMs) for education, work, and even healthcare. Yet these models are known to reproduce …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "EgoGroups: A Benchmark For Detecting Social Groups of People in the Wild",
+      "link": "http://arxiv.org/abs/2603.22249v1",
+      "summary": "Social group detection, or the identification of humans involved in reciprocal interpersonal interactions (e.g., family members, friends, and customer…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Evaluating the Reliability and Fidelity of Automated Judgment Systems of Large Language Models",
+      "link": "http://arxiv.org/abs/2603.22214v1",
+      "summary": "A Large Language Model (LLM) as judge evaluates the quality of victim Machine Learning (ML) models, specifically LLMs, by analyzing their outputs. An …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "SPA: A Simple but Tough-to-Beat Baseline for Knowledge Injection",
+      "link": "http://arxiv.org/abs/2603.22213v1",
+      "summary": "While large language models (LLMs) are pretrained on massive amounts of data, their knowledge coverage remains incomplete in specialized, data-scarce …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Omni-WorldBench: Towards a Comprehensive Interaction-Centric Evaluation for World Models",
+      "link": "http://arxiv.org/abs/2603.22212v1",
+      "summary": "Video--based world models have emerged along two dominant paradigms: video generation and 3D reconstruction. However, existing evaluation benchmarks e…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Chimera: Latency- and Performance-Aware Multi-agent Serving for Heterogeneous LLMs",
+      "link": "http://arxiv.org/abs/2603.22206v1",
+      "summary": "Multi-agent applications often execute complex tasks as multi-stage workflows, where each stage is an LLM call whose output becomes part of context fo…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Enhancing Document-Level Machine Translation via Filtered Synthetic Corpora and Two-Stage LLM Adaptation",
+      "link": "http://arxiv.org/abs/2603.22186v1",
+      "summary": "In Machine Translation, Large Language Models (LLMs) have generally underperformed compared to conventional encoder-decoder systems and thus see limit…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Revisiting Quantum Code Generation: Where Should Domain Knowledge Live?",
+      "link": "http://arxiv.org/abs/2603.22184v1",
+      "summary": "Recent advances in large language models (LLMs) have enabled the automation of an increasing number of programming tasks, including code generation fo…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "MARCUS: An agentic, multimodal vision-language model for cardiac diagnosis and management",
+      "link": "http://arxiv.org/abs/2603.22179v1",
+      "summary": "Cardiovascular disease remains the leading cause of global mortality, with progress hindered by human interpretation of complex cardiac tests. Current…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.709Z"
+    },
+    {
+      "title": "Human-Inspired Pavlovian and Instrumental Learning for Autonomous Agent Navigation",
+      "link": "http://arxiv.org/abs/2603.22170v1",
+      "summary": "Autonomous agents operating in uncertain environments must balance fast responses with goal-directed planning. Classical MF RL often converges slowly …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.710Z"
+    },
+    {
+      "title": "Causal Evidence that Language Models use Confidence to Drive Behavior",
+      "link": "http://arxiv.org/abs/2603.22161v1",
+      "summary": "Metacognition -- the ability to assess one's own cognitive performance -- is documented across species, with internal confidence estimates serving as …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.710Z"
+    },
+    {
+      "title": "Multimodal Survival Analysis with Locally Deployable Large Language Models",
+      "link": "http://arxiv.org/abs/2603.22158v1",
+      "summary": "We study multimodal survival analysis integrating clinical text, tabular covariates, and genomic profiles using locally deployable large language mode…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.710Z"
+    },
+    {
+      "title": "OpenEarth-Agent: From Tool Calling to Tool Creation for Open-Environment Earth Observation",
+      "link": "http://arxiv.org/abs/2603.22148v1",
+      "summary": "Earth Observation (EO) is essential for perceiving dynamic land surface changes, yet deploying autonomous EO in open environments is hindered by the i…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.710Z"
+    },
+    {
+      "title": "Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding",
+      "link": "http://arxiv.org/abs/2603.22121v1",
+      "summary": "Text-driven video moment retrieval (VMR) remains challenging due to limited capture of hidden temporal dynamics in untrimmed videos, leading to imprec…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.711Z"
+    },
+    {
+      "title": "StreamingClaw Technical Report",
+      "link": "http://arxiv.org/abs/2603.22120v1",
+      "summary": "Applications such as embodied intelligence rely on a real-time perception-decision-action closed loop, posing stringent challenges for streaming video…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.711Z"
+    },
+    {
+      "title": "Programming Manufacturing Robots with Imperfect AI: LLMs as Tuning Experts for FDM Print Configuration Selection",
+      "link": "http://arxiv.org/abs/2603.22118v1",
+      "summary": "We use fused deposition modeling (FDM) 3D printing as a case study of how manufacturing robots can use imperfect AI to acquire process expertise. In F…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-25T00:00:14.711Z"
+    }
+  ]
+}

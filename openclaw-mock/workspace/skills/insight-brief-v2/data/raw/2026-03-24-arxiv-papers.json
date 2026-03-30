@@ -1,0 +1,146 @@
+{
+  "collector_id": "arxiv-papers",
+  "collected_at": "2026-03-24T00:00:10.126Z",
+  "items": [
+    {
+      "title": "VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking",
+      "link": "http://arxiv.org/abs/2603.20185v1",
+      "summary": "Video agentic models have advanced challenging video-language tasks. However, most agentic approaches still heavily rely on greedy parsing over densel…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "IndoorR2X: Indoor Robot-to-Everything Coordination with LLM-Driven Planning",
+      "link": "http://arxiv.org/abs/2603.20182v1",
+      "summary": "Although robot-to-robot (R2R) communication improves indoor scene understanding beyond what a single robot can achieve, R2R alone cannot overcome part…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Improving Generalization on Cybersecurity Tasks with Multi-Modal Contrastive Learning",
+      "link": "http://arxiv.org/abs/2603.20181v1",
+      "summary": "The use of ML in cybersecurity has long been impaired by generalization issues: Models that work well in controlled scenarios fail to maintain perform…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "AI Agents Can Already Autonomously Perform Experimental High Energy Physics",
+      "link": "http://arxiv.org/abs/2603.20179v1",
+      "summary": "Large language model-based AI agents are now able to autonomously execute substantial portions of a high energy physics (HEP) analysis pipeline with m…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Measuring Faithfulness Depends on How You Measure: Classifier Sensitivity in LLM Chain-of-Thought Evaluation",
+      "link": "http://arxiv.org/abs/2603.20172v1",
+      "summary": "Recent work on chain-of-thought (CoT) faithfulness reports single aggregate numbers (e.g., DeepSeek-R1 acknowledges hints 39% of the time), implying t…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Learning Dynamic Belief Graphs for Theory-of-mind Reasoning",
+      "link": "http://arxiv.org/abs/2603.20170v1",
+      "summary": "Theory of Mind (ToM) reasoning with Large Language Models (LLMs) requires inferring how people's implicit, evolving beliefs shape what they seek and h…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Semantic Token Clustering for Efficient Uncertainty Quantification in Large Language Models",
+      "link": "http://arxiv.org/abs/2603.20161v1",
+      "summary": "Large language models (LLMs) have demonstrated remarkable capabilities across diverse tasks. However, the truthfulness of their outputs is not guarant…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Design-OS: A Specification-Driven Framework for Engineering System Design with a Control-Systems Design Case",
+      "link": "http://arxiv.org/abs/2603.20151v1",
+      "summary": "Engineering system design -- whether mechatronic, control, or embedded -- often proceeds in an ad hoc manner, with requirements left implicit and trac…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Can Large Multimodal Models Inspect Buildings? A Hierarchical Benchmark for Structural Pathology Reasoning",
+      "link": "http://arxiv.org/abs/2603.20148v1",
+      "summary": "Automated building facade inspection is a critical component of urban resilience and smart city maintenance. Traditionally, this field has relied on s…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Synergistic Perception and Generative Recomposition: A Multi-Agent Orchestration for Expert-Level Building Inspection",
+      "link": "http://arxiv.org/abs/2603.20143v1",
+      "summary": "Building facade defect inspection is fundamental to structural health monitoring and sustainable urban maintenance, yet it remains a formidable challe…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Reasoning Gets Harder for LLMs Inside A Dialogue",
+      "link": "http://arxiv.org/abs/2603.20133v1",
+      "summary": "Large Language Models (LLMs) achieve strong performance on many reasoning benchmarks, yet these evaluations typically focus on isolated tasks that dif…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.125Z"
+    },
+    {
+      "title": "Revisiting Gene Ontology Knowledge Discovery with Hierarchical Feature Selection and Virtual Study Group of AI Agents",
+      "link": "http://arxiv.org/abs/2603.20132v1",
+      "summary": "Large language models have achieved great success in multiple challenging tasks, and their capacity can be further boosted by the emerging agentic AI …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "An Agentic Multi-Agent Architecture for Cybersecurity Risk Management",
+      "link": "http://arxiv.org/abs/2603.20131v1",
+      "summary": "Getting a real cybersecurity risk assessment for a small organization is expensive -- a NIST CSF-aligned engagement runs $15,000 on the low end, takes…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "Evolving Jailbreaks: Automated Multi-Objective Long-Tail Attacks on Large Language Models",
+      "link": "http://arxiv.org/abs/2603.20122v1",
+      "summary": "Large Language Models (LLMs) have been widely deployed, especially through free Web-based applications that expose them to diverse user-generated inpu…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "Current LLMs still cannot 'talk much' about grammar modules: Evidence from syntax",
+      "link": "http://arxiv.org/abs/2603.20114v1",
+      "summary": "We aim to examine the extent to which Large Language Models (LLMs) can 'talk much' about grammar modules, providing evidence from syntax core properti…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "The $\\mathbf{Y}$-Combinator for LLMs: Solving Long-Context Rot with $λ$-Calculus",
+      "link": "http://arxiv.org/abs/2603.20105v1",
+      "summary": "LLMs are increasingly used as general-purpose reasoners, but long inputs remain bottlenecked by a fixed context window. Recursive Language Models (RLM…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "Pitfalls in Evaluating Interpretability Agents",
+      "link": "http://arxiv.org/abs/2603.20101v1",
+      "summary": "Automated interpretability systems aim to reduce the need for human labor and scale analysis to increasingly large models and diverse tasks. Recent ef…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "LLM-Enhanced Semantic Data Integration of Electronic Component Qualifications in the Aerospace Domain",
+      "link": "http://arxiv.org/abs/2603.20094v1",
+      "summary": "Large manufacturing companies face challenges in information retrieval due to data silos maintained by different departments, leading to inconsistenci…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "Beyond Accuracy: Towards a Robust Evaluation Methodology for AI Systems for Language Education",
+      "link": "http://arxiv.org/abs/2603.20088v1",
+      "summary": "The rapid adoption of large language models in AI-powered language education has created an urgent need for evaluations that assess pedagogical effect…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    },
+    {
+      "title": "Agentic Harness for Real-World Compilers",
+      "link": "http://arxiv.org/abs/2603.20075v1",
+      "summary": "Compilers are critical to modern computing, yet fixing compiler bugs is difficult. While recent large language model (LLM) advancements enable automat…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-24T00:00:10.126Z"
+    }
+  ]
+}

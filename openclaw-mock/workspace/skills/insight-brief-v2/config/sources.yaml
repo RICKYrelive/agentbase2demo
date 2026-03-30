@@ -1,0 +1,157 @@
+collectors:
+  - id: ai-rss
+    type: rss
+    name: AI 新闻 RSS
+    enabled: true
+    config:
+      feeds:
+        - url: http://localhost:1200/zhihu/hot
+          name: 知乎热榜
+        - url: http://localhost:1200/zhihu/daily
+          name: 知乎日报
+        - url: http://localhost:1200/36kr/hot-list
+          name: 36氪热榜
+        - url: http://localhost:1200/36kr/newsflashes
+          name: 36氪快讯
+        - url: http://localhost:1200/huxiu/article
+          name: 虎嗅文章
+        - url: http://localhost:1200/ifanr/index
+          name: 爱范儿
+        - url: http://localhost:1200/sspai/matrix
+          name: 少数派
+        - url: http://localhost:1200/ithome/ranking/24h
+          name: IT之家
+        - url: http://localhost:1200/juejin/trending/ios/monthly
+          name: 掘金趋势
+        - url: http://localhost:1200/bilibili/popular/all
+          name: B站热门
+      keywords:
+        - AI
+        - GPT
+        - OpenAI
+        - DeepSeek
+        - Claude
+        - 大模型
+        - LLM
+        - AGI
+        - Agent
+        - 智能体
+        - 芯片
+        - GPU
+        - 英伟达
+        - 机器人
+        - 自动驾驶
+        - 字节跳动
+        - 豆包
+        - 通义
+        - 智谱
+        - Sora
+        - RAG
+        - 多模态
+        - 具身智能
+        - 算力
+        - 云计算
+        - Copilot
+        - Kimi
+        - AIGC
+        - 生成式
+      max_items: 50
+
+  - id: general-rss
+    type: rss
+    name: 综合科技 RSS
+    enabled: true
+    config:
+      feeds:
+        # AIbase 的 aihub/daily 经常 503，暂时注释
+        # - url: http://localhost:1200/aihub/daily
+        #   name: AIbase
+        # 量子位：如果 RSSHub 支持请取消注释
+        # - url: http://localhost:1200/quantumai/daily
+        #   name: 量子位
+        - url: http://localhost:1200/ithome/news
+          name: IT之家资讯
+        - url: https://www.techcrunch.com/feed/
+          name: TechCrunch
+        - url: https://www.wired.com/feed/rss
+          name: Wired
+        # Simon Willison atom feed URL 不稳定，暂时注释
+        # - url: https://simonwillison.net/atom/feed/
+        #   name: Simon Willison
+      keywords: []
+      max_items: 30
+
+  - id: arxiv-papers
+    type: arxiv
+    name: 学术论文
+    enabled: true
+    config:
+      query: "LLM agent"
+      max_results: 20
+
+  - id: competitors
+    type: web-search
+    name: 竞品动态
+    enabled: true
+    config:
+      targets:
+        - name: 阿里云
+          keywords: "阿里云 通义千问 百炼 AI Agent"
+        - name: 字节跳动
+          keywords: "字节跳动 豆包 Coze AI Agent"
+        - name: 腾讯云
+          keywords: "腾讯云 混元 AI Agent"
+        - name: 百度
+          keywords: "百度 文心 千帆 AI Agent"
+        - name: 讯飞
+          keywords: "讯飞 星火 AI Agent"
+      max_per_target: 5
+
+  - id: customer-cases
+    type: web-search
+    name: 客户案例与实践
+    enabled: true
+    config:
+      queries:
+        - "AI Agent 落地案例 2026"
+        - "大模型 企业应用案例"
+        - "RAG 企业实践案例"
+      max_results: 10
+
+  - id: 36kr-direct
+    type: 36kr-hotlist
+    name: 36氪热榜（直连API）
+    enabled: true
+    config:
+      max_days: 3
+
+  # 微博热搜通过 RSSHub 一直 503，已改用 SearXNG web-search
+  # weibo-collector.mjs 已弃用，保留文件仅供参考
+  - id: social-hot
+    type: web-search
+    name: 社交热点
+    enabled: true
+    config:
+      queries:
+        - "微博 AI 热搜 人工智能"
+        - "微博 大模型 热点"
+      max_results: 10
+
+  - id: wechat-articles
+    type: wechat
+    name: 微信公众号文章
+    enabled: true
+    config:
+      # 模式1：特定公众号的最新文章
+      accounts:
+        - "机器之心"
+        - "量子位"
+        - "36氪"
+        - "新智元"
+      max_per_account: 3
+      # 模式2：关键词搜索公众号文章
+      keywords:
+        - "AI Agent 最新进展"
+        - "大模型 行业动态"
+        - "具身智能 机器人"
+      max_per_keyword: 5

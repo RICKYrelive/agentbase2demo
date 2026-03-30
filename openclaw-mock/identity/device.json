@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "deviceId": "REDACTED_DEVICE_ID",
+  "publicKeyPem": "REDACTED_PUBLIC_KEY_PEM",
+  "privateKeyPem": "REDACTED_PRIVATE_KEY_PEM",
+  "createdAtMs": 1773062208975
+}

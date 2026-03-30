@@ -1,0 +1,146 @@
+{
+  "collector_id": "arxiv-papers",
+  "collected_at": "2026-03-22T00:00:05.147Z",
+  "items": [
+    {
+      "title": "NavTrust: Benchmarking Trustworthiness for Embodied Navigation",
+      "link": "http://arxiv.org/abs/2603.19229v1",
+      "summary": "There are two major categories of embodied navigation: Vision-Language Navigation (VLN), where agents navigate by following natural language instructi…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "FinTradeBench: A Financial Reasoning Benchmark for LLMs",
+      "link": "http://arxiv.org/abs/2603.19225v1",
+      "summary": "Real-world financial decision-making is a challenging problem that requires reasoning over heterogeneous signals, including company fundamentals deriv…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "F2LLM-v2: Inclusive, Performant, and Efficient Embeddings for a Multilingual World",
+      "link": "http://arxiv.org/abs/2603.19223v1",
+      "summary": "We present F2LLM-v2, a new family of general-purpose, multilingual embedding models in 8 distinct sizes ranging from 80M to 14B. Trained on a newly cu…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "Nemotron-Cascade 2: Post-Training LLMs with Cascade RL and Multi-Domain On-Policy Distillation",
+      "link": "http://arxiv.org/abs/2603.19220v1",
+      "summary": "We introduce Nemotron-Cascade 2, an open 30B MoE model with 3B activated parameters that delivers best-in-class reasoning and strong agentic capabilit…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "LVOmniBench: Pioneering Long Audio-Video Understanding Evaluation for Omnimodal LLMs",
+      "link": "http://arxiv.org/abs/2603.19217v1",
+      "summary": "Recent advancements in omnimodal large language models (OmniLLMs) have significantly improved the comprehension of audio and video inputs. However, cu…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "How Auditory Knowledge in LLM Backbones Shapes Audio Language Models: A Holistic Evaluation",
+      "link": "http://arxiv.org/abs/2603.19195v1",
+      "summary": "Large language models (LLMs) have been widely used as knowledge backbones of Large Audio Language Models (LALMs), yet how much auditory knowledge they…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "OS-Themis: A Scalable Critic Framework for Generalist GUI Rewards",
+      "link": "http://arxiv.org/abs/2603.19191v1",
+      "summary": "Reinforcement Learning (RL) has the potential to improve the robustness of GUI agents in stochastic environments, yet training is highly sensitive to …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "Markov Potential Game and Multi-Agent Reinforcement Learning for Autonomous Driving",
+      "link": "http://arxiv.org/abs/2603.19188v1",
+      "summary": "Autonomous driving (AD) requires safe and reliable decision-making among interacting agents, e.g., vehicles, bicycles, and pedestrians. Multi-agent re…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "Box Maze: A Process-Control Architecture for Reliable LLM Reasoning",
+      "link": "http://arxiv.org/abs/2603.19182v1",
+      "summary": "Large language models (LLMs) demonstrate strong generative capabilities but remain vulnerable to hallucination and unreliable reasoning under adversar…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "SOL-ExecBench: Speed-of-Light Benchmarking for Real-World GPU Kernels Against Hardware Limits",
+      "link": "http://arxiv.org/abs/2603.19173v1",
+      "summary": "As agentic AI systems become increasingly capable of generating and optimizing GPU kernels, progress is constrained by benchmarks that reward speedup …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "ADMM-Based Distributed MPC with Control Barrier Functions for Safe Multi-Robot Quadrupedal Locomotion",
+      "link": "http://arxiv.org/abs/2603.19170v1",
+      "summary": "This paper proposes a fully decentralized model predictive control (MPC) framework with control barrier function (CBF) constraints for safety-critical…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.146Z"
+    },
+    {
+      "title": "Evaluating Counterfactual Strategic Reasoning in Large Language Models",
+      "link": "http://arxiv.org/abs/2603.19167v1",
+      "summary": "We evaluate Large Language Models (LLMs) in repeated game-theoretic settings to assess whether strategic performance reflects genuine reasoning or rel…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "Meanings and Measurements: Multi-Agent Probabilistic Grounding for Vision-Language Navigation",
+      "link": "http://arxiv.org/abs/2603.19166v1",
+      "summary": "Robots collaborating with humans must convert natural language goals into actionable, physically grounded decisions. For example, executing a command …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "cuGenOpt: A GPU-Accelerated General-Purpose Metaheuristic Framework for Combinatorial Optimization",
+      "link": "http://arxiv.org/abs/2603.19163v1",
+      "summary": "Combinatorial optimization problems arise in logistics, scheduling, and resource allocation, yet existing approaches face a fundamental trade-off amon…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "ADAPT: Attention Driven Adaptive Prompt Scheduling and InTerpolating Orthogonal Complements for Rare Concepts Generation",
+      "link": "http://arxiv.org/abs/2603.19157v1",
+      "summary": "Generating rare compositional concepts in text-to-image synthesis remains a challenge for diffusion models, particularly for attributes that are uncom…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "UGID: Unified Graph Isomorphism for Debiasing Large Language Models",
+      "link": "http://arxiv.org/abs/2603.19144v1",
+      "summary": "Large language models (LLMs) exhibit pronounced social biases. Output-level or data-optimization--based debiasing methods cannot fully resolve these b…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "Implicit Patterns in LLM-Based Binary Analysis",
+      "link": "http://arxiv.org/abs/2603.19138v1",
+      "summary": "Binary vulnerability analysis is increasingly performed by LLM-based agents in an iterative, multi-pass manner, with the model as the core decision-ma…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "GSMem: 3D Gaussian Splatting as Persistent Spatial Memory for Zero-Shot Embodied Exploration and Reasoning",
+      "link": "http://arxiv.org/abs/2603.19137v1",
+      "summary": "Effective embodied exploration requires agents to accumulate and retain spatial knowledge over time. However, existing scene representations, such as …",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "A Pipelined Collaborative Speculative Decoding Framework for Efficient Edge-Cloud LLM Inference",
+      "link": "http://arxiv.org/abs/2603.19133v1",
+      "summary": "Recent advancements and widespread adoption of Large Language Models (LLMs) in both industry and academia have catalyzed significant demand for LLM se…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    },
+    {
+      "title": "From Inference Efficiency to Embodied Efficiency: Revisiting Efficiency Metrics for Vision-Language-Action Models",
+      "link": "http://arxiv.org/abs/2603.19131v1",
+      "summary": "Vision-Language-Action (VLA) models have recently enabled embodied agents to perform increasingly complex tasks by jointly reasoning over visual, ling…",
+      "source_name": "arXiv",
+      "collected_at": "2026-03-22T00:00:05.147Z"
+    }
+  ]
+}

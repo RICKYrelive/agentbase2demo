@@ -1,0 +1,216 @@
+{
+  "collector_id": "general-rss",
+  "collected_at": "2026-03-25T00:00:03.030Z",
+  "items": [
+    {
+      "title": "OpenAI’s Sora was the creepiest app on your phone — now it’s shutting down",
+      "link": "https://techcrunch.com/2026/03/24/openais-sora-was-the-creepiest-app-on-your-phone-now-its-shutting-down/",
+      "summary": "Though the underlying Sora 2 video- and audio-generation model is scarily impressive, there was not sustained interest in an AI-only social feed.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Accel, Prosus pick six ‘off-the-map’ startups for inaugural India cohort",
+      "link": "https://techcrunch.com/2026/03/24/accel-prosus-pick-six-off-the-map-startups-for-inaugural-india-cohort-atoms/",
+      "summary": "The six startups were selected from over 2,000 applications and will receive $500,000 to $2 million each.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Kentucky woman rejects $26M offer to turn her farm into a data center",
+      "link": "https://techcrunch.com/2026/03/24/kentucky-woman-rejects-26-million-offer-to-turn-her-farm-into-a-data-center/",
+      "summary": "A \"major artificial intelligence company\" reportedly offered a Kentucky family $26 million to build a data center on their farm.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Anthropic hands Claude Code more control, but keeps it on a leash",
+      "link": "https://techcrunch.com/2026/03/24/anthropic-hands-claude-code-more-control-but-keeps-it-on-a-leash/",
+      "summary": "Anthropic’s new auto mode for Claude Code lets AI execute tasks with fewer approvals, reflecting a broader shift toward more autonomous tools that bal…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Spotify tests new tool to stop AI slop from being attributed to real artists",
+      "link": "https://techcrunch.com/2026/03/24/spotify-tests-new-tool-to-stop-ai-slop-from-being-attributed-to-real-artists/",
+      "summary": "The idea behind the new tool is to give artists more control over which tracks are associated with their name on Spotify.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Databricks bought two startups to underpin its new AI security product",
+      "link": "https://techcrunch.com/2026/03/24/databricks-buys-two-startups-lakewatch-antimatter-siftd-ai-security/",
+      "summary": "With an overflowing war chest from its recent $5 billion raise, Databricks is buying startups and looking for more. It acquired Antimatter and SiftD.a…",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Crusoe makes big battery buys for its data centers",
+      "link": "https://techcrunch.com/2026/03/24/crusoe-makes-big-battery-buys-for-its-data-centers/",
+      "summary": "Form Energy and Redwood Materials both received orders from the data center developer.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Arm is releasing the first in-house chip in its 35-year history",
+      "link": "https://techcrunch.com/2026/03/24/arm-is-releasing-its-first-in-house-chip-in-its-35-year-history/",
+      "summary": "Arm is producing its own CPU for the first time. It developed the CPU with Meta, which is also the chip's first customer.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "OpenAI’s plans to make ChatGPT more like Amazon aren’t going so well",
+      "link": "https://techcrunch.com/2026/03/24/openais-plans-to-make-chatgpt-more-like-amazon-arent-going-so-well/",
+      "summary": "OpenAI says it's moving away from Instant Checkout, which allowed users to buy items directly through the ChatGPT interface.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Google TV’s new Gemini features keep fans updated on sports teams and more",
+      "link": "https://techcrunch.com/2026/03/24/google-tv-new-gemini-features-keep-fans-updated-on-sports-teams-deep-dives-visual-answers/",
+      "summary": "Three Gemini-powered features are coming to your Google TV. This includes visual responses, deep dives, and sports briefs.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "OpenAI adds open source tools to help developers build for teen safety",
+      "link": "https://techcrunch.com/2026/03/24/openai-adds-open-source-tools-to-help-developers-build-for-teen-safety/",
+      "summary": "Rather than working from scratch to figure out how to make AI safer for teens, developers can use these policies to fortify what they build.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Talat’s AI meeting notes stay on your machine, not in the cloud",
+      "link": "https://techcrunch.com/2026/03/24/talats-ai-meeting-notes-stay-on-your-machine-not-in-the-cloud/",
+      "summary": "The subscription-free AI meeting notes app is a local-first twist on notetaking tools like Granola.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "BKR Capital raises $14.5M (so far) to  invest in Black founders",
+      "link": "https://techcrunch.com/2026/03/24/bkr-capital-raises-14-5m-so-far-to-invest-in-black-founders/",
+      "summary": "BKR Capital announced Monday that its Fund II closed $20 million Canadian toward its $50 million target.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Crunchyroll confirms data breach after hacker claims unauthorized access",
+      "link": "https://techcrunch.com/2026/03/24/crunchyroll-confirms-data-breach-after-hacker-claims-unauthorized-access/",
+      "summary": "Crunchyroll said it continues to investigate the data breach involving its users' personal information.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Doss raises $55M for AI inventory management that plugs into ERP",
+      "link": "https://techcrunch.com/2026/03/24/doss-raises-55m-for-ai-inventory-management-that-plugs-into-erp/",
+      "summary": "Doss's AI-powered inventory management system integrates with existing ERP systems. The Series B round was co-led by Madrona and Premji Invest.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Apple Music partners with Ticketmaster to power its concert discovery feature",
+      "link": "https://techcrunch.com/2026/03/24/apple-music-partners-with-ticketmaster-to-power-its-concert-discovery-feature/",
+      "summary": "Apple Music teamed up with Ticketmaster to power its Concert Discovery feature, which recommends live music events based on users' listening habits.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Meet the former Apple designer building a new AI interface at Hark",
+      "link": "https://techcrunch.com/2026/03/24/meet-the-former-apple-designer-building-a-new-ai-interface-at-hark/",
+      "summary": "The company said it would design models, hardware, and interfaces in tandem to deliver a \"seamless end-to-end personal intelligence product.\"",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Epic Games cuts 1,000 jobs, says Fortnite engagement is down",
+      "link": "https://techcrunch.com/2026/03/24/epic-games-cuts-1000-jobs-says-fortnite-engagement-is-down/",
+      "summary": "Epic Games also increased the price of V-Bucks, the Fortnite in-game currency.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Flighty’s new update gives you real-time alerts about airport disturbances",
+      "link": "https://techcrunch.com/2026/03/24/flightys-new-update-gives-you-real-time-alerts-about-airport-disturbances/",
+      "summary": "Flighty's new feature will give users real-time updates about why operations at an airport are disrupted.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Ads are coming to Apple Maps, as Apple expands its business offerings",
+      "link": "https://techcrunch.com/2026/03/24/apple-maps-ads-apple-business/",
+      "summary": "Apple Maps will launch ads this summer in the U.S. and Canada. Plus, a new suite of Apple Business offerings arrives April 14.",
+      "source_name": "TechCrunch",
+      "collected_at": "2026-03-25T00:00:02.470Z"
+    },
+    {
+      "title": "Pentagon’s ‘Attempt to Cripple’ Anthropic Is Troubling, Judge Says",
+      "link": "https://www.wired.com/story/pentagons-attempt-to-cripple-anthropic-is-troublesome-judge-says/",
+      "summary": "During a hearing Tuesday, a district court judge questioned the Department of Defense’s motivations for labeling the Claude AI developer a supply-chai…",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "What You Need to Know About the Foreign-Made Router Ban in the US",
+      "link": "https://www.wired.com/story/us-government-foreign-made-router-ban-explained/",
+      "summary": "The FCC just banned the sale of new consumer-grade Wi-Fi routers manufactured outside the US. Here’s what it means for you.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Our Favorite Turntable Is $51 Off Before Record Store Day",
+      "link": "https://www.wired.com/story/atlp120x-deal-326/",
+      "summary": "Audio-Technica is a leading name in home and professional audio, and the AT-LP120XUSB is a great turntable for most listeners.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Arm Is Now Making Its Own Chips",
+      "link": "https://www.wired.com/story/chip-design-firm-arm-is-making-its-own-ai-cpu/",
+      "summary": "The chip design firm says Meta, OpenAI, Cerebras, and Cloudflare are among the first customers of its new artificial intelligence hardware.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Clear Drop Soft Plastic Compactor Review: Eco Experiment",
+      "link": "https://www.wired.com/review/clear-drop-soft-plastic-compactor/",
+      "summary": "Clear Drop’s Soft Plastic Compactor is a unique household recycling solution that’s fun to use, but who is it for?",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "How to Use Apple’s Live Translation on Your AirPods",
+      "link": "https://www.wired.com/story/apple-live-translation-airpods/",
+      "summary": "If you have a recent Apple device, you can translate live conversations. It’s impressive, and the new AirPods Pro Max just joined the party.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Chris Hayes Has Some Advice for Keeping Up With the News",
+      "link": "https://www.wired.com/story/the-big-interview-podcast-chris-hayes/",
+      "summary": "The host of MS Now’s All In, knows how hard it is to stay current. But he also knows where you should focus your attention—and it starts with a sober …",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Best Premium Soundbars: Dolby Atmos, Hi-Res Audio, and More",
+      "link": "https://www.wired.com/gallery/best-premium-soundbars/",
+      "summary": "Soundbars just keep getting better, but some rise above the rest. These are the best high-end soundbars and wireless A/V speakers I’ve tried.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "‘Get Down! Get Down! They’re Gonna See Us!’: Six Months of Hiding From ICE",
+      "link": "https://www.wired.com/story/get-down-get-down-six-months-of-hiding-from-ice/",
+      "summary": "A family in Chicago has been terrified to leave their apartment. Agents could be anywhere.",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    },
+    {
+      "title": "Your Body Is Betraying Your Right to Privacy",
+      "link": "https://www.wired.com/story/book-excerpt-your-data-will-be-used-against-you-andrew-guthrie-ferguson/",
+      "summary": "Attachment to smart devices and biometric surveillance leaves Americans more vulnerable to police searches than ever. Left unchecked it will only get …",
+      "source_name": "Wired",
+      "collected_at": "2026-03-25T00:00:03.029Z"
+    }
+  ]
+}
