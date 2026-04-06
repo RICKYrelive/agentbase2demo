@@ -16,6 +16,10 @@ import Trace from './pages/Trace'
 import ClusterManage from './pages/ClusterManage'
 import SystemManagePage from './pages/SystemManagePage'
 import CreateAgentApp from './pages/CreateAgentApp'
+import HarnessAgentList from './pages/HarnessAgentList'
+import CreateHarnessAgent from './pages/CreateHarnessAgent'
+import HarnessAgentDetail from './pages/HarnessAgentDetail'
+import { HarnessAgentProvider } from './store/harnessAgentStore.jsx'
 
 import './App.css'
 
@@ -36,7 +40,8 @@ function AppLayout() {
   const currentPath = location.pathname.replace(/^\//, '') || 'overview'
 
   const handleNavClick = (key) => {
-    if (key.startsWith('agent-runtime/')) {
+    // Strip sub-paths so sidebar highlights the parent
+    if (key.startsWith('agent-runtime/') || key.startsWith('harness-agent/')) {
         navigate('/' + key.split('/')[0])
     } else {
         navigate('/' + key)
@@ -45,9 +50,14 @@ function AppLayout() {
 
   const handleAlert = () => setShowModal(true)
 
+  // Derive sidebar active key (strip sub-paths and id segments)
+  let activeNav = currentPath
+  if (activeNav.startsWith('harness-agent/')) activeNav = 'harness-agent'
+  if (activeNav.startsWith('agent-runtime/')) activeNav = 'agent-runtime'
+
   return (
     <div className="app-layout">
-      <Sidebar activeNav={currentPath} onNavClick={handleNavClick} />
+      <Sidebar activeNav={activeNav} onNavClick={handleNavClick} />
       <div className="app-main">
         <Routes>
           <Route path="/" element={<OverviewPage />} />
@@ -56,6 +66,9 @@ function AppLayout() {
           <Route path="/agent-dev" element={<AgentDev onAlert={handleAlert} />} />
           <Route path="/agent-runtime" element={<AgentRuntime onAlert={handleAlert} />} />
           <Route path="/agent-runtime/create" element={<CreateAgentApp />} />
+          <Route path="/harness-agent" element={<HarnessAgentList />} />
+          <Route path="/harness-agent/create" element={<CreateHarnessAgent />} />
+          <Route path="/harness-agent/:id" element={<HarnessAgentDetail />} />
           <Route path="/ai-database" element={<AIDatabase onAlert={handleAlert} />} />
           <Route path="/memory" element={<Memory onAlert={handleAlert} />} />
           <Route path="/ai-model-service" element={<AIModelService onAlert={handleAlert} />} />
@@ -79,9 +92,12 @@ function AppLayout() {
 function App() {
   return (
     <HashRouter>
-      <AppLayout />
+      <HarnessAgentProvider>
+        <AppLayout />
+      </HarnessAgentProvider>
     </HashRouter>
   )
 }
 
 export default App
+
