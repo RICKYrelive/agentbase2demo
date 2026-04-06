@@ -18,14 +18,14 @@
   white-space: nowrap;
 }
 
-.ha-type-badge {
+.ha-version-badge {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
-  background: #f0f0f0;
-  color: #555;
-  border: 1px solid #e0e0e0;
+  background: #f0f5ff;
+  color: #597ef7;
+  border: 1px solid #adc6ff;
 }
 
 .ha-desc-cell {
@@ -36,6 +36,23 @@
   white-space: nowrap;
 }
 
+/* Tags */
+.ha-tags-cell {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.ha-mini-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #e8e8e8;
+}
+
+/* Row actions */
 .ha-row-actions {
   display: flex;
   gap: 4px;
@@ -57,6 +74,7 @@
   color: var(--color-red);
 }
 
+/* Empty */
 .ha-empty {
   padding: 80px 0 !important;
 }
@@ -70,6 +88,254 @@
   font-size: 13px;
   color: var(--text-secondary);
   margin-top: 4px;
+}
+
+/* View toggle */
+.ha-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ha-view-toggle {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.view-btn {
+  background: var(--card-bg);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.view-btn.active {
+  background: var(--color-blue);
+  color: #fff;
+}
+.view-btn:not(.active):hover {
+  background: #f0f0f0;
+}
+
+/* Tag filter dropdown */
+.ha-tag-filter-wrap {
+  position: relative;
+}
+.ha-tag-dropdown {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 260px;
+  background: var(--card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  z-index: 100;
+  padding: 12px;
+}
+.ha-tag-dropdown-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.ha-tag-filter-search input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 5px 8px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  outline: none;
+}
+.ha-tag-filter-search input:focus {
+  border-color: var(--color-blue);
+}
+.ha-tag-options {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ha-tag-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 4px 0;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+.ha-tag-option:hover {
+  color: var(--color-blue);
+}
+.ha-tag-dropdown-footer {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+  text-align: right;
+}
+.ha-filter-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+/* Active tag chips */
+.ha-active-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 8px 0 4px;
+}
+.ha-active-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  background: #e6f4ff;
+  color: var(--color-blue);
+  border: 1px solid #91caff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ha-active-tag:hover {
+  background: #bae0ff;
+}
+
+/* ========== CARD VIEW ========== */
+.ha-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding-top: 4px;
+}
+.ha-empty-card-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 0;
+}
+.ha-agent-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.ha-agent-card:hover {
+  border-color: var(--color-blue);
+  box-shadow: 0 4px 16px rgba(64,128,255,0.1);
+  transform: translateY(-2px);
+}
+.ha-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.ha-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.ha-card-avatar-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.ha-card-status-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+.ha-card-info {
+  flex: 1;
+  min-width: 0;
+}
+.ha-card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ha-card-meta {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+.ha-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ha-card-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  min-height: 22px;
+}
+.ha-card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.ha-card-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ha-agent-card:hover .ha-card-actions {
+  opacity: 1;
+}
+.ha-card-actions button {
+  background: var(--card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+.ha-card-actions button:hover {
+  border-color: var(--color-blue);
+  background: #e6f4ff;
+}
+.ha-card-actions .ha-delete-btn:hover {
+  border-color: var(--color-red);
+  background: #fff2f0;
 }
 
 /* Toast */

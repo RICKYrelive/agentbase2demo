@@ -23,7 +23,7 @@
 /* Overview bar */
 .had-overview-bar {
   background: var(--card-bg);
-  padding: 20px 24px;
+  padding: 20px 24px 12px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .had-agent-title h2 {
   font-size: 20px;
@@ -48,11 +48,51 @@
   font-size: 13px;
   color: var(--text-secondary);
   flex-wrap: wrap;
+  margin-bottom: 8px;
 }
 .had-overview-actions {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
+}
+
+/* Tag editing */
+.had-tags-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.had-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #f5f5f5;
+  color: #555;
+  border: 1px solid #e8e8e8;
+}
+.had-tag-x {
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  margin-left: 2px;
+}
+.had-tag-x:hover { color: var(--color-red); }
+.had-tag-add input {
+  border: 1px dashed var(--color-border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  width: 80px;
+  outline: none;
+  background: transparent;
+}
+.had-tag-add input:focus {
+  border-color: var(--color-blue);
+  border-style: solid;
 }
 
 /* Tabs */
@@ -139,6 +179,74 @@
   cursor: not-allowed;
 }
 
+/* ========== Config sub-tabs ========== */
+.had-config-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.had-config-subtabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.had-config-subtab {
+  padding: 8px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--card-bg);
+  border-right: 1px solid var(--color-border);
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  user-select: none;
+}
+.had-config-subtab:last-child {
+  border-right: none;
+}
+.had-config-subtab:hover {
+  background: #f0f5ff;
+  color: var(--color-blue);
+}
+.had-config-subtab.active {
+  background: var(--color-blue);
+  color: #fff;
+  font-weight: 500;
+}
+
+.had-config-panel .had-section {
+  margin-bottom: 0;
+}
+.had-config-panel .form-row {
+  margin-bottom: 16px;
+}
+.had-config-panel .form-row > label {
+  width: 120px;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+.had-config-panel .form-row input[type="text"],
+.had-config-panel .form-row input[type="number"],
+.had-config-panel .form-row select,
+.had-config-panel .form-row textarea {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 14px;
+  outline: none;
+  background: var(--card-bg);
+}
+.had-config-panel .form-row input:focus,
+.had-config-panel .form-row select:focus,
+.had-config-panel .form-row textarea:focus {
+  border-color: var(--color-blue);
+}
+
 /* Config KV */
 .had-kv {
   display: flex;
@@ -160,42 +268,6 @@
   white-space: pre-wrap;
   font-family: monospace;
   font-size: 13px;
-}
-
-.had-config-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.had-config-view .had-section,
-.had-config-edit .had-section {
-  margin-bottom: 16px;
-}
-.had-config-edit .form-row {
-  margin-bottom: 16px;
-}
-.had-config-edit .form-row > label {
-  width: 120px;
-  flex-shrink: 0;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-.had-config-edit .form-row input[type="text"],
-.had-config-edit .form-row input[type="number"],
-.had-config-edit .form-row select,
-.had-config-edit .form-row textarea {
-  flex: 1;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 6px 10px;
-  font-size: 14px;
-  outline: none;
-  background: var(--card-bg);
-}
-.had-config-edit .form-row input:focus,
-.had-config-edit .form-row select:focus,
-.had-config-edit .form-row textarea:focus {
-  border-color: var(--color-blue);
 }
 
 .had-empty-hint {
@@ -250,85 +322,13 @@
   margin-top: 4px;
 }
 
-/* Experience cards */
-.had-exp-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.had-exp-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.had-exp-card:hover {
-  border-color: var(--color-blue);
-  box-shadow: 0 2px 12px rgba(64,128,255,0.1);
-  transform: translateY(-2px);
-}
-.had-exp-card-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-}
-.had-exp-card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-}
-.had-exp-card-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.had-test-result {
-  margin-top: 16px;
-}
-.had-test-result pre {
-  background: #fafafa;
-  padding: 16px;
-  border-radius: var(--radius);
-  font-size: 13px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  border: 1px solid var(--color-border);
-}
-
-/* Test modal */
-.had-test-modal {
-  background: var(--card-bg);
-  border-radius: 8px;
-  padding: 28px 32px;
-  width: 520px;
-  max-width: 90vw;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-}
-.had-test-modal h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-.had-test-input {
-  width: 100%;
-  height: 100px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  font-size: 14px;
-  resize: vertical;
-  outline: none;
-  margin-bottom: 16px;
-}
-.had-test-input:focus {
-  border-color: var(--color-blue);
-}
-.had-test-modal-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+/* Version badge - reuse across pages */
+.ha-version-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #f0f5ff;
+  color: #597ef7;
+  border: 1px solid #adc6ff;
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useHarnessAgents, HARNESS_TYPES, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
+import { useHarnessAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
+import TagSelect from '../components/TagSelect'
 import './CreateHarnessAgent.css'
 
 export default function CreateHarnessAgent() {
@@ -13,10 +14,10 @@ export default function CreateHarnessAgent() {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    harnessType: '',
+    version: '',
     owner: 'admin',
-    tags: '',
-    // harness config
+    tags: [],
+    // config
     endpoint: '',
     model: '',
     prompt: '',
@@ -27,7 +28,6 @@ export default function CreateHarnessAgent() {
     skills: [],
     memoryEnabled: false,
     memorySpace: '',
-    workspace: 'Demo项目',
     imType: '',
     imWebhookUrl: '',
     // resources
@@ -67,7 +67,7 @@ export default function CreateHarnessAgent() {
   const validate = () => {
     const errs = {}
     if (!form.name.trim()) errs.name = '请输入名称'
-    if (!form.harnessType) errs.harnessType = '请选择 Harness 类型'
+    if (!form.version) errs.version = '请选择版本'
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
@@ -82,9 +82,9 @@ export default function CreateHarnessAgent() {
       payload: {
         name: form.name.trim(),
         description: form.description,
-        harnessType: form.harnessType,
+        version: form.version,
         owner: form.owner,
-        tags: form.tags.split(/[,，\s]+/).filter(Boolean),
+        tags: form.tags,
         endpoint: form.endpoint,
         model: form.model,
         prompt: form.prompt,
@@ -94,7 +94,6 @@ export default function CreateHarnessAgent() {
         skills: form.skills,
         memoryEnabled: form.memoryEnabled,
         memorySpace: form.memorySpace,
-        workspace: form.workspace,
         imType: form.imType,
         imConfig: { webhookUrl: form.imWebhookUrl },
         k8sCluster: form.k8sCluster,
@@ -143,13 +142,13 @@ export default function CreateHarnessAgent() {
                 </div>
               </div>
               <div className="form-row">
-                <label>Harness 类型：<span className="required">*</span></label>
+                <label>版本：<span className="required">*</span></label>
                 <div style={{flex: 1}}>
-                  <select name="harnessType" value={form.harnessType} onChange={handleChange} style={{width:'100%'}}>
-                    <option value="">请选择</option>
-                    {HARNESS_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                  <select name="version" value={form.version} onChange={handleChange} style={{width:'100%'}}>
+                    <option value="">请选择版本</option>
+                    {VERSIONS.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
-                  {errors.harnessType && <div className="cha-field-error">{errors.harnessType}</div>}
+                  {errors.version && <div className="cha-field-error">{errors.version}</div>}
                 </div>
               </div>
               <div className="form-row">
@@ -158,16 +157,15 @@ export default function CreateHarnessAgent() {
               </div>
               <div className="form-row">
                 <label>标签：</label>
-                <input type="text" name="tags" value={form.tags} onChange={handleChange} placeholder="多个标签用逗号分隔" />
+                <div style={{flex: 1}}>
+                  <TagSelect value={form.tags} onChange={tags => setForm(prev => ({...prev, tags}))} />
+                </div>
               </div>
             </section>
 
-            {/* Harness 配置 */}
-            <section id="harness-config" className="form-section">
-              <h3 className="section-title">Harness 配置</h3>
-              <p className="section-desc">
-                当前 Harness 类型：<strong>{form.harnessType || '未选择'}</strong>
-              </p>
+            {/* Agent 配置 */}
+            <section id="agent-config" className="form-section">
+              <h3 className="section-title">Agent 配置</h3>
               <div className="form-row">
                 <label>运行入口：</label>
                 <input type="text" name="endpoint" value={form.endpoint} onChange={handleChange} placeholder="http://..." />
@@ -236,13 +234,6 @@ export default function CreateHarnessAgent() {
                 </div>
               )}
               <div className="form-row">
-                <label>工作区：</label>
-                <select name="workspace" value={form.workspace} onChange={handleChange}>
-                  <option value="Demo项目">Demo项目</option>
-                  <option value="生产环境">生产环境</option>
-                </select>
-              </div>
-              <div className="form-row">
                 <label>IM 类型：</label>
                 <select name="imType" value={form.imType} onChange={handleChange}>
                   <option value="">请选择</option>
@@ -301,14 +292,6 @@ export default function CreateHarnessAgent() {
                   <span className="unit">Gi</span>
                 </div>
               </div>
-              <div className="form-row">
-                <label>数据卷：</label>
-                <button className="add-btn text-btn">+ 添加数据卷</button>
-              </div>
-              <div className="form-row">
-                <label>网络配置：</label>
-                <button className="add-btn text-btn">+ 添加网络入口</button>
-              </div>
             </section>
           </div>
 
@@ -316,7 +299,7 @@ export default function CreateHarnessAgent() {
             <div className="anchor-nav-inner">
               {[
                 ['basic-info', '基本信息'],
-                ['harness-config', 'Harness 配置'],
+                ['agent-config', 'Agent 配置'],
                 ['capabilities', '基础能力挂载'],
                 ['resources', '资源与部署'],
               ].map(([id, label]) => (

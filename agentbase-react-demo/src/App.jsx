@@ -19,6 +19,7 @@ import CreateAgentApp from './pages/CreateAgentApp'
 import HarnessAgentList from './pages/HarnessAgentList'
 import CreateHarnessAgent from './pages/CreateHarnessAgent'
 import HarnessAgentDetail from './pages/HarnessAgentDetail'
+import AgentWebUI from './pages/AgentWebUI'
 import { HarnessAgentProvider } from './store/harnessAgentStore.jsx'
 
 import './App.css'
@@ -93,7 +94,10 @@ function App() {
   return (
     <HashRouter>
       <HarnessAgentProvider>
-        <AppLayout />
+        <Routes>
+          <Route path="/harness-agent/:id/webui" element={<AgentWebUI />} />
+          <Route path="/*" element={<AppLayout />} />
+        </Routes>
       </HarnessAgentProvider>
     </HashRouter>
   )

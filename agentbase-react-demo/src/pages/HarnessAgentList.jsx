@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useHarnessAgents, canTransition } from '../store/harnessAgentStore.jsx'
-import PageLayout, { DataToolbar } from '../components/PageLayout'
+import PageLayout, { GuideCards, DataToolbar } from '../components/PageLayout'
 import './HarnessAgentList.css'
 
 const STATUS_COLORS = {
@@ -12,12 +12,26 @@ const STATUS_COLORS = {
   Error:   { bg: '#fff2f0', color: '#ff4d4f', border: '#ffccc7' },
 }
 
+const STATUS_DOT = {
+  Draft:   '#1677ff',
+  Running: '#52c41a',
+  Paused:  '#d48806',
+  Stopped: '#8c8c8c',
+  Error:   '#ff4d4f',
+}
+
+const guideCards = [
+  { title: '创建 Harness Agent', desc: '配置 Agent 基本信息、版本、模型、Skill 和 IM 连接，完成 Agent 初始化。' },
+  { title: '扫码连接 IM', desc: '扫描二维码将 Agent 绑定至企业微信、飞书或钉钉，实现 IM 渠道即时访问。' },
+  { title: '通过 WebUI 或 IM 访问 Agent', desc: '使用内置 WebUI 体验服务或通过已绑定的 IM 渠道与 Agent 对话交互。' },
+]
+
 const columns = [
   { key: 'name', label: '名称', sortable: true },
   { key: 'status', label: '状态', sortable: true },
-  { key: 'harnessType', label: 'Harness 类型' },
+  { key: 'version', label: '版本' },
   { key: 'description', label: '描述' },
-  { key: 'workspace', label: '所属空间' },
+  { key: 'tags', label: '标签' },
   { key: 'createdAt', label: '创建时间', sortable: true },
   { key: 'owner', label: '创建人', sortable: true },
   { key: 'lastRunAt', label: '最近运行时间' },
@@ -25,20 +39,41 @@ const columns = [
 ]
 
 export default function HarnessAgentList() {
-  const { agents, dispatch } = useHarnessAgents()
+  const { agents, dispatch, globalTags } = useHarnessAgents()
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState(null)
   const [confirmDelete, setConfirmDelete] = useState(null)
+  const [viewMode, setViewMode] = useState('list') // 'list' | 'card'
+  const [showGuide, setShowGuide] = useState(true)
+  const [filterOpen, setFilterOpen] = useState(false)
+  const [selectedTags, setSelectedTags] = useState([])
+  const [tagInput, setTagInput] = useState('')
+  const [tagEditAgent, setTagEditAgent] = useState(null)
+  const [newTag, setNewTag] = useState('')
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type })
     setTimeout(() => setToast(null), 2500)
   }
 
-  const filtered = agents.filter(a =>
-    a.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const toggleTag = (tag) => {
+    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])
+  }
+
+  // Collect all unique tags from agents
+  const allTags = useMemo(() => {
+    const set = new Set()
+    agents.forEach(a => (a.tags || []).forEach(t => set.add(t)))
+    globalTags.forEach(t => set.add(t))
+    return [...set].sort()
+  }, [agents, globalTags])
+
+  const filtered = agents.filter(a => {
+    if (search && !a.name.toLowerCase().includes(search.toLowerCase())) return false
+    if (selectedTags.length > 0 && !selectedTags.some(t => (a.tags || []).includes(t))) return false
+    return true
+  })
 
   const handleAction = (agent, action) => {
     switch (action) {
@@ -66,8 +101,8 @@ export default function HarnessAgentList() {
       case 'delete':
         setConfirmDelete(agent)
         break
-      case 'experience':
-        navigate(`/harness-agent/${agent.id}?tab=experience`)
+      case 'webui':
+        navigate(`/harness-agent/${agent.id}/webui`)
         break
       default:
         break
@@ -82,14 +117,63 @@ export default function HarnessAgentList() {
     }
   }
 
+  const addTagToAgent = (agent) => {
+    if (newTag.trim() && !(agent.tags || []).includes(newTag.trim())) {
+      dispatch({ type: 'UPDATE', id: agent.id, payload: { tags: [...(agent.tags || []), newTag.trim()] } })
+      showToast(`已添加标签 "${newTag.trim()}"`)
+    }
+    setNewTag('')
+    setTagEditAgent(null)
+  }
+
+  const removeTagFromAgent = (agent, tag) => {
+    dispatch({ type: 'UPDATE', id: agent.id, payload: { tags: (agent.tags || []).filter(t => t !== tag) } })
+  }
+
   return (
-    <PageLayout title="Harness Agent">
+    <PageLayout
+      title="Harness Agent"
+      rightAction={showGuide && <button className="action-btn" onClick={() => setShowGuide(false)}>⊙ 收起指引</button>}
+    >
+      {showGuide && <GuideCards cards={guideCards} />}
+
       <DataToolbar
         buttons={
           <button className="action-btn primary" onClick={() => navigate('/harness-agent/create')}>+ 创建 Harness Agent</button>
         }
         filters={
-          <button className="action-btn" onClick={() => showToast('筛选功能演示中', 'info')}>🔧 筛选</button>
+          <div className="ha-filter-group">
+            <div className="ha-view-toggle">
+              <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')} title="列表视图">☰</button>
+              <button className={`view-btn ${viewMode === 'card' ? 'active' : ''}`} onClick={() => setViewMode('card')} title="卡片视图">▦</button>
+            </div>
+            <div className="ha-tag-filter-wrap">
+              <button className={`action-btn ${selectedTags.length > 0 ? 'primary' : ''}`} onClick={() => setFilterOpen(!filterOpen)}>
+                🏷 标签筛选 {selectedTags.length > 0 && `(${selectedTags.length})`}
+              </button>
+              {filterOpen && (
+                <div className="ha-tag-dropdown">
+                  <div className="ha-tag-dropdown-header">按标签筛选（可多选）</div>
+                  <div className="ha-tag-filter-search">
+                    <input placeholder="搜索标签" value={tagInput} onChange={e => setTagInput(e.target.value)} />
+                  </div>
+                  <div className="ha-tag-options">
+                    {allTags.filter(t => !tagInput || t.includes(tagInput)).map(tag => (
+                      <label key={tag} className="ha-tag-option">
+                        <input type="checkbox" checked={selectedTags.includes(tag)} onChange={() => toggleTag(tag)} />
+                        {tag}
+                      </label>
+                    ))}
+                  </div>
+                  {selectedTags.length > 0 && (
+                    <div className="ha-tag-dropdown-footer">
+                      <button className="text-btn" onClick={() => setSelectedTags([])}>清除全部</button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         }
       >
         <div className="search-input">
@@ -99,69 +183,136 @@ export default function HarnessAgentList() {
         <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻</button>
       </DataToolbar>
 
-      <div className="data-table-wrap">
-        <table className="data-table">
-          <thead>
-            <tr>
-              {columns.map((col, i) => (
-                <th key={i}>{col.label} {col.sortable && <span className="sort-icon">↕</span>}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
-              <tr>
-                <td colSpan={columns.length} className="data-table-empty">
-                  <div className="empty-state ha-empty">
-                    <div className="empty-icon">🔗</div>
-                    <div className="ha-empty-title">还没有 Harness Agent</div>
-                    <div className="ha-empty-desc">创建一个 Harness Agent，用于统一承载并运行 OpenClaw / Deerflow2 等 Agent</div>
-                    <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/harness-agent/create')}>+ 创建 Harness Agent</button>
-                  </div>
-                </td>
-              </tr>
-            ) : (
-              filtered.map(agent => {
-                const sc = STATUS_COLORS[agent.status] || STATUS_COLORS.Draft
-                return (
-                  <tr key={agent.id}>
-                    <td>
-                      <span className="ha-name-link" onClick={() => navigate(`/harness-agent/${agent.id}`)}>{agent.name}</span>
-                    </td>
-                    <td>
-                      <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>
-                        {agent.status}
-                      </span>
-                    </td>
-                    <td><span className="ha-type-badge">{agent.harnessType}</span></td>
-                    <td><span className="ha-desc-cell">{agent.description}</span></td>
-                    <td>{agent.workspace}</td>
-                    <td>{agent.createdAt}</td>
-                    <td>{agent.owner}</td>
-                    <td>{agent.lastRunAt || '-'}</td>
-                    <td>
-                      <div className="ha-row-actions">
-                        <button onClick={() => handleAction(agent, 'detail')}>详情</button>
-                        {canTransition(agent.status, 'Running') && <button onClick={() => handleAction(agent, 'start')}>启动</button>}
-                        {canTransition(agent.status, 'Paused') && <button onClick={() => handleAction(agent, 'pause')}>暂停</button>}
-                        {canTransition(agent.status, 'Stopped') && <button onClick={() => handleAction(agent, 'stop')}>停止</button>}
-                        <button onClick={() => handleAction(agent, 'experience')}>体验</button>
-                        <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>删除</button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })
-            )}
-          </tbody>
-        </table>
-        <div className="data-pagination">
-          <span>共 {filtered.length} 条</span>
-          <span>每页</span>
-          <select className="pagination-select"><option>50</option></select>
-          <span>条</span>
+      {/* Active tag chips */}
+      {selectedTags.length > 0 && (
+        <div className="ha-active-tags">
+          {selectedTags.map(t => (
+            <span key={t} className="ha-active-tag" onClick={() => toggleTag(t)}>{t} ×</span>
+          ))}
         </div>
-      </div>
+      )}
+
+      {/* ========== LIST VIEW ========== */}
+      {viewMode === 'list' && (
+        <div className="data-table-wrap">
+          <table className="data-table">
+            <thead>
+              <tr>
+                {columns.map((col, i) => (
+                  <th key={i}>{col.label} {col.sortable && <span className="sort-icon">↕</span>}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="data-table-empty">
+                    <div className="empty-state ha-empty">
+                      <div className="empty-icon">🔗</div>
+                      <div className="ha-empty-title">还没有 Harness Agent</div>
+                      <div className="ha-empty-desc">创建一个 Harness Agent，配置后即可通过 WebUI 或 IM 与其对话</div>
+                      <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/harness-agent/create')}>+ 创建 Harness Agent</button>
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                filtered.map(agent => {
+                  const sc = STATUS_COLORS[agent.status] || STATUS_COLORS.Draft
+                  return (
+                    <tr key={agent.id}>
+                      <td>
+                        <span className="ha-name-link" onClick={() => navigate(`/harness-agent/${agent.id}`)}>{agent.name}</span>
+                      </td>
+                      <td>
+                        <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>
+                          {agent.status}
+                        </span>
+                      </td>
+                      <td><span className="ha-version-badge">{agent.version}</span></td>
+                      <td><span className="ha-desc-cell">{agent.description}</span></td>
+                      <td>
+                        <div className="ha-tags-cell">
+                          {(agent.tags || []).slice(0, 3).map(t => <span key={t} className="ha-mini-tag">{t}</span>)}
+                          {(agent.tags || []).length > 3 && <span className="ha-mini-tag">+{agent.tags.length - 3}</span>}
+                        </div>
+                      </td>
+                      <td>{agent.createdAt}</td>
+                      <td>{agent.owner}</td>
+                      <td>{agent.lastRunAt || '-'}</td>
+                      <td>
+                        <div className="ha-row-actions">
+                          <button onClick={() => handleAction(agent, 'detail')}>详情</button>
+                          {canTransition(agent.status, 'Running') && <button onClick={() => handleAction(agent, 'start')}>启动</button>}
+                          {canTransition(agent.status, 'Paused') && <button onClick={() => handleAction(agent, 'pause')}>暂停</button>}
+                          {canTransition(agent.status, 'Stopped') && <button onClick={() => handleAction(agent, 'stop')}>停止</button>}
+                          <button onClick={() => handleAction(agent, 'webui')}>WebUI</button>
+                          <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>删除</button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+          <div className="data-pagination">
+            <span>共 {filtered.length} 条</span>
+            <span>每页</span>
+            <select className="pagination-select"><option>50</option></select>
+            <span>条</span>
+          </div>
+        </div>
+      )}
+
+      {/* ========== CARD VIEW ========== */}
+      {viewMode === 'card' && (
+        <div className="ha-card-grid">
+          {filtered.length === 0 ? (
+            <div className="ha-empty-card-state">
+              <div className="empty-icon">🔗</div>
+              <div className="ha-empty-title">还没有 Harness Agent</div>
+              <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/harness-agent/create')}>+ 创建</button>
+            </div>
+          ) : (
+            filtered.map(agent => {
+              const sc = STATUS_COLORS[agent.status] || STATUS_COLORS.Draft
+              const dotColor = STATUS_DOT[agent.status] || '#8c8c8c'
+              return (
+                <div key={agent.id} className="ha-agent-card" onClick={() => navigate(`/harness-agent/${agent.id}`)}>
+                  <div className="ha-card-header">
+                    <div className="ha-card-avatar">
+                      <span className="ha-card-avatar-text">{agent.name.charAt(0).toUpperCase()}</span>
+                      <span className="ha-card-status-dot" style={{ background: dotColor }} />
+                    </div>
+                    <div className="ha-card-info">
+                      <div className="ha-card-name">{agent.name}</div>
+                      <div className="ha-card-meta">
+                        <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border, fontSize: 11, padding: '1px 6px' }}>{agent.status}</span>
+                        <span className="ha-version-badge" style={{fontSize: 11}}>{agent.version}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ha-card-desc">{agent.description}</div>
+                  <div className="ha-card-tags">
+                    {(agent.tags || []).slice(0, 4).map(t => <span key={t} className="ha-mini-tag">{t}</span>)}
+                  </div>
+                  <div className="ha-card-footer">
+                    <span className="ha-card-owner">{agent.owner}</span>
+                    <span className="ha-card-time">{agent.createdAt?.slice(0, 10)}</span>
+                  </div>
+                  <div className="ha-card-actions" onClick={e => e.stopPropagation()}>
+                    {canTransition(agent.status, 'Running') && <button onClick={() => handleAction(agent, 'start')}>▶</button>}
+                    {canTransition(agent.status, 'Paused') && <button onClick={() => handleAction(agent, 'pause')}>⏸</button>}
+                    {canTransition(agent.status, 'Stopped') && <button onClick={() => handleAction(agent, 'stop')}>⏹</button>}
+                    <button onClick={() => handleAction(agent, 'webui')}>🌐</button>
+                    <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>🗑</button>
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+      )}
 
       {/* Toast */}
       {toast && (
@@ -181,6 +332,9 @@ export default function HarnessAgentList() {
           </div>
         </div>
       )}
+
+      {/* Click outside to close filter */}
+      {filterOpen && <div className="ha-filter-backdrop" onClick={() => setFilterOpen(false)} />}
     </PageLayout>
   )
 }
