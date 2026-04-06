@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useHarnessAgents, canTransition, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
-import TagSelect from '../components/TagSelect'
+import TagSelectModal from '../components/TagSelectModal'
+import SkillSelectionModal from '../components/SkillSelectionModal'
 import './HarnessAgentDetail.css'
 
 const STATUS_COLORS = {
@@ -46,23 +47,13 @@ export default function HarnessAgentDetail() {
     if (agent && editMode) {
       setEditForm({
         name: agent.name,
-        description: agent.description,
-        version: agent.version,
         tags: [...(agent.tags || [])],
         model: agent.model,
-        prompt: agent.prompt,
-        endpoint: agent.endpoint,
-        concurrency: agent.concurrency,
-        timeout: agent.timeout,
-        retry: agent.retry,
         skills: [...agent.skills],
         memoryEnabled: agent.memoryEnabled,
         memorySpace: agent.memorySpace,
-        imType: agent.imType,
-        imWebhookUrl: agent.imConfig?.webhookUrl || '',
         k8sCluster: agent.k8sCluster,
-        replicasMode: agent.replicasMode,
-        replicas: agent.replicas,
+        resourceSpec: agent.resourceSpec || 'standard',
         cpu: agent.cpu,
         memory: agent.memory,
       })
@@ -99,6 +90,16 @@ export default function HarnessAgentDetail() {
     setEditForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
   }
 
+  const handleResourceSpecChange = (spec) => {
+    const specs = {
+      lite: { cpu: 2, memory: 2 },
+      standard: { cpu: 4, memory: 4 },
+      heavy: { cpu: 8, memory: 8 },
+      custom: { cpu: editForm.cpu, memory: editForm.memory }
+    }
+    setEditForm(prev => ({ ...prev, resourceSpec: spec, cpu: specs[spec].cpu, memory: specs[spec].memory }))
+  }
+
   const toggleEditSkill = (s) => {
     setEditForm(prev => ({
       ...prev,
@@ -116,19 +117,11 @@ export default function HarnessAgentDetail() {
         version: editForm.version,
         tags: editForm.tags,
         model: editForm.model,
-        prompt: editForm.prompt,
-        endpoint: editForm.endpoint,
-        concurrency: Number(editForm.concurrency),
-        timeout: Number(editForm.timeout),
-        retry: Number(editForm.retry),
         skills: editForm.skills,
         memoryEnabled: editForm.memoryEnabled,
         memorySpace: editForm.memorySpace,
-        imType: editForm.imType,
-        imConfig: { webhookUrl: editForm.imWebhookUrl },
         k8sCluster: editForm.k8sCluster,
-        replicasMode: editForm.replicasMode,
-        replicas: Number(editForm.replicas),
+        resourceSpec: editForm.resourceSpec,
         cpu: Number(editForm.cpu),
         memory: Number(editForm.memory),
       }
@@ -177,15 +170,13 @@ export default function HarnessAgentDetail() {
           </div>
           <div className="had-meta-row">
             <span>ID: {agent.id}</span>
-            <span>Owner: {agent.owner}</span>
+            <span>Owner: admin</span>
             <span>创建: {agent.createdAt}</span>
             {agent.lastRunAt && <span>最近运行: {agent.lastRunAt}</span>}
           </div>
           {/* Tags inline */}
           <div className="had-tags-row">
-            {(agent.tags || []).map(t => (
-              <span key={t} className="had-tag-chip">{t}<span className="had-tag-x" onClick={() => removeTag(t)}>×</span></span>
-            ))}
+            <TagSelectModal value={agent.tags || []} onChange={tags => dispatch({ type: 'UPDATE', id: agent.id, payload: { tags } })} />
           </div>
         </div>
         <div className="had-overview-actions">
@@ -224,8 +215,8 @@ export default function HarnessAgentDetail() {
                 <div className="had-card-value">{agent.model || '-'}</div>
               </div>
               <div className="had-card">
-                <div className="had-card-label">并发 / 超时 / 重试</div>
-                <div className="had-card-value">{agent.concurrency} / {agent.timeout}s / {agent.retry}</div>
+                <div className="had-card-label">已选配置</div>
+                <div className="had-card-value">{agent.k8sCluster || '-'} | {agent.resourceSpec || 'standard'} | {agent.cpu}C{agent.memory}G</div>
               </div>
               <div className="had-card">
                 <div className="had-card-label">Skill</div>
@@ -316,31 +307,17 @@ export default function HarnessAgentDetail() {
                         {VERSIONS.map(v => <option key={v} value={v}>{v}</option>)}
                       </select>
                     </div>
-                    <div className="form-row">
-                      <label>标签：</label>
-                      <div style={{flex: 1}}>
-                        <TagSelect value={editForm.tags} onChange={tags => setEditForm(prev => ({...prev, tags}))} />
-                      </div>
-                    </div>
                   </div>
                 )
               )}
               {configSubTab === 'agent' && (
                 !editMode ? (
                   <div className="had-section">
-                    <div className="had-kv"><span>运行入口</span><span>{agent.endpoint || '-'}</span></div>
                     <div className="had-kv"><span>模型</span><span>{agent.model || '-'}</span></div>
-                    <div className="had-kv"><span>System Prompt</span><span className="had-kv-pre">{agent.prompt || '-'}</span></div>
-                    <div className="had-kv"><span>并发 / 超时 / 重试</span><span>{agent.concurrency} / {agent.timeout}s / {agent.retry}次</span></div>
                   </div>
                 ) : (
                   <div className="had-section">
-                    <div className="form-row"><label>运行入口：</label><input type="text" name="endpoint" value={editForm.endpoint} onChange={handleEditChange} /></div>
                     <div className="form-row"><label>模型：</label><input type="text" name="model" value={editForm.model} onChange={handleEditChange} /></div>
-                    <div className="form-row align-start"><label>System Prompt：</label><textarea name="prompt" value={editForm.prompt} onChange={handleEditChange} style={{height:100}} /></div>
-                    <div className="form-row"><label>并发数：</label><div className="number-input-group"><input type="number" name="concurrency" value={editForm.concurrency} onChange={handleEditChange} /></div></div>
-                    <div className="form-row"><label>超时时间：</label><div className="number-input-group"><input type="number" name="timeout" value={editForm.timeout} onChange={handleEditChange} /><span className="unit">秒</span></div></div>
-                    <div className="form-row"><label>重试次数：</label><div className="number-input-group"><input type="number" name="retry" value={editForm.retry} onChange={handleEditChange} /><span className="unit">次</span></div></div>
                   </div>
                 )
               )}
@@ -349,21 +326,16 @@ export default function HarnessAgentDetail() {
                   <div className="had-section">
                     <div className="had-kv"><span>Skill</span><span>{agent.skills.join(', ') || '-'}</span></div>
                     <div className="had-kv"><span>Memory</span><span>{agent.memoryEnabled ? `${agent.memorySpace}` : '未启用'}</span></div>
-                    <div className="had-kv"><span>IM</span><span>{agent.imType || '-'}</span></div>
                   </div>
                 ) : (
                   <div className="had-section">
                     <div className="form-row align-start"><label>Skill：</label>
-                      <div className="cha-skill-tags">
-                        {SKILL_OPTIONS.map(s => (
-                          <span key={s} className={`cha-skill-tag ${editForm.skills.includes(s) ? 'selected' : ''}`} onClick={() => toggleEditSkill(s)}>{s}</span>
-                        ))}
+                      <div style={{flex: 1}}>
+                        <SkillSelectionModal value={editForm.skills} onChange={skills => setEditForm(prev => ({...prev, skills}))} />
                       </div>
                     </div>
                     <div className="form-row"><label>Memory：</label><label className="checkbox-label"><input type="checkbox" name="memoryEnabled" checked={editForm.memoryEnabled} onChange={handleEditChange} /> 启用</label></div>
                     {editForm.memoryEnabled && <div className="form-row"><label>Memory 空间：</label><select name="memorySpace" value={editForm.memorySpace} onChange={handleEditChange}><option value="">请选择</option><option value="insight-mem-01">insight-mem-01</option><option value="support-mem-01">support-mem-01</option><option value="pipeline-mem-01">pipeline-mem-01</option></select></div>}
-                    <div className="form-row"><label>IM 类型：</label><select name="imType" value={editForm.imType} onChange={handleEditChange}><option value="">请选择</option>{IM_TYPES.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
-                    {editForm.imType && <div className="form-row"><label>Webhook：</label><input type="text" name="imWebhookUrl" value={editForm.imWebhookUrl} onChange={handleEditChange} /></div>}
                   </div>
                 )
               )}
@@ -371,15 +343,38 @@ export default function HarnessAgentDetail() {
                 !editMode ? (
                   <div className="had-section">
                     <div className="had-kv"><span>K8s 集群</span><span>{agent.k8sCluster || '-'}</span></div>
-                    <div className="had-kv"><span>副本</span><span>{agent.replicasMode === 'fixed' ? '固定' : '弹性'} × {agent.replicas}</span></div>
-                    <div className="had-kv"><span>CPU / 内存</span><span>{agent.cpu} 核 / {agent.memory} Gi</span></div>
+                    <div className="had-kv"><span>资源规格</span><span>{agent.resourceSpec || 'standard'} ({agent.cpu} 核 / {agent.memory} Gi)</span></div>
                   </div>
                 ) : (
                   <div className="had-section">
                     <div className="form-row"><label>K8s 集群：</label><select name="k8sCluster" value={editForm.k8sCluster} onChange={handleEditChange}><option value="">请选择</option><option value="cls-prod-cluster-1">cls-prod-cluster-1</option><option value="cls-dev-cluster-2">cls-dev-cluster-2</option></select></div>
-                    <div className="form-row"><label>副本数：</label><div className="number-input-group"><input type="number" name="replicas" value={editForm.replicas} onChange={handleEditChange} /><span className="unit">个</span></div></div>
-                    <div className="form-row"><label>CPU：</label><div className="number-input-group"><input type="number" name="cpu" value={editForm.cpu} onChange={handleEditChange} /><span className="unit">核</span></div></div>
-                    <div className="form-row"><label>内存：</label><div className="number-input-group"><input type="number" name="memory" value={editForm.memory} onChange={handleEditChange} /><span className="unit">Gi</span></div></div>
+                    
+                    <div className="form-row align-start">
+                      <label>资源规格：</label>
+                      <div className="resource-tier-group" style={{display:'flex', gap:16, flexWrap:'wrap', flex: 1}}>
+                        {[
+                          {id: 'lite', label: '轻量级', desc: '2C2G'},
+                          {id: 'standard', label: '标准级', desc: '4C4G'},
+                          {id: 'heavy', label: '重量级', desc: '8C8G'},
+                          {id: 'custom', label: '自定义', desc: '手动配置'}
+                        ].map(tier => (
+                          <div 
+                            key={tier.id} 
+                            className={`resource-tier-card ${editForm.resourceSpec === tier.id ? 'active' : ''}`}
+                            onClick={() => handleResourceSpecChange(tier.id)}
+                          >
+                            <div className="rt-label">{tier.label}</div>
+                            <div className="rt-desc">{tier.desc}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {editForm.resourceSpec === 'custom' && (
+                      <>
+                        <div className="form-row"><label>CPU：</label><div className="number-input-group"><input type="number" name="cpu" value={editForm.cpu} onChange={handleEditChange} /><span className="unit">核</span></div></div>
+                        <div className="form-row"><label>内存：</label><div className="number-input-group"><input type="number" name="memory" value={editForm.memory} onChange={handleEditChange} /><span className="unit">Gi</span></div></div>
+                      </>
+                    )}
                   </div>
                 )
               )}

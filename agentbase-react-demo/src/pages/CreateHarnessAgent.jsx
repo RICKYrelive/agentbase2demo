@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useHarnessAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
-import TagSelect from '../components/TagSelect'
+import TagSelectModal from '../components/TagSelectModal'
+import SkillSelectionModal from '../components/SkillSelectionModal'
 import './CreateHarnessAgent.css'
 
 export default function CreateHarnessAgent() {
@@ -18,24 +19,16 @@ export default function CreateHarnessAgent() {
     owner: 'admin',
     tags: [],
     // config
-    endpoint: '',
     model: '',
-    prompt: '',
-    concurrency: 5,
-    timeout: 120,
-    retry: 3,
     // capability
     skills: [],
     memoryEnabled: false,
     memorySpace: '',
-    imType: '',
-    imWebhookUrl: '',
     // resources
     k8sCluster: '',
-    replicasMode: 'fixed',
-    replicas: 1,
-    cpu: 1,
-    memory: 2,
+    resourceSpec: 'standard',
+    cpu: 4,
+    memory: 4,
   })
 
   const showToast = (msg, type = 'success') => {
@@ -49,13 +42,14 @@ export default function CreateHarnessAgent() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  const toggleSkill = (skill) => {
-    setForm(prev => ({
-      ...prev,
-      skills: prev.skills.includes(skill)
-        ? prev.skills.filter(s => s !== skill)
-        : [...prev.skills, skill]
-    }))
+  const handleResourceSpecChange = (spec) => {
+    const specs = {
+      lite: { cpu: 2, memory: 2 },
+      standard: { cpu: 4, memory: 4 },
+      heavy: { cpu: 8, memory: 8 },
+      custom: { cpu: form.cpu, memory: form.memory }
+    }
+    setForm(prev => ({ ...prev, resourceSpec: spec, cpu: specs[spec].cpu, memory: specs[spec].memory }))
   }
 
   const scrollTo = (id) => {
@@ -85,20 +79,12 @@ export default function CreateHarnessAgent() {
         version: form.version,
         owner: form.owner,
         tags: form.tags,
-        endpoint: form.endpoint,
         model: form.model,
-        prompt: form.prompt,
-        concurrency: Number(form.concurrency),
-        timeout: Number(form.timeout),
-        retry: Number(form.retry),
         skills: form.skills,
         memoryEnabled: form.memoryEnabled,
         memorySpace: form.memorySpace,
-        imType: form.imType,
-        imConfig: { webhookUrl: form.imWebhookUrl },
         k8sCluster: form.k8sCluster,
-        replicasMode: form.replicasMode,
-        replicas: Number(form.replicas),
+        resourceSpec: form.resourceSpec,
         cpu: Number(form.cpu),
         memory: Number(form.memory),
         cluster: form.k8sCluster,
@@ -153,12 +139,12 @@ export default function CreateHarnessAgent() {
               </div>
               <div className="form-row">
                 <label>Owner：</label>
-                <input type="text" name="owner" value={form.owner} onChange={handleChange} />
+                <input type="text" value="admin" disabled style={{ background: '#f5f7fa', color: '#999' }} />
               </div>
               <div className="form-row">
                 <label>标签：</label>
                 <div style={{flex: 1}}>
-                  <TagSelect value={form.tags} onChange={tags => setForm(prev => ({...prev, tags}))} />
+                  <TagSelectModal value={form.tags} onChange={tags => setForm(prev => ({...prev, tags}))} />
                 </div>
               </div>
             </section>
@@ -167,36 +153,8 @@ export default function CreateHarnessAgent() {
             <section id="agent-config" className="form-section">
               <h3 className="section-title">Agent 配置</h3>
               <div className="form-row">
-                <label>运行入口：</label>
-                <input type="text" name="endpoint" value={form.endpoint} onChange={handleChange} placeholder="http://..." />
-              </div>
-              <div className="form-row">
                 <label>模型名称：</label>
                 <input type="text" name="model" value={form.model} onChange={handleChange} placeholder="例如 gpt-4o / claude-sonnet-4" />
-              </div>
-              <div className="form-row align-start">
-                <label>System Prompt：</label>
-                <textarea name="prompt" value={form.prompt} onChange={handleChange} placeholder="输入 Agent 的系统提示词" style={{height: 100}} />
-              </div>
-              <div className="form-row">
-                <label>并发数：</label>
-                <div className="number-input-group">
-                  <input type="number" name="concurrency" value={form.concurrency} onChange={handleChange} min={1} />
-                </div>
-              </div>
-              <div className="form-row">
-                <label>超时时间：</label>
-                <div className="number-input-group">
-                  <input type="number" name="timeout" value={form.timeout} onChange={handleChange} min={1} />
-                  <span className="unit">秒</span>
-                </div>
-              </div>
-              <div className="form-row">
-                <label>重试次数：</label>
-                <div className="number-input-group">
-                  <input type="number" name="retry" value={form.retry} onChange={handleChange} min={0} />
-                  <span className="unit">次</span>
-                </div>
               </div>
             </section>
 
@@ -205,14 +163,8 @@ export default function CreateHarnessAgent() {
               <h3 className="section-title">基础能力挂载</h3>
               <div className="form-row align-start">
                 <label>Skill 绑定：</label>
-                <div className="cha-skill-tags">
-                  {SKILL_OPTIONS.map(s => (
-                    <span
-                      key={s}
-                      className={`cha-skill-tag ${form.skills.includes(s) ? 'selected' : ''}`}
-                      onClick={() => toggleSkill(s)}
-                    >{s}</span>
-                  ))}
+                <div style={{flex: 1}}>
+                  <SkillSelectionModal value={form.skills} onChange={skills => setForm(prev => ({...prev, skills}))} />
                 </div>
               </div>
               <div className="form-row">
@@ -233,19 +185,6 @@ export default function CreateHarnessAgent() {
                   </select>
                 </div>
               )}
-              <div className="form-row">
-                <label>IM 类型：</label>
-                <select name="imType" value={form.imType} onChange={handleChange}>
-                  <option value="">请选择</option>
-                  {IM_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
-              </div>
-              {form.imType && (
-                <div className="form-row">
-                  <label>Webhook URL：</label>
-                  <input type="text" name="imWebhookUrl" value={form.imWebhookUrl} onChange={handleChange} placeholder="https://..." />
-                </div>
-              )}
             </section>
 
             {/* 资源与部署 */}
@@ -260,38 +199,43 @@ export default function CreateHarnessAgent() {
                 </select>
               </div>
               <div className="form-row align-start">
-                <label>Pod 副本数：</label>
-                <div className="complex-input">
-                  <div className="radio-options">
-                    <label>
-                      <input type="radio" name="replicasMode" value="fixed" checked={form.replicasMode === 'fixed'} onChange={handleChange} />
-                      固定数量
-                    </label>
-                    <label>
-                      <input type="radio" name="replicasMode" value="elastic" checked={form.replicasMode === 'elastic'} onChange={handleChange} />
-                      弹性伸缩
-                    </label>
+                <label>资源规格：</label>
+                <div className="resource-tier-group" style={{display:'flex', gap:16, flexWrap:'wrap', flex: 1}}>
+                  {[
+                    {id: 'lite', label: '轻量级', desc: '2C2G'},
+                    {id: 'standard', label: '标准级', desc: '4C4G'},
+                    {id: 'heavy', label: '重量级', desc: '8C8G'},
+                    {id: 'custom', label: '自定义', desc: '手动配置'}
+                  ].map(tier => (
+                    <div 
+                      key={tier.id} 
+                      className={`resource-tier-card ${form.resourceSpec === tier.id ? 'active' : ''}`}
+                      onClick={() => handleResourceSpecChange(tier.id)}
+                    >
+                      <div className="rt-label">{tier.label}</div>
+                      <div className="rt-desc">{tier.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {form.resourceSpec === 'custom' && (
+                <>
+                  <div className="form-row">
+                    <label>CPU：</label>
+                    <div className="number-input-group">
+                      <input type="number" name="cpu" value={form.cpu} onChange={handleChange} min={1} />
+                      <span className="unit">核</span>
+                    </div>
                   </div>
-                  <div className="number-input-group mt-2">
-                    <input type="number" name="replicas" value={form.replicas} onChange={handleChange} min={1} />
-                    <span className="unit">个</span>
+                  <div className="form-row">
+                    <label>内存：</label>
+                    <div className="number-input-group">
+                      <input type="number" name="memory" value={form.memory} onChange={handleChange} min={1} />
+                      <span className="unit">Gi</span>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="form-row">
-                <label>CPU：</label>
-                <div className="number-input-group">
-                  <input type="number" name="cpu" value={form.cpu} onChange={handleChange} min={1} />
-                  <span className="unit">核</span>
-                </div>
-              </div>
-              <div className="form-row">
-                <label>内存：</label>
-                <div className="number-input-group">
-                  <input type="number" name="memory" value={form.memory} onChange={handleChange} min={1} />
-                  <span className="unit">Gi</span>
-                </div>
-              </div>
+                </>
+              )}
             </section>
           </div>
 

@@ -35,3 +35,36 @@
   color: var(--color-blue);
   font-weight: 500;
 }
+.resource-tier-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.resource-tier-card {
+  border: 1px solid var(--color-border);
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+.resource-tier-card:hover {
+  border-color: var(--color-blue);
+}
+.resource-tier-card.active {
+  border-color: var(--color-blue);
+  background: #f0f7ff;
+}
+.rt-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.rt-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}

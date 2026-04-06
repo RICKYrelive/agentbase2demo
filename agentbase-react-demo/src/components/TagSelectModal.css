@@ -1,0 +1,62 @@
+.tsm-wrapper {
+  width: 100%;
+}
+.tsm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.tsm-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-blue);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.tsm-tag-x {
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.8;
+}
+.tsm-tag-x:hover {
+  opacity: 1;
+}
+.tsm-list {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tsm-option {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: #fff;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tsm-option:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+.tsm-option.selected {
+  background: var(--color-blue);
+  color: #fff;
+  border-color: var(--color-blue);
+}
+.tsm-empty {
+  width: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 24px 0;
+}
