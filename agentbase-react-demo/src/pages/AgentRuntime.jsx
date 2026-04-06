@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
 
 const guideCards = [
@@ -21,6 +22,7 @@ const columns = [
 export default function AgentRuntime({ onAlert }) {
   const [tab, setTab] = useState('runtime')
   const [codeType, setCodeType] = useState('high')
+  const navigate = useNavigate()
 
   return (
     <PageLayout
@@ -39,7 +41,7 @@ export default function AgentRuntime({ onAlert }) {
       </div>
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={onAlert}>+ 创建 Agent 应用</button>
+          <button className="action-btn primary" onClick={() => navigate('/agent-runtime/create')}>+ 创建 Agent 应用</button>
         }
         filters={
           <>

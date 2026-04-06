@@ -15,6 +15,8 @@ import GlobalObservation from './pages/GlobalObservation'
 import Trace from './pages/Trace'
 import ClusterManage from './pages/ClusterManage'
 import SystemManagePage from './pages/SystemManagePage'
+import CreateAgentApp from './pages/CreateAgentApp'
+
 import './App.css'
 
 const systemPages = {
@@ -34,7 +36,11 @@ function AppLayout() {
   const currentPath = location.pathname.replace(/^\//, '') || 'overview'
 
   const handleNavClick = (key) => {
-    navigate('/' + key)
+    if (key.startsWith('agent-runtime/')) {
+        navigate('/' + key.split('/')[0])
+    } else {
+        navigate('/' + key)
+    }
   }
 
   const handleAlert = () => setShowModal(true)
@@ -49,6 +55,7 @@ function AppLayout() {
           <Route path="/application-portal" element={<AppPortal onAlert={handleAlert} />} />
           <Route path="/agent-dev" element={<AgentDev onAlert={handleAlert} />} />
           <Route path="/agent-runtime" element={<AgentRuntime onAlert={handleAlert} />} />
+          <Route path="/agent-runtime/create" element={<CreateAgentApp />} />
           <Route path="/ai-database" element={<AIDatabase onAlert={handleAlert} />} />
           <Route path="/memory" element={<Memory onAlert={handleAlert} />} />
           <Route path="/ai-model-service" element={<AIModelService onAlert={handleAlert} />} />
