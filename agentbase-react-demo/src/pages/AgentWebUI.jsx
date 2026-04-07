@@ -874,7 +874,6 @@ export default function AgentWebUI() {
               <div className="cm-item" onClick={() => alert('新建文件夹')}>📁 新建子目录</div>
               <div className="cm-divider" />
               <div className={`cm-item ${['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) ? 'disabled' : ''}`} onClick={() => !['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) && alert('重命名')}>📝 重命名</div>
-              <div className={`cm-item danger ${['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) ? 'disabled' : ''}`} onClick={() => !['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) && alert('删除文件夹')}>🗑️ 删除文件夹</div>
             </>
           ) : (
             <>
