@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSuperAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/superAgentStore.jsx'
+import { useSuperAgents, VERSIONS, IM_TYPES } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
 import SkillSelectionModal from '../components/SkillSelectionModal'
 import './CreateSuperAgent.css'

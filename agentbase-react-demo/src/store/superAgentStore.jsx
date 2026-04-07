@@ -372,16 +372,5 @@ export function useSuperAgents() {
 export const VERSIONS = ['v1.0.0', 'v1.0.0-beta', 'v1.3.2', 'v2.0.0', 'v2.1.0', 'v3.0.1']
 export const STATUS_LIST = ['运行中', '停止', '启动中', '关闭中']
 export const IM_TYPES = ['企业微信', '飞书', '钉钉', '自定义 Webhook']
-export const SKILL_OPTIONS = [
-  'web-search', 'doc-parser', 'summarizer', 'code-analysis',
-  'security-scan', 'faq-retrieval', 'ticket-manager', 'sql-executor',
-  'data-validator', 'schema-migrator', 'speech-to-text', 'image-gen',
-]
 export const INITIAL_TAGS = ['production', 'daily', '信息摘要', 'dev', 'code-review', 'support', 'data', 'etl', 'critical', 'meeting', 'draft']
 
-export const SKILL_PACKAGES = [
-  { name: '研发提效包', skills: ['code-analysis', 'security-scan'] },
-  { name: '客户服务包', skills: ['faq-retrieval', 'ticket-manager'] },
-  { name: '数据处理包', skills: ['sql-executor', 'data-validator', 'schema-migrator'] },
-  { name: '内容解析包', skills: ['web-search', 'doc-parser', 'summarizer'] }
-]

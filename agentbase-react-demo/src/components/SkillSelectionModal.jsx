@@ -1,40 +1,41 @@
 import { useState } from 'react'
-import { useSuperAgents, SKILL_OPTIONS, SKILL_PACKAGES } from '../store/superAgentStore'
+import { useSkills } from '../store/skillStore'
 import './SkillSelectionModal.css'
 
 export default function SkillSelectionModal({ value = [], onChange }) {
   const [open, setOpen] = useState(false)
   const [tab, setTab] = useState('packages') // 'packages' | 'individual'
   const [search, setSearch] = useState('')
+  const { skills, packages } = useSkills()
 
-  const toggleSkill = (skill) => {
-    if (value.includes(skill)) onChange(value.filter(s => s !== skill))
-    else onChange([...value, skill])
+  const toggleSkill = (skillName) => {
+    if (value.includes(skillName)) onChange(value.filter(s => s !== skillName))
+    else onChange([...value, skillName])
   }
 
-  const removeSkill = (e, skill) => {
+  const removeSkill = (e, skillName) => {
     e.stopPropagation()
-    onChange(value.filter(s => s !== skill))
+    onChange(value.filter(s => s !== skillName))
   }
 
   const togglePackage = (pkg) => {
-    const pkgSkills = pkg.skills
-    const hasAll = pkgSkills.every(s => value.includes(s))
+    const pkgSkillNames = pkg.skills.map(s => s.skillName)
+    const hasAll = pkgSkillNames.every(sn => value.includes(sn))
     if (hasAll) {
       // Remove all
-      onChange(value.filter(s => !pkgSkills.includes(s)))
+      onChange(value.filter(sn => !pkgSkillNames.includes(sn)))
     } else {
       // Add all missing
       const newSkills = [...value]
-      pkgSkills.forEach(s => {
-        if (!newSkills.includes(s)) newSkills.push(s)
+      pkgSkillNames.forEach(sn => {
+        if (!newSkills.includes(sn)) newSkills.push(sn)
       })
       onChange(newSkills)
     }
   }
 
-  const filteredIndividual = SKILL_OPTIONS.filter(s => s.toLowerCase().includes(search.toLowerCase()))
-  const filteredPackages = SKILL_PACKAGES.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.skills.some(s => s.toLowerCase().includes(search.toLowerCase())))
+  const filteredIndividual = skills.filter(s => s.name.toLowerCase().includes(search.toLowerCase()))
+  const filteredPackages = packages.filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <div className="ssm-wrapper">
@@ -76,16 +77,17 @@ export default function SkillSelectionModal({ value = [], onChange }) {
                 <div className="ssm-package-list">
                   {filteredPackages.length === 0 ? <div className="ssm-empty">无匹配技能包</div> : (
                     filteredPackages.map(pkg => {
-                      const selectedCount = pkg.skills.filter(s => value.includes(s)).length
-                      const isAllSelected = selectedCount === pkg.skills.length
+                      const pkgSkillNames = pkg.skills.map(s => s.skillName)
+                      const selectedCount = pkgSkillNames.filter(sn => value.includes(sn)).length
+                      const isAllSelected = selectedCount === pkgSkillNames.length
                       const isPartial = selectedCount > 0 && !isAllSelected
                       return (
-                        <div key={pkg.name} className={`ssm-package-item ${isAllSelected ? 'selected' : ''}`} onClick={() => togglePackage(pkg)}>
+                        <div key={pkg.id} className={`ssm-package-item ${isAllSelected ? 'selected' : ''}`} onClick={() => togglePackage(pkg)}>
                           <div className="ssm-pkg-header">
                             <span className="ssm-pkg-name">{pkg.name}</span>
                             <span className={`ssm-pkg-check ${isAllSelected ? 'checked' : isPartial ? 'partial' : ''}`}></span>
                           </div>
-                          <div className="ssm-pkg-skills">包含: {pkg.skills.join(', ')}</div>
+                          <div className="ssm-pkg-skills">包含: {pkgSkillNames.join(', ')}</div>
                         </div>
                       )
                     })
@@ -97,9 +99,9 @@ export default function SkillSelectionModal({ value = [], onChange }) {
                 <div className="ssm-individual-list">
                   {filteredIndividual.length === 0 ? <div className="ssm-empty">无匹配独立技能</div> : (
                     filteredIndividual.map(skill => (
-                      <div key={skill} className={`ssm-individual-item ${value.includes(skill) ? 'selected' : ''}`} onClick={() => toggleSkill(skill)}>
-                        <span>{skill}</span>
-                        {value.includes(skill) && <span className="ssm-check">✓</span>}
+                      <div key={skill.id} className={`ssm-individual-item ${value.includes(skill.name) ? 'selected' : ''}`} onClick={() => toggleSkill(skill.name)}>
+                        <span>{skill.name}</span>
+                        {value.includes(skill.name) && <span className="ssm-check">✓</span>}
                       </div>
                     ))
                   )}
