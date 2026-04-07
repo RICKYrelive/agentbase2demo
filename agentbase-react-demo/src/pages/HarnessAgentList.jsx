@@ -1,23 +1,22 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useHarnessAgents, canTransition } from '../store/harnessAgentStore.jsx'
+import { useHarnessAgents, STATUS_LIST } from '../store/harnessAgentStore.jsx'
 import PageLayout, { GuideCards, DataToolbar } from '../components/PageLayout'
+import TagSelectModal from '../components/TagSelectModal'
 import './HarnessAgentList.css'
 
 const STATUS_COLORS = {
-  Draft:   { bg: '#e6f4ff', color: '#1677ff', border: '#91caff' },
-  Running: { bg: '#f6ffed', color: '#52c41a', border: '#b7eb8f' },
-  Paused:  { bg: '#fffbe6', color: '#d48806', border: '#ffe58f' },
-  Stopped: { bg: '#f5f5f5', color: '#8c8c8c', border: '#d9d9d9' },
-  Error:   { bg: '#fff2f0', color: '#ff4d4f', border: '#ffccc7' },
+  '运行中': { bg: '#f6ffed', color: '#52c41a', border: '#b7eb8f' },
+  '启动中': { bg: '#e6f7ff', color: '#1890ff', border: '#91d5ff' },
+  '关闭中': { bg: '#fff2e8', color: '#fa8c16', border: '#ffd8bf' },
+  '停止': { bg: '#f5f5f5', color: '#595959', border: '#d9d9d9' },
 }
 
 const STATUS_DOT = {
-  Draft:   '#1677ff',
-  Running: '#52c41a',
-  Paused:  '#d48806',
-  Stopped: '#8c8c8c',
-  Error:   '#ff4d4f',
+  '运行中': '#52c41a',
+  '启动中': '#1890ff',
+  '关闭中': '#fa8c16',
+  '停止': '#8c8c8c'
 }
 
 const guideCards = [
@@ -81,22 +80,18 @@ export default function HarnessAgentList() {
         navigate(`/harness-agent/${agent.id}`)
         break
       case 'start':
-        if (canTransition(agent.status, 'Running')) {
-          dispatch({ type: 'CHANGE_STATUS', id: agent.id, newStatus: 'Running' })
-          showToast(`${agent.name} 已启动`)
-        }
-        break
-      case 'pause':
-        if (canTransition(agent.status, 'Paused')) {
-          dispatch({ type: 'CHANGE_STATUS', id: agent.id, newStatus: 'Paused' })
-          showToast(`${agent.name} 已暂停`)
-        }
+        dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '启动中' } })
+        showToast(`${agent.name} 启动中...`)
+        setTimeout(() => {
+          dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '运行中' } })
+        }, 1500)
         break
       case 'stop':
-        if (canTransition(agent.status, 'Stopped')) {
-          dispatch({ type: 'CHANGE_STATUS', id: agent.id, newStatus: 'Stopped' })
-          showToast(`${agent.name} 已停止`)
-        }
+        dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '关闭中' } })
+        showToast(`${agent.name} 关闭中...`)
+        setTimeout(() => {
+          dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '停止' } })
+        }, 1500)
         break
       case 'delete':
         setConfirmDelete(agent)
@@ -217,7 +212,7 @@ export default function HarnessAgentList() {
                 </tr>
               ) : (
                 filtered.map(agent => {
-                  const sc = STATUS_COLORS[agent.status] || STATUS_COLORS.Draft
+                  const sc = STATUS_COLORS[agent.status] || STATUS_COLORS['停止']
                   return (
                     <tr key={agent.id}>
                       <td>
@@ -242,9 +237,12 @@ export default function HarnessAgentList() {
                       <td>
                         <div className="ha-row-actions">
                           <button onClick={() => handleAction(agent, 'detail')}>详情</button>
-                          {canTransition(agent.status, 'Running') && <button onClick={() => handleAction(agent, 'start')}>启动</button>}
-                          {canTransition(agent.status, 'Paused') && <button onClick={() => handleAction(agent, 'pause')}>暂停</button>}
-                          {canTransition(agent.status, 'Stopped') && <button onClick={() => handleAction(agent, 'stop')}>停止</button>}
+                          {['停止', '启动中'].includes(agent.status) && (
+                            <button disabled={agent.status === '启动中'} onClick={() => handleAction(agent, 'start')}>启动</button>
+                          )}
+                          {['运行中', '关闭中'].includes(agent.status) && (
+                            <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}>停止</button>
+                          )}
                           <button onClick={() => handleAction(agent, 'webui')}>WebUI</button>
                           <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>删除</button>
                         </div>
@@ -275,7 +273,7 @@ export default function HarnessAgentList() {
             </div>
           ) : (
             filtered.map(agent => {
-              const sc = STATUS_COLORS[agent.status] || STATUS_COLORS.Draft
+              const sc = STATUS_COLORS[agent.status] || STATUS_COLORS['停止']
               const dotColor = STATUS_DOT[agent.status] || '#8c8c8c'
               return (
                 <div key={agent.id} className="ha-agent-card" onClick={() => navigate(`/harness-agent/${agent.id}`)}>
@@ -301,9 +299,12 @@ export default function HarnessAgentList() {
                     <span className="ha-card-time">{agent.createdAt?.slice(0, 10)}</span>
                   </div>
                   <div className="ha-card-actions" onClick={e => e.stopPropagation()}>
-                    {canTransition(agent.status, 'Running') && <button onClick={() => handleAction(agent, 'start')}>▶</button>}
-                    {canTransition(agent.status, 'Paused') && <button onClick={() => handleAction(agent, 'pause')}>⏸</button>}
-                    {canTransition(agent.status, 'Stopped') && <button onClick={() => handleAction(agent, 'stop')}>⏹</button>}
+                    {['停止', '启动中'].includes(agent.status) && (
+                      <button disabled={agent.status === '启动中'} onClick={() => handleAction(agent, 'start')}>▶</button>
+                    )}
+                    {['运行中', '关闭中'].includes(agent.status) && (
+                      <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}>⏹</button>
+                    )}
                     <button onClick={() => handleAction(agent, 'webui')}>🌐</button>
                     <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>🗑</button>
                   </div>

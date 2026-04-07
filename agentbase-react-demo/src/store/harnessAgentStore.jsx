@@ -2,11 +2,10 @@ import { createContext, useContext, useReducer, useState } from 'react'
 
 // ========== Status machine ==========
 const VALID_TRANSITIONS = {
-  Draft:   ['Running'],
-  Running: ['Paused', 'Stopped', 'Error'],
-  Paused:  ['Running', 'Stopped'],
-  Stopped: ['Running'],
-  Error:   ['Running', 'Stopped'],
+  '停止': ['启动中'],
+  '启动中': ['运行中', '停止', '关闭中'],
+  '运行中': ['关闭中'],
+  '关闭中': ['停止'],
 }
 
 export function canTransition(from, to) {
@@ -23,13 +22,51 @@ function ts(daysAgo, hoursAgo = 0) {
   return d.toISOString().replace('T', ' ').slice(0, 19)
 }
 
+const mockFiles = {
+  'AGENTS.md': `# AGENTS.md - Your Workspace\n\nThis folder is home. Treat it that way.\n\n## Session Startup\n1. Read \`SOUL.md\` — this is who you are\n2. Read \`USER.md\` — this is who you're helping`,
+  'USER.md': `# USER.md\n\n## About the User\n- Prefers concise answers.\n- Has technical background.\n- Values performance and scalable designs.`,
+  'IDENTITY.md': `# IDENTITY.md\n\nYou are an autonomous agent designed to assist in complex developer workflows. You operate efficiently with minimal oversight.`,
+  'SOUL.MD': `# SOUL.md\n\nYour core directives:\n- **Truth over politeness**: tell it like it is.\n- **Action over words**: prefer demonstrating via code over long explanations.\n- **Responsibility**: if you make a mistake, admit it and fix it immediately.`,
+  'TOOLS.MD': `# TOOLS.md\n\nAvailable capabilities:\n- Web Search: Used for fetching latest documentation.\n- Semantic DB: Access to the corporate knowledge base.\n- Code Analysis: AST parsing utilities for large refactors.`
+}
+
+const generateMockTasks = () => {
+  const t = []
+  const now = new Date()
+  let idAcc = 100
+  // Generate a random scatter of tasks logic over last 7 days
+  const taskTypes = ['每日简报生成', '周报汇总', '系统清理']
+  const colors = { '每日简报生成': '#1890ff', '周报汇总': '#52c41a', '系统清理': '#faad14' }
+  
+  for (let d = 0; d < 7; d++) {
+    for (let h = 0; h < 24; h++) {
+      if (Math.random() > 0.7) { // 30% chance for an hour to have a job
+        const type = taskTypes[Math.floor(Math.random() * taskTypes.length)]
+        const dObj = new Date(now)
+        dObj.setDate(dObj.getDate() - d)
+        dObj.setHours(h, Math.floor(Math.random() * 60))
+        t.push({
+          id: `t-${idAcc++}`,
+          name: type,
+          color: colors[type],
+          status: Math.random() > 0.1 ? 'Success' : 'Error',
+          timestamp: dObj.getTime(),
+          time: dObj.toISOString().replace('T', ' ').slice(0, 19),
+          duration: `${Math.floor(Math.random() * 50 + 10)}s`
+        })
+      }
+    }
+  }
+  return t.sort((a,b) => b.timestamp - a.timestamp)
+}
+
 const INITIAL_AGENTS = [
   {
     id: 'ha-001',
     name: 'insight-brief-agent',
     description: '信息摘要 Agent，用于自动化生成每日简报',
     version: 'v2.1.0',
-    status: 'Running',
+    status: '运行中',
     owner: 'admin',
     cluster: 'cls-prod-cluster-1',
     createdAt: ts(14),
@@ -49,11 +86,16 @@ const INITIAL_AGENTS = [
       { time: ts(7), action: '更新配置', detail: '修改并发数为 5' },
       { time: ts(1), action: '重启', detail: '配置更新后自动重启' },
     ],
-    tasks: [
-      { id: 't-001', name: '每日简报生成', status: 'Success', time: ts(0, 2), duration: '45s' },
-      { id: 't-002', name: '每日简报生成', status: 'Success', time: ts(1, 2), duration: '38s' },
-      { id: 't-003', name: '周报汇总', status: 'Success', time: ts(7), duration: '2m12s' },
+    tasks: generateMockTasks(),
+    markdownFiles: mockFiles,
+    channels: [
+      { id: 'ch-1', type: '企业微信', name: '内部运营支持群', status: 'connected' },
+      { id: 'ch-2', type: '钉钉', name: '客户支持群A', status: 'connected' }
     ],
+    webuiConfig: {
+      url: 'https://agentbase.ai/ui/ha-001-xyz',
+      access: 'Owner可见'
+    },
     conversations: [
       {
         id: 'conv-001', title: '每日简报生成', createdAt: ts(0, 2),
@@ -70,6 +112,10 @@ const INITIAL_AGENTS = [
           { role: 'assistant', content: '本周重要事件汇总已生成，共涉及 23 条信息。', time: ts(7) },
         ]
       },
+    ],
+    snapshots: [
+      { id: 'snap-001', name: 'v2.1.0-release', createdAt: ts(2), size: '12.4 MB', author: 'admin', desc: '版本更新前的全量备份', trigger: '手动备份', version: 'v2.1.0' },
+      { id: 'snap-002', name: 'auto-backup-daily', createdAt: ts(1), size: '12.5 MB', author: '系统', desc: '每日自动定时快照', trigger: '定时备份', version: 'v2.1.0' }
     ],
     workspace: {
       files: [
@@ -92,7 +138,7 @@ const INITIAL_AGENTS = [
     name: 'code-review-agent',
     description: '代码审查 Agent，自动对 PR 进行 review',
     version: 'v1.3.2',
-    status: 'Paused',
+    status: '停止',
     owner: 'zhangsan',
     cluster: 'cls-dev-cluster-2',
     createdAt: ts(10),
@@ -141,7 +187,7 @@ const INITIAL_AGENTS = [
     name: 'customer-support-bot',
     description: '客户支持 Agent，处理工单和FAQ',
     version: 'v3.0.1',
-    status: 'Stopped',
+    status: '停止',
     owner: 'lisi',
     cluster: 'cls-prod-cluster-1',
     createdAt: ts(30),
@@ -171,7 +217,7 @@ const INITIAL_AGENTS = [
     name: 'data-pipeline-agent',
     description: '数据流水线 Agent，负责 ETL 任务调度',
     version: 'v1.0.0-beta',
-    status: 'Error',
+    status: '停止',
     owner: 'wangwu',
     cluster: 'cls-prod-cluster-1',
     createdAt: ts(7),
@@ -202,7 +248,7 @@ const INITIAL_AGENTS = [
     name: 'meeting-assistant',
     description: '会议助手 Agent，自动记录、总结和分配待办',
     version: 'v2.0.0',
-    status: 'Draft',
+    status: '停止',
     owner: 'admin',
     cluster: '',
     createdAt: ts(1),
@@ -232,7 +278,7 @@ function agentReducer(state, action) {
       const newAgent = {
         ...action.payload,
         id: `ha-${String(_nextId++).padStart(3, '0')}`,
-        status: 'Draft',
+        status: '停止',
         createdAt: new Date().toISOString().replace('T', ' ').slice(0, 19),
         updatedAt: new Date().toISOString().replace('T', ' ').slice(0, 19),
         lastRunAt: '',
@@ -324,7 +370,7 @@ export function useHarnessAgents() {
 
 // ========== Constants ==========
 export const VERSIONS = ['v1.0.0', 'v1.0.0-beta', 'v1.3.2', 'v2.0.0', 'v2.1.0', 'v3.0.1']
-export const STATUS_LIST = ['Draft', 'Running', 'Paused', 'Stopped', 'Error']
+export const STATUS_LIST = ['运行中', '停止', '启动中', '关闭中']
 export const IM_TYPES = ['企业微信', '飞书', '钉钉', '自定义 Webhook']
 export const SKILL_OPTIONS = [
   'web-search', 'doc-parser', 'summarizer', 'code-analysis',
