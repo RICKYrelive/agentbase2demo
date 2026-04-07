@@ -60,6 +60,10 @@
   justify-content: center;
   border: 1px solid #eee;
 }
+.channel-status {
+  margin-left: auto;
+  margin-right: 24px;
+}
 
 /* Markdown Editor */
 .had-markdown-editor {

@@ -22,14 +22,19 @@ const columns = [
 export default function AgentRuntime({ onAlert }) {
   const [tab, setTab] = useState('runtime')
   const [codeType, setCodeType] = useState('high')
+  const [showGuide, setShowGuide] = useState(true)
   const navigate = useNavigate()
 
   return (
     <PageLayout
       title="Agent 应用运行时"
-      rightAction={<button className="action-btn" onClick={onAlert}>⊙ 收起指引</button>}
+      rightAction={
+        <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
+          {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
+        </button>
+      }
     >
-      <GuideCards cards={guideCards} />
+      {showGuide && <GuideCards cards={guideCards} />}
       <div className="page-tabs">
         <div className={`page-tab ${tab === 'runtime' ? 'active' : ''}`} onClick={() => setTab('runtime')}>Agent 应用运行时</div>
         <div className={`page-tab ${tab === 'artifact' ? 'active' : ''}`} onClick={() => setTab('artifact')}>制品上传管理</div>

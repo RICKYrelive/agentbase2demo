@@ -17,7 +17,11 @@ export default function SkillCenter() {
   return (
     <PageLayout
       title="Skill 中心"
-      rightAction={showGuide && <button className="action-btn" onClick={() => setShowGuide(false)}>⊙ 收起指引</button>}
+      rightAction={
+        <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
+          {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
+        </button>
+      }
     >
       {/* 描述文案 */}
       <div className="skill-center-desc">

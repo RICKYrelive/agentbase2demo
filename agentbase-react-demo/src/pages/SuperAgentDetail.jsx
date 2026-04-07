@@ -580,6 +580,11 @@ export default function SuperAgentDetail() {
                             <div style={{ fontSize: 12, color: '#999' }}>{ch.type}</div>
                           </div>
                         </div>
+                        <div className="channel-status">
+                          <span className="ha-status-tag" style={ch.status === '异常' ? { background: '#fff2f0', color: '#ff4d4f', borderColor: '#ffccc7' } : { background: '#f6ffed', color: '#52c41a', borderColor: '#b7eb8f' }}>
+                            ● {ch.status === '异常' ? '异常' : '正常'}
+                          </span>
+                        </div>
                         <button className="action-btn small" onClick={() => handleInlineUpdate('channels', agent.channels.filter(c => c.id !== ch.id))}>断开</button>
                       </div>
                     ))}
