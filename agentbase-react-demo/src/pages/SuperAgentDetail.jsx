@@ -129,11 +129,13 @@ export default function SuperAgentDetail() {
         dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '运行中' } })
       }, 1500)
     } else if (newStatus === '关闭中') {
-      dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '关闭中' } })
-      showToast('关闭中...')
-      setTimeout(() => {
-        dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '停止' } })
-      }, 1500)
+      if (window.confirm('确定要停止该 Agent 吗？')) {
+        dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '关闭中' } })
+        showToast('关闭中...')
+        setTimeout(() => {
+          dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '停止' } })
+        }, 1500)
+      }
     } else {
       dispatch({ type: 'UPDATE', id: agent.id, payload: { status: newStatus } })
       showToast(newStatus === '运行中' ? '已启动' : '已停止')
@@ -585,7 +587,11 @@ export default function SuperAgentDetail() {
                             ● {ch.status === '异常' ? '异常' : '正常'}
                           </span>
                         </div>
-                        <button className="action-btn small" onClick={() => handleInlineUpdate('channels', agent.channels.filter(c => c.id !== ch.id))}>断开</button>
+                        <button className="action-btn small" onClick={() => {
+                          if (window.confirm('确定要断开该渠道连接吗？')) {
+                            handleInlineUpdate('channels', agent.channels.filter(c => c.id !== ch.id))
+                          }
+                        }}>断开</button>
                       </div>
                     ))}
                     <button className="action-btn primary" onClick={handleAddChannel} style={{ marginTop: 8 }}>+ 新增 Channel</button>

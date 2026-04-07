@@ -84,11 +84,13 @@ export default function SuperAgentList() {
         }, 1500)
         break
       case 'stop':
-        dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '关闭中' } })
-        showToast(`${agent.name} 关闭中...`)
-        setTimeout(() => {
-          dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '停止' } })
-        }, 1500)
+        if (window.confirm(`确定要停止 ${agent.name} 吗？`)) {
+          dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '关闭中' } })
+          showToast(`${agent.name} 关闭中...`)
+          setTimeout(() => {
+            dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '停止' } })
+          }, 1500)
+        }
         break
       case 'delete':
         setConfirmDelete(agent)

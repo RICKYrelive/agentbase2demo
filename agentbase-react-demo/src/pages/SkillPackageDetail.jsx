@@ -122,8 +122,10 @@ export default function SkillPackageDetail() {
   }
 
   const handleRemoveSkill = (skillId) => {
-    dispatch({ type: 'REMOVE_SKILL_FROM_PACKAGE', packageId: pkg.id, skillId })
-    showToast('已移除关联的 Skill')
+    if (window.confirm('确定要从该技能包中移除此技能吗？')) {
+      dispatch({ type: 'REMOVE_SKILL_FROM_PACKAGE', packageId: pkg.id, skillId })
+      showToast('已移除关联的 Skill')
+    }
   }
 
   const handleChangeVersion = (pkgId, skillId, version) => {

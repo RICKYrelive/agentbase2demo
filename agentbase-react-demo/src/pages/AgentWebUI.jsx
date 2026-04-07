@@ -497,7 +497,12 @@ export default function AgentWebUI() {
                         <div className="cron-popover">
                           <div className="popover-item" onClick={handleRunNow}>▶ 立即运行</div>
                           <div className="popover-item" onClick={() => { setEditingCron({ name: item.name, prompt: '请搜索并汇总 "agent infra" 在过去24小时内的全网最新动态...', time: '10:00', days: [1,2,3,4,5], icon: '📄', schedType: 'daily', cron: '0 0/15 * * * ?' }); setShowCronModal(true); setPopoverId(null); }}>✏️ 编辑</div>
-                          <div className="popover-item danger">🗑️ 删除</div>
+                          <div className="popover-item danger" onClick={() => {
+                            if (window.confirm('确定要删除该定时任务吗？')) {
+                              alert('已删除');
+                              setActiveActionItem(null);
+                            }
+                          }}>🗑️ 删除</div>
                         </div>
                       )}
                     </td>
@@ -531,11 +536,13 @@ export default function AgentWebUI() {
                     className="btn-remove-skill" 
                     title="移除技能"
                     onClick={() => {
-                      dispatch({
-                        type: 'UPDATE_AGENT',
-                        id: agent.id,
-                        updates: { skills: agent.skills.filter(s => s !== skillName) }
-                      })
+                      if (window.confirm(`确定要从该 Agent 中移除技能 "${skillName}" 吗？`)) {
+                        dispatch({
+                          type: 'UPDATE_AGENT',
+                          id: agent.id,
+                          updates: { skills: agent.skills.filter(s => s !== skillName) }
+                        })
+                      }
                     }}
                   >
                     ×
@@ -608,7 +615,11 @@ export default function AgentWebUI() {
                               <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <span style={{ fontSize: '12px', color: '#94a3b8', marginRight: '20px' }}>{v.time}</span>
                                 <span className="btn-v-download" onClick={() => alert(`下载 ${v.file}`)}>下载</span>
-                                <span className="btn-v-delete" onClick={() => alert('删除版本')}>删除版本</span>
+                                <span className="btn-v-delete" onClick={() => {
+                                  if (window.confirm('确定要删除该制品版本吗？')) {
+                                    alert('已从历史记录中删除该版本');
+                                  }
+                                }}>删除版本</span>
                               </div>
                             </div>
                           ))}
@@ -753,7 +764,12 @@ export default function AgentWebUI() {
               <div className="cm-divider" />
               <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品</div>
               <div className="cm-divider" />
-              <div className="cm-item danger" onClick={() => alert('删除文件')}>🗑️ 删除文件</div>
+              <div className="cm-item danger" onClick={() => {
+                if (window.confirm(`确定要删除文件 "${activeActionItem.item.name}" 吗？`)) {
+                  alert('文件已删除');
+                  setActiveActionItem(null);
+                }
+              }}>🗑️ 删除文件</div>
             </>
           )}
         </div>
