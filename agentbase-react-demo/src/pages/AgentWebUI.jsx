@@ -57,7 +57,7 @@ export default function AgentWebUI() {
     return () => window.removeEventListener('click', handleClick);
   }, []);
 
-  const handleActionClick = (e, type, item) => {
+  const handleActionClick = (e, type, item, isRoot = false) => {
     e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
     setActiveActionItem({
@@ -65,7 +65,8 @@ export default function AgentWebUI() {
       y: rect.bottom + 8,
       visible: true,
       type,
-      item
+      item,
+      isRoot
     });
   };
 
@@ -252,7 +253,7 @@ export default function AgentWebUI() {
           {item.size && <span className="webui-file-size">{item.size}</span>}
           <button 
             className="row-action-btn" 
-            onClick={(e) => handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item)}
+            onClick={(e) => handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item, depth === 0)}
           >
             ⋮
           </button>
@@ -713,14 +714,14 @@ export default function AgentWebUI() {
               <div className="cm-item" onClick={() => alert('上传文件')}>📤 上传文件</div>
               <div className="cm-item" onClick={() => alert('新建文件夹')}>📁 新建子目录</div>
               <div className="cm-divider" />
-              <div className={`cm-item ${['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) ? 'disabled' : ''}`} onClick={() => !['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) && alert('重命名')}>📝 重命名</div>
+              <div className={`cm-item ${activeActionItem.isRoot ? 'disabled' : ''}`} onClick={() => !activeActionItem.isRoot && alert('重命名')}>📝 重命名</div>
             </>
           ) : (
             <>
               <div className="cm-item" onClick={() => alert('下载文件')}>⬇️ 下载文件</div>
-              <div className="cm-item" onClick={() => alert('重命名')}>📝 重命名</div>
+              <div className={`cm-item ${activeActionItem.isRoot ? 'disabled' : ''}`} onClick={() => !activeActionItem.isRoot && alert('重命名')}>📝 重命名</div>
               <div className="cm-divider" />
-              <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品 / 关联版本</div>
+              <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品</div>
               <div className="cm-divider" />
               <div className="cm-item danger" onClick={() => alert('删除文件')}>🗑️ 删除文件</div>
             </>
@@ -730,38 +731,12 @@ export default function AgentWebUI() {
 
       {/* ========== ARTIFACT LINK MODAL ========== */}
       {showArtifactLinkModal && (
-        <div className="ai-modal-overlay">
-          <div className="ai-modal modal-artifact-link">
-            <button className="cron-modal-close" onClick={() => setShowArtifactLinkModal(false)}>×</button>
-            <h3>📦 同步为制品</h3>
-            <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>将文件 <strong>{linkFile?.name}</strong> 分发为制品或关联到现有制品版本。</p>
-            
-            <div className="link-type-tabs">
-              <div className="link-type-tab active">关联到已有制品</div>
-              <div className="link-type-tab" onClick={() => alert('切换到创建新制品')}>创建新制品</div>
-            </div>
-
-            <div className="artifact-select-list">
-              {artifacts.map(art => (
-                <div key={art.id} className="artifact-opt">
-                  <div>
-                    <div style={{ fontWeight: 600 }}>{art.name}</div>
-                    <div style={{ fontSize: '11px', color: '#999' }}>当前版本: {art.versions[0]?.version}</div>
-                  </div>
-                  <button className="action-btn small" onClick={() => {
-                    const newVersion = { id: `v${Date.now()}`, version: `v1.2.${art.versions.length}`, file: linkFile.name, time: '刚刚' };
-                    setArtifacts(artifacts.map(a => a.id === art.id ? { ...a, versions: [newVersion, ...a.versions] } : a));
-                    setShowArtifactLinkModal(false);
-                  }}>选择</button>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '20px' }}>
-              <button className="btn-cancel" onClick={() => setShowArtifactLinkModal(false)}>取消</button>
-            </div>
-          </div>
-        </div>
+        <ArtifactLinkModal 
+          file={linkFile} 
+          artifacts={artifacts} 
+          onClose={() => setShowArtifactLinkModal(false)}
+          onSave={(newArts) => setArtifacts(newArts)}
+        />
       )}
 
       {/* ========== RIGHT: Workspace Files ========== */}
@@ -780,3 +755,168 @@ export default function AgentWebUI() {
     </div>
   )
 }
+
+function ArtifactLinkModal({ file, artifacts, onClose, onSave }) {
+  const [mode, setMode] = useState('existing') // 'existing' | 'new'
+  const [selectedArtId, setSelectedArtId] = useState(null)
+  const [version, setVersion] = useState('')
+  const [newName, setNewName] = useState('')
+  const [newDesc, setNewDesc] = useState('')
+  const [error, setError] = useState('')
+
+  const selectedArt = artifacts.find(a => a.id === selectedArtId)
+
+  // Auto-increment version suggestion
+  useEffect(() => {
+    if (mode === 'existing' && selectedArt) {
+      const latest = selectedArt.versions[0]?.version || 'v0.0.0'
+      const parts = latest.replace('v', '').split('.')
+      if (parts.length === 3) {
+        const nextPatch = parseInt(parts[2]) + 1
+        setVersion(`v${parts[0]}.${parts[1]}.${nextPatch}`)
+      } else {
+        setVersion('v1.0.1')
+      }
+    } else if (mode === 'new') {
+      setVersion('v1.0.0')
+    }
+  }, [mode, selectedArtId])
+
+  const validateAndSave = () => {
+    setError('')
+    
+    // Basic semver check logic
+    const verRegex = /^v\d+\.\d+\.\d+$/
+    if (!verRegex.test(version)) {
+      setError('版本号格式必须为 vX.Y.Z (例如 v1.2.3)')
+      return
+    }
+
+    if (mode === 'existing') {
+      if (!selectedArtId) {
+        setError('请选择一个现有制品')
+        return
+      }
+      
+      const latest = selectedArt.versions[0]?.version
+      if (latest) {
+        const parse = (v) => v.replace('v', '').split('.').map(Number)
+        const vCurr = parse(version)
+        const vLate = parse(latest)
+        
+        let isNewer = false
+        for (let i = 0; i < 3; i++) {
+          if (vCurr[i] > vLate[i]) { isNewer = true; break; }
+          if (vCurr[i] < vLate[i]) { isNewer = false; break; }
+        }
+        
+        if (!isNewer && version !== latest) {
+          setError(`版本号必须大于当前最新版本 (${latest})`)
+          return
+        }
+      }
+
+      const newVersionObj = { 
+        id: `v-${Date.now()}`, 
+        version, 
+        file: file.name, 
+        time: new Date().toISOString().split('T')[0] + ' ' + new Date().toTimeString().slice(0, 5) 
+      }
+      
+      const updatedArts = artifacts.map(a => 
+        a.id === selectedArtId ? { ...a, versions: [newVersionObj, ...a.versions] } : a
+      )
+      onSave(updatedArts)
+      onClose()
+    } else {
+      if (!newName.trim()) {
+        setError('请输入制品名称')
+        return
+      }
+      
+      const newArt = {
+        id: `art-${Date.now()}`,
+        name: newName,
+        description: newDesc,
+        versions: [{
+          id: `v-${Date.now()}`,
+          version,
+          file: file.name,
+          time: new Date().toISOString().split('T')[0] + ' ' + new Date().toTimeString().slice(0, 5)
+        }]
+      }
+      onSave([newArt, ...artifacts])
+      onClose()
+    }
+  }
+
+  return (
+    <div className="ai-modal-overlay">
+      <div className="ai-modal modal-artifact-link">
+        <button className="cron-modal-close" onClick={onClose}>×</button>
+        <h3>📦 存为制品</h3>
+        <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>
+          将文件 <strong>{file?.name}</strong> 发布为制品版本
+        </p>
+        
+        <div className="link-type-tabs">
+          <div className={`link-type-tab ${mode === 'existing' ? 'active' : ''}`} onClick={() => setMode('existing')}>关联到已有制品</div>
+          <div className={`link-type-tab ${mode === 'new' ? 'active' : ''}`} onClick={() => setMode('new')}>创建新制品</div>
+        </div>
+
+        {mode === 'existing' ? (
+          <div className="artifact-select-list">
+            {artifacts.map(art => (
+              <div 
+                key={art.id} 
+                className={`artifact-opt ${selectedArtId === art.id ? 'selected' : ''}`}
+                onClick={() => setSelectedArtId(art.id)}
+              >
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600 }}>{art.name}</div>
+                  <div style={{ fontSize: '11px', color: '#999' }}>当前版本: {art.versions[0]?.version}</div>
+                </div>
+                {selectedArtId === art.id && <span style={{ color: '#6366f1' }}>✓</span>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="artifact-new-form">
+            <input 
+              className="cron-input-full" 
+              placeholder="制品名称 (必填)" 
+              value={newName}
+              onChange={e => setNewName(e.target.value)}
+              style={{ marginBottom: '12px' }}
+            />
+            <textarea 
+              className="cron-prompt-area" 
+              placeholder="描述信息 (选填)" 
+              value={newDesc}
+              onChange={e => setNewDesc(e.target.value)}
+              rows={3}
+              style={{ padding: '12px' }}
+            />
+          </div>
+        )}
+
+        <div className="version-input-section" style={{ marginTop: '20px' }}>
+          <label style={{ fontSize: '13px', fontWeight: 600, color: '#334155', marginBottom: '8px', display: 'block' }}>版本号</label>
+          <input 
+            className="cron-input-full"
+            placeholder="v1.0.0"
+            value={version}
+            onChange={e => setVersion(e.target.value)}
+          />
+          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>⚠️ {error}</div>}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>
+          <button className="btn-cancel" onClick={onClose}>取消</button>
+          <button className="btn-save" onClick={validateAndSave}>确认保存</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+

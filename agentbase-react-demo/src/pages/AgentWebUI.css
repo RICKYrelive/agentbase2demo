@@ -1355,51 +1355,83 @@ input:checked + .cron-slider:before {
 .btn-v-delete { color: #94a3b8; cursor: pointer; font-size: 13px; margin-left: 12px; }
 .btn-v-delete:hover { color: #ff4d4f; }
 
-/* ========== ARTIFACT LINK MODAL ========== */
+/* ========== ARTIFACT LINK MODAL REFINEMENTS ========== */
 .modal-artifact-link {
-  width: 500px !important;
+  width: 480px !important;
+  max-width: 95vw;
 }
+
 .link-type-tabs {
   display: flex;
-  gap: 20px;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
   margin-bottom: 24px;
-  border-bottom: 1px solid #f1f5f9;
 }
 .link-type-tab {
-  padding: 8px 4px;
-  font-size: 14px;
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 500;
   color: #64748b;
   cursor: pointer;
-  position: relative;
+  border-radius: 7px;
+  transition: all 0.2s;
 }
 .link-type-tab.active {
+  background: #fff;
   color: #6366f1;
-  font-weight: 600;
-}
-.link-type-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 2px;
-  background: #6366f1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .artifact-select-list {
-  max-height: 200px;
+  max-height: 220px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  margin-bottom: 16px;
+  padding: 4px;
+  margin-bottom: 20px;
 }
 .artifact-opt {
-  padding: 12px 16px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  border-bottom: 1px solid #f8fafc;
+  transition: all 0.2s;
+  border: 1px solid transparent;
 }
-.artifact-opt:hover { background: #f1f5f9; }
-.artifact-opt.selected { background: #eff6ff; border-left: 3px solid #6366f1; }
+.artifact-opt:hover {
+  background: #f8fafc;
+}
+.artifact-opt.selected {
+  background: rgba(99, 102, 241, 0.05);
+  border-color: #6366f1;
+}
+
+.artifact-new-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.version-error-msg {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+  padding-left: 4px;
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
 
 
 
