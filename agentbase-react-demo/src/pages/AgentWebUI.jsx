@@ -714,13 +714,10 @@ export default function AgentWebUI() {
             <>
               <div className="cm-item" onClick={() => alert('上传文件')}>📤 上传文件</div>
               <div className="cm-item" onClick={() => alert('新建文件夹')}>📁 新建子目录</div>
-              <div className="cm-divider" />
-              <div className={`cm-item ${activeActionItem.isRoot ? 'disabled' : ''}`} onClick={() => !activeActionItem.isRoot && alert('重命名')}>📝 重命名</div>
             </>
           ) : (
             <>
               <div className="cm-item" onClick={() => alert('下载文件')}>⬇️ 下载文件</div>
-              <div className={`cm-item ${activeActionItem.isRoot ? 'disabled' : ''}`} onClick={() => !activeActionItem.isRoot && alert('重命名')}>📝 重命名</div>
               <div className="cm-divider" />
               <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品</div>
               <div className="cm-divider" />
