@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useHarnessAgents } from '../store/harnessAgentStore.jsx'
+import { useSuperAgents } from '../store/superAgentStore.jsx'
 import './AgentWebUI.css'
 
 export default function AgentWebUI() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { agents, dispatch } = useHarnessAgents()
+  const { agents, dispatch } = useSuperAgents()
   const agent = agents.find(a => a.id === id)
 
   const [activeConv, setActiveConv] = useState(null)
@@ -32,7 +32,7 @@ export default function AgentWebUI() {
     return (
       <div className="webui-not-found">
         <div>Agent 不存在</div>
-        <button className="action-btn primary" onClick={() => navigate('/harness-agent')}>返回列表</button>
+        <button className="action-btn primary" onClick={() => navigate('/super-agent')}>返回列表</button>
       </div>
     )
   }
@@ -154,7 +154,7 @@ export default function AgentWebUI() {
       {/* ========== LEFT: Conversation List ========== */}
       <div className="webui-sidebar">
         <div className="webui-sidebar-header">
-          <button className="webui-back-btn" onClick={() => navigate(`/harness-agent/${agent.id}`)}>← 返回</button>
+          <button className="webui-back-btn" onClick={() => navigate(`/super-agent/${agent.id}`)}>← 返回</button>
           <div className="webui-agent-name">{agent.name}</div>
         </div>
         

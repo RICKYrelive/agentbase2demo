@@ -16,11 +16,18 @@ import Trace from './pages/Trace'
 import ClusterManage from './pages/ClusterManage'
 import SystemManagePage from './pages/SystemManagePage'
 import CreateAgentApp from './pages/CreateAgentApp'
-import HarnessAgentList from './pages/HarnessAgentList'
-import CreateHarnessAgent from './pages/CreateHarnessAgent'
-import HarnessAgentDetail from './pages/HarnessAgentDetail'
+import SuperAgentList from './pages/SuperAgentList'
+import CreateSuperAgent from './pages/CreateSuperAgent'
+import SuperAgentDetail from './pages/SuperAgentDetail'
 import AgentWebUI from './pages/AgentWebUI'
-import { HarnessAgentProvider } from './store/harnessAgentStore.jsx'
+import { SuperAgentProvider } from './store/superAgentStore.jsx'
+import { SkillProvider } from './store/skillStore.jsx'
+
+import SkillCenter from './pages/SkillCenter'
+import CreateSkillPackage from './pages/CreateSkillPackage'
+import SkillPackageDetail from './pages/SkillPackageDetail'
+import CreateSkill from './pages/CreateSkill'
+import SkillDetail from './pages/SkillDetail'
 
 import './App.css'
 
@@ -42,7 +49,7 @@ function AppLayout() {
 
   const handleNavClick = (key) => {
     // Strip sub-paths so sidebar highlights the parent
-    if (key.startsWith('agent-runtime/') || key.startsWith('harness-agent/')) {
+    if (key.startsWith('agent-runtime/') || key.startsWith('super-agent/') || key.startsWith('skill-center/')) {
         navigate('/' + key.split('/')[0])
     } else {
         navigate('/' + key)
@@ -53,8 +60,9 @@ function AppLayout() {
 
   // Derive sidebar active key (strip sub-paths and id segments)
   let activeNav = currentPath
-  if (activeNav.startsWith('harness-agent/')) activeNav = 'harness-agent'
+  if (activeNav.startsWith('super-agent/')) activeNav = 'super-agent'
   if (activeNav.startsWith('agent-runtime/')) activeNav = 'agent-runtime'
+  if (activeNav.startsWith('skill-center/')) activeNav = 'skill-center'
 
   return (
     <div className="app-layout">
@@ -67,13 +75,18 @@ function AppLayout() {
           <Route path="/agent-dev" element={<AgentDev onAlert={handleAlert} />} />
           <Route path="/agent-runtime" element={<AgentRuntime onAlert={handleAlert} />} />
           <Route path="/agent-runtime/create" element={<CreateAgentApp />} />
-          <Route path="/harness-agent" element={<HarnessAgentList />} />
-          <Route path="/harness-agent/create" element={<CreateHarnessAgent />} />
-          <Route path="/harness-agent/:id" element={<HarnessAgentDetail />} />
+          <Route path="/super-agent" element={<SuperAgentList />} />
+          <Route path="/super-agent/create" element={<CreateSuperAgent />} />
+          <Route path="/super-agent/:id" element={<SuperAgentDetail />} />
           <Route path="/ai-database" element={<AIDatabase onAlert={handleAlert} />} />
           <Route path="/memory" element={<Memory onAlert={handleAlert} />} />
           <Route path="/ai-model-service" element={<AIModelService onAlert={handleAlert} />} />
           <Route path="/mcp-service" element={<MCPService onAlert={handleAlert} />} />
+          <Route path="/skill-center" element={<SkillCenter onAlert={handleAlert} />} />
+          <Route path="/skill-center/package/create" element={<CreateSkillPackage />} />
+          <Route path="/skill-center/package/:id" element={<SkillPackageDetail />} />
+          <Route path="/skill-center/skill/create" element={<CreateSkill />} />
+          <Route path="/skill-center/skill/:id" element={<SkillDetail />} />
           <Route path="/api-routing" element={<APIRouting onAlert={handleAlert} />} />
           <Route path="/global-observation" element={<GlobalObservation onAlert={handleAlert} />} />
           <Route path="/trace" element={<Trace onAlert={handleAlert} />} />
@@ -93,12 +106,14 @@ function AppLayout() {
 function App() {
   return (
     <HashRouter>
-      <HarnessAgentProvider>
-        <Routes>
-          <Route path="/harness-agent/:id/webui" element={<AgentWebUI />} />
-          <Route path="/*" element={<AppLayout />} />
-        </Routes>
-      </HarnessAgentProvider>
+      <SuperAgentProvider>
+        <SkillProvider>
+          <Routes>
+            <Route path="/super-agent/:id/webui" element={<AgentWebUI />} />
+            <Route path="/*" element={<AppLayout />} />
+          </Routes>
+        </SkillProvider>
+      </SuperAgentProvider>
     </HashRouter>
   )
 }

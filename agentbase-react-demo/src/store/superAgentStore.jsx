@@ -352,7 +352,7 @@ function agentReducer(state, action) {
 // ========== Context ==========
 const AgentContext = createContext(null)
 
-export function HarnessAgentProvider({ children }) {
+export function SuperAgentProvider({ children }) {
   const [agents, dispatch] = useReducer(agentReducer, INITIAL_AGENTS)
   const [globalTags, setGlobalTags] = useState(INITIAL_TAGS)
   return (
@@ -362,9 +362,9 @@ export function HarnessAgentProvider({ children }) {
   )
 }
 
-export function useHarnessAgents() {
+export function useSuperAgents() {
   const ctx = useContext(AgentContext)
-  if (!ctx) throw new Error('useHarnessAgents must be used within HarnessAgentProvider')
+  if (!ctx) throw new Error('useSuperAgents must be used within SuperAgentProvider')
   return ctx
 }
 

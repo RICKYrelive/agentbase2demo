@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useHarnessAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
+import { useSuperAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
 import SkillSelectionModal from '../components/SkillSelectionModal'
-import './CreateHarnessAgent.css'
+import './CreateSuperAgent.css'
 
-export default function CreateHarnessAgent() {
+export default function CreateSuperAgent() {
   const navigate = useNavigate()
-  const { dispatch } = useHarnessAgents()
+  const { dispatch } = useSuperAgents()
   const [activeAnchor, setActiveAnchor] = useState('basic-info')
   const [toast, setToast] = useState(null)
   const [errors, setErrors] = useState({})
@@ -90,20 +90,20 @@ export default function CreateHarnessAgent() {
         cluster: form.k8sCluster,
       },
     })
-    showToast('Harness Agent 创建成功')
-    setTimeout(() => navigate('/harness-agent'), 800)
+    showToast('Super Agent 创建成功')
+    setTimeout(() => navigate('/super-agent'), 800)
   }
 
-  const goBack = () => navigate('/harness-agent')
+  const goBack = () => navigate('/super-agent')
 
   return (
     <div className="create-app-page">
       <div className="create-app-header">
         <button className="back-btn" onClick={goBack}>⬅</button>
         <div className="breadcrumb">
-          <span className="bc-item" onClick={goBack}>Harness Agent</span>
+          <span className="bc-item" onClick={goBack}>Super Agent</span>
           <span className="bc-separator"> &gt; </span>
-          <span className="bc-current">创建 Harness Agent</span>
+          <span className="bc-current">创建 Super Agent</span>
         </div>
       </div>
 

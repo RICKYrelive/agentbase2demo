@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHarnessAgents, SKILL_OPTIONS, SKILL_PACKAGES } from '../store/harnessAgentStore'
+import { useSuperAgents, SKILL_OPTIONS, SKILL_PACKAGES } from '../store/superAgentStore'
 import './SkillSelectionModal.css'
 
 export default function SkillSelectionModal({ value = [], onChange }) {

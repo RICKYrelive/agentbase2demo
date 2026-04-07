@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useHarnessAgents } from '../store/harnessAgentStore'
+import { useSuperAgents } from '../store/superAgentStore'
 import './TagSelectModal.css'
 
 export default function TagSelectModal({ value = [], onChange }) {
-  const { globalTags } = useHarnessAgents()
+  const { globalTags } = useSuperAgents()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useHarnessAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/harnessAgentStore.jsx'
+import { useSuperAgents, VERSIONS, IM_TYPES, SKILL_OPTIONS } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
 import SkillSelectionModal from '../components/SkillSelectionModal'
-import './HarnessAgentDetail.css'
+import './SuperAgentDetail.css'
 
 const STATUS_COLORS = {
   '运行中': { bg: '#f6ffed', color: '#52c41a', border: '#b7eb8f' },
@@ -71,11 +71,11 @@ function InlineEditable({ label, value, type = 'text', options = [], onChange, r
   )
 }
 
-export default function HarnessAgentDetail() {
+export default function SuperAgentDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  const { agents, dispatch } = useHarnessAgents()
+  const { agents, dispatch } = useSuperAgents()
   const agent = agents.find(a => a.id === id)
 
   const searchParams = new URLSearchParams(location.search)
@@ -113,7 +113,7 @@ export default function HarnessAgentDetail() {
       <div className="had-not-found">
         <div className="had-not-found-icon">🔍</div>
         <div>Agent 不存在</div>
-        <button className="action-btn primary" onClick={() => navigate('/harness-agent')}>返回列表</button>
+        <button className="action-btn primary" onClick={() => navigate('/super-agent')}>返回列表</button>
       </div>
     )
   }
@@ -290,7 +290,7 @@ export default function HarnessAgentDetail() {
 
   const handleTabClick = (key) => {
     if (key === 'webui') {
-      navigate(`/harness-agent/${agent.id}/webui`)
+      navigate(`/super-agent/${agent.id}/webui`)
     } else {
       setTab(key)
     }
@@ -300,9 +300,9 @@ export default function HarnessAgentDetail() {
     <div className="had-page">
       {/* Header */}
       <div className="create-app-header">
-        <button className="back-btn" onClick={() => navigate('/harness-agent')}>⬅</button>
+        <button className="back-btn" onClick={() => navigate('/super-agent')}>⬅</button>
         <div className="breadcrumb">
-          <span className="bc-item" onClick={() => navigate('/harness-agent')}>Harness Agent</span>
+          <span className="bc-item" onClick={() => navigate('/super-agent')}>Super Agent</span>
           <span className="bc-separator"> &gt; </span>
           <span className="bc-current">{agent.name}</span>
         </div>
@@ -334,7 +334,7 @@ export default function HarnessAgentDetail() {
           {['运行中', '关闭中'].includes(agent.status) && (
             <button className="action-btn" disabled={agent.status === '关闭中'} onClick={() => doStatusChange('关闭中')}>⏹ 停止</button>
           )}
-          <button className="action-btn" onClick={() => navigate(`/harness-agent/${agent.id}/webui`)}>🌐 WebUI</button>
+          <button className="action-btn" onClick={() => navigate(`/super-agent/${agent.id}/webui`)}>🌐 WebUI</button>
         </div>
       </div>
 

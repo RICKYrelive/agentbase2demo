@@ -14,7 +14,7 @@ const workspaceNavGroups = [
     items: [
       { key: 'agent-dev', label: 'Agent 应用开发', icon: '🤖' },
       { key: 'agent-runtime', label: 'Agent 应用运行时', icon: '⚡' },
-      { key: 'harness-agent', label: 'Harness Agent', icon: '🔗' },
+      { key: 'super-agent', label: 'Super Agent', icon: '🔗' },
     ]
   },
   {
@@ -24,6 +24,7 @@ const workspaceNavGroups = [
       { key: 'memory', label: '记忆体', icon: '🧠' },
       { key: 'ai-model-service', label: 'AI 模型服务', icon: '🏗️' },
       { key: 'mcp-service', label: 'MCP 服务', icon: '🌐' },
+      { key: 'skill-center', label: 'Skill 中心', icon: '🧩' },
       { key: 'api-routing', label: 'API 应用路由', icon: '🔀' },
     ]
   },

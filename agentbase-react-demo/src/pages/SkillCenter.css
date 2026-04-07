@@ -1,0 +1,157 @@
+.skill-center-desc {
+  font-size: 14px;
+  color: #5c5c5c;
+  margin-top: -12px;
+  margin-bottom: 20px;
+}
+
+.skill-center-tabs {
+  display: flex;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 16px;
+  gap: 32px;
+}
+
+.skill-tab {
+  padding: 12px 4px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #5c5c5c;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.skill-tab:hover {
+  color: #1890ff;
+}
+
+.skill-tab.active {
+  color: #1890ff;
+  font-weight: 500;
+}
+
+.skill-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #1890ff;
+}
+
+/* Card view styles for SkillList */
+.skill-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.skill-card {
+  background: #fff;
+  border: 1px solid #e5e6eb;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+.skill-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.skill-card-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1d2129;
+}
+
+.skill-card-id {
+  font-size: 12px;
+  color: #86909c;
+  margin-top: 4px;
+}
+
+.skill-card-desc {
+  font-size: 13px;
+  color: #4e5969;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.skill-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f2f3f5;
+  font-size: 12px;
+  color: #86909c;
+}
+
+.skill-card-actions {
+  display: flex;
+  gap: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.skill-card:hover .skill-card-actions {
+  visibility: visible;
+  opacity: 1;
+}
+
+.skill-card-actions button {
+  background: none;
+  border: none;
+  color: #1890ff;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.skill-card-actions button:hover {
+  background: #e6f7ff;
+}
+
+.skill-category-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.skill-category-tab {
+  padding: 6px 16px;
+  border: 1px solid #e5e6eb;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #4e5969;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.skill-category-tab.active {
+  background: #e6f7ff;
+  color: #1890ff;
+  border-color: #1890ff;
+}

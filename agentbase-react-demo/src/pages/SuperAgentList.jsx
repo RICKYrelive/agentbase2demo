@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useHarnessAgents, STATUS_LIST } from '../store/harnessAgentStore.jsx'
+import { useSuperAgents, STATUS_LIST } from '../store/superAgentStore.jsx'
 import PageLayout, { GuideCards, DataToolbar } from '../components/PageLayout'
 import TagSelectModal from '../components/TagSelectModal'
-import './HarnessAgentList.css'
+import './SuperAgentList.css'
 
 const STATUS_COLORS = {
   '运行中': { bg: '#f6ffed', color: '#52c41a', border: '#b7eb8f' },
@@ -20,7 +20,7 @@ const STATUS_DOT = {
 }
 
 const guideCards = [
-  { title: '创建 Harness Agent', desc: '配置 Agent 基本信息、版本、模型、Skill 和 IM 连接，完成 Agent 初始化。' },
+  { title: '创建 Super Agent', desc: '配置 Agent 基本信息、版本、模型、Skill 和 IM 连接，完成 Agent 初始化。' },
   { title: '扫码连接 IM', desc: '扫描二维码将 Agent 绑定至企业微信、飞书或钉钉，实现 IM 渠道即时访问。' },
   { title: '通过 WebUI 或 IM 访问 Agent', desc: '使用内置 WebUI 体验服务或通过已绑定的 IM 渠道与 Agent 对话交互。' },
 ]
@@ -37,8 +37,8 @@ const columns = [
   { key: 'actions', label: '操作' },
 ]
 
-export default function HarnessAgentList() {
-  const { agents, dispatch, globalTags } = useHarnessAgents()
+export default function SuperAgentList() {
+  const { agents, dispatch, globalTags } = useSuperAgents()
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState(null)
@@ -77,7 +77,7 @@ export default function HarnessAgentList() {
   const handleAction = (agent, action) => {
     switch (action) {
       case 'detail':
-        navigate(`/harness-agent/${agent.id}`)
+        navigate(`/super-agent/${agent.id}`)
         break
       case 'start':
         dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '启动中' } })
@@ -97,7 +97,7 @@ export default function HarnessAgentList() {
         setConfirmDelete(agent)
         break
       case 'webui':
-        navigate(`/harness-agent/${agent.id}/webui`)
+        navigate(`/super-agent/${agent.id}/webui`)
         break
       default:
         break
@@ -127,14 +127,14 @@ export default function HarnessAgentList() {
 
   return (
     <PageLayout
-      title="Harness Agent"
+      title="Super Agent"
       rightAction={showGuide && <button className="action-btn" onClick={() => setShowGuide(false)}>⊙ 收起指引</button>}
     >
       {showGuide && <GuideCards cards={guideCards} />}
 
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => navigate('/harness-agent/create')}>+ 创建 Harness Agent</button>
+          <button className="action-btn primary" onClick={() => navigate('/super-agent/create')}>+ 创建 Super Agent</button>
         }
         filters={
           <div className="ha-filter-group">
@@ -204,9 +204,9 @@ export default function HarnessAgentList() {
                   <td colSpan={columns.length} className="data-table-empty">
                     <div className="empty-state ha-empty">
                       <div className="empty-icon">🔗</div>
-                      <div className="ha-empty-title">还没有 Harness Agent</div>
-                      <div className="ha-empty-desc">创建一个 Harness Agent，配置后即可通过 WebUI 或 IM 与其对话</div>
-                      <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/harness-agent/create')}>+ 创建 Harness Agent</button>
+                      <div className="ha-empty-title">还没有 Super Agent</div>
+                      <div className="ha-empty-desc">创建一个 Super Agent，配置后即可通过 WebUI 或 IM 与其对话</div>
+                      <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/super-agent/create')}>+ 创建 Super Agent</button>
                     </div>
                   </td>
                 </tr>
@@ -216,7 +216,7 @@ export default function HarnessAgentList() {
                   return (
                     <tr key={agent.id}>
                       <td>
-                        <span className="ha-name-link" onClick={() => navigate(`/harness-agent/${agent.id}`)}>{agent.name}</span>
+                        <span className="ha-name-link" onClick={() => navigate(`/super-agent/${agent.id}`)}>{agent.name}</span>
                       </td>
                       <td>
                         <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>
@@ -268,15 +268,15 @@ export default function HarnessAgentList() {
           {filtered.length === 0 ? (
             <div className="ha-empty-card-state">
               <div className="empty-icon">🔗</div>
-              <div className="ha-empty-title">还没有 Harness Agent</div>
-              <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/harness-agent/create')}>+ 创建</button>
+              <div className="ha-empty-title">还没有 Super Agent</div>
+              <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/super-agent/create')}>+ 创建</button>
             </div>
           ) : (
             filtered.map(agent => {
               const sc = STATUS_COLORS[agent.status] || STATUS_COLORS['停止']
               const dotColor = STATUS_DOT[agent.status] || '#8c8c8c'
               return (
-                <div key={agent.id} className="ha-agent-card" onClick={() => navigate(`/harness-agent/${agent.id}`)}>
+                <div key={agent.id} className="ha-agent-card" onClick={() => navigate(`/super-agent/${agent.id}`)}>
                   <div className="ha-card-header">
                     <div className="ha-card-avatar">
                       <span className="ha-card-avatar-text">{agent.name.charAt(0).toUpperCase()}</span>
