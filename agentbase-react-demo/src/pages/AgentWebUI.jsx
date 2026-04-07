@@ -43,6 +43,7 @@ export default function AgentWebUI() {
   const [showArtifactLinkModal, setShowArtifactLinkModal] = useState(false);
   const [linkFile, setLinkFile] = useState(null);
   const [expandedArtifacts, setExpandedArtifacts] = useState(new Set());
+  const [showCreateArtModal, setShowCreateArtModal] = useState(false);
   
   const [inputText, setInputText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -530,7 +531,7 @@ export default function AgentWebUI() {
               <h2>制品管理</h2>
               <p style={{ color: '#999', fontSize: '14px', margin: '4px 0 0' }}>查看和维护 Agent 生成的各类数字化制品及版本</p>
             </div>
-            <button className="action-btn primary" onClick={() => alert('创建新制品')}>+ 创建制品</button>
+            <button className="action-btn primary" onClick={() => setShowCreateArtModal(true)}>+ 创建制品</button>
           </div>
 
           <table className="artifact-table">
@@ -739,6 +740,18 @@ export default function AgentWebUI() {
         />
       )}
 
+      {/* ========== CREATE ARTIFACT MODAL (Management Page) ========== */}
+      {showCreateArtModal && (
+        <CreateArtModal 
+          onClose={() => setShowCreateArtModal(false)}
+          onSave={(newArt) => {
+            setArtifacts([newArt, ...artifacts]);
+            setShowCreateArtModal(false);
+          }}
+        />
+      )}
+
+
       {/* ========== RIGHT: Workspace Files ========== */}
       <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || activeView === 'artifacts' || !showWorkspace ? 'hidden' : ''}`}>
         <div className="webui-workspace-header">
@@ -914,6 +927,62 @@ function ArtifactLinkModal({ file, artifacts, onClose, onSave }) {
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>
           <button className="btn-cancel" onClick={onClose}>取消</button>
           <button className="btn-save" onClick={validateAndSave}>确认保存</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+function CreateArtModal({ onClose, onSave }) {
+  const [name, setName] = useState('')
+  const [desc, setDesc] = useState('')
+  const [error, setError] = useState('')
+
+  const handleSave = () => {
+    if (!name.trim()) {
+      setError('请输入制品名称')
+      return
+    }
+    onSave({
+      id: `art-${Date.now()}`,
+      name,
+      description: desc,
+      versions: []
+    })
+  }
+
+  return (
+    <div className="ai-modal-overlay">
+      <div className="ai-modal modal-artifact-link">
+        <button className="cron-modal-close" onClick={onClose}>×</button>
+        <h3>📦 创建新制品</h3>
+        <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>
+          为您的 Agent 产出物创建一个新的分类容器。
+        </p>
+        
+        <div className="artifact-new-form">
+          <label style={{ fontSize: '13px', fontWeight: 600, color: '#334155', marginBottom: '8px', display: 'block' }}>制品名称</label>
+          <input 
+            className="cron-input-full" 
+            placeholder="例如：市场周报、代码分析结果..." 
+            value={name}
+            onChange={e => setName(e.target.value)}
+            style={{ marginBottom: '16px' }}
+          />
+          
+          <label style={{ fontSize: '13px', fontWeight: 600, color: '#334155', marginBottom: '8px', display: 'block' }}>补充描述</label>
+          <textarea 
+            className="cron-prompt-area" 
+            placeholder="简要说明该制品的用途..." 
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
+            rows={4}
+          />
+          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>⚠️ {error}</div>}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>
+          <button className="btn-cancel" onClick={onClose}>取消</button>
+          <button className="btn-save" onClick={handleSave}>立即创建</button>
         </div>
       </div>
     </div>
