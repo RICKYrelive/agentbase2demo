@@ -744,7 +744,7 @@ export default function AgentWebUI() {
       )}
 
       {/* ========== RIGHT: Workspace Files ========== */}
-      <div className={`webui-workspace ${activeView === 'cron' || !showWorkspace ? 'hidden' : ''}`}>
+      <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || !showWorkspace ? 'hidden' : ''}`}>
         <div className="webui-workspace-header">
           <span>工作区文件</span>
         </div>
