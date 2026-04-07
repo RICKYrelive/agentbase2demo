@@ -23,7 +23,7 @@ const CONFIG_SUBTABS = [
   { key: 'basic', label: '基础信息' },
   { key: 'agent', label: 'Agent 配置' },
   { key: 'capabilities', label: '基础能力' },
-  { key: 'channel', label: 'Channel' },
+  { key: 'channel', label: '连接管理' },
   { key: 'webui', label: 'WebUI 配置' },
   { key: 'markdown', label: 'Agent Markdown' },
 ]
@@ -80,8 +80,9 @@ export default function SuperAgentDetail() {
 
   const searchParams = new URLSearchParams(location.search)
   const initialTab = searchParams.get('tab') || 'overview'
+  const initialSubTab = searchParams.get('sub') || 'basic'
   const [tab, setTab] = useState(initialTab)
-  const [configSubTab, setConfigSubTab] = useState('basic')
+  const [configSubTab, setConfigSubTab] = useState(initialSubTab)
   const [toast, setToast] = useState(null)
   const [editMode, setEditMode] = useState(false)
   const [editForm, setEditForm] = useState({})
@@ -324,7 +325,9 @@ export default function SuperAgentDetail() {
           </div>
           {/* Tags inline */}
           <div className="had-tags-row">
-            <TagSelectModal value={agent.tags || []} onChange={tags => dispatch({ type: 'UPDATE', id: agent.id, payload: { tags } })} />
+            {(agent.tags || []).map(tag => (
+              <span key={tag} className="ha-mini-tag">{tag}</span>
+            ))}
           </div>
         </div>
         <div className="had-overview-actions">
@@ -514,7 +517,10 @@ export default function SuperAgentDetail() {
                 <div className="had-section">
                   <InlineEditable label="名称" value={agent.name} onChange={v => handleInlineUpdate('name', v)} />
                   <InlineEditable label="描述" value={agent.description} type="textarea" onChange={v => handleInlineUpdate('description', v)} />
-                  <InlineEditable label="版本" value={agent.version} type="select" options={VERSIONS.map(v => ({ label: v, value: v }))} onChange={v => handleInlineUpdate('version', v)} />
+                  <div className="had-kv">
+                    <span>版本</span>
+                    <div className="had-val-static">{agent.version}</div>
+                  </div>
                   <div className="had-kv inline-editable-kv">
                     <span>标签</span>
                     <div className="ie-val-box">
@@ -687,7 +693,11 @@ export default function SuperAgentDetail() {
                 <div className="cron-plot-area">
                   {/* Y Axis Labels */}
                   <div className="cron-y-axis">
-                    {['每日简报', '周报汇总', '系统清理'].map(t => <span key={t}>{t}</span>)}
+                    {graphGrouping === 'hour' ? (
+                      ['每日简报', '周报汇总', '系统清理'].map(t => <span key={t}>{t}</span>)
+                    ) : (
+                      ['23:59', '18:00', '12:00', '06:00', '00:00'].map(h => <span key={h}>{h}</span>)
+                    )}
                   </div>
                   
                   {/* X Axis Labels */}
@@ -703,14 +713,19 @@ export default function SuperAgentDetail() {
                   {(agent.tasks || []).map(t => {
                     const date = new Date(t.timestamp);
                     let left = 0;
+                    let bottom = 0;
+
                     if (graphGrouping === 'hour') {
+                      // 24h View: X = Time of Day, Y = Task Type
                       left = ((date.getHours() * 60 + date.getMinutes()) / (24 * 60)) * 100;
+                      const typeIndex = ['每日简报生成', '周报汇总', '系统清理'].indexOf(t.name);
+                      bottom = (typeIndex / 2) * 100; 
                     } else {
-                      left = (date.getDay() / 7) * 100;
+                      // 7d View: X = Day of Week, Y = Time of Day
+                      const dayIndex = (date.getDay() + 6) % 7;
+                      left = (dayIndex / 6) * 100;
+                      bottom = ((date.getHours() * 60 + date.getMinutes()) / (24 * 60)) * 100;
                     }
-                    
-                    const typeIndex = ['每日简报生成', '周报汇总', '系统清理'].indexOf(t.name);
-                    const bottom = (typeIndex / 2) * 100; // 3 items, 0, 50, 100
                     
                     return (
                       <div 
@@ -735,7 +750,40 @@ export default function SuperAgentDetail() {
                 </div>
               </div>
             </div>
-            
+
+            <div className="had-section">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h4 style={{ margin: 0 }}>定时任务配置</h4>
+                <button className="action-btn" onClick={() => navigate(`/super-agent/${agent.id}/webui?view=cron`)}>管理</button>
+              </div>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>任务名称</th>
+                    <th>执行频率</th>
+                    <th>下次执行时间</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { name: '每日简报生成', interval: '每天 02:00', next: '2026-04-08 02:00:00', status: '已启用' },
+                    { name: '周报汇总', interval: '每周五 17:45', next: '2026-04-10 17:45:00', status: '已启用' },
+                    { name: '系统清理', interval: '每 15 分钟', next: '2026-04-07 15:30:00', status: '已禁用' },
+                  ].map((ct, idx) => (
+                    <tr key={idx}>
+                      <td>{ct.name}</td>
+                      <td><span className="ha-status-tag" style={{ background: '#f0f5ff', color: '#1d39c4', borderColor: '#adc6ff' }}>{ct.interval}</span></td>
+                      <td>{ct.next}</td>
+                      <td>
+                        <span style={{ color: ct.status === '已启用' ? '#52c41a' : '#bfbfbf' }}>● {ct.status}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
             <div className="had-section">
               <h4>最近任务流水</h4>
               <table className="data-table">
@@ -758,6 +806,7 @@ export default function SuperAgentDetail() {
             </div>
           </div>
         )}
+
       </div>
 
       {/* Channel Modal */}

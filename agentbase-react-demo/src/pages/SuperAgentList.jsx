@@ -76,9 +76,6 @@ export default function SuperAgentList() {
 
   const handleAction = (agent, action) => {
     switch (action) {
-      case 'detail':
-        navigate(`/super-agent/${agent.id}`)
-        break
       case 'start':
         dispatch({ type: 'UPDATE', id: agent.id, payload: { status: '启动中' } })
         showToast(`${agent.name} 启动中...`)
@@ -98,6 +95,12 @@ export default function SuperAgentList() {
         break
       case 'webui':
         navigate(`/super-agent/${agent.id}/webui`)
+        break
+      case 'connect':
+        navigate(`/super-agent/${agent.id}?tab=config&sub=channel`)
+        break
+      case 'snapshot':
+        navigate(`/super-agent/${agent.id}?tab=snapshots`)
         break
       default:
         break
@@ -236,7 +239,6 @@ export default function SuperAgentList() {
                       <td>{agent.lastRunAt || '-'}</td>
                       <td>
                         <div className="ha-row-actions">
-                          <button onClick={() => handleAction(agent, 'detail')}>详情</button>
                           {['停止', '启动中'].includes(agent.status) && (
                             <button disabled={agent.status === '启动中'} onClick={() => handleAction(agent, 'start')}>启动</button>
                           )}
@@ -244,6 +246,8 @@ export default function SuperAgentList() {
                             <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}>停止</button>
                           )}
                           <button onClick={() => handleAction(agent, 'webui')}>WebUI</button>
+                          <button onClick={() => handleAction(agent, 'connect')}>连接管理</button>
+                          <button onClick={() => handleAction(agent, 'snapshot')}>快照</button>
                           <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>删除</button>
                         </div>
                       </td>
@@ -294,9 +298,9 @@ export default function SuperAgentList() {
                   <div className="ha-card-tags">
                     {(agent.tags || []).slice(0, 4).map(t => <span key={t} className="ha-mini-tag">{t}</span>)}
                   </div>
+                  <div className="ha-card-date-top">{agent.createdAt?.slice(0, 10)}</div>
                   <div className="ha-card-footer">
                     <span className="ha-card-owner">{agent.owner}</span>
-                    <span className="ha-card-time">{agent.createdAt?.slice(0, 10)}</span>
                   </div>
                   <div className="ha-card-actions" onClick={e => e.stopPropagation()}>
                     {['停止', '启动中'].includes(agent.status) && (
@@ -305,8 +309,10 @@ export default function SuperAgentList() {
                     {['运行中', '关闭中'].includes(agent.status) && (
                       <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}>⏹</button>
                     )}
-                    <button onClick={() => handleAction(agent, 'webui')}>🌐</button>
-                    <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')}>🗑</button>
+                    <button onClick={() => handleAction(agent, 'webui')} title="WebUI">🌐</button>
+                    <button onClick={() => handleAction(agent, 'connect')} title="连接管理">🔌</button>
+                    <button onClick={() => handleAction(agent, 'snapshot')} title="快照">📸</button>
+                    <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')} title="删除">🗑</button>
                   </div>
                 </div>
               )

@@ -304,9 +304,16 @@
   font-size: 12px;
   color: var(--text-muted);
 }
+.ha-card-date-top {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
 .ha-card-actions {
   position: absolute;
-  top: 12px;
+  bottom: 12px;
   right: 12px;
   display: flex;
   gap: 2px;
