@@ -26,12 +26,55 @@ export default function AgentWebUI() {
   const [aiThinking, setAiThinking] = useState(false)
   const [aiPrompt, setAiPrompt] = useState('')
   const [generatedSkill, setGeneratedSkill] = useState(null)
+
+  // Action Menu State (formerly Context Menu)
+  const [activeActionItem, setActiveActionItem] = useState(null) // { id: '...', type: 'file'/'folder', x, y }
+  
+  // Artifacts State
+  const [artifacts, setArtifacts] = useState([
+    { id: 'art-1', name: '数据分析报告', description: '基于 Q1 销售数据的自动化分析结果', versions: [
+      { id: 'v2', version: 'v1.1.0', file: 'report_v1.1.pdf', time: '2026-04-05 14:20' },
+      { id: 'v1', version: 'v1.0.0', file: 'report_v1.0.pdf', time: '2026-04-01 09:00' }
+    ]},
+    { id: 'art-2', name: '清洗后的数据集', description: '去除缺失值并完成归一化处理的数据', versions: [
+      { id: 'v1', version: 'v1.0.0', file: 'clean_data.csv', time: '2026-04-06 11:30' }
+    ]}
+  ]);
+  const [showArtifactLinkModal, setShowArtifactLinkModal] = useState(false);
+  const [linkFile, setLinkFile] = useState(null);
+  const [expandedArtifacts, setExpandedArtifacts] = useState(new Set());
   
   const [inputText, setInputText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [fileNames, setFileNames] = useState([])
   const chatEndRef = useRef(null)
   const fileInputRef = useRef(null)
+
+  // Global click to close menu
+  useEffect(() => {
+    const handleClick = () => setActiveActionItem(null);
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, []);
+
+  const handleActionClick = (e, type, item) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    setActiveActionItem({
+      x: rect.left - 180, 
+      y: rect.bottom + 8,
+      visible: true,
+      type,
+      item
+    });
+  };
+
+  const toggleArtifactExpand = (id) => {
+    const next = new Set(expandedArtifacts);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setExpandedArtifacts(next);
+  };
 
   const handleAIGen = () => {
     if (!aiPrompt.trim()) return
@@ -200,10 +243,19 @@ export default function AgentWebUI() {
   const renderFileTree = (items, depth = 0) => {
     return items.map((item, i) => (
       <div key={i}>
-        <div className="webui-file-item" style={{ paddingLeft: depth * 16 + 12 }}>
+        <div 
+          className="webui-file-item file-tree-row" 
+          style={{ paddingLeft: depth * 16 + 12 }}
+        >
           <span className="webui-file-icon">{item.type === 'folder' ? (depth < 2 ? '📂' : '📁') : '📄'}</span>
           <span className="webui-file-name">{item.name}</span>
           {item.size && <span className="webui-file-size">{item.size}</span>}
+          <button 
+            className="row-action-btn" 
+            onClick={(e) => handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item)}
+          >
+            ⋮
+          </button>
         </div>
         {item.children && renderFileTree(item.children, depth + 1)}
       </div>
@@ -223,6 +275,7 @@ export default function AgentWebUI() {
           <div className={`webui-menu-item ${activeView === 'chat' ? 'active' : ''}`} onClick={() => setActiveView('chat')}>💬 会话列表</div>
           <div className={`webui-menu-item ${activeView === 'skills' ? 'active' : ''}`} onClick={() => setActiveView('skills')}>🔧 技能配置</div>
           <div className={`webui-menu-item ${activeView === 'cron' ? 'active' : ''}`} onClick={() => setActiveView('cron')}>⏱️ 定时任务</div>
+          <div className={`webui-menu-item ${activeView === 'artifacts' ? 'active' : ''}`} onClick={() => setActiveView('artifacts')}>📦 制品管理</div>
         </div>
         
         <div className="webui-menu-divider" />
@@ -420,7 +473,7 @@ export default function AgentWebUI() {
             </table>
           </div>
         </div>
-      ) : (
+      ) : activeView === 'skills' ? (
         <div className="skill-mgmt-content">
           <div className="skill-header">
             <div className="skill-header-left">
@@ -468,6 +521,71 @@ export default function AgentWebUI() {
               </div>
             ))}
           </div>
+        </div>
+      ) : (
+        <div className="artifacts-mgmt-content">
+          <div className="artifact-info-bar">
+            <div>
+              <h2>制品管理</h2>
+              <p style={{ color: '#999', fontSize: '14px', margin: '4px 0 0' }}>查看和维护 Agent 生成的各类数字化制品及版本</p>
+            </div>
+            <button className="action-btn primary" onClick={() => alert('创建新制品')}>+ 创建制品</button>
+          </div>
+
+          <table className="artifact-table">
+            <thead>
+              <tr>
+                <th>制品名称</th>
+                <th>最新版本</th>
+                <th>描述</th>
+                <th>更新时间</th>
+                <th style={{ textAlign: 'right' }}>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {artifacts.map(art => (
+                <React.Fragment key={art.id}>
+                  <tr>
+                    <td>
+                      <div className="artifact-name">📦 {art.name}</div>
+                    </td>
+                    <td>
+                      <span className="artifact-version-pill">{art.versions[0]?.version}</span>
+                    </td>
+                    <td style={{ color: '#64748b', fontSize: '13px' }}>{art.description}</td>
+                    <td style={{ color: '#94a3b8', fontSize: '13px' }}>{art.versions[0]?.time}</td>
+                    <td style={{ textAlign: 'right' }}>
+                      <button className="artifact-actions-btn" onClick={() => toggleArtifactExpand(art.id)}>
+                        {expandedArtifacts.has(art.id) ? '收起版本' : '版本记录'}
+                      </button>
+                      <button className="artifact-actions-btn" style={{ marginLeft: '8px' }} onClick={() => alert('编辑制品')}>编辑</button>
+                    </td>
+                  </tr>
+                  {expandedArtifacts.has(art.id) && (
+                    <tr>
+                      <td colSpan={5} style={{ padding: '0 16px 16px' }}>
+                        <div className="version-list-panel">
+                          {art.versions.map(v => (
+                            <div key={v.id} className="version-row">
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontWeight: 600, color: '#6366f1' }}>{v.version}</span>
+                                <span style={{ fontSize: '12px', color: '#64748b' }}>文件: {v.file}</span>
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <span style={{ fontSize: '12px', color: '#94a3b8', marginRight: '20px' }}>{v.time}</span>
+                                <span className="btn-v-download" onClick={() => alert(`下载 ${v.file}`)}>下载</span>
+                                <span className="btn-v-delete" onClick={() => alert('删除版本')}>删除版本</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
@@ -743,8 +861,72 @@ export default function AgentWebUI() {
         </div>
       )}
 
+      {/* ========== ACTION MENU (Dropdown) ========== */}
+      {activeActionItem && activeActionItem.visible && (
+        <div 
+          className="webui-context-menu" 
+          style={{ top: activeActionItem.y, left: activeActionItem.x }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {activeActionItem.type === 'folder' ? (
+            <>
+              <div className="cm-item" onClick={() => alert('上传文件')}>📤 上传文件</div>
+              <div className="cm-item" onClick={() => alert('新建文件夹')}>📁 新建子目录</div>
+              <div className="cm-divider" />
+              <div className={`cm-item ${['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) ? 'disabled' : ''}`} onClick={() => !['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) && alert('重命名')}>📝 重命名</div>
+              <div className={`cm-item danger ${['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) ? 'disabled' : ''}`} onClick={() => !['src', 'agentbase-react-demo'].includes(activeActionItem.item.name) && alert('删除文件夹')}>🗑️ 删除文件夹</div>
+            </>
+          ) : (
+            <>
+              <div className="cm-item" onClick={() => alert('下载文件')}>⬇️ 下载文件</div>
+              <div className="cm-item" onClick={() => alert('重命名')}>📝 重命名</div>
+              <div className="cm-divider" />
+              <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品 / 关联版本</div>
+              <div className="cm-divider" />
+              <div className="cm-item danger" onClick={() => alert('删除文件')}>🗑️ 删除文件</div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* ========== ARTIFACT LINK MODAL ========== */}
+      {showArtifactLinkModal && (
+        <div className="ai-modal-overlay">
+          <div className="ai-modal modal-artifact-link">
+            <button className="cron-modal-close" onClick={() => setShowArtifactLinkModal(false)}>×</button>
+            <h3>📦 同步为制品</h3>
+            <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>将文件 <strong>{linkFile?.name}</strong> 分发为制品或关联到现有制品版本。</p>
+            
+            <div className="link-type-tabs">
+              <div className="link-type-tab active">关联到已有制品</div>
+              <div className="link-type-tab" onClick={() => alert('切换到创建新制品')}>创建新制品</div>
+            </div>
+
+            <div className="artifact-select-list">
+              {artifacts.map(art => (
+                <div key={art.id} className="artifact-opt">
+                  <div>
+                    <div style={{ fontWeight: 600 }}>{art.name}</div>
+                    <div style={{ fontSize: '11px', color: '#999' }}>当前版本: {art.versions[0]?.version}</div>
+                  </div>
+                  <button className="action-btn small" onClick={() => {
+                    const newVersion = { id: `v${Date.now()}`, version: `v1.2.${art.versions.length}`, file: linkFile.name, time: '刚刚' };
+                    setArtifacts(artifacts.map(a => a.id === art.id ? { ...a, versions: [newVersion, ...a.versions] } : a));
+                    setShowArtifactLinkModal(false);
+                  }}>选择</button>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '20px' }}>
+              <button className="btn-cancel" onClick={() => setShowArtifactLinkModal(false)}>取消</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ========== RIGHT: Workspace Files ========== */}
-      <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || !showWorkspace ? 'hidden' : ''}`}>
+      <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || activeView === 'artifacts' || !showWorkspace ? 'hidden' : ''}`}>
         <div className="webui-workspace-header">
           <span>工作区文件</span>
         </div>
