@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Fragment } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSuperAgents } from '../store/superAgentStore.jsx'
 import './AgentWebUI.css'
@@ -544,7 +544,7 @@ export default function AgentWebUI() {
             </thead>
             <tbody>
               {artifacts.map(art => (
-                <React.Fragment key={art.id}>
+                <Fragment key={art.id}>
                   <tr>
                     <td>
                       <div className="artifact-name">📦 {art.name}</div>
@@ -582,14 +582,14 @@ export default function AgentWebUI() {
                       </td>
                     </tr>
                   )}
-                </React.Fragment>
+                </Fragment>
               ))}
             </tbody>
           </table>
         </div>
       )}
 
-      {/* ========== EDIT CRON MODAL ========== */}
+      {/* ========== Modals Section ========== */}
       {showCronModal && editingCron && (
         <div className="cron-modal-overlay">
           <div className="cron-modal">
@@ -598,7 +598,6 @@ export default function AgentWebUI() {
               <h3 className="cron-modal-title">编辑定时任务</h3>
               <p className="cron-modal-subtitle">设置定时任务名称、图标、提示词和执行计划。</p>
             </div>
-
             <div className="cron-form-item">
               <input 
                 className="cron-input-full" 
@@ -607,7 +606,6 @@ export default function AgentWebUI() {
                 placeholder="任务名称"
               />
             </div>
-
             <div className="cron-form-item">
               <label className="cron-form-label">任务图标</label>
               <div className="icon-selector-grid">
@@ -622,7 +620,6 @@ export default function AgentWebUI() {
                 ))}
               </div>
             </div>
-
             <div className="cron-form-item">
               <label className="cron-form-label">提示词</label>
               <textarea 
@@ -631,235 +628,78 @@ export default function AgentWebUI() {
                 onChange={e => setEditingCron({...editingCron, prompt: e.target.value})}
                 placeholder="请输入提示词..."
               />
-              <div style={{ textAlign: 'right', fontSize: '12px', color: '#ccc', marginTop: '4px' }}>{editingCron.prompt.length}/20000</div>
             </div>
-
             <div className="cron-form-item">
               <label className="cron-form-label">定时计划</label>
               <select 
                 className="cron-select" 
                 value={editingCron.schedType || 'daily'} 
-                onChange={e => setEditingCron({...editingCron, schedType: e.target.value})}
-                style={{ marginBottom: 12 }}
+                onChange={(e) => setEditingCron({...editingCron, schedType: e.target.value})}
               >
                 <option value="daily">每日定时</option>
                 <option value="custom">自定义间隔 (Cron)</option>
               </select>
-
-              {editingCron.schedType === 'custom' ? (
-                <div style={{ padding: '20px', border: '1px solid #f0f0f0', borderRadius: '16px' }}>
-                  <div className="cron-form-label" style={{ fontSize: '12px', color: '#999' }}>执行频率</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <span style={{ fontSize: '14px', color: '#666' }}>每隔</span>
-                    <input 
-                      type="number"
-                      className="cron-time-val" 
-                      style={{ width: '80px' }}
-                      value={editingCron.frequency || 15} 
-                      onChange={e => setEditingCron({...editingCron, frequency: e.target.value})}
-                    />
-                    <select 
-                      className="cron-select" 
-                      style={{ width: '100px', marginBottom: 0 }}
-                      value={editingCron.unit || 'minutes'}
-                      onChange={e => setEditingCron({...editingCron, unit: e.target.value})}
-                    >
-                      <option value="minutes">分钟</option>
-                      <option value="hours">小时</option>
-                    </select>
-                    <span style={{ fontSize: '14px', color: '#666' }}>运行一次</span>
-                  </div>
-                  <div className="cron-cron-desc" style={{ marginTop: '16px' }}>
-                    💡 提示: 该任务将以当前时间为起点，每 {editingCron.frequency || 15} {editingCron.unit === 'hours' ? '小时' : '分钟'} 自动触发。
-                  </div>
-                </div>
-              ) : (
-                <div style={{ padding: '24px', border: '1px solid #f0f0f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div>
-                    <div className="cron-form-label" style={{ fontSize: '12px', color: '#999' }}>执行时间</div>
-                    <input type="time" className="cron-time-val" value={editingCron.time} onChange={e => setEditingCron({...editingCron, time: e.target.value})} />
-                  </div>
-                  <div>
-                    <div className="cron-form-label" style={{ fontSize: '12px', color: '#999' }}>重复周期</div>
-                    <div className="cron-week-btns">
-                      {['周一', '周二', '周三', '周四', '周五', '周六', '周日'].map((day, idx) => (
-                        <button 
-                          key={idx} 
-                          className={`cron-week-btn ${editingCron.days.includes(idx+1) ? 'active' : ''}`}
-                          onClick={() => {
-                            const newDays = editingCron.days.includes(idx+1) 
-                              ? editingCron.days.filter(d => d !== idx+1)
-                              : [...editingCron.days, idx+1];
-                            setEditingCron({...editingCron, days: newDays});
-                          }}
-                        >
-                          {day}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
-
             <div className="cron-modal-footer">
-              <div className="cron-footer-left">
-                {/* Removed delete and pause buttons per request */}
-              </div>
-              <div className="cron-footer-right">
-                <button className="btn-cancel" onClick={() => setShowCronModal(false)}>取消</button>
-                <button className="btn-save" onClick={() => setShowCronModal(false)}>保存</button>
-              </div>
+              <button className="btn-cancel" onClick={() => setShowCronModal(false)}>取消</button>
+              <button className="btn-save" onClick={() => setShowCronModal(false)}>保存</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ========== RUN PROGRESS MODAL ========== */}
       {showRunProgress && (
         <div className="run-progress-overlay">
           <div className="run-progress-modal">
             <h3 className="run-progress-title">正在执行定时任务</h3>
             <div className="run-timeline">
               <div className={`run-step ${runStep >= 0 ? 'active' : ''} ${runStep > 0 ? 'done' : ''}`}>
-                <div className={`run-step-icon ${runStep > 0 ? 'done' : 'active'}`}>
-                  {runStep > 0 ? '✓' : '1'}
-                </div>
+                <div className="run-step-icon">{runStep > 0 ? '✓' : '1'}</div>
                 <div className="run-step-label">连接 Agent</div>
                 <div className={`run-line ${runStep > 0 ? 'done' : ''}`} />
               </div>
               <div className={`run-step ${runStep >= 1 ? 'active' : ''} ${runStep > 1 ? 'done' : ''}`}>
-                <div className={`run-step-icon ${runStep > 1 ? 'done' : (runStep === 1 ? 'active' : '')}`}>
-                  {runStep > 1 ? '✓' : '2'}
-                </div>
+                <div className="run-step-icon">{runStep > 1 ? '✓' : '2'}</div>
                 <div className="run-step-label">运行定时任务</div>
                 <div className={`run-line ${runStep > 1 ? 'done' : ''}`} />
               </div>
-              <div className={`run-step ${runStep >= 2 ? 'active' : ''} ${runStep > 2 ? 'done' : ''}`}>
-                <div className={`run-step-icon ${runStep >= 2 ? 'done' : ''}`}>
-                  {runStep >= 2 ? '✓' : '3'}
-                </div>
+              <div className={`run-step ${runStep >= 2 ? 'active' : ''}`}>
+                <div className="run-step-icon">{runStep >= 2 ? '✓' : '3'}</div>
                 <div className="run-step-label">执行成功</div>
               </div>
             </div>
-            <p style={{ fontSize: '13px', color: '#999' }}>请稍候，任务正在处理中...</p>
           </div>
         </div>
       )}
 
-      {/* ========== AI SKILL GENERATOR MODAL ========== */}
       {showAIGenModal && (
         <div className="ai-modal-overlay">
           <div className="ai-modal">
             <button className="cron-modal-close" onClick={() => setShowAIGenModal(false)}>×</button>
             <h3 className="ai-gen-title">✨ AI 生成智能技能</h3>
-            <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>输入你的需求描述，LLM 将自动为你构建、编写并配置该技能。</p>
-            
             <textarea 
               className="ai-prompt-area"
               placeholder="例如: 帮我写一个能查询当前主要数字货币价格的工具..."
-              rows={4}
               value={aiPrompt}
               onChange={e => setAiPrompt(e.target.value)}
               disabled={aiThinking}
             />
-            
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-              <button 
-                className="btn-ai-gen" 
-                onClick={handleAIGen}
-                disabled={aiThinking || !aiPrompt.trim()}
-              >
+              <button className="btn-ai-gen" onClick={handleAIGen} disabled={aiThinking || !aiPrompt.trim()}>
                 {aiThinking ? '正在生成中...' : '开始生成'}
               </button>
             </div>
-
-            {aiThinking && (
-              <div className="ai-thinking">
-                <div className="ai-loader" />
-                <div style={{ fontSize: '15px', color: '#6366f1', fontWeight: 500 }}>AI 正在构思技能逻辑并编写代码...</div>
-              </div>
-            )}
-
             {generatedSkill && (
               <div className="ai-result-panel">
-                <div className="ai-result-header">生成结果预览</div>
-                <div className="ai-result-content">
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-                    <div className="skill-icon-box">{generatedSkill.icon}</div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '16px' }}>{generatedSkill.name}</div>
-                      <div style={{ fontSize: '13px', color: '#64748b' }}>{generatedSkill.description}</div>
-                    </div>
-                  </div>
-                  <div className="code-preview">{generatedSkill.code}</div>
-                </div>
-                <div style={{ padding: '16px 24px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-                  <button className="btn-cancel" onClick={() => setGeneratedSkill(null)}>重新生成</button>
-                  <button className="btn-save" onClick={addGeneratedSkill}>确认并添加技能</button>
-                </div>
+                <div className="ai-result-header">预览结果</div>
+                <div className="code-preview">{generatedSkill.code}</div>
+                <button className="btn-save" onClick={addGeneratedSkill} style={{ width: '100%', marginTop: '12px' }}>确认并添加</button>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* ========== AI SKILL GENERATOR MODAL ========== */}
-      {showAIGenModal && (
-        <div className="ai-modal-overlay">
-          <div className="ai-modal">
-            <button className="cron-modal-close" onClick={() => setShowAIGenModal(false)}>×</button>
-            <h3 className="ai-gen-title">✨ AI 生成智能技能</h3>
-            <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>输入你的需求描述，LLM 将自动为你构建、编写并配置该技能。</p>
-            
-            <textarea 
-              className="ai-prompt-area"
-              placeholder="例如: 帮我写一个能查询当前主要数字货币价格的工具..."
-              rows={4}
-              value={aiPrompt}
-              onChange={e => setAiPrompt(e.target.value)}
-              disabled={aiThinking}
-            />
-            
-            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-              <button 
-                className="btn-ai-gen" 
-                onClick={handleAIGen}
-                disabled={aiThinking || !aiPrompt.trim()}
-              >
-                {aiThinking ? '正在生成中...' : '开始生成'}
-              </button>
-            </div>
-
-            {aiThinking && (
-              <div className="ai-thinking">
-                <div className="ai-loader" />
-                <div style={{ fontSize: '15px', color: '#6366f1', fontWeight: 500 }}>AI 正在构思技能逻辑并编写代码...</div>
-              </div>
-            )}
-
-            {generatedSkill && (
-              <div className="ai-result-panel">
-                <div className="ai-result-header">生成结果预览</div>
-                <div className="ai-result-content">
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-                    <div className="skill-icon-box">{generatedSkill.icon}</div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '16px' }}>{generatedSkill.name}</div>
-                      <div style={{ fontSize: '13px', color: '#64748b' }}>{generatedSkill.description}</div>
-                    </div>
-                  </div>
-                  <div className="code-preview">{generatedSkill.code}</div>
-                </div>
-                <div style={{ padding: '16px 24px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-                  <button className="btn-cancel" onClick={() => setGeneratedSkill(null)}>重新生成</button>
-                  <button className="btn-save" onClick={addGeneratedSkill}>确认并添加技能</button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* ========== ACTION MENU (Dropdown) ========== */}
       {activeActionItem && activeActionItem.visible && (
