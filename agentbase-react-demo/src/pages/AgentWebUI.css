@@ -424,12 +424,37 @@
   border-left-width: 0;
 }
 .webui-workspace-header {
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid #ebedf0;
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+.workspace-header-actions {
+  display: flex;
+  gap: 8px;
+}
+.ws-header-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ws-header-btn:hover {
+  background: rgba(0,0,0,0.06);
+  transform: scale(1.1);
+}
+
 .webui-file-tree {
   flex: 1;
   overflow-y: auto;
@@ -456,26 +481,30 @@
   text-overflow: ellipsis;
 }
 .row-action-btn {
-  opacity: 0;
-  background: none;
+  opacity: 0.3; /* Increased default visibility */
+  background: rgba(0,0,0,0.04); /* Subtle background to make it 'more obvious' */
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   cursor: pointer;
-  padding: 0 4px;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   font-size: 14px;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 .file-tree-row:hover .row-action-btn {
   opacity: 1;
+  background: #f1f5f9;
 }
 .row-action-btn:hover {
-  background: #e2e8f0;
+  background: #e2e8f0 !important;
   color: #6366f1;
 }
+
 .webui-file-icon { font-size: 14px; }
 .webui-file-name {
   flex: 1;

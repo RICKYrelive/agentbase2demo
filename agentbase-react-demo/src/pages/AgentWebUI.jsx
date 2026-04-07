@@ -44,6 +44,7 @@ export default function AgentWebUI() {
   const [linkFile, setLinkFile] = useState(null);
   const [expandedArtifacts, setExpandedArtifacts] = useState(new Set());
   const [showCreateArtModal, setShowCreateArtModal] = useState(false);
+  const [expandedFolders, setExpandedFolders] = useState(new Set(agent.workspace?.files?.filter(f => f.type === 'folder').map(f => f.name) || []));
   
   const [inputText, setInputText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -142,6 +143,31 @@ export default function AgentWebUI() {
       </div>
     )
   }
+
+  const toggleFolder = (folderName) => {
+    const next = new Set(expandedFolders);
+    if (next.has(folderName)) next.delete(folderName);
+    else next.add(folderName);
+    setExpandedFolders(next);
+  };
+
+  const expandAll = () => {
+    const allFolders = [];
+    const collect = (items) => {
+      items.forEach(item => {
+        if (item.type === 'folder') {
+          allFolders.push(item.name);
+          if (item.children) collect(item.children);
+        }
+      });
+    };
+    collect(agent.workspace.files);
+    setExpandedFolders(new Set(allFolders));
+  };
+
+  const collapseAll = () => {
+    setExpandedFolders(new Set());
+  };
 
   const conversations = agent.conversations || []
   const currentConv = conversations.find(c => c.id === activeConv)
@@ -248,18 +274,24 @@ export default function AgentWebUI() {
         <div 
           className="webui-file-item file-tree-row" 
           style={{ paddingLeft: depth * 16 + 12 }}
+          onClick={() => item.type === 'folder' && toggleFolder(item.name)}
         >
-          <span className="webui-file-icon">{item.type === 'folder' ? (depth < 2 ? '📂' : '📁') : '📄'}</span>
+          <span className="webui-file-icon">
+            {item.type === 'folder' 
+              ? (expandedFolders.has(item.name) ? '📂' : '📁') 
+              : '📄'
+            }
+          </span>
           <span className="webui-file-name">{item.name}</span>
           {item.size && <span className="webui-file-size">{item.size}</span>}
           <button 
-            className="row-action-btn" 
-            onClick={(e) => handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item, depth === 0)}
+            className="row-action-btn visible" 
+            onClick={(e) => { e.stopPropagation(); handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item, depth === 0); }}
           >
             ⋮
           </button>
         </div>
-        {item.children && renderFileTree(item.children, depth + 1)}
+        {item.type === 'folder' && expandedFolders.has(item.name) && item.children && renderFileTree(item.children, depth + 1)}
       </div>
     ))
   }
@@ -753,6 +785,10 @@ export default function AgentWebUI() {
       <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || activeView === 'artifacts' || !showWorkspace ? 'hidden' : ''}`}>
         <div className="webui-workspace-header">
           <span>工作区文件</span>
+          <div className="workspace-header-actions">
+            <button className="ws-header-btn" onClick={expandAll} title="全部展开">📂</button>
+            <button className="ws-header-btn" onClick={collapseAll} title="全部折叠">📁</button>
+          </div>
         </div>
         <div className="webui-file-tree">
           {(agent.workspace?.files || []).length > 0 ? (
