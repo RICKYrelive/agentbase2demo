@@ -824,3 +824,360 @@
   background: rgba(24, 144, 255, 0.1);
 }
 
+.mc-source-tabs {
+  display: flex;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 8px;
+  gap: 4px;
+  width: fit-content;
+}
+
+.mc-source-tab {
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+  color: #595959;
+}
+
+.mc-source-tab:hover {
+  color: #1890ff;
+}
+
+.mc-source-tab.active {
+  background: #fff;
+  color: #1890ff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-weight: 500;
+}
+
+/* Route Display */
+.mc-route-display {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+}
+
+.mc-route-card {
+  padding: 12px 16px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.mcr-name {
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 4px;
+}
+
+.mcr-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.mcr-tag {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #8c8c8c;
+}
+
+.mcr-tag.blue {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.mc-route-placeholder {
+  flex: 1;
+  color: #bfbfbf;
+  font-style: italic;
+}
+
+/* Modal Split View */
+.mr-modal-content {
+  display: flex;
+  height: 480px;
+}
+
+.mr-selection-area {
+  flex: 1;
+  border-right: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-selected-area {
+  width: 220px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-search-bar {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.mr-search-input {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.mr-refresh-btn {
+  background: none;
+  border: 1px solid #d9d9d9;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #595959;
+}
+
+.mr-table-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mr-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mr-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  color: #8c8c8c;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.mr-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+  color: #262626;
+  cursor: pointer;
+}
+
+.mr-table tr:hover td {
+  background: #fafafa;
+}
+
+.mr-table tr.active td {
+  background: #e6f7ff;
+}
+
+.mrs-header {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: #595959;
+}
+
+.mrs-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.mrs-list {
+  padding: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mrs-item {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.mrs-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #bfbfbf;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.mrs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #bfbfbf;
+}
+
+.mrs-empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.mrs-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.no-border-bottom {
+  border-bottom: none !important;
+}
+
+/* Custom Provider List */
+.mc-provider-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mc-provider-item {
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mc-provider-item:hover {
+  border-color: #1890ff;
+  background: #fafafa;
+}
+
+.mc-provider-item.active {
+  border-color: #1890ff;
+  background: #e6f7ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.mcp-info {
+  flex: 1;
+}
+
+.mcp-name {
+  font-weight: 600;
+  color: #262626;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.mcp-url {
+  font-size: 12px;
+  color: #8c8c8c;
+  word-break: break-all;
+}
+
+.mcp-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  background: #f5f5f5;
+  color: #595959;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+}
+
+.mcp-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s;
+  padding: 6px;
+  font-size: 14px;
+  color: #8c8c8c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.mcp-del:hover {
+  opacity: 1;
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.mc-empty-providers {
+  padding: 32px;
+  text-align: center;
+  color: #bfbfbf;
+  font-style: italic;
+  font-size: 13px;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 8px;
+}
+
+/* Modal Table Inputs */
+.mr-table input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.mr-table input[type="number"]::-webkit-inner-spin-button,
+.mr-table input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mr-table .mr-search-input {
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all 0.2s;
+  padding: 4px 8px;
+}
+
+.mr-table .mr-search-input:hover {
+  background: #fff;
+  border-color: #d9d9d9;
+}
+
+.mr-table .mr-search-input:focus {
+  background: #fff;
+  border-color: #1890ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.mr-table td label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.mr-table td label:hover {
+  color: #1890ff;
+}
+
+.ha-modal-footer .action-btn {
+  min-width: 100px;
+}
+

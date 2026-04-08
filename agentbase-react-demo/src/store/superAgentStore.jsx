@@ -114,8 +114,8 @@ const INITIAL_AGENTS = [
       },
     ],
     snapshots: [
-      { id: 'snap-001', name: 'v2.1.0-release', createdAt: ts(2), size: '12.4 MB', author: 'admin', desc: '版本更新前的全量备份', trigger: '手动备份', version: 'v2.1.0' },
-      { id: 'snap-002', name: 'auto-backup-daily', createdAt: ts(1), size: '12.5 MB', author: '系统', desc: '每日自动定时快照', trigger: '定时备份', version: 'v2.1.0' }
+      { id: 'snap-001', name: 'v2.1.0-release', createdAt: ts(2), size: '12.4 MB', author: 'admin', desc: '版本更新前的全量备份', trigger: '手动备份', version: 'v2.1.0', isKept: false },
+      { id: 'snap-002', name: 'auto-backup-daily', createdAt: ts(1), size: '12.5 MB', author: '系统', desc: '每日自动定时快照', trigger: '定时备份', version: 'v2.1.0', isKept: false }
     ],
     workspace: {
       files: [
@@ -132,6 +132,30 @@ const INITIAL_AGENTS = [
         ]},
       ]
     },
+    modelSource: 'platform',
+    modelRoutes: [
+      { 
+        name: 'AgentBase-HighCode-GPT-4o', 
+        strategy: '聚合路由-优先级调度', 
+        type: '文本生成' 
+      }
+    ],
+    customProviders: [
+      { 
+        id: 'cp-1', name: 'ZHIPU AI', baseUrl: 'https://open.bigmodel.cn/api/paas/v4', apiKey: 'sk-********', 
+        models: [
+          { id: 'glm-4-turbo', name: 'GLM-4 Turbo', input: ['text', 'image'], output: ['text'], contextWindow: 128000, maxTokens: 4096 },
+          { id: 'glm-4-flash', name: 'GLM-4 Flash', input: ['text'], output: ['text'], contextWindow: 128000, maxTokens: 4096 }
+        ] 
+      },
+      { 
+        id: 'cp-2', name: 'OpenAI', baseUrl: 'https://api.openai.com/v1', apiKey: 'sk-********', 
+        models: [
+          { id: 'gpt-4o', name: 'GPT-4o', input: ['text', 'image'], output: ['text', 'image'], contextWindow: 128000, maxTokens: 4096 },
+          { id: 'gpt-4o-mini', name: 'GPT-4o-mini', input: ['text', 'image'], output: ['text'], contextWindow: 128000, maxTokens: 16384 }
+        ] 
+      }
+    ]
   },
   {
     id: 'ha-002',
@@ -268,10 +292,24 @@ const INITIAL_AGENTS = [
     tasks: [],
     conversations: [],
     workspace: { files: [{ name: 'workspace', type: 'folder', children: [] }] },
-    autoBackupEnabled: false,
-    autoBackupInterval: 12,
-    autoBackupUnit: 'hour',
-    autoBackupRetention: 5
+    autoBackupRetention: 5,
+    modelSource: 'platform',
+    modelRoutes: [
+      { 
+        name: 'smart-route-dev', 
+        strategy: '语义路由-成本优先', 
+        type: '文本生成' 
+      }
+    ],
+    customProviders: [
+      { 
+        id: 'cp-3', name: 'Local Ollama', baseUrl: 'http://localhost:11434/v1', apiKey: 'n/a', 
+        models: [
+          { id: 'llama-3', name: 'Llama 3', input: ['text'], output: ['text'], contextWindow: 8192, maxTokens: 2048 },
+          { id: 'mistral', name: 'Mistral 7B', input: ['text'], output: ['text'], contextWindow: 32768, maxTokens: 4096 }
+        ] 
+      }
+    ]
   },
 ]
 
@@ -293,7 +331,11 @@ function agentReducer(state, action) {
         autoBackupEnabled: false,
         autoBackupInterval: 24,
         autoBackupUnit: 'hour',
-        autoBackupRetention: 7
+        autoBackupRetention: 7,
+        snapshots: [],
+        modelSource: 'platform',
+        modelRoute: null,
+        customProviders: []
       }
       return [...state, newAgent]
     }
@@ -302,6 +344,15 @@ function agentReducer(state, action) {
         ? { ...a, ...action.payload, updatedAt: new Date().toISOString().replace('T', ' ').slice(0, 19) }
         : a
       )
+    }
+    case 'TOGGLE_SNAPSHOT_KEEP': {
+      return state.map(a => {
+        if (a.id !== action.agentId) return a
+        return {
+          ...a,
+          snapshots: (a.snapshots || []).map(s => s.id === action.snapId ? { ...s, isKept: !s.isKept } : s)
+        }
+      })
     }
     case 'DELETE': {
       return state.filter(a => a.id !== action.id)

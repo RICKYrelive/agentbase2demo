@@ -12,6 +12,14 @@ const STATUS_COLORS = {
   '停止': { bg: '#f5f5f5', color: '#595959', border: '#d9d9d9' },
 }
 
+const MOCK_MODEL_ROUTES = [
+  { id: 'mr-1', name: 'AgentBase-HighCode-GPT-4o', strategy: '聚合路由-优先级调度', type: '文本生成' },
+  { id: 'mr-2', name: 'smart-route-dev', strategy: '语义路由-成本优先', type: '文本生成' },
+  { id: 'mr-3', name: '生产专用-Qwen高级模型', strategy: '聚合路由-轮询调度', type: '文本生成' },
+  { id: 'mr-4', name: 'AgentBase-HighCode-Embed', strategy: '聚合路由-优先级调度', type: 'Embedding' },
+  { id: 'mr-5', name: 'pinchbench测试裁判模型', strategy: '聚合路由-轮询调度', type: '文本生成' },
+]
+
 const TABS = [
   { key: 'overview', label: '概览' },
   { key: 'snapshots', label: '快照' },
@@ -21,25 +29,44 @@ const TABS = [
 
 const CONFIG_SUBTABS = [
   { key: 'basic', label: '基础信息' },
-  { key: 'agent', label: 'Agent 配置' },
+  { key: 'agent', label: '模型配置' },
   { key: 'capabilities', label: '基础能力' },
   { key: 'channel', label: '连接管理' },
   { key: 'webui', label: 'WebUI 配置' },
   { key: 'markdown', label: 'Agent Markdown' },
 ]
 
-function InlineEditable({ label, value, type = 'text', options = [], onChange, renderValue }) {
+function InlineEditable({ label, value, type = 'text', options = [], onChange, renderValue, noButtons = false, refreshTrigger, onEditStart }) {
   const [isEditing, setIsEditing] = useState(false)
   const [tempVal, setTempVal] = useState(value)
+
+  // Exit edit mode ONLY if refreshTrigger changes
+  useEffect(() => {
+    setIsEditing(false)
+    setTempVal(value)
+  }, [refreshTrigger])
 
   const handleSave = () => {
     onChange(tempVal)
     setIsEditing(false)
   }
 
+  const handleChange = (val) => {
+    setTempVal(val)
+    if (noButtons) {
+      onChange(val)
+    }
+  }
+
+  const startEditing = () => {
+    setTempVal(value)
+    setIsEditing(true)
+    if (onEditStart) onEditStart()
+  }
+
   if (!isEditing) {
     return (
-      <div className="had-kv inline-editable-kv" onClick={() => { setTempVal(value); setIsEditing(true) }}>
+      <div className="had-kv inline-editable-kv" onClick={startEditing}>
         <span>{label}</span>
         <div className="ie-val-box">
           {renderValue ? renderValue(value) : (value || '-')}
@@ -54,18 +81,36 @@ function InlineEditable({ label, value, type = 'text', options = [], onChange, r
       <span style={{ marginTop: 8 }}>{label}</span>
       <div className="ie-input-wrap">
         {type === 'textarea' ? (
-          <textarea value={tempVal} onChange={e => setTempVal(e.target.value)} autoFocus style={{ width: '100%', minHeight: 60, padding: 8, border: '1px solid #d9d9d9', borderRadius: 4, resize: 'vertical' }} />
+          <textarea 
+            value={tempVal} 
+            onChange={e => handleChange(e.target.value)} 
+            autoFocus 
+            style={{ width: '100%', minHeight: 60, padding: 8, border: '1px solid #d9d9d9', borderRadius: 4, resize: 'vertical' }} 
+          />
         ) : type === 'select' ? (
-          <select value={tempVal} onChange={e => setTempVal(e.target.value)} autoFocus style={{ padding: '6px 12px', border: '1px solid #d9d9d9', borderRadius: 4 }}>
+          <select 
+            value={tempVal} 
+            onChange={e => handleChange(e.target.value)} 
+            autoFocus 
+            style={{ padding: '6px 12px', border: '1px solid #d9d9d9', borderRadius: 4 }}
+          >
             {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         ) : (
-          <input type={type} value={tempVal} onChange={e => setTempVal(e.target.value)} autoFocus style={{ padding: '6px 12px', border: '1px solid #d9d9d9', borderRadius: 4, width: '100%' }} />
+          <input 
+            type={type} 
+            value={tempVal} 
+            onChange={e => handleChange(e.target.value)} 
+            autoFocus
+            style={{ padding: '6px 12px', border: '1px solid #d9d9d9', borderRadius: 4, width: '100%' }} 
+          />
         )}
-        <div className="ie-actions" style={{ marginTop: 8, display: 'flex', gap: 8 }}>
-          <button className="action-btn primary small" onClick={handleSave}>保存</button>
-          <button className="action-btn small" onClick={() => setIsEditing(false)}>取消</button>
-        </div>
+        {!noButtons && (
+          <div className="ie-actions" style={{ marginTop: 8, display: 'flex', gap: 8 }}>
+            <button className="action-btn primary small" onClick={handleSave}>保存</button>
+            <button className="action-btn small" onClick={() => setIsEditing(false)}>取消</button>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -86,6 +131,17 @@ export default function SuperAgentDetail() {
   const [toast, setToast] = useState(null)
   const [editMode, setEditMode] = useState(false)
   const [editForm, setEditForm] = useState({})
+  const [backupDraft, setBackupDraft] = useState(null)
+  const [modelDraft, setModelDraft] = useState(null)
+  const [showModelRouteModal, setShowModelRouteModal] = useState(false)
+  const [showProviderModal, setShowProviderModal] = useState(false)
+  const [showModelsModal, setShowModelsModal] = useState(false)
+  const [selectedRouteId, setSelectedRouteId] = useState(null)
+  const [tempProvider, setTempProvider] = useState(null)
+  const [tempModels, setTempModels] = useState(null)
+  const [basicDraft, setBasicDraft] = useState(null)
+  const [basicEditNonce, setBasicEditNonce] = useState(0)
+  const [isBasicEditing, setIsBasicEditing] = useState(false)
 
   useEffect(() => {
     if (agent && editMode) {
@@ -103,6 +159,185 @@ export default function SuperAgentDetail() {
       })
     }
   }, [editMode])
+
+  useEffect(() => {
+    if (agent && tab === 'snapshots') {
+      setBackupDraft({
+        enabled: agent.autoBackupEnabled,
+        interval: agent.autoBackupInterval,
+        unit: agent.autoBackupUnit,
+        retention: agent.autoBackupRetention
+      })
+    }
+  }, [tab, agent.autoBackupEnabled, agent.autoBackupInterval, agent.autoBackupUnit, agent.autoBackupRetention])
+
+  useEffect(() => {
+    if (agent && configSubTab === 'agent') {
+      setModelDraft({
+        source: agent.modelSource || 'platform',
+        routes: agent.modelRoutes || [],
+        customProviders: agent.customProviders || []
+      })
+    }
+  }, [configSubTab, agent.modelSource, agent.modelRoutes, agent.customProviders])
+
+  useEffect(() => {
+    if (agent && configSubTab === 'basic') {
+      setBasicDraft({
+        name: agent.name,
+        description: agent.description,
+        tags: [...(agent.tags || [])]
+      })
+    }
+  }, [configSubTab, agent.name, agent.description, agent.tags])
+
+  const updateAgentModel = (fields) => {
+    dispatch({
+      type: 'UPDATE',
+      id: agent.id,
+      payload: fields
+    })
+  }
+
+  const isBasicDirty = basicDraft && (
+    basicDraft.name !== agent.name ||
+    basicDraft.description !== agent.description ||
+    JSON.stringify(basicDraft.tags) !== JSON.stringify(agent.tags || [])
+  )
+
+  const showBasicActions = isBasicDirty || isBasicEditing
+
+  const handleBasicSave = () => {
+    dispatch({
+      type: 'UPDATE',
+      id: agent.id,
+      payload: {
+        name: basicDraft.name,
+        description: basicDraft.description,
+        tags: basicDraft.tags
+      }
+    })
+    showToast('基础信息已更新')
+    setBasicEditNonce(n => n + 1)
+    setIsBasicEditing(false)
+  }
+
+  const handleBasicCancel = () => {
+    setBasicDraft({
+      name: agent.name,
+      description: agent.description,
+      tags: [...(agent.tags || [])]
+    })
+    setBasicEditNonce(n => n + 1)
+    setIsBasicEditing(false)
+  }
+
+  const handleOpenProviderModal = (provider = null) => {
+    if (provider) {
+      setTempProvider({ ...provider, models: [...provider.models] })
+    } else {
+      setTempProvider({
+        id: `cp-${Date.now()}`,
+        name: '新模型服务商',
+        baseUrl: '',
+        apiKey: '',
+        models: []
+      })
+    }
+    setShowProviderModal(true)
+  }
+
+  const handleSaveProviderModal = () => {
+    const nextProviders = modelDraft.customProviders.find(p => p.id === tempProvider.id)
+      ? modelDraft.customProviders.map(p => p.id === tempProvider.id ? tempProvider : p)
+      : [...modelDraft.customProviders, tempProvider]
+    
+    updateAgentModel({ customProviders: nextProviders })
+    setShowProviderModal(false)
+    setTempProvider(null)
+  }
+
+  const handleOpenModelsModal = () => {
+    setTempModels([...tempProvider.models])
+    setShowModelsModal(true)
+  }
+
+  const handleSaveModelsModal = () => {
+    setTempProvider(prev => ({ ...prev, models: tempModels }))
+    setShowModelsModal(false)
+    setTempModels(null)
+  }
+
+  const handleAddTempModel = () => {
+    const newModel = { 
+      id: `model-${Date.now()}`, 
+      name: '新模型', 
+      input: ['text'], 
+      output: ['text'], 
+      contextWindow: 128000, 
+      maxTokens: 8192 
+    }
+    setTempModels(prev => [...prev, newModel])
+  }
+
+  const handleUpdateTempModel = (modelId, fields) => {
+    setTempModels(prev => prev.map(m => m.id === modelId ? { ...m, ...fields } : m))
+  }
+
+  const handleDeleteTempModel = (modelId) => {
+    if (window.confirm('确定要删除该模型配置吗？')) {
+      setTempModels(prev => prev.filter(m => m.id !== modelId))
+    }
+  }
+
+  const handleDeleteCustomProvider = (e, id) => {
+    e.stopPropagation();
+    if (window.confirm('确定要删除该服务商配置吗？')) {
+      updateAgentModel({ customProviders: modelDraft.customProviders.filter(p => p.id !== id) })
+    }
+  }
+
+  const confirmSelectModelRoute = (selectedIds) => {
+    const selectedRoutes = MOCK_MODEL_ROUTES.filter(r => selectedIds.includes(r.id))
+      .map(r => ({ name: r.name, strategy: r.strategy, type: r.type }))
+    updateAgentModel({ modelRoutes: selectedRoutes })
+    setShowModelRouteModal(false)
+  }
+
+  const isBackupDirty = backupDraft && (
+    backupDraft.enabled !== agent.autoBackupEnabled ||
+    backupDraft.interval !== agent.autoBackupInterval ||
+    backupDraft.unit !== agent.autoBackupUnit ||
+    backupDraft.retention !== agent.autoBackupRetention
+  )
+
+  const handleBackupSave = () => {
+    dispatch({ 
+      type: 'UPDATE', 
+      id: agent.id, 
+      payload: { 
+        autoBackupEnabled: backupDraft.enabled,
+        autoBackupInterval: backupDraft.interval,
+        autoBackupUnit: backupDraft.unit,
+        autoBackupRetention: backupDraft.retention
+      } 
+    })
+    showToast('备份策略已更新')
+  }
+
+  const handleBackupCancel = () => {
+    setBackupDraft({
+      enabled: agent.autoBackupEnabled,
+      interval: agent.autoBackupInterval,
+      unit: agent.autoBackupUnit,
+      retention: agent.autoBackupRetention
+    })
+  }
+
+  const toggleKeepSnapshot = (snapId) => {
+    dispatch({ type: 'TOGGLE_SNAPSHOT_KEEP', agentId: agent.id, snapId })
+    showToast('快照保留状态已更新')
+  }
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type })
@@ -456,33 +691,33 @@ export default function SuperAgentDetail() {
         )}
 
         {/* ========== SNAPSHOTS ========== */}
-        {tab === 'snapshots' && (
+        {tab === 'snapshots' && backupDraft && (
           <div className="had-lifecycle">
             <div className="had-section">
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
                 <h4 style={{ margin: 0 }}>定时备份设置</h4>
                 <button 
-                  className={`ha-toggle-btn ${agent.autoBackupEnabled ? 'active' : ''}`}
-                  onClick={() => handleInlineUpdate('autoBackupEnabled', !agent.autoBackupEnabled)}
+                  className={`ha-toggle-btn ${backupDraft.enabled ? 'active' : ''}`}
+                  onClick={() => setBackupDraft({ ...backupDraft, enabled: !backupDraft.enabled })}
                 >
                   <div className="toggle-dot" />
                 </button>
               </div>
               
-              {agent.autoBackupEnabled && (
+              {backupDraft.enabled && (
                 <div className="auto-backup-config-row">
                   <div className="config-item">
                     <label>备份频率：每隔</label>
                     <input 
                       type="number" 
                       className="auto-backup-input"
-                      value={agent.autoBackupInterval} 
-                      onChange={e => handleInlineUpdate('autoBackupInterval', Number(e.target.value))}
+                      value={backupDraft.interval} 
+                      onChange={e => setBackupDraft({ ...backupDraft, interval: Number(e.target.value) })}
                     />
                     <select 
                       className="auto-backup-select"
-                      value={agent.autoBackupUnit} 
-                      onChange={e => handleInlineUpdate('autoBackupUnit', e.target.value)}
+                      value={backupDraft.unit} 
+                      onChange={e => setBackupDraft({ ...backupDraft, unit: e.target.value })}
                     >
                       <option value="hour">小时</option>
                       <option value="day">天</option>
@@ -494,11 +729,18 @@ export default function SuperAgentDetail() {
                     <input 
                       type="number" 
                       className="auto-backup-input"
-                      value={agent.autoBackupRetention} 
-                      onChange={e => handleInlineUpdate('autoBackupRetention', Number(e.target.value))}
+                      value={backupDraft.retention} 
+                      onChange={e => setBackupDraft({ ...backupDraft, retention: Number(e.target.value) })}
                     />
                     <span>份快照 (滚动覆盖)</span>
                   </div>
+                </div>
+              )}
+
+              {isBackupDirty && (
+                <div style={{ marginTop: 16, display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+                  <button className="action-btn" onClick={handleBackupCancel}>取消</button>
+                  <button className="action-btn primary" onClick={handleBackupSave}>保存设置</button>
                 </div>
               )}
             </div>
@@ -525,7 +767,7 @@ export default function SuperAgentDetail() {
                   <tbody>
                     {(agent.snapshots || []).map(snap => (
                       <tr key={snap.id}>
-                        <td>{snap.name}</td>
+                        <td>{snap.isKept && <span style={{ marginRight: 4 }} title="已保留（不计入滚动，不可删除）">📌</span>}{snap.name}</td>
                         <td style={{ color: '#8c8c8c' }}>{snap.createdAt}</td>
                         <td>{snap.version || agent.version}</td>
                         <td>{snap.size || '未知'}</td>
@@ -533,8 +775,17 @@ export default function SuperAgentDetail() {
                         <td style={{ color: '#595959' }}>{snap.desc || '-'}</td>
                         <td>
                           <div className="ha-row-actions">
+                            <button onClick={() => toggleKeepSnapshot(snap.id)} style={{ color: snap.isKept ? '#1890ff' : '#666' }}>{snap.isKept ? '取消保留' : '保留'}</button>
                             <button onClick={() => handleRestoreSnapshot(snap)}>恢复</button>
-                            <button className="ha-delete-btn" onClick={() => handleDeleteSnapshot(snap)}>删除</button>
+                            <button 
+                              className="ha-delete-btn" 
+                              onClick={() => !snap.isKept && handleDeleteSnapshot(snap)}
+                              disabled={snap.isKept}
+                              title={snap.isKept ? '已开启保留，不可删除' : ''}
+                              style={snap.isKept ? { opacity: 0.4, cursor: 'not-allowed' } : {}}
+                            >
+                              删除
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -560,10 +811,25 @@ export default function SuperAgentDetail() {
 
             {/* Sub-tab content */}
             <div className="had-config-panel">
-              {configSubTab === 'basic' && (
-                <div className="had-section">
-                  <InlineEditable label="名称" value={agent.name} onChange={v => handleInlineUpdate('name', v)} />
-                  <InlineEditable label="描述" value={agent.description} type="textarea" onChange={v => handleInlineUpdate('description', v)} />
+              {configSubTab === 'basic' && basicDraft && (
+                <div className="had-section" style={{ paddingBottom: 16 }}>
+                  <InlineEditable 
+                    label="名称" 
+                    value={basicDraft.name} 
+                    onChange={v => setBasicDraft(p => ({ ...p, name: v }))} 
+                    noButtons={true}
+                    refreshTrigger={basicEditNonce}
+                    onEditStart={() => setIsBasicEditing(true)}
+                  />
+                  <InlineEditable 
+                    label="描述" 
+                    value={basicDraft.description} 
+                    type="textarea" 
+                    onChange={v => setBasicDraft(p => ({ ...p, description: v }))} 
+                    noButtons={true}
+                    refreshTrigger={basicEditNonce}
+                    onEditStart={() => setIsBasicEditing(true)}
+                  />
                   <div className="had-kv">
                     <span>版本</span>
                     <div className="had-val-static">{agent.version}</div>
@@ -571,14 +837,92 @@ export default function SuperAgentDetail() {
                   <div className="had-kv inline-editable-kv">
                     <span>标签</span>
                     <div className="ie-val-box">
-                      <TagSelectModal value={agent.tags || []} onChange={tags => handleInlineUpdate('tags', tags)} />
+                      <TagSelectModal 
+                        value={basicDraft.tags || []} 
+                        onChange={tags => setBasicDraft(p => ({ ...p, tags }))} 
+                      />
                     </div>
                   </div>
+
+                  {showBasicActions && (
+                    <div style={{ marginTop: 24, padding: '16px 0', borderTop: '1px dashed #f0f0f0', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+                      <button className="action-btn" onClick={handleBasicCancel}>取消</button>
+                      <button className="action-btn primary" onClick={handleBasicSave}>保存设置</button>
+                    </div>
+                  )}
                 </div>
               )}
-              {configSubTab === 'agent' && (
-                <div className="had-section">
-                  <InlineEditable label="模型" value={agent.model} onChange={v => handleInlineUpdate('model', v)} />
+              {configSubTab === 'agent' && modelDraft && (
+                <div className="had-model-config-panel">
+                  {/* Source Selector */}
+                  <div className="had-section no-border-bottom" style={{ marginBottom: 0 }}>
+                    <div className="form-row">
+                      <label>服务类型</label>
+                      <div className="mc-source-tabs">
+                        <div className={`mc-source-tab ${modelDraft.source === 'platform' ? 'active' : ''}`} onClick={() => { setModelDraft({ ...modelDraft, source: 'platform' }); updateAgentModel({ modelSource: 'platform' }); }}>平台模型路由</div>
+                        <div className={`mc-source-tab ${modelDraft.source === 'custom' ? 'active' : ''}`} onClick={() => { setModelDraft({ ...modelDraft, source: 'custom' }); updateAgentModel({ modelSource: 'custom' }); }}>自定义模型服务</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {modelDraft.source === 'platform' ? (
+                    <div className="had-section" style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                        <h4 style={{ margin: 0, fontSize: 14, color: '#262626' }}>已绑定的平台模型路由 ({modelDraft.routes.length})</h4>
+                        <button className="action-btn small primary" onClick={() => { 
+                          // Initialize selectedRouteIds if needed
+                          setShowModelRouteModal(true); 
+                        }}>选择路由</button>
+                      </div>
+                      
+                      <div className="mc-route-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                        {modelDraft.routes.map((route, idx) => (
+                          <div key={idx} className="mc-route-card" style={{ width: '100%' }}>
+                            <div className="mcr-name">{route.name}</div>
+                            <div className="mcr-tags">
+                              <span className="mcr-tag">{route.strategy}</span>
+                              <span className="mcr-tag blue">{route.type}</span>
+                            </div>
+                          </div>
+                        ))}
+                        {modelDraft.routes.length === 0 && (
+                          <div className="mc-route-placeholder" style={{ width: '100%', padding: '24px', textAlign: 'center', background: '#fafafa', border: '1px dashed #d9d9d9', borderRadius: 8, color: '#999' }}>
+                            尚未选择平台模型路由
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mc-custom-container">
+                      <div className="had-section no-border-bottom" style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                          <h4 style={{ margin: 0, fontSize: 14, color: '#262626' }}>已配置的服务商 ({modelDraft.customProviders.length})</h4>
+                          <button className="action-btn small primary" onClick={() => handleOpenProviderModal()}>+ 添加服务商</button>
+                        </div>
+                        
+                        {!modelDraft.customProviders.length ? (
+                          <div className="mc-empty-providers">尚未配置任何自定义模型服务商</div>
+                        ) : (
+                          <div className="mc-provider-list">
+                            {modelDraft.customProviders.map(p => (
+                              <div key={p.id} className="mc-provider-item" onClick={() => handleOpenProviderModal(p)}>
+                                <div className="mcp-info">
+                                  <div className="mcp-name">{p.name || '未命名服务商'}</div>
+                                  <div className="mcp-url">{p.baseUrl || '尚未设置 API Endpoint'}</div>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                  <div className="mcp-badge">{p.models?.length || 0} Models</div>
+                                  <button className="mcp-del" onClick={(e) => handleDeleteCustomProvider(e, p.id)}>🗑️</button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+
                 </div>
               )}
               {configSubTab === 'capabilities' && (
@@ -992,8 +1336,271 @@ export default function SuperAgentDetail() {
         </div>
       )}
 
+      {/* Model Route Selection Modal */}
+      {showModelRouteModal && (
+        <div className="ha-modal-overlay">
+          <ModelRouteSelectionContent 
+            onCancel={() => setShowModelRouteModal(false)}
+            onConfirm={(ids) => confirmSelectModelRoute(ids)}
+            initialSelectedNames={modelDraft.routes.map(r => r.name)}
+          />
+        </div>
+      )}
+
+      {/* Provider Details Modal */}
+      {showProviderModal && tempProvider && (
+        <div className="ha-modal-overlay">
+          <div className="ha-modal" style={{ maxWidth: 600 }}>
+            <div className="ha-modal-header">
+              <h3 style={{ fontSize: '16px', fontWeight: 600 }}>
+                {tempProvider.id.startsWith('cp-') && !modelDraft.customProviders.find(p => p.id === tempProvider.id) ? '添加服务商' : '编辑服务商'}
+              </h3>
+              <button className="ha-modal-close" onClick={() => setShowProviderModal(false)}>×</button>
+            </div>
+            <div className="ha-modal-body" style={{ padding: '24px' }}>
+              <div className="form-row">
+                <label>服务商名称<span style={{ color: 'red' }}>*</span></label>
+                <input 
+                  type="text" 
+                  value={tempProvider.name}
+                  onChange={e => setTempProvider(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="例如: OpenAI, Zhipu AI"
+                />
+              </div>
+              <div className="form-row">
+                <label>Base URL<span style={{ color: 'red' }}>*</span></label>
+                <input 
+                  type="text" 
+                  value={tempProvider.baseUrl}
+                  onChange={e => setTempProvider(prev => ({ ...prev, baseUrl: e.target.value }))}
+                  placeholder="https://api.openai.com/v1"
+                />
+              </div>
+              <div className="form-row">
+                <label>API Key<span style={{ color: 'red' }}>*</span></label>
+                <input 
+                  type="password" 
+                  value={tempProvider.apiKey}
+                  onChange={e => setTempProvider(prev => ({ ...prev, apiKey: e.target.value }))}
+                  placeholder="sk-********"
+                />
+              </div>
+              <div className="form-row" style={{ alignItems: 'center' }}>
+                <label>模型管理</label>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div className="mcp-badge" style={{ padding: '6px 12px', fontSize: 13 }}>
+                    已配置 {tempProvider.models?.length || 0} 个模型
+                  </div>
+                  <button 
+                    className="action-btn" 
+                    onClick={handleOpenModelsModal}
+                  >
+                    ⚙️ 配置模型列表
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="ha-modal-footer" style={{ padding: '16px 24px', textAlign: 'right', borderTop: '1px solid #f0f0f0', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+              <button className="action-btn" onClick={() => setShowProviderModal(false)}>取消</button>
+              <button className="action-btn primary" onClick={handleSaveProviderModal}>确定</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Provider Models Management Modal */}
+      {showModelsModal && tempModels && (
+        <div className="ha-modal-overlay" style={{ zIndex: 1100 }}>
+          <div className="ha-modal" style={{ maxWidth: 900 }}>
+            <div className="ha-modal-header">
+              <h3 style={{ fontSize: '16px', fontWeight: 600 }}>
+                管理模型列表 — {tempProvider.name}
+              </h3>
+              <button className="ha-modal-close" onClick={() => setShowModelsModal(false)}>×</button>
+            </div>
+            <div className="ha-modal-body" style={{ padding: '20px' }}>
+              <div style={{ marginBottom: 16, textAlign: 'right' }}>
+                <button className="action-btn primary small" onClick={handleAddTempModel}>+ 添加模型</button>
+              </div>
+              <div className="mr-table-container" style={{ border: '1px solid #f0f0f0', borderRadius: 8 }}>
+                <table className="mr-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '150px' }}>模型 ID / 名称</th>
+                      <th style={{ width: '120px' }}>输入类型</th>
+                      <th style={{ width: '120px' }}>输出类型</th>
+                      <th style={{ width: '140px' }}>Context Window</th>
+                      <th style={{ width: '120px' }}>Max Tokens</th>
+                      <th style={{ width: '80px' }}>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tempModels.map(m => (
+                      <tr key={m.id}>
+                        <td>
+                          <input 
+                            type="text" 
+                            className="mr-search-input" 
+                            style={{ width: '90%', marginBottom: 4 }} 
+                            placeholder="ID (如 gpt-4o)"
+                            value={m.id}
+                            onChange={e => handleUpdateTempModel(m.id, { id: e.target.value })}
+                          />
+                          <input 
+                            type="text" 
+                            className="mr-search-input" 
+                            style={{ width: '90%', fontSize: 11, opacity: 0.7 }} 
+                            placeholder="友好名称 (如 GPT-4o)"
+                            value={m.name}
+                            onChange={e => handleUpdateTempModel(m.id, { name: e.target.value })}
+                          />
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                              <input 
+                                type="checkbox" 
+                                checked={m.input.includes('text')} 
+                                onChange={e => {
+                                  const next = e.target.checked ? [...m.input, 'text'] : m.input.filter(i => i !== 'text');
+                                  handleUpdateTempModel(m.id, { input: next });
+                                }}
+                              /> 文本
+                            </label>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                              <input 
+                                type="checkbox" 
+                                checked={m.input.includes('image')} 
+                                onChange={e => {
+                                  const next = e.target.checked ? [...m.input, 'image'] : m.input.filter(i => i !== 'image');
+                                  handleUpdateTempModel(m.id, { input: next });
+                                }}
+                              /> 图像
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                              <input 
+                                type="checkbox" 
+                                checked={m.output.includes('text')} 
+                                onChange={e => {
+                                  const next = e.target.checked ? [...m.output, 'text'] : m.output.filter(i => i !== 'text');
+                                  handleUpdateTempModel(m.id, { output: next });
+                                }}
+                              /> 文本
+                            </label>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                              <input 
+                                type="checkbox" 
+                                checked={m.output.includes('image')} 
+                                onChange={e => {
+                                  const next = e.target.checked ? [...m.output, 'image'] : m.output.filter(i => i !== 'image');
+                                  handleUpdateTempModel(m.id, { output: next });
+                                }}
+                              /> 图像
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <input 
+                            type="number" 
+                            className="mr-search-input" 
+                            style={{ width: '120px' }}
+                            value={m.contextWindow}
+                            onChange={e => handleUpdateTempModel(m.id, { contextWindow: Number(e.target.value) })}
+                          />
+                        </td>
+                        <td>
+                          <input 
+                            type="number" 
+                            className="mr-search-input" 
+                            style={{ width: '100px' }}
+                            value={m.maxTokens}
+                            onChange={e => handleUpdateTempModel(m.id, { maxTokens: Number(e.target.value) })}
+                          />
+                        </td>
+                        <td>
+                          <button 
+                            className="mcp-del" 
+                            onClick={() => handleDeleteTempModel(m.id)}
+                            style={{ opacity: 1, color: '#ff4d4f' }}
+                          >
+                            🗑️
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="ha-modal-footer" style={{ padding: '16px 24px', textAlign: 'right', borderTop: '1px solid #f0f0f0', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+              <button className="action-btn" onClick={() => setShowModelsModal(false)}>取消</button>
+              <button className="action-btn primary" onClick={handleSaveModelsModal}>确定</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Toast */}
       {toast && <div className={`ha-toast ha-toast-${toast.type}`}>{toast.msg}</div>}
+    </div>
+  )
+}
+
+function ModelRouteSelectionContent({ onCancel, onConfirm, initialSelectedNames }) {
+  const [selectedIds, setSelectedIds] = useState(() => {
+    return MOCK_MODEL_ROUTES.filter(r => initialSelectedNames.includes(r.name)).map(r => r.id)
+  })
+
+  const toggleRoute = (id) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    )
+  }
+
+  return (
+    <div className="ha-modal" style={{ maxWidth: 800 }}>
+      <div className="ha-modal-header">
+        <h3 style={{ fontSize: '16px', fontWeight: 600 }}>选择平台模型路由</h3>
+        <button className="ha-modal-close" onClick={onCancel}>×</button>
+      </div>
+      <div className="ha-modal-body" style={{ padding: '0px' }}>
+        <div className="mr-table-container">
+          <table className="mr-table">
+            <thead>
+              <tr>
+                <th style={{ width: '40px' }}></th>
+                <th>路由名称</th>
+                <th>策略</th>
+                <th>类型</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MOCK_MODEL_ROUTES.map(r => (
+                <tr key={r.id} className={selectedIds.includes(r.id) ? 'selected' : ''} onClick={() => toggleRoute(r.id)}>
+                  <td onClick={e => e.stopPropagation()}>
+                    <input 
+                      type="checkbox" 
+                      checked={selectedIds.includes(r.id)} 
+                      onChange={() => toggleRoute(r.id)}
+                    />
+                  </td>
+                  <td style={{ fontWeight: 500 }}>{r.name}</td>
+                  <td><span className="mcr-tag">{r.strategy}</span></td>
+                  <td><span className="mcr-tag blue">{r.type}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="ha-modal-footer" style={{ padding: '16px 24px', textAlign: 'right', borderTop: '1px solid #f0f0f0', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+        <button className="action-btn" onClick={onCancel}>取消</button>
+        <button className="action-btn primary" onClick={() => onConfirm(selectedIds)}>确定选择</button>
+      </div>
     </div>
   )
 }
