@@ -459,8 +459,56 @@ export default function SuperAgentDetail() {
         {tab === 'snapshots' && (
           <div className="had-lifecycle">
             <div className="had-section">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h4 style={{ margin: 0 }}>定时备份设置</h4>
+                <div className="ha-switch-wrap">
+                  <span style={{ marginRight: 12, fontSize: 13, color: '#666' }}>自动化策略：{agent.autoBackupEnabled ? '已开启' : '已禁用'}</span>
+                  <button 
+                    className={`ha-toggle-btn ${agent.autoBackupEnabled ? 'active' : ''}`}
+                    onClick={() => handleInlineUpdate('autoBackupEnabled', !agent.autoBackupEnabled)}
+                  >
+                    <div className="toggle-dot" />
+                  </button>
+                </div>
+              </div>
+              
+              {agent.autoBackupEnabled && (
+                <div className="auto-backup-config-row">
+                  <div className="config-item">
+                    <label>备份频率：每隔</label>
+                    <input 
+                      type="number" 
+                      className="auto-backup-input"
+                      value={agent.autoBackupInterval} 
+                      onChange={e => handleInlineUpdate('autoBackupInterval', Number(e.target.value))}
+                    />
+                    <select 
+                      className="auto-backup-select"
+                      value={agent.autoBackupUnit} 
+                      onChange={e => handleInlineUpdate('autoBackupUnit', e.target.value)}
+                    >
+                      <option value="hour">小时</option>
+                      <option value="day">天</option>
+                    </select>
+                    <span style={{ marginLeft: 4 }}>执行一次</span>
+                  </div>
+                  <div className="config-item">
+                    <label>版本控制：保留最近</label>
+                    <input 
+                      type="number" 
+                      className="auto-backup-input"
+                      value={agent.autoBackupRetention} 
+                      onChange={e => handleInlineUpdate('autoBackupRetention', Number(e.target.value))}
+                    />
+                    <span>份快照 (滚动覆盖)</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="had-section">
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-                <button className="action-btn primary" onClick={handleCreateSnapshot}>+ 创建快照</button>
+                <button className="action-btn primary" onClick={handleCreateSnapshot}>+ 创建新快照</button>
               </div>
               {!(agent.snapshots || []).length ? (
                 <div className="had-empty-hint">暂无历史快照，您可以创建一个新的快照来保存当前状态。</div>

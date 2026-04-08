@@ -731,3 +731,96 @@
 .had-ob-bar-v.primary { background: #b5f5ec; }
 .had-ob-bar-v.purple { background: #d3adf7; }
 
+/* Scheduled Backup Styles */
+.ha-switch-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.ha-toggle-btn {
+  width: 44px;
+  height: 22px;
+  border-radius: 11px;
+  background: #bfbfbf;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.ha-toggle-btn.active {
+  background: var(--color-blue);
+}
+
+.toggle-dot {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.ha-toggle-btn.active .toggle-dot {
+  left: 24px;
+}
+
+.auto-backup-config-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 16px 20px;
+  background: #f8faff;
+  border: 1px dashed #adc6ff;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.config-item label {
+  color: #666;
+  margin-right: 4px;
+}
+
+.auto-backup-input {
+  width: 64px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin: 0 8px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.auto-backup-input:focus {
+  border-color: var(--color-blue);
+}
+
+.auto-backup-select {
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  color: var(--color-blue);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.auto-backup-select:hover {
+  background: rgba(24, 144, 255, 0.1);
+}
+

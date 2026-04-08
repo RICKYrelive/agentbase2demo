@@ -268,6 +268,10 @@ const INITIAL_AGENTS = [
     tasks: [],
     conversations: [],
     workspace: { files: [{ name: 'workspace', type: 'folder', children: [] }] },
+    autoBackupEnabled: false,
+    autoBackupInterval: 12,
+    autoBackupUnit: 'hour',
+    autoBackupRetention: 5
   },
 ]
 
@@ -286,6 +290,10 @@ function agentReducer(state, action) {
         tasks: [],
         conversations: [],
         workspace: { files: [{ name: 'workspace', type: 'folder', children: [] }] },
+        autoBackupEnabled: false,
+        autoBackupInterval: 24,
+        autoBackupUnit: 'hour',
+        autoBackupRetention: 7
       }
       return [...state, newAgent]
     }
