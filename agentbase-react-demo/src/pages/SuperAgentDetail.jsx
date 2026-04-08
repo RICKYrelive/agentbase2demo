@@ -459,17 +459,14 @@ export default function SuperAgentDetail() {
         {tab === 'snapshots' && (
           <div className="had-lifecycle">
             <div className="had-section">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
                 <h4 style={{ margin: 0 }}>定时备份设置</h4>
-                <div className="ha-switch-wrap">
-                  <span style={{ marginRight: 12, fontSize: 13, color: '#666' }}>自动化策略：{agent.autoBackupEnabled ? '已开启' : '已禁用'}</span>
-                  <button 
-                    className={`ha-toggle-btn ${agent.autoBackupEnabled ? 'active' : ''}`}
-                    onClick={() => handleInlineUpdate('autoBackupEnabled', !agent.autoBackupEnabled)}
-                  >
-                    <div className="toggle-dot" />
-                  </button>
-                </div>
+                <button 
+                  className={`ha-toggle-btn ${agent.autoBackupEnabled ? 'active' : ''}`}
+                  onClick={() => handleInlineUpdate('autoBackupEnabled', !agent.autoBackupEnabled)}
+                >
+                  <div className="toggle-dot" />
+                </button>
               </div>
               
               {agent.autoBackupEnabled && (
