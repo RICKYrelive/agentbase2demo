@@ -25,6 +25,7 @@ const TABS = [
   { key: 'snapshots', label: '快照' },
   { key: 'config', label: '配置' },
   { key: 'runtime', label: '定时任务' },
+  { key: 'system', label: '系统' },
 ]
 
 const CONFIG_SUBTABS = [
@@ -142,6 +143,9 @@ function SuperAgentDetail() {
   const [basicDraft, setBasicDraft] = useState(null)
   const [basicEditNonce, setBasicEditNonce] = useState(0)
   const [isBasicEditing, setIsBasicEditing] = useState(false)
+  const [systemOnline, setSystemOnline] = useState(true)
+  const [showTerminal, setShowTerminal] = useState(false)
+  const [terminalLogs, setTerminalLogs] = useState([])
   // Legacy modal state removed
 
   useEffect(() => {
@@ -401,6 +405,14 @@ function SuperAgentDetail() {
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type })
     setTimeout(() => setToast(null), 2500)
+  }
+
+  const openTerminal = () => {
+    setShowTerminal(true)
+    setTerminalLogs(['Connecting to agent-runtime-01...', 'Authenticating...', 'Channel established.'])
+    setTimeout(() => {
+      setTerminalLogs(prev => [...prev, 'bash-5.1# systemctl status agentbase-service', '● agentbase-service.service - Agent runtime service', '   Loaded: loaded (/lib/systemd/system/agentbase-service.service; enabled; vendor preset: enabled)', '   Active: active (running) since Wed 2026-04-08 14:15:33 UTC; 1h 30min ago'])
+    }, 1000)
   }
 
   if (!agent) {
@@ -1337,6 +1349,63 @@ function SuperAgentDetail() {
           </div>
         )}
 
+        {tab === 'system' && (
+          <div className="system-dashboard">
+            {/* Service Monitor */}
+            <div className="system-status-card">
+              <div className="system-status-group">
+                <div className={`status-indicator ${systemOnline ? 'online' : 'offline'}`}></div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 600 }}>观测服务: {systemOnline ? '已连接' : '已断开'}</div>
+                  <div style={{ fontSize: 12, color: '#8c8c8c' }}>实时观测与其配套的运行时环境连接情况</div>
+                </div>
+              </div>
+              <div>
+                {systemOnline ? (
+                  <button className="action-btn small" onClick={() => setSystemOnline(false)}>模拟断开</button>
+                ) : (
+                  <button className="action-btn small primary" onClick={() => {
+                    showToast('正在尝试连接服务...')
+                    setTimeout(() => {
+                      setSystemOnline(true)
+                      showToast('服务已成功重连')
+                    }, 1500)
+                  }}>一键修复</button>
+                )}
+              </div>
+            </div>
+
+            {/* Recovery Capabilities */}
+            <div className="had-section" style={{ background: 'transparent', padding: 0, border: 'none' }}>
+              <h4 style={{ marginBottom: 16 }}>灾备与恢复</h4>
+              <div className="recovery-grid">
+                <div className="recovery-card">
+                  <h5>配置恢复</h5>
+                  <p>将当前 Agent 配置状态强制回滚至上一个已标记的“可用”版本。</p>
+                  <div className="recovery-tips">
+                    <span>💡</span>
+                    <span>小i提示：建议由于误配置导致服务异常时使用。</span>
+                  </div>
+                  <button className="action-btn" style={{ marginTop: 'auto' }} onClick={() => showToast('正在回滚配置，请稍候...', 'success')}>立即恢复</button>
+                </div>
+
+                <div className="recovery-card">
+                  <h5>网关重启</h5>
+                  <p>如果接口调用频繁出现超时或 504 错误，可以尝试手动重启 API 网关通道。</p>
+                  <button className="action-btn" style={{ marginTop: 'auto' }} onClick={() => showToast('网关重启指令已发送...', 'success')}>网关重启</button>
+                </div>
+
+                <div className="recovery-card">
+                  <h5>链接终端 (Diagnostic)</h5>
+                  <p>通过 SSH 协议安全接入 Agent 运行环境，执行低级别的诊断命令。</p>
+                  <button className="action-btn primary" style={{ marginTop: 'auto' }} onClick={openTerminal}>连接终端</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+
       </div>
 
       {/* Channel Modal */}
@@ -1674,7 +1743,41 @@ function SuperAgentDetail() {
         </div>
       )}
 
-      {/* Default Model Selection Modal Removed */}
+      {/* Terminal Modal */}
+      {showTerminal && (
+        <div className="ha-modal-overlay">
+          <div className="ha-modal" style={{ maxWidth: 900 }}>
+            <div className="terminal-window">
+              <div className="terminal-header">
+                <div className="terminal-controls">
+                  <div className="t-dot red"></div>
+                  <div className="t-dot yellow"></div>
+                  <div className="t-dot green"></div>
+                </div>
+                <div className="terminal-title">agentbase-diagnostic-term — ssh root@agent-runtime-01</div>
+                <button className="ha-modal-close" onClick={() => setShowTerminal(false)} style={{ color: '#fff', fontSize: 18 }}>×</button>
+              </div>
+              <div className="terminal-body" id="term-body">
+                {terminalLogs.map((log, idx) => (
+                  <p key={idx} className="terminal-line">
+                    <span className="t-prompt">{log.startsWith('bash') ? '' : '>'}</span>
+                    <span className={log.includes('Active: active') ? 't-success' : ''}>{log}</span>
+                  </p>
+                ))}
+                <p className="terminal-line">
+                  <span className="t-prompt">bash-5.1# </span>
+                  <span className="t-typing">&nbsp;</span>
+                </p>
+              </div>
+            </div>
+            <div style={{ padding: '12px 20px', background: '#222', borderTop: '1px solid #333', textAlign: 'right' }}>
+              <button className="action-btn" onClick={() => setShowTerminal(false)}>退出终端</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Legacy modal state removed */}
 
       {/* Toast */}
       {toast && <div className={`ha-toast ha-toast-${toast.type}`}>{toast.msg}</div>}
