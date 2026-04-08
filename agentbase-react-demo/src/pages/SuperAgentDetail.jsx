@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSuperAgents, VERSIONS, IM_TYPES } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
@@ -116,7 +116,7 @@ function InlineEditable({ label, value, type = 'text', options = [], onChange, r
   )
 }
 
-export default function SuperAgentDetail() {
+function SuperAgentDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
@@ -142,6 +142,7 @@ export default function SuperAgentDetail() {
   const [basicDraft, setBasicDraft] = useState(null)
   const [basicEditNonce, setBasicEditNonce] = useState(0)
   const [isBasicEditing, setIsBasicEditing] = useState(false)
+  // Legacy modal state removed
 
   useEffect(() => {
     if (agent && editMode) {
@@ -176,10 +177,15 @@ export default function SuperAgentDetail() {
       setModelDraft({
         source: agent.modelSource || 'platform',
         routes: agent.modelRoutes || [],
-        customProviders: agent.customProviders || []
+        customProviders: agent.customProviders || [],
+        defaultModelConfig: agent.defaultModelConfig ? JSON.parse(JSON.stringify(agent.defaultModelConfig)) : {
+          chat: { mainId: '', fallbacks: [] },
+          vision: { mainId: '', fallbacks: [] },
+          imageGen: { mainId: '', fallbacks: [] }
+        }
       })
     }
-  }, [configSubTab, agent.modelSource, agent.modelRoutes, agent.customProviders])
+  }, [configSubTab, agent.modelSource, agent.modelRoutes, agent.customProviders, agent.defaultModelConfig])
 
   useEffect(() => {
     if (agent && configSubTab === 'basic') {
@@ -255,6 +261,59 @@ export default function SuperAgentDetail() {
     updateAgentModel({ customProviders: nextProviders })
     setShowProviderModal(false)
     setTempProvider(null)
+  }
+
+  const getAllAvailableModels = () => {
+    if (!modelDraft) return []
+    const pool = []
+    
+    // Platform Routes
+    modelDraft.routes.forEach(r => {
+      pool.push({
+        id: `platform:${r.name}`,
+        name: r.name,
+        source: '平台路由',
+        type: r.type,
+        strategy: r.strategy
+      })
+    })
+    
+    // Custom Providers
+    modelDraft.customProviders.forEach(p => {
+      (p.models || []).forEach(m => {
+        pool.push({
+          id: `custom:${p.id}:${m.id}`,
+          name: m.name,
+          modelId: m.id,
+          source: `自定义 (${p.name})`,
+          providerName: p.name,
+          input: m.input,
+          output: m.output
+        })
+      })
+    })
+    
+    return pool
+  }
+
+  const handleUpdateDefaultModel = (category, config) => {
+    const newDraft = {
+      ...modelDraft,
+      defaultModelConfig: {
+        ...modelDraft.defaultModelConfig,
+        [category]: config
+      }
+    }
+    setModelDraft(newDraft)
+    
+    // Atomic update to store
+    dispatch({
+      type: 'UPDATE',
+      id: agent.id,
+      payload: { defaultModelConfig: newDraft.defaultModelConfig }
+    })
+    
+    showToast('默认模型状态已更新')
   }
 
   const handleOpenModelsModal = () => {
@@ -922,7 +981,78 @@ export default function SuperAgentDetail() {
                     </div>
                   )}
 
+                  {/* Default Model Configuration */}
+                  <div className="had-section" style={{ marginTop: 20 }}>
+                    <div style={{ marginBottom: 16 }}>
+                      <h4 style={{ margin: 0, fontSize: 14, color: '#262626' }}>默认模型配置</h4>
+                      <p style={{ margin: '4px 0 0', fontSize: 12, color: '#8c8c8c' }}>设置 Agent 在不同场景下的主要模型及备选模型（Fallback）</p>
+                    </div>
 
+                    {[
+                      { key: 'chat', label: 'Agent 模型', icon: '🤖' },
+                      { key: 'vision', label: '图像理解模型', icon: '🎨' },
+                      { key: 'imageGen', label: '图像生成模型', icon: '✨' }
+                    ].map(cat => {
+                      const config = modelDraft.defaultModelConfig[cat.key] || { mainId: '', fallbacks: [] }
+                      const availableOptions = getAllAvailableModels()
+
+                      return (
+                        <div key={cat.key} className="dmc-category-box">
+                          <div className="dmc-category-header">
+                            <span style={{ fontSize: 18 }}>{cat.icon}</span>
+                            <span className="dmc-category-label">{cat.label}</span>
+                          </div>
+
+                          {/* Primary Model Row */}
+                          <div className="dmc-row">
+                            <div className="dmc-row-label">主要模型</div>
+                            <div className="dmc-row-content">
+                              <ModelSearchSelector 
+                                value={config.mainId}
+                                options={availableOptions}
+                                placeholder="选择主要模型..."
+                                onSelect={(newId) => {
+                                  handleUpdateDefaultModel(cat.key, { ...config, mainId: newId })
+                                }}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Fallback Models Rows */}
+                          {config.fallbacks.map((fid, fidx) => (
+                            <div key={`${cat.key}-fb-${fidx}`} className="dmc-row">
+                              <div className="dmc-row-label">备选模型 {fidx + 1}</div>
+                              <div className="dmc-row-content">
+                                <ModelSearchSelector 
+                                  value={fid}
+                                  options={availableOptions}
+                                  placeholder="选择备选模型..."
+                                  onSelect={(newId) => {
+                                    const nextFbs = [...config.fallbacks]
+                                    nextFbs[fidx] = newId
+                                    handleUpdateDefaultModel(cat.key, { ...config, fallbacks: nextFbs })
+                                  }}
+                                />
+                                <button className="dmc-del-btn" onClick={() => {
+                                  const nextFbs = config.fallbacks.filter((_, i) => i !== fidx)
+                                  handleUpdateDefaultModel(cat.key, { ...config, fallbacks: nextFbs })
+                                }}>🗑️</button>
+                              </div>
+                            </div>
+                          ))}
+
+                          <div className="dmc-add-link" onClick={() => {
+                            handleUpdateDefaultModel(cat.key, { 
+                              ...config, 
+                              fallbacks: [...config.fallbacks, ''] 
+                            })
+                          }}>
+                            <span>+ 添加备选模型</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               )}
               {configSubTab === 'capabilities' && (
@@ -1544,6 +1674,8 @@ export default function SuperAgentDetail() {
         </div>
       )}
 
+      {/* Default Model Selection Modal Removed */}
+
       {/* Toast */}
       {toast && <div className={`ha-toast ha-toast-${toast.type}`}>{toast.msg}</div>}
     </div>
@@ -1604,3 +1736,68 @@ function ModelRouteSelectionContent({ onCancel, onConfirm, initialSelectedNames 
     </div>
   )
 }
+
+function ModelSearchSelector({ value, options = [], onSelect, placeholder }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const dropdownRef = useRef(null)
+
+  const selectedOption = options.find(o => o.id === value)
+  const filteredOptions = options.filter(o => 
+    (o.name || '').toLowerCase().includes(query.toLowerCase()) || 
+    (o.id || '').toLowerCase().includes(query.toLowerCase()) || 
+    (o.source && o.source.toLowerCase().includes(query.toLowerCase()))
+  )
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false)
+        setQuery('')
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  return (
+    <div className="dmc-selector-wrap" ref={dropdownRef}>
+      <input 
+        type="text" 
+        className="dmc-selector-input"
+        placeholder={selectedOption ? selectedOption.name : placeholder}
+        value={isOpen ? query : (selectedOption ? selectedOption.name : '')}
+        onFocus={() => setIsOpen(true)}
+        onChange={e => setQuery(e.target.value)}
+        readOnly={!isOpen && !!selectedOption}
+        onClick={() => !isOpen && setIsOpen(true)}
+        autoComplete="off"
+      />
+      {isOpen && (
+        <div className="dmc-popover">
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map(opt => (
+              <div 
+                key={opt.id} 
+                className={`dmc-option ${opt.id === value ? 'selected' : ''}`}
+                onClick={() => {
+                  onSelect(opt.id)
+                  setIsOpen(false)
+                  setQuery('')
+                }}
+              >
+                <div className="dmc-option-name">{opt.name}</div>
+                <div className="dmc-option-meta">{opt.source} · {opt.id}</div>
+              </div>
+            ))
+          ) : (
+            <div className="dmc-no-results">没有找到匹配的模型</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default SuperAgentDetail;
+

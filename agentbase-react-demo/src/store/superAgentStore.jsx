@@ -155,7 +155,12 @@ const INITIAL_AGENTS = [
           { id: 'gpt-4o-mini', name: 'GPT-4o-mini', input: ['text', 'image'], output: ['text'], contextWindow: 128000, maxTokens: 16384 }
         ] 
       }
-    ]
+    ],
+    defaultModelConfig: {
+      chat: { mainId: 'platform:AgentBase-HighCode-GPT-4o', fallbacks: ['custom:cp-1:glm-4-turbo'] },
+      vision: { mainId: 'custom:cp-2:gpt-4o', fallbacks: [] },
+      imageGen: { mainId: 'custom:cp-2:gpt-4o', fallbacks: [] }
+    }
   },
   {
     id: 'ha-002',
