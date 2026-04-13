@@ -4,6 +4,7 @@ import './AgentDev.css'
 
 export default function AgentDev({ onAlert }) {
   const [tab, setTab] = useState('high')
+
   return (
     <PageLayout
       title="Agent 应用开发"
@@ -20,6 +21,7 @@ export default function AgentDev({ onAlert }) {
         </div>
         <h3 className="agent-dev-heading">创建第一个高代码开发环境</h3>
         <p className="agent-dev-desc">使用平台内置高代码应用开发模板，<br />快速构建应用镜像</p>
+        
         <button className="action-btn primary" onClick={onAlert}>模版创建</button>
       </div>
     </PageLayout>

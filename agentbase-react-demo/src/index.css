@@ -52,3 +52,61 @@ ul, li {
   display: flex;
   min-height: 100vh;
 }
+
+/* PM Comment: overlay highlight box */
+.pm-highlight-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.pm-highlight-box {
+  position: fixed;
+  border: 3px solid #4080ff;
+  border-radius: 8px;
+  background: rgba(64, 128, 255, 0.06);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.pm-highlight-box.pm-pulse {
+  animation: pm-overlay-pulse 0.7s ease-in-out 3;
+}
+
+@keyframes pm-overlay-pulse {
+  0%, 100% {
+    background: rgba(64, 128, 255, 0.06);
+    box-shadow: 0 0 0 0 rgba(64, 128, 255, 0.3);
+  }
+  50% {
+    background: rgba(64, 128, 255, 0.18);
+    box-shadow: 0 0 0 10px rgba(64, 128, 255, 0.08);
+  }
+}
+
+/* Ctrl+Click hint — show a brief tooltip */
+.pm-ctrl-hint {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  z-index: 10001;
+  pointer-events: none;
+  animation: pm-hint-fade 2.5s ease forwards;
+}
+
+@keyframes pm-hint-fade {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}

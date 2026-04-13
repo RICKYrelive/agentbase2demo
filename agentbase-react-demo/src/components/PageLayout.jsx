@@ -77,7 +77,9 @@ export function DataTable({ columns, data = [], emptyText = '暂无数据' }) {
             data.map((row, i) => (
               <tr key={i}>
                 {columns.map((col, j) => (
-                  <td key={j}>{row[col.key]}</td>
+                  <td key={j}>
+                    {col.render ? col.render(row[col.key], row) : row[col.key]}
+                  </td>
                 ))}
               </tr>
             ))

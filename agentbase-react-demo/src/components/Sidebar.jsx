@@ -8,13 +8,27 @@ const navItems = [
   { key: 'application-portal', label: '应用门户', icon: '📱' },
 ]
 
+const agentFactoryItems = [
+  { key: 'af-workshop', label: 'Agent 造物工坊', icon: '✨', desc: 'AI 生成' },
+  { key: 'af-agent', label: 'Agent Blueprint', icon: '🤖', desc: 'Agent 定义库' },
+  { key: 'af-session', label: 'Session', icon: '▶️', desc: '运行实例' },
+  { key: 'af-passport', label: 'Passport', icon: '🔐', desc: '凭证保险箱' },
+]
+
 const workspaceNavGroups = [
   {
     title: '构建与运行时',
     items: [
       { key: 'agent-dev', label: 'Agent 应用开发', icon: '🤖' },
       { key: 'agent-runtime', label: 'Agent 应用运行时', icon: '⚡' },
-      { key: 'super-agent', label: 'Super Agent', icon: '🔗' },
+      { 
+        key: 'managed-agent', 
+        label: 'Agent Factory', 
+        icon: '🎯',
+        isSubmenu: true,
+        subItems: agentFactoryItems
+      },
+      { key: 'super-agent', label: 'Super Agent (已废弃)', icon: '🔗' },
     ]
   },
   {
@@ -25,6 +39,7 @@ const workspaceNavGroups = [
       { key: 'ai-model-service', label: 'AI 模型服务', icon: '🏗️' },
       { key: 'mcp-service', label: 'MCP 服务', icon: '🌐' },
       { key: 'skill-center', label: 'Skill 中心', icon: '🧩' },
+      { key: 'sandbox-manage', label: '沙箱', icon: '📦' },
       { key: 'api-routing', label: 'API 应用路由', icon: '🔀' },
     ]
   },
@@ -51,8 +66,13 @@ export default function Sidebar({ activeNav, onNavClick }) {
   const [systemOpen, setSystemOpen] = useState(
     systemItems.some(item => activeNav === item.key)
   )
+  const [factoryOpen, setFactoryOpen] = useState(
+    agentFactoryItems.some(item => activeNav === item.key)
+  )
+  const [showProfile, setShowProfile] = useState(false)
 
   const isSystemActive = systemItems.some(item => activeNav === item.key)
+  const isFactoryActive = agentFactoryItems.some(item => activeNav === item.key)
 
   return (
     <div className="sidebar">
@@ -93,18 +113,42 @@ export default function Sidebar({ activeNav, onNavClick }) {
             <div className="sidebar-group-title">{group.title}</div>
             <ul className="sidebar-nav">
               {group.items.map(item => (
-                <li
-                  key={item.key}
-                  className={`sidebar-nav-item ${activeNav === item.key ? 'active' : ''}`}
-                  onClick={() => onNavClick(item.key)}
-                >
-                  <span className="sidebar-nav-icon">{item.icon}</span>
-                  <span className="sidebar-nav-label">{item.label}</span>
-                </li>
+                <div key={item.key}>
+                  <li
+                    className={`sidebar-nav-item ${activeNav === item.key || (item.subItems && item.subItems.some(si => si.key === activeNav)) ? 'active' : ''} ${item.isSubmenu ? 'sidebar-submenu-trigger' : ''}`}
+                    onClick={() => {
+                      if (item.isSubmenu) {
+                        setFactoryOpen(!factoryOpen)
+                      } else {
+                        onNavClick(item.key)
+                      }
+                    }}
+                  >
+                    <span className="sidebar-nav-icon">{item.icon}</span>
+                    <span className="sidebar-nav-label">{item.label}</span>
+                    {item.isSubmenu && <span className={`sidebar-submenu-arrow ${factoryOpen ? 'open' : ''}`}>›</span>}
+                  </li>
+                  {item.isSubmenu && factoryOpen && (
+                    <ul className="sidebar-nav sidebar-subnav">
+                      {item.subItems.map(sub => (
+                        <li
+                          key={sub.key}
+                          className={`sidebar-nav-item sidebar-sub-item ${activeNav === sub.key ? 'active' : ''}`}
+                          onClick={() => onNavClick(sub.key)}
+                        >
+                          <span className="sidebar-nav-icon" style={{ fontSize: '13px' }}>{sub.icon}</span>
+                          <span className="sidebar-nav-label">{sub.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
             </ul>
           </div>
         ))}
+
+        <div className="sidebar-divider" />
 
         <div className="sidebar-divider" />
 
@@ -140,12 +184,38 @@ export default function Sidebar({ activeNav, onNavClick }) {
             <span className="sidebar-nav-icon">❓</span>
             <span className="sidebar-nav-label">新手引导</span>
           </div>
-          <div className="sidebar-nav-item" onClick={() => onNavClick('overview')}>
-            <span className="sidebar-nav-icon">👤</span>
-            <span className="sidebar-nav-label">超级管理员</span>
+          
+          <div 
+            className="sidebar-user-container"
+            onMouseEnter={() => setShowProfile(true)}
+            onMouseLeave={() => setShowProfile(false)}
+          >
+            {showProfile && (
+              <div className="sidebar-profile-popover">
+                <div className="spp-info">
+                  <div className="spp-header">
+                    <span className="spp-title">AgentBase</span>
+                    <span className="spp-badge">已授权</span>
+                  </div>
+                  <div className="spp-stat">vCPU授权数: 400核</div>
+                  <div className="spp-stat">有效期：2026-09-30</div>
+                </div>
+                <div className="spp-menu">
+                  <div className="spp-menu-item">更新授权</div>
+                  <div className="spp-menu-item" style={{ fontWeight: 600, color: 'var(--color-blue)' }}>APIKey 管理</div>
+                  <div className="spp-menu-item">重置密码</div>
+                  <div className="spp-menu-item danger">退出</div>
+                </div>
+              </div>
+            )}
+            <div className="sidebar-nav-item">
+              <span className="sidebar-nav-icon">👤</span>
+              <span className="sidebar-nav-label">超级管理员</span>
+            </div>
           </div>
         </div>
       </div>
+
 
       {/* Collapse button */}
       <div className="sidebar-collapse">

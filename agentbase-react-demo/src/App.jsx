@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { HashRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import OverviewPage from './components/OverviewPage'
@@ -10,6 +10,8 @@ import AIDatabase from './pages/AIDatabase'
 import Memory from './pages/Memory'
 import AIModelService from './pages/AIModelService'
 import MCPService from './pages/MCPService'
+import SkillCenter from './pages/SkillCenter'
+import SandboxManage from './pages/SandboxManage'
 import APIRouting from './pages/APIRouting'
 import GlobalObservation from './pages/GlobalObservation'
 import Trace from './pages/Trace'
@@ -22,12 +24,42 @@ import SuperAgentDetail from './pages/SuperAgentDetail'
 import AgentWebUI from './pages/AgentWebUI'
 import { SuperAgentProvider } from './store/superAgentStore.jsx'
 import { SkillProvider } from './store/skillStore.jsx'
+import { CommentProvider, useComments } from './store/commentStore.jsx'
+import FloatingCommentBall from './components/FloatingCommentBall'
+import CommentPanel from './components/CommentPanel'
+import CommentPin from './components/CommentPin'
+import { getElementSelector, getElementLabel, highlightElement, locateElement } from './utils/elementSelector'
 
-import SkillCenter from './pages/SkillCenter'
 import CreateSkillPackage from './pages/CreateSkillPackage'
 import SkillPackageDetail from './pages/SkillPackageDetail'
 import CreateSkill from './pages/CreateSkill'
 import SkillDetail from './pages/SkillDetail'
+
+// Agent Factory
+import AFWorkshop from './pages/factory/AFWorkshop'
+import AFAgent from './pages/factory/AFAgent'
+import AFSession from './pages/factory/AFSession'
+import AFPassport from './pages/factory/AFPassport'
+
+// Agent Console (Managed Agent)
+import { ManagedAgentProvider } from './store/managedAgentStore.jsx'
+import MACOverview from './pages/managed/MACOverview'
+import MACAgentList from './pages/managed/MACAgentList'
+import MACCreateAgent from './pages/managed/MACCreateAgent'
+import MACAgentDetail from './pages/managed/MACAgentDetail'
+import MACEnvironmentList from './pages/managed/MACEnvironmentList'
+import MACEnvironmentDetail from './pages/managed/MACEnvironmentDetail'
+import MACSessionList from './pages/managed/MACSessionList'
+import MACSessionDetail from './pages/managed/MACSessionDetail'
+import MACEventTimeline from './pages/managed/MACEventTimeline'
+import MACToolCatalog from './pages/managed/MACToolCatalog'
+import MACCustomToolBuilder from './pages/managed/MACCustomToolBuilder'
+import MACIntegrations from './pages/managed/MACIntegrations'
+import MACSecrets from './pages/managed/MACSecrets'
+import MACApprovals from './pages/managed/MACApprovals'
+import MACAnalytics from './pages/managed/MACAnalytics'
+import MACAuditLog from './pages/managed/MACAuditLog'
+import MACRoles from './pages/managed/MACRoles'
 
 import './App.css'
 
@@ -42,27 +74,34 @@ const systemPages = {
 
 function AppLayout() {
   const [showModal, setShowModal] = useState(false)
+  const [modalMessage, setModalMessage] = useState('非demo演示区域')
+  const [panelOpen, setPanelOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
   const currentPath = location.pathname.replace(/^\//, '') || 'overview'
 
   const handleNavClick = (key) => {
-    // Strip sub-paths so sidebar highlights the parent
-    if (key.startsWith('agent-runtime/') || key.startsWith('super-agent/') || key.startsWith('skill-center/')) {
+    if (key === 'super-agent' || key === 'managed-agent') {
+      handleAlert('该部分已废弃')
+    }
+    if (key.startsWith('agent-runtime/') || key.startsWith('super-agent/') || key.startsWith('skill-center/') || key.startsWith('managed-agent/')) {
         navigate('/' + key.split('/')[0])
     } else {
         navigate('/' + key)
     }
   }
 
-  const handleAlert = () => setShowModal(true)
+  const handleAlert = (msg = '非demo演示区域') => {
+    setModalMessage(msg)
+    setShowModal(true)
+  }
 
-  // Derive sidebar active key (strip sub-paths and id segments)
   let activeNav = currentPath
   if (activeNav.startsWith('super-agent/')) activeNav = 'super-agent'
   if (activeNav.startsWith('agent-runtime/')) activeNav = 'agent-runtime'
   if (activeNav.startsWith('skill-center/')) activeNav = 'skill-center'
+  if (activeNav.startsWith('managed-agent/')) activeNav = 'managed-agent'
 
   return (
     <div className="app-layout">
@@ -87,10 +126,35 @@ function AppLayout() {
           <Route path="/skill-center/package/:id" element={<SkillPackageDetail />} />
           <Route path="/skill-center/skill/create" element={<CreateSkill />} />
           <Route path="/skill-center/skill/:id" element={<SkillDetail />} />
+          <Route path="/sandbox-manage" element={<SandboxManage onAlert={handleAlert} />} />
+          <Route path="/sandbox-manage/:id/instances" element={<SandboxManage onAlert={handleAlert} />} />
           <Route path="/api-routing" element={<APIRouting onAlert={handleAlert} />} />
           <Route path="/global-observation" element={<GlobalObservation onAlert={handleAlert} />} />
           <Route path="/trace" element={<Trace onAlert={handleAlert} />} />
           <Route path="/cluster-manage" element={<ClusterManage onAlert={handleAlert} />} />
+          {/* Agent Console (Managed Agent) Routes */}
+          <Route path="/managed-agent" element={<MACOverview />} />
+          <Route path="/managed-agent/agents" element={<MACAgentList />} />
+          <Route path="/managed-agent/agents/create" element={<MACCreateAgent />} />
+          <Route path="/managed-agent/agents/:id" element={<MACAgentDetail />} />
+          <Route path="/managed-agent/environments" element={<MACEnvironmentList />} />
+          <Route path="/managed-agent/environments/:id" element={<MACEnvironmentDetail />} />
+          <Route path="/managed-agent/sessions" element={<MACSessionList />} />
+          <Route path="/managed-agent/sessions/:id" element={<MACSessionDetail />} />
+          <Route path="/managed-agent/events" element={<MACEventTimeline />} />
+          <Route path="/managed-agent/tools" element={<MACToolCatalog />} />
+          <Route path="/managed-agent/tools/create" element={<MACCustomToolBuilder />} />
+          <Route path="/managed-agent/integrations" element={<MACIntegrations />} />
+          <Route path="/managed-agent/secrets" element={<MACSecrets />} />
+          <Route path="/managed-agent/approvals" element={<MACApprovals />} />
+          <Route path="/managed-agent/analytics" element={<MACAnalytics />} />
+          <Route path="/managed-agent/audit" element={<MACAuditLog />} />
+          <Route path="/managed-agent/settings/roles" element={<MACRoles />} />
+          {/* Agent Factory Routes */}
+          <Route path="/af-workshop" element={<AFWorkshop />} />
+          <Route path="/af-agent" element={<AFAgent />} />
+          <Route path="/af-session" element={<AFSession />} />
+          <Route path="/af-passport" element={<AFPassport />} />
           {Object.entries(systemPages).map(([key, cfg]) => (
             <Route key={key} path={`/${key}`} element={
               <SystemManagePage onAlert={handleAlert} pageTitle={cfg.title} columns={cfg.columns} />
@@ -98,9 +162,94 @@ function AppLayout() {
           ))}
         </Routes>
       </div>
-      {showModal && <AlertModal onClose={() => setShowModal(false)} />}
+      {showModal && <AlertModal message={modalMessage} onClose={() => setShowModal(false)} />}
+      <CommentLayer
+        currentPage={`/${currentPath}`}
+        panelOpen={panelOpen}
+        setPanelOpen={setPanelOpen}
+        navigate={navigate}
+      />
     </div>
   )
+}
+
+/**
+ * Inner layer that has access to CommentContext.
+ * Handles middle-mouse-click global listener + renders comment UI.
+ */
+function CommentLayer({ currentPage, panelOpen, setPanelOpen, navigate }) {
+  const { dispatch, comments, pendingLocateId } = useComments();
+
+  // Global middle-mouse-click (button 1) listener
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      // Only trigger on middle mouse button (button === 1)
+      if (e.button !== 1) return;
+
+      // Ignore clicks on comment system UI itself
+      if (e.target.closest('.floating-comment-ball, .comment-panel-overlay, .comment-pin, .pin-mode-hint, .ball-menu, .sidebar')) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const target = e.target;
+      const selector = getElementSelector(target);
+      const label = getElementLabel(target);
+
+      // Highlight the element immediately
+      if (selector) {
+        const el = document.querySelector(selector);
+        if (el) highlightElement(el);
+      }
+
+      // Set pending comment so the panel form is pre-filled
+      dispatch({
+        type: 'SET_PENDING_COMMENT',
+        payload: {
+          linkedSelector: selector,
+          linkedLabel: label,
+          page: currentPage
+        }
+      });
+
+      // Open the panel
+      setPanelOpen(true);
+    };
+
+    document.addEventListener('mousedown', handleMouseDown, true);
+    return () => document.removeEventListener('mousedown', handleMouseDown, true);
+  }, [currentPage, dispatch, setPanelOpen]);
+
+  // Handle cross-page locate: after page changes, execute pending locate
+  useEffect(() => {
+    if (!pendingLocateId) return;
+    const comment = comments.find(c => c.id === pendingLocateId);
+    if (!comment) {
+      dispatch({ type: 'CLEAR_PENDING_LOCATE' });
+      return;
+    }
+    // Only execute when we've arrived on the right page
+    if (comment.page !== currentPage) return;
+
+    dispatch({ type: 'CLEAR_PENDING_LOCATE' });
+
+    // Wait for the new page's DOM to render
+    const timer = setTimeout(() => {
+      if (comment.linkedSelector) {
+        const el = locateElement(comment.linkedSelector);
+        if (el) highlightElement(el);
+      }
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [currentPage, pendingLocateId, comments, dispatch]);
+
+  return (
+    <>
+      <CommentPin currentPage={currentPage} onCommentClick={() => setPanelOpen(true)} />
+      <FloatingCommentBall onTogglePanel={() => setPanelOpen(!panelOpen)} panelOpen={panelOpen} />
+      <CommentPanel open={panelOpen} onClose={() => setPanelOpen(false)} currentPage={currentPage} navigate={navigate} />
+    </>
+  );
 }
 
 function App() {
@@ -108,10 +257,14 @@ function App() {
     <HashRouter>
       <SuperAgentProvider>
         <SkillProvider>
-          <Routes>
-            <Route path="/super-agent/:id/webui" element={<AgentWebUI />} />
-            <Route path="/*" element={<AppLayout />} />
-          </Routes>
+          <ManagedAgentProvider>
+            <CommentProvider>
+              <Routes>
+                <Route path="/super-agent/:id/webui" element={<AgentWebUI />} />
+                <Route path="/*" element={<AppLayout />} />
+              </Routes>
+            </CommentProvider>
+          </ManagedAgentProvider>
         </SkillProvider>
       </SuperAgentProvider>
     </HashRouter>

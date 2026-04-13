@@ -1,0 +1,401 @@
+/* Agent Workshop — Comprehensive Redesign Styles */
+
+.af-workshop {
+  min-height: calc(100vh - 64px);
+  background: #f8f8f6;
+  color: var(--text-primary);
+}
+
+/* Home View */
+.afw-home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Centered Hero Section */
+.afw-hero {
+  max-width: 640px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.afw-hero-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.afw-hero-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.afw-input-card {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+.afw-tabs {
+  display: flex;
+  background: #f0f0ee;
+  border-bottom: 1px solid var(--card-border);
+  padding: 4px;
+}
+
+.afw-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.afw-tab.active {
+  background: #fff;
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.afw-textarea-wrap {
+  position: relative;
+  padding: 16px;
+}
+
+.afw-textarea {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+  background: transparent;
+}
+
+.afw-input-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 12px;
+}
+
+.afw-action-left {
+  display: flex;
+  gap: 8px;
+}
+
+/* Templates Section */
+.afw-templates-section {
+  margin-bottom: 48px;
+}
+
+.afw-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.afw-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.afw-template-card {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.afw-template-card:hover {
+  border-color: var(--color-blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.afw-template-icon {
+  width: 32px;
+  height: 32px;
+  background: #f0f4ff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.afw-template-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Task List (Table Style) */
+.afw-tasks-section {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+}
+
+.afw-tasks-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Wizard Interface */
+.afw-wizard {
+  display: flex;
+  height: calc(100vh - 64px);
+  background: #fff;
+}
+
+.afw-wizard-side {
+  width: 260px;
+  border-right: 1px solid var(--card-border);
+  background: #fafafa;
+  padding: 32px 24px;
+}
+
+.afw-wizard-step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.afw-wizard-step::after {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 28px;
+  bottom: -24px;
+  width: 2px;
+  background: #ebedf0;
+}
+
+.afw-wizard-step:last-child::after { display: none; }
+
+.afw-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #ebedf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #999;
+  z-index: 1;
+}
+
+.afw-wizard-step.active .afw-step-num {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+  color: #fff;
+}
+
+.afw-wizard-step.completed .afw-step-num {
+  background: var(--color-green);
+  border-color: var(--color-green);
+  color: #fff;
+}
+
+.afw-step-info {
+  flex: 1;
+}
+
+.afw-step-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.afw-wizard-step.active .afw-step-title { color: var(--text-primary); }
+
+.afw-wizard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  max-width: 800px;
+}
+
+.afw-wizard-content {
+  flex: 1;
+}
+
+/* Workspace (New Split View) */
+.afw-workspace-split {
+  display: flex;
+  height: calc(100vh - 56px);
+}
+
+/* Left: Chat & Conversation */
+.afw-ws-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--card-border);
+  background: #f8f9fb;
+}
+
+.afw-ws-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.afw-ws-footer {
+  padding: 16px 24px 24px;
+  background: #f8f9fb;
+}
+
+.afw-test-input-wrap {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.afw-test-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  min-height: 48px;
+}
+
+.afw-test-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.afw-eval-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #606266;
+  transition: all 0.2s;
+}
+
+.afw-eval-btn:hover {
+  background: #fdf6ec;
+  border-color: #f5dab1;
+  color: #e6a23c;
+}
+
+/* Right: Preview & Code */
+.afw-ws-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.afw-preview-header {
+  height: 40px;
+  border-bottom: 1px solid var(--card-border);
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.afw-preview-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Explorer Sidebar */
+.afw-explorer {
+  width: 200px;
+  border-right: 1px solid var(--card-border);
+  background: #f3f3f3;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.afw-exp-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #555;
+}
+
+.afw-exp-item:hover { background: #e8e8e8; }
+.afw-exp-item.active { background: #fff; color: var(--color-blue); }
+
+.afw-exp-folder {
+  font-weight: 700;
+  color: #333;
+  padding-top: 8px;
+}
+
+/* Markdown/Code Content */
+.afw-code-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #24292e;
+}
+
+.markdown-body pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* Actions in lists */
+.af-list-btn {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: none;
+  background: none;
+  color: var(--color-blue);
+  cursor: pointer;
+}
+
+.af-list-btn.delete { color: #ff4d4f; }
+.af-list-btn:hover { text-decoration: underline; }

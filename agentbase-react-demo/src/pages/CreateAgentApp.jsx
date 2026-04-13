@@ -1,10 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import SelectionModal from '../components/SelectionModal'
 import './CreateAgentApp.css'
+
+const MOCK_SANDBOXES = [
+  { id: 'sb-001', name: 'dev-sandbox-python', status: 'Running', createTime: '2026-04-12' },
+  { id: 'sb-002', name: 'test-sandbox-node', status: 'Running', createTime: '2026-04-12' },
+  { id: 'sb-003', name: 'creative-writing-env', status: 'Stopped', createTime: '2026-04-11' },
+  { id: 'sb-004', name: 'v-qa-sandbox', status: 'Running', createTime: '2026-04-13' },
+  { id: 'sb-005', name: 'data-mining-01', status: 'Running', createTime: '2026-04-13' },
+]
 
 export default function CreateAgentApp() {
   const navigate = useNavigate()
   const [activeAnchor, setActiveAnchor] = useState('basic-info')
+  const [showSandboxModal, setShowSandboxModal] = useState(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -21,6 +31,7 @@ export default function CreateAgentApp() {
     memoryComp: '',
     modelRouting: '',
     mcpService: '',
+    sandboxes: [], // Updated to multiple
     observerEnabled: false,
     envMode: 'table',
     cmd: '',
@@ -44,6 +55,15 @@ export default function CreateAgentApp() {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
+
+  const handleSandboxConfirm = (ids) => {
+    setFormData(prev => ({ ...prev, sandboxes: ids }))
+  }
+
+  const selectedSandboxNames = MOCK_SANDBOXES
+    .filter(sb => formData.sandboxes.includes(sb.id))
+    .map(sb => sb.name)
+    .join(', ')
 
   return (
     <div className="create-app-page">
@@ -185,6 +205,21 @@ export default function CreateAgentApp() {
                 <select name="mcpService" value={formData.mcpService} onChange={handleChange}><option value="">请选择</option></select>
               </div>
               <div className="form-row">
+                <label>沙箱实例：</label>
+                <div className="multi-select-trigger" style={{ flex: 1, display: 'flex', gap: 8 }}>
+                  <div className="container-image-select" style={{ flex: 1 }}>
+                    <input 
+                      type="text" 
+                      readOnly 
+                      value={selectedSandboxNames || '未选择沙箱实例'} 
+                      onClick={() => setShowSandboxModal(true)}
+                      style={{ cursor: 'pointer', color: selectedSandboxNames ? '#333' : '#999' }}
+                    />
+                    <button className="add-btn sm" onClick={() => setShowSandboxModal(true)} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', padding: '2px 8px', fontSize: 11 }}>选择</button>
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
                 <label>观测服务：</label>
                 <label className="checkbox-label">
                   <input type="checkbox" name="observerEnabled" checked={formData.observerEnabled} onChange={handleChange} />
@@ -241,6 +276,20 @@ export default function CreateAgentApp() {
         <button className="action-btn primary" onClick={goBack}>确定</button>
         <button className="action-btn default" onClick={goBack}>取消</button>
       </div>
+
+      <SelectionModal
+        title="选择待绑定沙箱实例"
+        isVisible={showSandboxModal}
+        onClose={() => setShowSandboxModal(false)}
+        onConfirm={handleSandboxConfirm}
+        items={MOCK_SANDBOXES}
+        columns={[
+          { key: 'name', label: '名称' },
+          { key: 'status', label: '状态' },
+          { key: 'createTime', label: '创建日期' },
+        ]}
+        initialSelection={formData.sandboxes}
+      />
     </div>
   )
 }
