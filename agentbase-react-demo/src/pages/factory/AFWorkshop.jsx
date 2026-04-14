@@ -70,20 +70,21 @@ export default function AFWorkshop() {
     <div className="af-workshop afw-home">
       {/* Centered Hero Section */}
       <div className="afw-hero">
-        <div className="afw-hero-title">
-          <span style={{ fontSize: 32 }}>⌨️</span> Agent 工坊
-        </div>
-        <p className="afw-hero-subtitle">
+        <h1 className="afw-hero-title notion-h1" style={{ justifyContent: 'center', marginBottom: '24px' }}>
+          <span style={{ fontSize: 44 }}>⌨️</span> Agent 工坊
+        </h1>
+        <p className="afw-hero-subtitle notion-body-large" style={{ color: 'var(--notion-gray-500)', fontSize: 20, marginBottom: '48px' }}>
           高效构建 AI Agent 与 Skill，让能力从设想变为现实
         </p>
 
-        <div className="afw-input-card">
-          <div className="afw-tabs">
+        <div className="afw-input-card" style={{ boxShadow: 'var(--notion-shadow-card)', border: 'var(--notion-border)' }}>
+          <div className="afw-tabs notion-font">
             {['Agent Blueprint', 'Skill'].map(t => (
               <button 
                 key={t} 
                 className={`afw-tab ${activeTab === t ? 'active' : ''}`}
                 onClick={() => setActiveTab(t)}
+                style={{ fontSize: 15 }}
               >
                 {t}
               </button>
@@ -91,21 +92,23 @@ export default function AFWorkshop() {
           </div>
           <div className="afw-textarea-wrap">
             <textarea 
-              className="afw-textarea" 
+              className="afw-textarea notion-body" 
               placeholder={`输入你想创建的 ${activeTab} 的核心功能或上传文件...`}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
+              style={{ fontSize: 16 }}
             />
           </div>
           <div className="afw-input-actions">
             <div className="afw-action-left">
               <button className="afw-upload-btn" title="上传附件">📎</button>
-              <button className="af-list-btn" style={{ marginLeft: 8 }}>💡 获取灵感</button>
+              <button className="af-list-btn notion-body-medium" style={{ marginLeft: 8, color: 'var(--notion-blue)' }}>💡 获取灵感</button>
             </div>
             <button 
-              className="afw-send-btn" 
+              className="afw-send-btn action-btn primary" 
               disabled={!prompt.trim()} 
               onClick={startWizard}
+              style={{ width: 44, height: 44, borderRadius: '50%', padding: 0 }}
             >
               ↑
             </button>
@@ -115,14 +118,14 @@ export default function AFWorkshop() {
 
       {/* Templates Section */}
       <div className="afw-templates-section">
-        <h2 className="afw-section-title">使用模板快速开始</h2>
+        <h2 className="afw-section-title notion-card-title">使用模板快速开始</h2>
         <div className="afw-template-grid">
           {MOCK_TEMPLATES[activeTab].map(tpl => (
-            <div key={tpl.id} className="afw-template-card" onClick={startWizard}>
-              <div className="afw-template-icon">{tpl.icon}</div>
+            <div key={tpl.id} className="afw-template-card" onClick={startWizard} style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 12 }}>
+              <div className="afw-template-icon" style={{ background: 'var(--notion-bg-alt)' }}>{tpl.icon}</div>
               <div>
-                <div className="afw-template-name">{tpl.name}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>{tpl.desc}</div>
+                <div className="afw-template-name notion-body-medium">{tpl.name}</div>
+                <div className="notion-caption" style={{ color: 'var(--notion-gray-500)', marginTop: 2 }}>{tpl.desc}</div>
               </div>
             </div>
           ))}
@@ -130,8 +133,8 @@ export default function AFWorkshop() {
       </div>
 
       {/* Task List Section (Table) */}
-      <div className="afw-section-title">我的任务</div>
-      <div className="afw-tasks-section">
+      <h2 className="afw-section-title notion-card-title" style={{ marginTop: 48 }}>我的任务</h2>
+      <div className="afw-tasks-section" style={{ border: 'var(--notion-border)', borderRadius: 12 }}>
         <table className="data-table">
           <thead>
             <tr>

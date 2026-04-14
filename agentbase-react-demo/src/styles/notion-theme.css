@@ -1,0 +1,100 @@
+/* Notion Design System Tokens */
+:root {
+  /* Warm Neutral Palette */
+  --notion-bg: #ffffff;
+  --notion-bg-alt: #f6f5f4;
+  --notion-text: rgba(0, 0, 0, 0.95);
+  --notion-text-near-black: #000000f2;
+  --notion-text-dark: #31302e;
+  --notion-gray-500: #615d59;
+  --notion-gray-300: #a39e98;
+  
+  /* Brand Accent */
+  --notion-blue: #0075de;
+  --notion-blue-active: #005bab;
+  --notion-blue-bg: #f2f9ff;
+  --notion-blue-text: #097fe8;
+  
+  /* Semantic */
+  --notion-success: #1aae39;
+  --notion-warning: #dd5b00;
+  --notion-error: #ff4d4f;
+  
+  /* Borders & Shadows */
+  --notion-border: 1px solid rgba(0, 0, 0, 0.1);
+  --notion-shadow-card: 
+    rgba(0,0,0,0.04) 0px 4px 18px, 
+    rgba(0,0,0,0.027) 0px 2.025px 7.84688px, 
+    rgba(0,0,0,0.02) 0px 0.8px 2.925px, 
+    rgba(0,0,0,0.01) 0px 0.175px 1.04062px;
+  --notion-shadow-deep: 
+    rgba(0,0,0,0.01) 0px 1px 3px, 
+    rgba(0,0,0,0.02) 0px 3px 7px, 
+    rgba(0,0,0,0.02) 0px 7px 15px, 
+    rgba(0,0,0,0.04) 0px 14px 28px, 
+    rgba(0,0,0,0.05) 0px 23px 52px;
+
+  /* Typography Fallbacks (Assuming Inter is used) */
+  --notion-font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Typography Utils */
+.notion-font {
+  font-family: var(--notion-font-family);
+  color: var(--notion-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.notion-h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -2.125px;
+  font-feature-settings: "lnum" on, "locl" on;
+}
+
+.notion-h2 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -1.5px;
+}
+
+.notion-h3 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.23;
+  letter-spacing: -0.625px;
+}
+
+.notion-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.27;
+  letter-spacing: -0.25px;
+}
+
+.notion-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.notion-body-medium {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.notion-caption {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+.notion-badge-text {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0.125px;
+}

@@ -6,7 +6,7 @@ export default function PageLayout({ title, rightAction, children }) {
       <div className="page-header">
         <div className="page-header-left">
           <div className="page-title-bar"></div>
-          <h1 className="page-title">{title}</h1>
+          <h1 className="page-title notion-h3">{title}</h1>
         </div>
         {rightAction && <div className="page-header-right">{rightAction}</div>}
       </div>
@@ -26,9 +26,9 @@ export function GuideCards({ cards }) {
             <h3 className="guide-card-title">{card.title}</h3>
             <span className="guide-card-number">{String(i + 1).padStart(2, '0')}</span>
           </div>
-          <p className="guide-card-desc">{card.desc}</p>
+          <p className="guide-card-desc notion-body">{card.desc}</p>
           {card.link && (
-            <span className="guide-card-link" onClick={card.onLinkClick}>
+            <span className="guide-card-link notion-body-medium" onClick={card.onLinkClick}>
               {card.link} →
             </span>
           )}

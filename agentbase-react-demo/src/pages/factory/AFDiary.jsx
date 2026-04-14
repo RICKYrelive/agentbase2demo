@@ -52,10 +52,10 @@ export default function AFDiary() {
           <div className="afd-sidebar-label">Session 日记本</div>
           {MOCK_DIARIES.map(d => (
             <div key={d.id} className={`afd-diary-item ${selected?.id === d.id ? 'active' : ''}`} onClick={() => setSelected(d)}>
-              <div className="afd-diary-title">{d.sessionTitle}</div>
+              <div className="afd-diary-title notion-body-medium">{d.sessionTitle}</div>
               <div className="afd-diary-meta">
-                <span className="af-model-badge" style={{ fontSize: 10 }}>{d.agentName}</span>
-                <span className="af-muted">{d.entries.length} 条</span>
+                <span className="af-model-badge notion-badge-text" style={{ fontSize: 10 }}>{d.agentName}</span>
+                <span className="af-muted notion-caption">{d.entries.length} 条</span>
               </div>
               <div className="afd-diary-time">{d.createdAt}</div>
             </div>
@@ -68,14 +68,14 @@ export default function AFDiary() {
             <>
               <div className="afd-content-header">
                 <div>
-                  <div className="afd-content-title">{selected.sessionTitle}</div>
-                  <div className="afd-content-sub">
+                  <div className="afd-content-title notion-h3">{selected.sessionTitle}</div>
+                  <div className="afd-content-sub notion-caption">
                     <span className="af-id-cell">{selected.sessionId}</span>
                     <span>·</span>
                     <span>来自 Session 实例，非全局记忆体</span>
                   </div>
                 </div>
-                <span className="afd-badge">📓 Local Diary</span>
+                <span className="status-badge" style={{ background: 'var(--notion-bg-alt)', color: 'var(--notion-gray-500)', border: 'var(--notion-border)', borderRadius: '9999px', padding: '2px 10px', fontSize: 11, fontWeight: 600 }}>📓 Local Diary</span>
               </div>
 
               <div className="afd-entries">
@@ -85,14 +85,14 @@ export default function AFDiary() {
                     <span>无匹配记录</span>
                   </div>
                 ) : filteredEntries.map((e, i) => (
-                  <div key={i} className="afd-entry">
+                  <div key={i} className="afd-entry" style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 8, background: 'var(--notion-bg)' }}>
                     <div className="afd-entry-header">
-                      <span className="afd-entry-path">📝 {e.path}</span>
-                      <span className="afd-entry-time">{e.time}</span>
+                      <span className="afd-entry-path notion-body-medium" style={{ color: 'var(--notion-blue)' }}>📝 {e.path}</span>
+                      <span className="afd-entry-time notion-caption">{e.time}</span>
                     </div>
-                    <div className="afd-entry-content">{e.content}</div>
+                    <div className="afd-entry-content notion-body">{e.content}</div>
                     <div className="afd-entry-tags">
-                      {e.tags.map(t => <span key={t} className="afd-tag">{t}</span>)}
+                      {e.tags.map(t => <span key={t} className="status-badge" style={{ background: 'var(--notion-bg-alt)', color: 'var(--notion-blue)', border: 'var(--notion-border)', borderRadius: '4px', fontSize: 10 }}>{t}</span>)}
                     </div>
                   </div>
                 ))}

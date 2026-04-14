@@ -68,13 +68,13 @@ export default function AFFilesystem() {
                 <div className="affs-head-left">
                   <span className="affs-icon">📂</span>
                   <div>
-                    <div className="affs-name">{fs.name}</div>
+                    <div className="affs-name notion-body-medium">{fs.name}</div>
                     <div className="affs-meta">
                       <span className="af-id-cell">{fs.id}</span>
                       <span className="affs-sep">·</span>
-                      <span>{fs.mounts.length} 个挂载点</span>
+                      <span className="notion-caption">{fs.mounts.length} 个挂载点</span>
                       <span className="affs-sep">·</span>
-                      <span>关联 {fs.sessionCount} 个 Session</span>
+                      <span className="notion-caption">关联 {fs.sessionCount} 个 Session</span>
                     </div>
                   </div>
                 </div>
@@ -88,13 +88,13 @@ export default function AFFilesystem() {
                   <div className="affs-desc">{fs.desc}</div>
                   <div className="affs-mount-label">挂载配置</div>
                   {fs.mounts.map(m => (
-                    <div key={m.id} className="affs-mount-row">
-                      <span className={`affs-type-badge affs-type-${m.type}`}>{MOUNT_TYPES[m.type]?.icon} {MOUNT_TYPES[m.type]?.label}</span>
+                    <div key={m.id} className="affs-mount-row" style={{ border: 'var(--notion-border)', borderRadius: '4px' }}>
+                      <span className={`affs-type-badge affs-type-${m.type} notion-badge-text`}>{MOUNT_TYPES[m.type]?.icon} {MOUNT_TYPES[m.type]?.label}</span>
                       <div className="affs-path-area">
-                        <div className="affs-src">{m.src}</div>
-                        <div className="affs-mount-path">↳ {m.mountPath}</div>
+                        <div className="affs-src notion-caption">{m.src}</div>
+                        <div className="affs-mount-path notion-caption" style={{ color: 'var(--notion-blue)' }}>↳ {m.mountPath}</div>
                       </div>
-                      <span className="affs-note">{m.note}</span>
+                      <span className="affs-note notion-caption">{m.note}</span>
                     </div>
                   ))}
                   <div className="affs-actions">
@@ -115,7 +115,7 @@ export default function AFFilesystem() {
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
                 <div className="af-drawer-icon">📂</div>
-                <div className="af-drawer-title">新建 Filesystem</div>
+                <div className="af-drawer-title notion-h3">新建 Filesystem</div>
               </div>
               <button className="af-drawer-close" onClick={() => setShowDrawer(false)}>×</button>
             </div>

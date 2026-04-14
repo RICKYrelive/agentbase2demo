@@ -97,19 +97,18 @@ export default function AFSession() {
                   return (
                     <tr key={s.id} className={selected?.id === s.id ? 'afs-row-active' : ''} style={{ cursor: 'pointer' }} onClick={() => setSelected(s)}>
                       <td><span className="af-id-cell">{s.id}</span></td>
-                      <td><span className="af-name-link">{s.title}</span></td>
-                      <td><span className="af-model-badge">{s.agentName}</span></td>
-                      <td><span className={`ha-status-tag ${st.cls}`}>{st.label}</span></td>
-                      <td className="af-muted">{fmtSec(s.activeSeconds)}</td>
-                      <td className="af-muted">{s.inputTokens.toLocaleString()}</td>
-                      <td className="af-muted">{s.outputTokens.toLocaleString()}</td>
-                      <td className="af-muted">{s.events}</td>
-                      <td className="af-muted">{s.createdAt}</td>
+                      <td><span className="af-name-link notion-body-medium">{s.title}</span></td>
+                      <td><span className="af-model-badge notion-badge-text">{s.agentName}</span></td>
+                      <td><span className="status-badge" style={{ background: 'var(--notion-blue-bg)', color: 'var(--notion-blue-text)', borderRadius: '9999px', padding: '2px 10px', fontWeight: 600 }}>{st.label}</span></td>
+                      <td className="af-muted notion-caption">{fmtSec(s.activeSeconds)}</td>
+                      <td className="af-muted notion-caption">{s.inputTokens.toLocaleString()}</td>
+                      <td className="af-muted notion-caption">{s.outputTokens.toLocaleString()}</td>
+                      <td className="af-muted notion-caption">{s.events}</td>
+                      <td className="af-muted notion-caption">{s.createdAt}</td>
                       <td>
                         <div className="ha-row-actions">
-                          <button onClick={() => navigate(`/super-agent/${s.agentId}/webui?title=${encodeURIComponent(s.title)}`)}>WebUI</button>
-                          <button>事件流</button>
-                          <button>详情</button>
+                          <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }} onClick={() => navigate(`/super-agent/${s.agentId}/webui?title=${encodeURIComponent(s.title)}`)}>WebUI</button>
+                          <button className="notion-body-medium">事件流</button>
                         </div>
                       </td>
                     </tr>
@@ -130,7 +129,7 @@ export default function AFSession() {
           <div className="afs-panel">
             <div className="afs-panel-head">
               <div>
-                <div className="afs-panel-title">{selected.title}</div>
+                <div className="afs-panel-title notion-body-medium">{selected.title}</div>
                 <div className="afs-panel-id">{selected.id}</div>
               </div>
               <button className="afs-close-btn" onClick={() => setSelected(null)}>✕</button>
@@ -140,7 +139,7 @@ export default function AFSession() {
               <div className="afs-stat"><span className="afs-stat-label">输出 Token</span><span className="afs-stat-val">{selected.outputTokens.toLocaleString()}</span></div>
               <div className="afs-stat"><span className="afs-stat-label">运行时长</span><span className="afs-stat-val">{fmtSec(selected.activeSeconds)}</span></div>
             </div>
-            <div className="afs-event-label">事件流 (Event Stream)</div>
+            <div className="afs-event-label notion-caption" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>事件流 (Event Stream)</div>
             <div className="afs-events">
               {MOCK_EVENTS.map((ev, i) => (
                 <div key={i} className={`afs-event afs-ev-${ev.type.split('.')[0]}`}>

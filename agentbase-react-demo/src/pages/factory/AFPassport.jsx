@@ -92,12 +92,12 @@ export default function AFPassport() {
                 <div className="afp-vault-left">
                   <span className="afp-vault-icon">🔐</span>
                   <div>
-                    <div className="afp-vault-name">{v.name}</div>
+                    <div className="afp-vault-name notion-body-medium">{v.name}</div>
                     <div className="afp-vault-id">{v.id}</div>
                   </div>
                 </div>
                 <div className="afp-vault-right">
-                  <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>{sc.label}</span>
+                  <span className="status-badge" style={{ background: 'var(--notion-blue-bg)', color: 'var(--notion-blue-text)', borderRadius: '9999px', padding: '2px 10px', fontWeight: 600 }}>{sc.label}</span>
                   <span className="afp-cred-count">{v.credCount} 个凭证</span>
                   <span className={`afp-arrow ${isOpen ? 'open' : ''}`}>›</span>
                 </div>
@@ -107,10 +107,10 @@ export default function AFPassport() {
                   {v.creds.length === 0 ? (
                     <div className="afp-cred-empty">暂无凭证 — 点击「添加凭证」导入 Bearer Token 或 OAuth 凭证</div>
                   ) : v.creds.map(c => (
-                    <div key={c.id} className="afp-cred-row">
-                      <span className={`afp-cred-type afp-cred-${c.type}`}>{c.type === 'oauth' ? 'OAuth' : 'Bearer'}</span>
-                      <span className="afp-cred-target">{c.target}</span>
-                      <span className="afp-cred-masked">{c.masked}</span>
+                    <div key={c.id} className="afp-cred-row" style={{ border: 'var(--notion-border)', borderRadius: '4px' }}>
+                      <span className={`afp-cred-type afp-cred-${c.type} notion-badge-text`}>{c.type === 'oauth' ? 'OAuth' : 'Bearer'}</span>
+                      <span className="afp-cred-target notion-caption">{c.target}</span>
+                      <span className="afp-cred-masked notion-caption">{c.masked}</span>
                       <button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(c.masked); showToast('已复制') }}>⎘</button>
                     </div>
                   ))}
@@ -130,7 +130,7 @@ export default function AFPassport() {
           <div className="af-drawer" onClick={e => e.stopPropagation()}>
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
-                <div className="af-drawer-title">添加凭证</div>
+                <div className="af-drawer-title notion-h3">添加凭证</div>
               </div>
               <button className="af-drawer-close" onClick={() => { setShowDrawer(false); resetForm(); }}>×</button>
             </div>

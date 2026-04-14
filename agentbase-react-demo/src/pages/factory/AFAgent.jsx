@@ -111,17 +111,17 @@ export default function AFAgent() {
                   <td><span className="af-id-cell">{a.id}</span><button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(a.id); showToast('已复制') }}>⎘</button></td>
                   <td><span className="af-name-link">{a.name}</span></td>
                   <td><span className="af-model-badge">{a.model}</span></td>
-                  <td><span className="ha-version-badge">v{a.version}</span></td>
-                  <td><span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>{sc.label}</span></td>
+                  <td><span className="ha-version-badge notion-caption">v{a.version}</span></td>
+                  <td><span className="status-badge" style={{ background: 'var(--notion-blue-bg)', color: 'var(--notion-blue-text)', borderRadius: '9999px', padding: '2px 10px', fontWeight: 600 }}>{sc.label}</span></td>
                   <td className="af-muted">{a.tools}</td>
                   <td className="af-muted">{a.skills}</td>
                   <td className="af-muted">{a.createdAt}</td>
                   <td className="af-muted">{a.owner}</td>
                   <td>
                     <div className="ha-row-actions">
-                      <button>详情</button>
-                      <button>编辑</button>
-                      <button className="ha-delete-btn">归档</button>
+                      <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }}>详情</button>
+                      <button className="notion-body-medium">编辑</button>
+                      <button className="ha-delete-btn notion-body-medium" style={{ color: 'var(--notion-warning)' }}>归档</button>
                     </div>
                   </td>
                 </tr>
@@ -143,8 +143,8 @@ export default function AFAgent() {
           <div className="af-drawer" onClick={e => e.stopPropagation()}>
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
-                <div className="af-drawer-icon">🤖</div>
-                <div className="af-drawer-title">新建 Blueprint</div>
+                <div className="af-drawer-icon" style={{ background: 'var(--notion-bg-alt)' }}>🤖</div>
+                <div className="af-drawer-title notion-h3">新建 Blueprint</div>
               </div>
               <button className="af-drawer-close" onClick={resetAndClose}>×</button>
             </div>
@@ -165,7 +165,7 @@ export default function AFAgent() {
                     <label className="af-field-label">名称</label>
                     <input 
                       type="text" 
-                      className="af-input-text" 
+                      className="af-input-text notion-body" 
                       placeholder="给你的 Agent 起个名字" 
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
@@ -174,7 +174,7 @@ export default function AFAgent() {
                   <div className="af-field">
                     <label className="af-field-label">描述</label>
                     <textarea 
-                      className="af-input-textarea" 
+                      className="af-input-textarea notion-body" 
                       placeholder="简要描述这个 Agent 的职责内容…" 
                       style={{ minHeight: 80 }}
                       value={formData.desc}
@@ -191,7 +191,7 @@ export default function AFAgent() {
                           onClick={() => setFormData({...formData, model: m.id})}
                         >
                           <div className="af-option-icon">{m.icon}</div>
-                          <div className="af-option-name">{m.name}</div>
+                          <div className="af-option-name notion-body-medium">{m.name}</div>
                           <div className="af-option-desc">{m.desc}</div>
                         </div>
                       ))}
@@ -206,9 +206,9 @@ export default function AFAgent() {
                     <label className="af-field-label">系统提示词 (System Prompt)</label>
                     <div className="af-field-hint">核心指令集，定义 Agent 的角色、语气、回复格式及行为约束。</div>
                     <textarea 
-                      className="af-input-textarea" 
+                      className="af-input-textarea notion-body" 
                       placeholder="Enter system prompt instructions here..." 
-                      style={{ minHeight: 340, fontFamily: 'monospace', fontSize: '13px' }}
+                      style={{ minHeight: 340, fontFamily: 'var(--notion-font-family)', fontSize: '15px' }}
                       value={formData.systemPrompt}
                       onChange={e => setFormData({...formData, systemPrompt: e.target.value})}
                     />
@@ -233,8 +233,8 @@ export default function AFAgent() {
                   </div>
                   <div className="af-success-state">
                     <div className="af-success-icon">🎉</div>
-                    <h3 style={{ fontSize: 18, fontWeight: 700 }}>一切准备就绪</h3>
-                    <p style={{ color: '#64748b', marginTop: 8 }}>您可以立即创建此 Agent 或返回修改配置。</p>
+                    <h3 className="notion-card-title">一切准备就绪</h3>
+                    <p className="notion-body" style={{ color: 'var(--notion-gray-500)', marginTop: 8 }}>您可以立即创建此 Agent 或返回修改配置。</p>
                   </div>
                 </div>
               )}

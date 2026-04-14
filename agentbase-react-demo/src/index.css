@@ -1,3 +1,4 @@
+@import './styles/notion-theme.css';
 /* =========== Reset & Variables =========== */
 :root {
   --sidebar-width: 220px;

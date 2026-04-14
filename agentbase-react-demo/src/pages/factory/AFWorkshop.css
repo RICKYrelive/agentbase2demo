@@ -2,14 +2,15 @@
 
 .af-workshop {
   min-height: calc(100vh - 64px);
-  color: var(--text-primary);
+  color: var(--notion-text);
+  background-color: var(--notion-bg);
 }
 
 /* Home View */
 .afw-home {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 80px 40px;
 }
 
 /* Centered Hero Section */
@@ -20,53 +21,57 @@
 }
 
 .afw-hero-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
+  color: var(--notion-text);
 }
 
 .afw-hero-subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-bottom: 32px;
+  color: var(--notion-gray-500);
+  margin-bottom: 48px;
 }
 
 .afw-input-card {
-  background: #fff;
-  border: 1px solid var(--card-border);
+  background: var(--notion-bg);
+  border: var(--notion-border);
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  box-shadow: var(--notion-shadow-card);
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+.afw-input-card:focus-within {
+  box-shadow: var(--notion-shadow-deep);
+  transform: translateY(-2px);
 }
 
 .afw-tabs {
   display: flex;
-  background: #f0f0ee;
-  border-bottom: 1px solid var(--card-border);
+  background: var(--notion-bg-alt);
+  border-bottom: var(--notion-border);
   padding: 4px;
 }
 
 .afw-tab {
   flex: 1;
-  padding: 8px;
+  padding: 8px 12px;
   border: none;
   background: transparent;
-  font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--notion-gray-500);
   cursor: pointer;
   border-radius: 6px;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .afw-tab.active {
-  background: #fff;
-  color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: var(--notion-bg);
+  color: var(--notion-text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.afw-tab:hover:not(.active) {
+  background: rgba(0,0,0,0.05);
 }
 
 .afw-textarea-wrap {
