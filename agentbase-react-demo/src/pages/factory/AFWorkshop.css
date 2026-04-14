@@ -9,8 +9,9 @@
 .af-workshop-container {
   position: relative;
   min-height: calc(100vh - 64px);
-  overflow: hidden;
+  /* Removed overflow:hidden — it breaks backdrop-filter compositing in production builds */
   background-color: var(--notion-bg);
+  isolation: isolate; /* Create a new stacking context for proper compositing */
 }
 
 .afw-bg-wrap {
@@ -53,14 +54,16 @@
 }
 
 .afw-input-card {
-  background: rgba(255, 255, 255, 0.72); /* Semi-transparent white */
-  backdrop-filter: blur(12px) saturate(180%); /* Pro-max glass effect */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   border: var(--notion-border);
   border-radius: 12px;
   box-shadow: var(--notion-shadow-card), 0 8px 32px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: all 0.3s ease;
+  will-change: transform; /* Force GPU compositing layer — critical for backdrop-filter in production */
+  transform: translateZ(0); /* Promote to own compositing layer */
 }
 .afw-input-card:focus-within {
   box-shadow: var(--notion-shadow-deep);
@@ -163,6 +166,7 @@
 .afw-template-card {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 12px 16px;
@@ -171,6 +175,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .afw-template-card:hover {
@@ -198,9 +204,12 @@
 .afw-tasks-section {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 8px;
   border: 1px solid var(--card-border);
   overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .afw-tasks-header {
