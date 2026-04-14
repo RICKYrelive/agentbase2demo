@@ -59,7 +59,7 @@ export default function AFPassport() {
 
   return (
     <PageLayout
-      title="Agent Factory — Passport"
+      title="Passport"
       rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ New Passport</button>}
     >
       <div className="info-alert">

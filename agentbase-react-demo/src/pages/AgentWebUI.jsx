@@ -11,6 +11,7 @@ export default function AgentWebUI() {
 
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
+  const queryTitle = searchParams.get('title')
   const initialView = searchParams.get('view') === 'cron' ? 'cron' : 'chat'
 
   const [activeView, setActiveView] = useState(initialView)
@@ -123,12 +124,16 @@ export default function AgentWebUI() {
     }, 5000)
   }
 
-  // Initialize with first conversation
+  // Initialize with first conversation or create one
   useEffect(() => {
-    if (agent && agent.conversations?.length > 0 && !activeConv) {
-      setActiveConv(agent.conversations[0].id)
+    if (agent) {
+      if (agent.conversations?.length > 0) {
+        if (!activeConv) setActiveConv(agent.conversations[0].id)
+      } else {
+        createConversation()
+      }
     }
-  }, [agent])
+  }, [agent, activeConv])
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -301,12 +306,12 @@ export default function AgentWebUI() {
       {/* ========== LEFT: Conversation List ========== */}
       <div className="webui-sidebar">
         <div className="webui-sidebar-header">
-          <button className="webui-back-btn" onClick={() => navigate(`/super-agent/${agent.id}`)}>← 返回</button>
-          <div className="webui-agent-name">{agent.name}</div>
+          <button className="webui-back-btn" onClick={() => navigate(-1)}>← 返回</button>
+          <div className="webui-agent-name">{queryTitle || agent.name}</div>
         </div>
         
         <div className="webui-sidebar-menu">
-          <div className={`webui-menu-item ${activeView === 'chat' ? 'active' : ''}`} onClick={() => setActiveView('chat')}>💬 会话列表</div>
+          <div className={`webui-menu-item ${activeView === 'chat' ? 'active' : ''}`} onClick={() => setActiveView('chat')}>💬 会话</div>
           <div className={`webui-menu-item ${activeView === 'skills' ? 'active' : ''}`} onClick={() => setActiveView('skills')}>🔧 技能配置</div>
           <div className={`webui-menu-item ${activeView === 'cron' ? 'active' : ''}`} onClick={() => setActiveView('cron')}>⏱️ 定时任务</div>
           <div className={`webui-menu-item ${activeView === 'artifacts' ? 'active' : ''}`} onClick={() => setActiveView('artifacts')}>📦 制品管理</div>
@@ -315,24 +320,9 @@ export default function AgentWebUI() {
         <div className="webui-menu-divider" />
         
         {activeView === 'chat' ? (
-          <>
-            <button className="webui-new-task" onClick={createConversation}>+ 新任务</button>
-            <div className="webui-conv-list">
-              {conversations.map(conv => (
-                <div
-                  key={conv.id}
-                  className={`webui-conv-item ${activeConv === conv.id ? 'active' : ''}`}
-                  onClick={() => setActiveConv(conv.id)}
-                >
-                  <div className="webui-conv-title">{conv.title}</div>
-                  <div className="webui-conv-time">{conv.createdAt?.slice(5, 16)}</div>
-                </div>
-              ))}
-              {conversations.length === 0 && (
-                <div className="webui-conv-empty">暂无会话，点击上方按钮创建</div>
-              )}
-            </div>
-          </>
+          <div style={{ padding: '16px', fontSize: '12px', color: '#6b6b80', lineHeight: '1.5' }}>
+            每个 Session 对应一个独立会话空间。聊天记录将在此处持续保留。
+          </div>
         ) : (
           <div style={{ padding: '0 12px', fontSize: '13px', color: '#8c8c8c' }}>
             在这里查看和管理该 Agent 的所有定时调度任务。
@@ -344,7 +334,7 @@ export default function AgentWebUI() {
       {activeView === 'chat' ? (
         <div className="webui-chat">
           <div className="webui-chat-header">
-            <span className="webui-chat-title">{currentConv ? currentConv.title : '选择或创建一个会话'}</span>
+            <span className="webui-chat-title">{queryTitle ? queryTitle : '当前会话'}</span>
             <span className="webui-model-badge">{agent.model}</span>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
               <button 
@@ -358,18 +348,11 @@ export default function AgentWebUI() {
           </div>
 
           <div className="webui-messages">
-            {!currentConv ? (
-              <div className="webui-welcome">
-                <div className="webui-welcome-icon">🤖</div>
-                <div className="webui-welcome-title">欢迎使用 {agent.name}</div>
-                <div className="webui-welcome-desc">{agent.description}</div>
-                <button className="action-btn primary" onClick={createConversation}>开始新对话</button>
-              </div>
-            ) : currentConv.messages.length === 0 ? (
+            {!currentConv || currentConv.messages.length === 0 ? (
               <div className="webui-welcome">
                 <div className="webui-welcome-icon">💬</div>
                 <div className="webui-welcome-title">开始对话</div>
-                <div className="webui-welcome-desc">输入你的需求，Agent 将为你处理</div>
+                <div className="webui-welcome-desc">已为您开启专属会话。输入你的需求，Agent 将为你处理。</div>
               </div>
             ) : (
               currentConv.messages.map((msg, i) => (

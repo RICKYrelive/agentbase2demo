@@ -31,7 +31,7 @@ export default function AFDiary() {
   ) ?? []
 
   return (
-    <PageLayout title="Agent Factory — Diary">
+    <PageLayout title="Diary">
       <div className="info-alert">
         <span className="info-alert-icon">ℹ️</span>
         Diary 记录每个 Session 实例在执行过程中积累的<strong>本地记忆</strong>，生命周期与 Session 绑定。

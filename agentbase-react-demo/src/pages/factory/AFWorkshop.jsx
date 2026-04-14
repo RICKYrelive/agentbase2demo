@@ -71,7 +71,7 @@ export default function AFWorkshop() {
       {/* Centered Hero Section */}
       <div className="afw-hero">
         <div className="afw-hero-title">
-          <span style={{ fontSize: 32 }}>⌨️</span> Agent Factory — Agent 造物工坊
+          <span style={{ fontSize: 32 }}>⌨️</span> Agent 工坊
         </div>
         <p className="afw-hero-subtitle">
           高效构建 AI Agent 与 Skill，让能力从设想变为现实
@@ -375,7 +375,7 @@ if __name__ == "__main__":
   if (view === 'workspace') return renderWorkspace()
   
   return (
-    <PageLayout title="Agent Factory — Agent 造物工坊">
+    <PageLayout title="Agent 工坊">
       {renderHome()}
     </PageLayout>
   )

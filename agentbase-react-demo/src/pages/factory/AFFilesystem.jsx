@@ -51,7 +51,7 @@ export default function AFFilesystem() {
 
   return (
     <PageLayout
-      title="Agent Factory — Filesystem"
+      title="Filesystem"
       rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ New Filesystem</button>}
     >
       <div className="info-alert">

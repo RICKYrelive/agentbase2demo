@@ -9,7 +9,7 @@ const navItems = [
 ]
 
 const agentFactoryItems = [
-  { key: 'af-workshop', label: 'Agent 造物工坊', icon: '✨', desc: 'AI 生成' },
+  { key: 'af-workshop', label: 'Agent 工坊', icon: '✨', desc: 'AI 生成' },
   { key: 'af-agent', label: 'Agent Blueprint', icon: '🤖', desc: 'Agent 定义库' },
   { key: 'af-session', label: 'Session', icon: '▶️', desc: '运行实例' },
   { key: 'af-passport', label: 'Passport', icon: '🔐', desc: '凭证保险箱' },

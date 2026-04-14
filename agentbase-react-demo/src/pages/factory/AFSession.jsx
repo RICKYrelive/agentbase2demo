@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
 import './AF.css'
 
@@ -10,15 +11,15 @@ const STATUS = {
 }
 
 const MOCK_SESSIONS = [
-  { id: 'ses_a1b2c3d4', title: 'PR 代码审查 #384', agentName: 'Code Reviewer', agentId: 'agt_7f3a2b1c', status: 'idle', activeSeconds: 142, inputTokens: 8210, outputTokens: 1043, createdAt: '2026-04-12 18:34', events: 27 },
-  { id: 'ses_e5f6a7b8', title: '市场报告研究', agentName: 'Deep Researcher', agentId: 'agt_9d1e5f7a', status: 'running', activeSeconds: 890, inputTokens: 32400, outputTokens: 6710, createdAt: '2026-04-12 21:02', events: 104 },
-  { id: 'ses_c9d0e1f2', title: 'Q1 销售数据清洗', agentName: 'Data Analyst', agentId: 'agt_2c4b8d9e', status: 'terminated', activeSeconds: 430, inputTokens: 12100, outputTokens: 3240, createdAt: '2026-04-11 09:15', events: 61 },
+  { id: 'ses_a1b2c3d4', title: 'PR 代码审查 #384', agentName: 'Insight Agent', agentId: 'ha-001', status: 'idle', activeSeconds: 142, inputTokens: 8210, outputTokens: 1043, createdAt: '2026-04-12 18:34', events: 27 },
+  { id: 'ses_e5f6a7b8', title: '市场报告研究', agentName: 'Code Reviewer', agentId: 'ha-002', status: 'running', activeSeconds: 890, inputTokens: 32400, outputTokens: 6710, createdAt: '2026-04-12 21:02', events: 104 },
+  { id: 'ses_c9d0e1f2', title: 'Q1 销售数据清洗', agentName: 'Data Pipeline', agentId: 'ha-004', status: 'terminated', activeSeconds: 430, inputTokens: 12100, outputTokens: 3240, createdAt: '2026-04-11 09:15', events: 61 },
 ]
 
 const MOCK_AGENTS_LIBRARY = [
-  { id: 'agt_7f3a2b1c', name: 'Code Reviewer', desc: 'Expert in GitHub PR analysis and security auditing.', icon: '🔍' },
-  { id: 'agt_9d1e5f7a', name: 'Deep Researcher', desc: 'Performs deep web research and document synthesis.', icon: '🧪' },
-  { id: 'agt_2c4b8d9e', name: 'Data Analyst', desc: 'Parses complex CSV/Excel and generates insights.', icon: '📊' },
+  { id: 'ha-001', name: 'Insight Agent', desc: 'Expert in GitHub PR analysis and security auditing.', icon: '🔍' },
+  { id: 'ha-002', name: 'Code Reviewer', desc: 'Performs deep web research and document synthesis.', icon: '🧪' },
+  { id: 'ha-004', name: 'Data Pipeline', desc: 'Parses complex CSV/Excel and generates insights.', icon: '📊' },
 ]
 
 const MOCK_EVENTS = [
@@ -34,6 +35,7 @@ const fmtSec = s => s >= 60 ? `${Math.floor(s / 60)}m ${s % 60}s` : `${s}s`
 const columns = ['ID', '标题', 'Agent', '状态', '运行时长', '输入 Token', '输出 Token', '事件数', '创建时间', '操作']
 
 export default function AFSession() {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState(null)
   const [search, setSearch] = useState('')
   const [agentFilter, setAgentFilter] = useState('all')
@@ -61,7 +63,7 @@ export default function AFSession() {
   }
 
   return (
-    <PageLayout title="Agent Factory — Session">
+    <PageLayout title="Session">
       <DataToolbar
         buttons={<button className="action-btn primary" onClick={() => setShowLauncher(true)}>+ New Session</button>}
         filters={
@@ -105,6 +107,7 @@ export default function AFSession() {
                       <td className="af-muted">{s.createdAt}</td>
                       <td>
                         <div className="ha-row-actions">
+                          <button onClick={() => navigate(`/super-agent/${s.agentId}/webui?title=${encodeURIComponent(s.title)}`)}>WebUI</button>
                           <button>事件流</button>
                           <button>详情</button>
                         </div>

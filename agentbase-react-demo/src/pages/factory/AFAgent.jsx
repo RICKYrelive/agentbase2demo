@@ -64,7 +64,7 @@ export default function AFAgent() {
 
   return (
     <PageLayout
-      title="Agent Factory — Agent Blueprint"
+      title="Agent Blueprint"
       rightAction={
         <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
           {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
