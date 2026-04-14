@@ -1,21 +1,169 @@
-import { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PageLayout from '../../components/PageLayout'
 import { 
   IconPaperclip, IconSend, IconDatabase, IconTerminal, 
   IconEdit, IconSearch, IconFile, IconImage, IconBarChart, 
   IconChevronRight, IconChevronDown, IconArrowLeft, IconCheck, IconX,
-  IconBot, IconFolder, IconFileText
+  IconBot, IconFolder, IconFileText, IconCopy, IconCheckCircle, IconPlay,
+  IconAlertTriangle, IconActivity, IconGithub, IconGlobe, IconLock, IconPlus
 } from '../../components/Icons'
 import './AFWorkshop.css'
 import ShapeGrid from '../../components/effects/ShapeGrid'
 
-// Local icons removed and replaced by central Icons library
-
 const MOCK_TEMPLATES = {
   'Agent Blueprint': [
-    { id: 'at1', name: '数据分析专家', icon: <IconBarChart />, desc: '擅长处理结构化数据并生成图表' },
-    { id: 'at2', name: '全栈开发助手', icon: <IconTerminal />, desc: '协助编写前端与后端业务代码' },
-    { id: 'at3', name: '文案策划专家', icon: <IconEdit />, desc: '高效生成市场文案与创意内容' },
+    { 
+      id: 'at1', name: 'Blank agent config', icon: <IconFileText />, desc: 'A blank starting point with the core toolset.',
+      envTemplate: 'default',
+      tags: ['Core'],
+      tools: ['bash', 'web_fetch'],
+      yaml: `name: blank-agent
+description: A blank starting point with the core toolset.
+system_prompt: |
+  You are a helpful assistant. Use your tools to solve problems.
+tools:
+  - bash
+  - web_fetch
+`
+    },
+    { 
+      id: 'at2', name: 'Data analyst', icon: <IconBarChart />, desc: 'Load, explore, and visualize data; build reports and answer questions from datasets.',
+      envTemplate: 'data-analyst',
+      tags: ['Data', 'Python'],
+      tools: ['bash', 'web_fetch', 'python'],
+      yaml: `name: data-analyst
+description: Load, explore, and visualize data.
+system_prompt: |
+  You are an expert data analyst. You write Python code to load datasets, 
+  clean data, perform statistical analysis, and generate charts using matplotlib.
+tools:
+  - bash
+  - web_fetch
+  - python
+`
+    },
+    { 
+      id: 'at3', name: 'Deep researcher', icon: <IconSearch />, desc: 'Conducts multi-step web research with source synthesis and citations.',
+      envTemplate: 'researcher',
+      tags: ['Web', 'Research'],
+      tools: ['web_fetch', 'search'],
+      yaml: `name: deep-researcher
+description: Conducts multi-step web research with source synthesis and citations.
+system_prompt: |
+  You are a meticulous researcher. You conduct comprehensive web searches, 
+  synthesize information from multiple sources, and always provide citations.
+tools:
+  - web_fetch
+  - search
+`
+    },
+    { 
+      id: 'at4', name: 'Software Developer', icon: <IconTerminal />, desc: 'Full-stack software developer capable of writing, reviewing, and testing code.',
+      envTemplate: 'developer',
+      tags: ['Code', 'Development'],
+      tools: ['bash', 'github'],
+      yaml: `name: software-developer
+description: Assists with software development tasks.
+system_prompt: |
+  You are an experienced full-stack developer. You write clean, testable code,
+  perform code reviews, and can execute bash commands to run tests.
+tools:
+  - bash
+  - github
+`
+    },
+    { 
+      id: 'at5', name: 'Incident commander', icon: <IconAlertTriangle />, desc: 'Triages alerts, opens incident tickets, and runs the war room.',
+      envTemplate: 'ops',
+      tags: ['DevOps', 'SRE'],
+      tools: ['pagerduty', 'slack', 'jira'],
+      yaml: `name: incident-commander
+description: Triages alerts and manages incidents.
+system_prompt: |
+  You are an incident commander. You investigate alerts, coordinate communication
+  in Slack, and ensure tickets are tracked and updated.
+tools:
+  - pagerduty
+  - slack
+  - jira
+`
+    },
+    { 
+      id: 'at6', name: 'Support-to-eng escalator', icon: <IconMessageSquare />, desc: 'Reads customer conversations, reproduces bugs, and files Jira issues.',
+      envTemplate: 'support',
+      tags: ['Support', 'Engineering'],
+      tools: ['intercom', 'jira', 'github'],
+      yaml: `name: support-escalator
+description: Escalates support tickets to engineering.
+system_prompt: |
+  You read customer support conversations, identify reproducible bugs,
+  and create detailed engineering tickets with reproduction steps.
+tools:
+  - intercom
+  - jira
+  - github
+`
+    },
+    { 
+      id: 'at7', name: 'Structured extractor', icon: <IconDatabase />, desc: 'Parses unstructured text into a typed JSON schema.',
+      envTemplate: 'default',
+      tags: ['Data', 'Parsing'],
+      tools: ['json_schema'],
+      yaml: `name: structured-extractor
+description: Extracts structured JSON from unstructured text.
+system_prompt: |
+  You parse large blocks of unstructured text and extract entities matching
+  the provided JSON schema exactly.
+tools:
+  - json_schema
+`
+    },
+    { 
+      id: 'at8', name: 'Feedback miner', icon: <IconEdit />, desc: 'Clusters raw feedback from Slack and Notion into themes and drafts Asana tasks.',
+      envTemplate: 'product',
+      tags: ['Product', 'Analysis'],
+      tools: ['slack', 'notion', 'asana'],
+      yaml: `name: feedback-miner
+description: Clusters user feedback into actionable themes.
+system_prompt: |
+  You are a product manager analyzing user feedback. You cluster feedback into
+  themes and create actionable tasks for the engineering team.
+tools:
+  - slack
+  - notion
+  - asana
+`
+    },
+    { 
+      id: 'at9', name: 'Field monitor', icon: <IconGlobe />, desc: 'Scans software blogs for a topic and writes a weekly what-changed brief.',
+      envTemplate: 'researcher',
+      tags: ['News', 'Monitoring'],
+      tools: ['web_fetch', 'rss'],
+      yaml: `name: field-monitor
+description: Monitors industry blogs and writes summaries.
+system_prompt: |
+  You monitor specified industry blogs and RSS feeds. You compile a weekly
+  brief summarizing the most important changes and announcements.
+tools:
+  - web_fetch
+  - rss
+`
+    },
+    { 
+      id: 'at10', name: 'Sprint retro facilitator', icon: <IconActivity />, desc: 'Pulls a closed sprint from Linear, synthesizes themes, and writes the retro doc.',
+      envTemplate: 'agile',
+      tags: ['Agile', 'Docs'],
+      tools: ['linear', 'notion'],
+      yaml: `name: sprint-retro
+description: Facilitates sprint retrospectives.
+system_prompt: |
+  You analyze completed sprints in Linear, identifying bottlenecks and successes.
+  You generate a comprehensive retrospective document.
+tools:
+  - linear
+  - notion
+`
+    }
   ],
   Skill: [
     { id: 'st1', name: '网页抓取器', icon: <IconSearch />, desc: '解析网页 HTML 并提取关键信息' },
@@ -50,11 +198,34 @@ const MOCK_TASKS = [
 export default function AFWorkshop() {
   const [view, setView] = useState('home') // 'home' | 'wizard' | 'workspace'
   const [wizardStep, setWizardStep] = useState(1)
-  const [activeTab, setActiveTab] = useState('Agent Blueprint') // Agent Blueprint before Skill
+  const [activeTab, setActiveTab] = useState('Agent Blueprint')
   const [prompt, setPrompt] = useState('')
   const [selectedTask, setSelectedTask] = useState(null)
   
-  // Workspace specific states
+  // Template Preview Modal
+  const [previewTemplate, setPreviewTemplate] = useState(null)
+  const [previewActiveTab, setPreviewActiveTab] = useState('yaml') // 'yaml' | 'structured'
+  const [editedYaml, setEditedYaml] = useState('')
+
+  // Wizard state
+  const [agentConfig, setAgentConfig] = useState({
+    name: '',
+    description: '',
+    systemPrompt: '',
+    envTemplate: 'default',
+    network: 'unrestricted',
+    yaml: ''
+  })
+
+  // Test Run State
+  const [testSession, setTestSession] = useState({
+    running: false,
+    messages: [],
+    events: [],
+    input: ''
+  })
+  
+  // Workspace specific states (for Skill)
   const [activeFile, setActiveFile] = useState('SKILL.md')
   const [testInput, setTestInput] = useState('')
 
@@ -63,21 +234,65 @@ export default function AFWorkshop() {
     setView('workspace')
   }
 
-  const startWizard = () => {
+  const openTemplatePreview = (tpl) => {
+    setPreviewTemplate(tpl)
+    setEditedYaml(tpl.yaml || '')
+    setPreviewActiveTab('yaml')
+  }
+
+  const startWizardFromTemplate = () => {
+    setAgentConfig({
+      name: previewTemplate.name,
+      description: previewTemplate.desc,
+      systemPrompt: (editedYaml.match(/system_prompt:\\s*\\|([\\s\\S]*?)(?=\\ntools:|$)/) || [])[1]?.trim() || '',
+      envTemplate: previewTemplate.envTemplate || 'default',
+      network: 'unrestricted',
+      yaml: editedYaml
+    })
+    setPreviewTemplate(null)
+    setWizardStep(1)
+    setView('wizard')
+  }
+  
+  const startWizardEmpty = () => {
+    setAgentConfig({
+      name: '', description: '', systemPrompt: '', envTemplate: 'default', network: 'unrestricted', yaml: ''
+    })
     setWizardStep(1)
     setView('wizard')
   }
 
-  const nextStep = () => {
-    if (wizardStep < 4) setWizardStep(wizardStep + 1)
-    else setView('workspace')
+  const runTestMessage = () => {
+    if (!testSession.input.trim()) return
+    const newMsg = { role: 'user', content: testSession.input }
+    setTestSession(prev => ({
+      ...prev,
+      messages: [...prev.messages, newMsg],
+      input: '',
+      events: [...prev.events, { type: 'user', text: `User request: ${testSession.input}`, time: new Date().toLocaleTimeString() }]
+    }))
+
+    // Simulate Agent Processing
+    setTimeout(() => {
+      setTestSession(prev => ({
+        ...prev,
+        events: [...prev.events, { type: 'tool', text: `Tool bash called. 14 tokens / 120ms`, time: new Date().toLocaleTimeString() }]
+      }))
+    }, 800)
+
+    setTimeout(() => {
+      setTestSession(prev => ({
+        ...prev,
+        messages: [...prev.messages, { role: 'agent', content: 'I have executed the necessary commands and gathered the results for you.' }],
+        events: [...prev.events, { type: 'agent', text: `Response generated. 45 tokens / 450ms`, time: new Date().toLocaleTimeString() }]
+      }))
+    }, 1500)
   }
 
   // --- RENDERING HELPERS ---
 
   const renderHome = () => (
     <div className="af-workshop-container">
-      {/* Dynamic Background Effect */}
       <div className="afw-bg-wrap">
         <ShapeGrid 
           speed={0.24}
@@ -90,13 +305,12 @@ export default function AFWorkshop() {
       </div>
 
       <div className="af-workshop afw-home">
-      {/* Centered Hero Section */}
       <div className="afw-hero">
         <h1 className="afw-hero-title notion-h1" style={{ justifyContent: 'center', marginBottom: '24px' }}>
-          Agent 工坊
+          Agent Blueprint Quickstart
         </h1>
-        <p className="afw-hero-subtitle notion-body-large" style={{ color: 'var(--notion-gray-500)', fontSize: 20, marginBottom: '48px' }}>
-          高效构建 AI Agent 与 Skill，让能力从设想变为现实
+        <p className="afw-hero-subtitle notion-body-large" style={{ color: 'var(--notion-gray-500)', fontSize: 18, marginBottom: '48px' }}>
+          What do you want to build? Describe your agent or start with a template.
         </p>
 
         <div className="afw-input-card" style={{ boxShadow: 'var(--notion-shadow-card)', border: 'var(--notion-border)' }}>
@@ -115,7 +329,7 @@ export default function AFWorkshop() {
           <div className="afw-textarea-wrap">
             <textarea 
               className="afw-textarea notion-body" 
-              placeholder={`输入你想创建的 ${activeTab} 的核心功能或上传文件...`}
+              placeholder={`Describe your ${activeTab.toLowerCase()}...`}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               style={{ fontSize: 16 }}
@@ -123,157 +337,409 @@ export default function AFWorkshop() {
           </div>
           <div className="afw-input-actions">
             <div className="afw-action-left">
-              <button className="afw-upload-btn" title="上传附件">
+              <button className="afw-upload-btn" title="Upload file">
                 <IconPaperclip />
               </button>
             </div>
             <button 
               className="afw-send-btn action-btn primary" 
               disabled={!prompt.trim()} 
-              onClick={startWizard}
+              onClick={startWizardEmpty}
               style={{ width: 44, height: 44, borderRadius: '50%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              <IconSend />
+              <IconArrowLeft style={{ transform: 'rotate(180deg)' }} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Templates Section */}
       <div className="afw-templates-section">
-        <h2 className="afw-section-title notion-card-title">使用模板快速开始</h2>
-        <div className="afw-template-grid">
+        <h2 className="afw-section-title notion-card-title">Browse templates</h2>
+        <div className="afw-template-grid" style={{ gridTemplateColumns: activeTab === 'Agent Blueprint' ? 'repeat(auto-fill, minmax(340px, 1fr))' : 'repeat(auto-fill, minmax(220px, 1fr))' }}>
           {MOCK_TEMPLATES[activeTab].map(tpl => (
-            <div key={tpl.id} className="afw-template-card" onClick={startWizard} style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 12 }}>
+            <div 
+              key={tpl.id} 
+              className="afw-template-card" 
+              onClick={() => activeTab === 'Agent Blueprint' ? openTemplatePreview(tpl) : startWizardEmpty()} 
+              style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 12, alignItems: 'flex-start' }}
+            >
               <div className="afw-template-icon" style={{ background: 'var(--notion-bg-alt)' }}>{tpl.icon}</div>
-              <div>
-                <div className="afw-template-name notion-body-medium">{tpl.name}</div>
-                <div className="notion-caption" style={{ color: 'var(--notion-gray-500)', marginTop: 2 }}>{tpl.desc}</div>
+              <div style={{ flex: 1 }}>
+                <div className="afw-template-name notion-body-medium" style={{ marginBottom: 4 }}>{tpl.name}</div>
+                <div className="notion-caption" style={{ color: 'var(--notion-gray-500)', lineHeight: '1.4' }}>{tpl.desc}</div>
+                {tpl.tags && (
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+                    {tpl.tags.map(tag => (
+                      <span key={tag} style={{ fontSize: 11, background: '#f1f5f9', padding: '2px 6px', borderRadius: 4, color: '#64748b' }}>{tag}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Task List Section (Table) */}
-      <h2 className="afw-section-title notion-card-title" style={{ marginTop: 48 }}>我的任务</h2>
-      <div className="afw-tasks-section" style={{ border: 'var(--notion-border)', borderRadius: 12 }}>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th width="180">名称</th>
-              <th>描述</th>
-              <th width="160">创建时间</th>
-              <th width="160">过期时间</th>
-              <th width="180" style={{ textAlign: 'right' }}>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {MOCK_TASKS.map(task => (
-              <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => handleTaskClick(task)}>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ color: 'var(--notion-blue)' }}>{task.icon}</span>
-                    <span style={{ fontWeight: 600 }}>{task.name}</span>
-                  </div>
-                </td>
-                <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{task.desc}</td>
-                <td>{task.createdAt}</td>
-                <td style={{ color: '#fa8c16' }}>{task.expiryAt}</td>
-                <td style={{ textAlign: 'right' }} onClick={e => e.stopPropagation()}>
-                  <button className="af-list-btn" onClick={() => handleTaskClick(task)}>详情</button>
-                  <button className="af-list-btn">续期</button>
-                  <button className="af-list-btn delete">删除</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {activeTab === 'Skill' && (
+        <>
+          <h2 className="afw-section-title notion-card-title" style={{ marginTop: 48 }}>我的任务 (Workspace Tasks)</h2>
+          <div className="afw-tasks-section" style={{ border: 'var(--notion-border)', borderRadius: 12 }}>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th width="180">名称</th>
+                  <th>描述</th>
+                  <th width="160">创建时间</th>
+                  <th width="180" style={{ textAlign: 'right' }}>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MOCK_TASKS.filter(t => t.type === 'Skill').map(task => (
+                  <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => handleTaskClick(task)}>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ color: 'var(--notion-blue)' }}>{task.icon}</span>
+                        <span style={{ fontWeight: 600 }}>{task.name}</span>
+                      </div>
+                    </td>
+                    <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{task.desc}</td>
+                    <td>{task.createdAt}</td>
+                    <td style={{ textAlign: 'right' }} onClick={e => e.stopPropagation()}>
+                      <button className="af-list-btn" onClick={() => handleTaskClick(task)}>进入工作区</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
       </div>
-    </div>
-  </div>
-)
 
-  const renderWizard = () => (
-    <div className="afw-wizard">
-      <div className="afw-wizard-side">
-        <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 40 }}>创建 {activeTab}</h2>
-        {[
-          { step: 1, title: '基础定义', desc: '设定名称与核心目标' },
-          { step: 2, title: '详细指令', desc: '编写系统级运行提示词' },
-          { step: 3, title: '能力扩展', desc: '添加工具 or 外部数据' },
-          { step: 4, title: '生成并初始化', desc: 'AI 生成初始代码与文档' },
-        ].map(s => (
-          <div key={s.step} className={`afw-wizard-step ${wizardStep === s.step ? 'active' : ''} ${wizardStep > s.step ? 'completed' : ''}`}>
-            <div className="afw-step-num">{wizardStep > s.step ? <IconCheck size={12} /> : s.step}</div>
-            <div className="afw-step-info">
-              <div className="afw-step-title">{s.title}</div>
-              <div style={{ fontSize: 11, color: '#b0aca8' }}>{s.desc}</div>
+      {/* Template Preview Modal */}
+      {previewTemplate && (
+        <div className="afw-tpl-modal-overlay">
+          <div className="afw-tpl-modal">
+            <div className="afw-tpl-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className="afw-template-icon" style={{ background: '#f1f5f9' }}>{previewTemplate.icon}</div>
+                <div style={{ fontSize: 18, fontWeight: 700 }}>{previewTemplate.name}</div>
+              </div>
+              <button className="afw-tpl-close" onClick={() => setPreviewTemplate(null)}><IconX /></button>
+            </div>
+            
+            <div className="afw-tpl-modal-body">
+              <div className="afw-tpl-info-pane">
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Description</div>
+                  <div style={{ fontSize: 15, lineHeight: 1.5 }}>{previewTemplate.desc}</div>
+                </div>
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Environment Template</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, display: 'inline-block', background: '#f8fafc', padding: '4px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
+                    {previewTemplate.envTemplate}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Default Tools</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {previewTemplate.tools?.map(t => (
+                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 8px', borderRadius: 4, fontWeight: 600 }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="afw-tpl-editor-pane">
+                <div className="afw-tab-switch">
+                  <button className={`afw-ts-btn ${previewActiveTab === 'yaml' ? 'active' : ''}`} onClick={() => setPreviewActiveTab('yaml')}>YAML</button>
+                  <button className={`afw-ts-btn ${previewActiveTab === 'structured' ? 'active' : ''}`} onClick={() => setPreviewActiveTab('structured')}>Preview</button>
+                </div>
+                
+                {previewActiveTab === 'yaml' ? (
+                  <textarea 
+                    className="afw-yaml-editor"
+                    value={editedYaml}
+                    onChange={e => setEditedYaml(e.target.value)}
+                    spellCheck={false}
+                  />
+                ) : (
+                  <div className="afw-structured-preview">
+                    <div className="afw-sp-field">
+                      <div className="afw-sp-label">System Prompt</div>
+                      <div className="afw-sp-val" style={{ whiteSpace: 'pre-wrap' }}>{(editedYaml.match(/system_prompt:\s*\|([\s\S]*?)(?=\ntools:|$)/) || [])[1]?.trim()}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="afw-tpl-modal-footer">
+              <button className="action-btn" onClick={() => { setPreviewTemplate(null); startWizardEmpty(); }}>Start blank</button>
+              <button className="action-btn primary" onClick={startWizardFromTemplate}>Use this template</button>
             </div>
           </div>
-        ))}
+        </div>
+      )}
+    </div>
+  )
+
+  const renderWizard = () => (
+    <div className="afw-wizard-v2">
+      <div className="afw-wv2-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <button className="afw-back-btn" onClick={() => setView('home')} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}><IconArrowLeft size={20} /></button>
+          <span style={{ fontSize: 16, fontWeight: 600 }}>Quickstart</span>
+        </div>
+        
+        <div className="afw-stepper">
+          {[
+            { step: 1, label: 'Create agent', path: 'POST /v1/agents' },
+            { step: 2, label: 'Configure environment' },
+            { step: 3, label: 'Start session', path: 'POST /v1/sessions' },
+            { step: 4, label: 'Integrate' }
+          ].map(s => (
+            <React.Fragment key={s.step}>
+              <div className={`afw-step-item ${wizardStep === s.step ? 'active' : ''} ${wizardStep > s.step ? 'completed' : ''}`}>
+                <div className="afw-step-circle">{wizardStep > s.step ? <IconCheck size={12} /> : s.step}</div>
+                <div className="afw-step-label">{s.label}</div>
+                {s.path && <div className="afw-step-path">{s.path}</div>}
+              </div>
+              {s.step < 4 && <div className="afw-step-line" />}
+            </React.Fragment>
+          ))}
+        </div>
+        
+        <div className="afw-wv2-actions">
+           {wizardStep < 4 && (
+             <button className="action-btn primary" onClick={() => setWizardStep(wizardStep + 1)}>
+               {wizardStep === 3 ? 'Stop session' : `Next step`}
+             </button>
+           )}
+           {wizardStep === 4 && (
+             <button className="action-btn primary" onClick={() => setView('home')}>Done</button>
+           )}
+        </div>
       </div>
-      <div className="afw-wizard-main">
-        <div className="afw-wizard-content">
+
+      <div className="afw-wv2-body">
+        {/* Left pane for form/instructions */}
+        <div className="afw-wv2-left">
           {wizardStep === 1 && (
-            <div>
-              <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>为你的 {activeTab} 命名</h1>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 32 }}>这将作为其唯一标识。好的名称能让人一目了然。</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: 13, marginBottom: 8, fontWeight: 600 }}>名称</label>
-                  <input type="text" className="data-toolbar-search" style={{ width: '100%' }} placeholder="例如：GitHub 代码审查专家" />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 13, marginBottom: 8, fontWeight: 600 }}>一句话描述</label>
-                  <textarea className="data-toolbar-search" style={{ width: '100%', height: 80, padding: 12 }} placeholder="描述这个 Agent 或 Skill 最大的价值点" />
+            <div className="afw-step-content fade-in">
+              <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Create your agent</h2>
+              
+              <div className="af-field">
+                <label className="af-field-label">Agent Name</label>
+                <input 
+                  type="text" 
+                  className="af-input-text" 
+                  value={agentConfig.name}
+                  onChange={e => setAgentConfig({...agentConfig, name: e.target.value})}
+                  placeholder="e.g. Data analyst" 
+                />
+              </div>
+              
+              <div className="af-field">
+                <label className="af-field-label">System Prompt</label>
+                <div className="af-field-hint">Instructs the agent on its persona and how to use tools.</div>
+                <textarea 
+                  className="af-input-textarea" 
+                  value={agentConfig.systemPrompt}
+                  onChange={e => setAgentConfig({...agentConfig, systemPrompt: e.target.value})}
+                  style={{ height: 260, fontFamily: 'monospace', fontSize: 13 }}
+                  placeholder="You are an expert data analyst..."
+                />
+              </div>
+              
+              <div className="af-field">
+                <label className="af-field-label">MCP Servers & Tools</label>
+                <div className="af-field-hint">Tools the agent has access to automatically.</div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                   {['bash', 'web_fetch', 'python', 'github'].map(t => (
+                     <div key={t} style={{ padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: '#f8fafc' }}>
+                       <IconCheck size={14} color="#10b981" /> {t}
+                     </div>
+                   ))}
+                   <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                     <IconPlus size={14}/> Add Tool
+                   </button>
                 </div>
               </div>
             </div>
           )}
+
           {wizardStep === 2 && (
-            <div>
-              <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>编写运行指令</h1>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 32 }}>这是决定 AI 行为的核心。你可以使用自然语言描述。</p>
-              <textarea 
-                className="data-toolbar-search" 
-                style={{ width: '100%', height: 300, padding: 16, fontFamily: 'monospace' }} 
-                placeholder="# 你的身份\n你是一个代码审查专家...\n\n# 你的任务\n检查 PR 的代码质量与安全性..."
-              />
-            </div>
-          )}
-          {wizardStep === 3 && (
-            <div>
-              <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>选择核心能力</h1>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 32 }}>为你的 Agent 挂载必要的工具或知识库。</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {['Google 搜索工具', 'GitHub API 工具', 'PDF 解析器', 'Python 代码解释器'].map(tool => (
-                  <div key={tool} style={{ border: '1px solid var(--card-border)', padding: '12px 16px', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <input type="checkbox" />
-                    <span style={{ fontSize: 14 }}>{tool}</span>
+            <div className="afw-step-content fade-in">
+              <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Configure environment</h2>
+              <p style={{ color: '#64748b', marginBottom: 24 }}>Set up the execution sandbox and network permissions for this agent.</p>
+              
+              <div className="af-field">
+                <label className="af-field-label">Environment Variables</label>
+                <div className="af-field-hint">Required for some MCP servers (e.g. AMPLITUDE_API_KEY).</div>
+                <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 16, background: '#f8fafc' }}>
+                  <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                    <input type="text" className="af-input-text" placeholder="Key (e.g. API_KEY)" style={{ flex: 1 }} />
+                    <input type="password" className="af-input-text" placeholder="Value" style={{ flex: 2 }} />
                   </div>
-                ))}
+                  <button style={{ color: '#3b82f6', fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>+ Add variable</button>
+                </div>
+              </div>
+
+              <div className="af-field">
+                <label className="af-field-label">Network Access</label>
+                <div className="af-field-hint">Internet routing policies for the sandbox.</div>
+                <div className="af-card-grid">
+                  {[
+                    { id: 'unrestricted', name: 'Unrestricted', icon: <IconGlobe />, desc: 'Full internet access' },
+                    { id: 'restricted', name: 'Restricted', icon: <IconAlertTriangle />, desc: 'Specific domains only' },
+                    { id: 'none', name: 'None', icon: <IconLock />, desc: 'No outbound traffic' }
+                  ].map(opt => (
+                    <div 
+                      key={opt.id} 
+                      className={`af-option-card ${agentConfig.network === opt.id ? 'selected' : ''}`}
+                      onClick={() => setAgentConfig({...agentConfig, network: opt.id})}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                         <div className="af-option-icon">{opt.icon}</div>
+                         <div className="af-option-name">{opt.name}</div>
+                      </div>
+                      <div className="af-option-desc">{opt.desc}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
-          {wizardStep === 4 && (
-            <div style={{ textAlign: 'center', paddingTop: 60 }}>
-              <div style={{ marginBottom: 20, color: 'var(--notion-blue)' }}>
-                <IconBot size={64} />
+
+          {wizardStep === 3 && (
+            <div className="afw-step-content fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%', paddingBottom: 0 }}>
+              <div style={{ marginBottom: 16 }}>
+                <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Your session is live</h2>
+                <p style={{ color: '#64748b', fontSize: 14 }}>Send your first message in the test run panel to kick things off!</p>
               </div>
-              <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>一切就绪！</h1>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 40 }}>AI 正在根据你的指令生成初始模块、文档和脚本...</p>
-              <div style={{ width: '100%', height: 4, background: '#f0f0f0', borderRadius: 2, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '70%', background: 'var(--color-blue)', borderRadius: 2 }}></div>
+
+              <div className="afw-curl-box">
+                <div className="afw-cb-header">
+                  <span style={{ fontSize: 11, fontWeight: 600, color: '#64748b' }}>cURL</span>
+                  <button className="af-copy-btn" title="Copy"><IconCopy size={14}/></button>
+                </div>
+                <div className="afw-cb-code">
+{`curl -X POST https://api.anthropic.com/v1/sessions/sesn_test123/events \\
+  -H "Content-Type: application/json" \\
+  -H "x-api-key: $ANTHROPIC_API_KEY" \\
+  -H "anthropic-beta: managed-agents-2026-04-01" \\
+  -d '{
+    "events": [{"type": "user", "text": "${testSession.input || '...'}"}]
+  }'`}
+                </div>
+              </div>
+              
+              <div style={{ flex: 1, borderTop: '1px solid #e2e8f0', marginTop: 16, paddingTop: 16, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#94a3b8', marginBottom: 12, textTransform: 'uppercase' }}>Session Event Sent</div>
+                
+                {testSession.messages.length > 0 ? (
+                  <div className="afw-msg-list">
+                    <p style={{ fontSize: 14, color: '#334155', lineHeight: 1.6 }}>The agent received your message. See the transcript and debug stream on the right for intermediate outputs!</p>
+                  </div>
+                ) : (
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: 14 }}>
+                    Waiting for input...
+                  </div>
+                )}
+                
+                <div className="afw-chat-input-area" style={{ marginTop: 'auto' }}>
+                  <textarea 
+                    value={testSession.input}
+                    onChange={e => setTestSession({...testSession, input: e.target.value})}
+                    placeholder="E.g. Load the Titanic CSV and analyze survival rates..."
+                    onKeyDown={e => { if(e.key === 'Enter') { e.preventDefault(); runTestMessage(); } }}
+                  />
+                  <button onClick={runTestMessage} disabled={!testSession.input.trim()} className="afw-send-circle"><IconArrowUp size={16}/></button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {wizardStep === 4 && (
+            <div className="afw-step-content fade-in">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+                <div style={{ width: 48, height: 48, background: '#ecfdf5', color: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <IconCheckCircle size={28} />
+                </div>
+                <div>
+                  <h2 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>All set!</h2>
+                  <p style={{ color: '#64748b', margin: '4px 0 0 0' }}>Your agent is ready for integration.</p>
+                </div>
+              </div>
+              
+              <div className="afw-integrate-card">
+                <div className="afw-ic-header">Agent ID</div>
+                <div className="afw-ic-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <code style={{ fontSize: 14, color: '#334155' }}>agnt_011Ca3fmseBwu2FAXJyPqo2v</code>
+                  <button className="af-copy-btn"><IconCopy size={16}/></button>
+                </div>
+              </div>
+
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginTop: 32, marginBottom: 16 }}>Integration Code</h3>
+              <div className="afw-code-tabs">
+                <div className="afw-code-tab active">cURL</div>
+                <div className="afw-code-tab">Python</div>
+                <div className="afw-code-tab">Node.js</div>
+              </div>
+              <div className="afw-code-container" style={{ background: '#1e293b', padding: 16, borderRadius: '0 0 8px 8px', color: '#f8fafc', fontFamily: 'monospace', fontSize: 13, overflowX: 'auto' }}>
+{`curl -X POST https://api.anthropic.com/v1/sessions \\
+  -H "x-api-key: $ANTHROPIC_API_KEY" \\
+  -d '{
+    "agent_id": "agnt_011Ca3fmse..." 
+  }'`}
               </div>
             </div>
           )}
         </div>
-        <div style={{ marginTop: 40, display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
-          <button className="action-btn" onClick={() => setView('home')}>取消</button>
-          <button className="action-btn primary" onClick={nextStep}>
-            {wizardStep === 4 ? '进入工作区进行调试' : '下一步'}
-          </button>
+        
+        {/* Right pane for preview/debug */}
+        <div className="afw-wv2-right">
+          {wizardStep < 3 ? (
+            <div className="afw-preview-pane">
+              <div className="afw-pp-header">
+                <div className="afw-pp-tabs">
+                  <div className="afw-pp-tab active">Config</div>
+                  <div className="afw-pp-tab">Preview</div>
+                </div>
+              </div>
+              <div className="afw-pp-body yaml-view">
+                <pre>{agentConfig.yaml || 'name: ' + agentConfig.name + '\ndescription: ' + agentConfig.description + '\n...'}</pre>
+              </div>
+            </div>
+          ) : (
+            <div className="afw-preview-pane debug">
+               <div className="afw-pp-header" style={{ justifyContent: 'space-between' }}>
+                 <div className="afw-pp-tabs">
+                   <div className="afw-pp-tab active">Transcript</div>
+                   <div className="afw-pp-tab">Debug</div>
+                 </div>
+                 <div style={{ fontSize: 12, color: '#64748b', display: 'flex', alignItems: 'center', gap: 6 }}>
+                   <IconActivity size={14}/> Event Stream
+                 </div>
+               </div>
+               <div className="afw-pp-body debug-view">
+                 {testSession.events.length === 0 ? (
+                   <div style={{ color: '#94a3b8', textAlign: 'center', marginTop: 60, fontSize: 13 }}>Waiting for session events...</div>
+                 ) : (
+                   <div className="afw-event-stream">
+                     {testSession.events.map((ev, i) => (
+                       <div key={i} className={`afw-event-row ${ev.type}`}>
+                         <div className={`afw-er-badge ${ev.type}`}>{ev.type}</div>
+                         <div className="afw-er-text">{ev.text}</div>
+                         <div className="afw-er-time">{ev.time}</div>
+                       </div>
+                     ))}
+                   </div>
+                 )}
+               </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -281,7 +747,6 @@ export default function AFWorkshop() {
 
   const renderWorkspace = () => (
     <div className="afw-workspace-split">
-      {/* Left: Chat Area */}
       <div className="afw-ws-left">
         <div className="afw-header" style={{ borderBottom: '1px solid var(--card-border)', background: '#fff' }}>
           <div className="afw-back-btn" onClick={() => setView('home')}>
@@ -289,122 +754,32 @@ export default function AFWorkshop() {
           </div>
           <div className="page-header-left" style={{ margin: 0 }}>
             <div className="page-title-bar"></div>
-            <h1 className="page-title">{selectedTask?.name || '创建中...'}</h1>
+            <h1 className="page-title">{selectedTask?.name || 'Workspace'}</h1>
           </div>
         </div>
-        
         <div className="afw-ws-chat">
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 11, marginBottom: 20 }}>历史会话回放</div>
-          <div style={{ 
-            background: '#fff', 
-            padding: '12px 16px', 
-            borderRadius: '8px', 
-            border: '1px solid var(--card-border)',
-            width: 'fit-content',
-            maxWidth: '85%',
-            fontSize: 13,
-            marginBottom: 16
-          }}>
-            <p style={{ fontWeight: 600, marginBottom: 4 }}>Workshop Agent:</p>
-            已为你生成了核心脚本 `competitor_analysis.py` 和 包含文档的 `SKILL.md`。您可以直接在下方输入指令来测试或进一步优化。
-          </div>
-          
-          <div style={{ 
-            background: '#ebf4ff', 
-            padding: '12px 16px', 
-            borderRadius: '8px', 
-            width: 'fit-content',
-            maxWidth: '85%',
-            fontSize: 13,
-            alignSelf: 'flex-end',
-            marginLeft: 'auto',
-            marginBottom: 16
-          }}>
-             帮我增加一个 Excel 导出功能。
-          </div>
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 11, marginBottom: 20 }}>Workspace Chat</div>
         </div>
-
         <div className="afw-ws-footer">
           <div className="afw-test-input-wrap">
             <textarea 
               className="afw-test-input" 
-              placeholder="在这里测试你的 Skill，或者要求 AI 调整逻辑..."
-              value={testInput}
-              onChange={(e) => setTestInput(e.target.value)}
+              placeholder="Test your skill..."
             />
-            <div className="afw-test-actions">
-              <button className="afw-eval-btn" title="调用系统评估功能">
-                <IconBarChart /> 提测评估
-              </button>
-              <div style={{ display: 'flex', gap: 8 }}>
-                 <button className="afw-upload-btn"><IconPaperclip /></button>
-                 <button className="afw-send-btn"><IconSend /></button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-
-      {/* Right: Preview Area */}
       <div className="afw-ws-right">
         <div className="afw-preview-header">
-           <span style={{ fontSize: 12, fontWeight: 600 }}>预览区域：{activeFile}</span>
-           <button className="action-btn primary" style={{ height: 28, fontSize: 11, padding: '0 12px', marginLeft: 'auto' }}>发布资产</button>
+           <span style={{ fontSize: 12, fontWeight: 600 }}>Skill Editor</span>
         </div>
-          <div className="afw-preview-body">
-            <div className="afw-explorer">
-              <div className="afw-exp-item afw-exp-folder">
-                <IconFolder size={14} style={{ marginRight: 6 }} />
-                skills1/research
-              </div>
-              {['SKILL.md', 'competitor_analysis.py', 'data_guide.md', 'template.csv'].map(f => (
-                <div 
-                  key={f} 
-                  className={`afw-exp-item ${activeFile === f ? 'active' : ''}`}
-                  onClick={() => setActiveFile(f)}
-                >
-                  {f.endsWith('.py') ? <IconTerminal /> : <IconFileText />} {f}
-                </div>
-              ))}
-            </div>
-          <div className="afw-code-content">
-             {activeFile === 'SKILL.md' ? (
-               <div className="markdown-body">
-                 <h1># 竞品研究技能</h1>
-                 <p>本技能提供完整的竞品研究工具包，用于系统性地收集、分析和报告竞品信息。</p>
-                 <pre>
-{`---
-name: competitor-research
-description: Comprehensive toolkit for research.
----
-
-## 核心功能
-1. 竞品数据收集
-2. 多维度分析
-3. 导出报表
-`}
-                 </pre>
-               </div>
-             ) : (
-               <pre style={{ margin: 0 }}>
-{`import os
-import sys
-
-def main():
-    print("Running competitor research script...")
-    # TODO: Implement collection logic
-    
-if __name__ == "__main__":
-    main()`}
-               </pre>
-             )}
-          </div>
+        <div className="afw-preview-body">
+           <div style={{ padding: 24, fontSize: 14, color: '#666' }}>Workspace area for editing Skill Markdown and Python scripts...</div>
         </div>
       </div>
     </div>
   )
 
-  // MAIN LAYOUT RETURN
   if (view === 'wizard') return renderWizard()
   if (view === 'workspace') return renderWorkspace()
   
