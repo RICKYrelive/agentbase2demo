@@ -451,7 +451,7 @@ export default function AFWorkshop() {
         <div className="afw-stepper">
           {[
             { step: 1, label: '创排蓝图内容', path: 'Define & Setup' },
-            { step: 2, label: '沙盒环境测试', path: 'Sandbox Session' },
+            { step: 2, label: '启动Session测试', path: 'Test Session' },
             { step: 3, label: '部署验证集成', path: 'Integrate API' }
           ].map(s => (
             <React.Fragment key={s.step}>
@@ -467,7 +467,7 @@ export default function AFWorkshop() {
         <div className="afw-wv2-actions">
            {wizardStep < 3 && (
              <button className="action-btn primary" onClick={() => setWizardStep(wizardStep + 1)}>
-               {wizardStep === 2 ? '结束沙盒' : '保存并进入沙盒'}
+               {wizardStep === 2 ? '结束Session' : '保存并启动Session'}
              </button>
            )}
            {wizardStep === 3 && (
@@ -555,9 +555,22 @@ export default function AFWorkshop() {
                 </div>
                 
                 <div className="af-field">
-                  <label className="af-field-label">挂载能力池 (MCP Tools)</label>
-                  <div className="af-field-hint">为 Agent 授权本地或外部服务。通过左侧 Meta-Agent 也可以快速添加。</div>
+                  <label className="af-field-label">挂载技能集 (Skills)</label>
+                  <div className="af-field-hint">选择专注的业务操作技能或编排。</div>
                   <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                     <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                       <IconPlus size={14}/> Add Skill
+                     </button>
+                  </div>
+                </div>
+                
+                <div className="af-field">
+                  <label className="af-field-label">挂载能力池 (MCPs and tools)</label>
+                  <div className="af-field-hint">为 Agent 授权本地或外部服务。带有一个默认的内置工具包，通过左侧 Meta-Agent 也可以快速添加外部 MCP 工具。</div>
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                     <div style={{ padding: '6px 12px', border: '1px solid #c7d2fe', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: '#e0e7ff', color: '#4338ca', fontWeight: 600 }}>
+                       <IconDatabase size={14} /> build-in-tools
+                     </div>
                      {agentConfig.tools.map(t => (
                        <div key={t} style={{ padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: '#f8fafc' }}>
                          <IconCheck size={14} color="#10b981" /> {t}
