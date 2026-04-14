@@ -69,9 +69,23 @@
 }
 .sidebar-nav-icon {
   width: 20px;
-  text-align: center;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   flex-shrink: 0;
+}
+.sidebar-nav-icon svg {
+  width: 100%;
+  height: 100%;
+  transition: stroke 0.2s;
+}
+.sidebar-nav-item.active .sidebar-nav-icon {
+  color: var(--sidebar-active-color);
+}
+.sidebar-nav-item.active-parent .sidebar-nav-icon {
+  color: var(--color-blue);
 }
 .sidebar-nav-label {
   overflow: hidden;
@@ -125,7 +139,6 @@
 /* Submenu trigger */
 .sidebar-submenu-trigger {
   padding: 0 12px 0 12px !important;
-  margin: 0 8px;
 }
 .sidebar-submenu-arrow {
   margin-left: auto;
@@ -210,6 +223,17 @@
   z-index: 1000;
   padding: 16px 0 8px;
   animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Hover bridge to prevent closing */
+.sidebar-profile-popover::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent;
 }
 
 @keyframes popIn {
