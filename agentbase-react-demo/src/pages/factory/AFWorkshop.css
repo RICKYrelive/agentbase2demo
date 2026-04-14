@@ -248,3 +248,32 @@
 .afw-workspace-split { display: flex; height: calc(100vh - 64px); }
 .afw-ws-left { flex: 1; border-right: 1px solid var(--card-border); background: #fff; display: flex; flex-direction: column; }
 .afw-ws-right { flex: 1; display: flex; flex-direction: column; background: #fafafa; }
+
+/* Workspace Action Buttons */
+.afw-text-btn {
+  background: transparent;
+  border: 1px solid var(--notion-border);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  color: var(--notion-gray-600);
+}
+.afw-text-btn:hover {
+  background: var(--notion-bg-alt);
+  color: var(--notion-text);
+}
+.afw-text-btn.primary {
+  color: var(--notion-blue);
+}
+.afw-text-btn.primary:hover {
+  background: var(--notion-blue-bg);
+}
+.afw-text-btn.danger {
+  color: var(--notion-warning);
+}
+.afw-text-btn.danger:hover {
+  background: #fee2e2;
+}

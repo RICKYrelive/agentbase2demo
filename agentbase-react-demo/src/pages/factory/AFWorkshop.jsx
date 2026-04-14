@@ -108,8 +108,11 @@ const MOCK_TASKS = [
     createdAt: '2026-04-12 10:15:00',
     expiryAt: '2026-04-13 10:15:00',
     status: 'generating',
-    type: 'Agent Blueprint',
-    icon: <IconSearch />
+    type: 'Agent蓝图',
+    icon: <IconSearch />,
+    envTemplate: 'developer',
+    tools: ['bash', 'github'],
+    yaml: "name: 代码审查 Agent\ndescription: 用于自动化审查 PR 并在 GitHub 留言报告\nsystem_prompt: |\n  You are an experienced code reviewer...\ntools:\n  - bash\n  - github"
   }
 ]
 
@@ -122,7 +125,7 @@ export default function AFWorkshop() {
   
   // Template Preview Modal
   const [previewTemplate, setPreviewTemplate] = useState(null)
-  const [previewActiveTab, setPreviewActiveTab] = useState('yaml') // 'yaml' | 'structured'
+  const [previewMode, setPreviewMode] = useState('template') // 'template' | 'task'
   const [editedYaml, setEditedYaml] = useState('')
 
   // Wizard state
@@ -151,13 +154,24 @@ export default function AFWorkshop() {
 
   const handleTaskClick = (task) => {
     setSelectedTask(task)
-    setView('workspace')
+    if (task.type === 'Agent蓝图') {
+      setView('wizard')
+      setWizardStep(1)
+    } else {
+      setView('workspace')
+    }
+  }
+
+  const openBlueprintDetail = (task) => {
+    setPreviewMode('task')
+    setPreviewTemplate(task)
+    setEditedYaml(task.yaml || '')
   }
 
   const openTemplatePreview = (tpl) => {
+    setPreviewMode('template')
     setPreviewTemplate(tpl)
     setEditedYaml(tpl.yaml || '')
-    setPreviewActiveTab('yaml')
   }
 
   const startWizardFromTemplate = () => {
@@ -336,40 +350,44 @@ export default function AFWorkshop() {
         </div>
       </div>
 
-      {activeTab === 'Skill' && (
-        <>
-          <h2 className="afw-section-title notion-card-title" style={{ marginTop: 48 }}>我的任务 (Workspace Tasks)</h2>
-          <div className="afw-tasks-section" style={{ border: 'var(--notion-border)', borderRadius: 12 }}>
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th width="180">名称</th>
-                  <th>描述</th>
-                  <th width="160">创建时间</th>
-                  <th width="180" style={{ textAlign: 'right' }}>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {MOCK_TASKS.filter(t => t.type === 'Skill').map(task => (
-                  <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => handleTaskClick(task)}>
-                    <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span style={{ color: 'var(--notion-blue)' }}>{task.icon}</span>
-                        <span style={{ fontWeight: 600 }}>{task.name}</span>
-                      </div>
-                    </td>
-                    <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{task.desc}</td>
-                    <td>{task.createdAt}</td>
-                    <td style={{ textAlign: 'right' }} onClick={e => e.stopPropagation()}>
-                      <button className="af-list-btn" onClick={() => handleTaskClick(task)}>进入工作区</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
+      <h2 className="afw-section-title notion-card-title" style={{ marginTop: 48 }}>我的任务 (Workspace Tasks)</h2>
+      <div className="afw-tasks-section" style={{ background: 'rgba(255, 255, 255, 0.85)', border: '1px solid rgba(255, 255, 255, 0.9)', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)', borderRadius: 12, overflow: 'hidden' }}>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th width="180">名称</th>
+              <th>描述</th>
+              <th width="160">创建时间</th>
+              <th width="220" style={{ textAlign: 'right' }}>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {MOCK_TASKS.filter(t => t.type === activeTab).map(task => (
+              <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => task.type === 'Agent蓝图' ? openBlueprintDetail(task) : handleTaskClick(task)}>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ color: 'var(--notion-blue)' }}>{task.icon}</span>
+                    <span style={{ fontWeight: 600 }}>{task.name}</span>
+                  </div>
+                </td>
+                <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{task.desc}</td>
+                <td>{task.createdAt}</td>
+                <td style={{ textAlign: 'right' }} onClick={e => e.stopPropagation()}>
+                  {task.type === 'Agent蓝图' ? (
+                     <div style={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+                       <button className="afw-text-btn primary" onClick={() => handleTaskClick(task)}>恢复</button>
+                       <button className="afw-text-btn" onClick={() => {}}>续期</button>
+                       <button className="afw-text-btn danger" onClick={() => {}}>删除</button>
+                     </div>
+                  ) : (
+                     <button className="afw-text-btn primary" onClick={() => handleTaskClick(task)}>进入工作区</button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       </div>
 
       {/* Template Preview Modal */}
@@ -407,32 +425,27 @@ export default function AFWorkshop() {
               </div>
               
               <div className="afw-tpl-editor-pane">
-                <div className="afw-tab-switch">
-                  <button className={"afw-ts-btn " + (previewActiveTab === 'yaml' ? 'active' : '')} onClick={() => setPreviewActiveTab('yaml')}>YAML 源码</button>
-                  <button className={"afw-ts-btn " + (previewActiveTab === 'structured' ? 'active' : '')} onClick={() => setPreviewActiveTab('structured')}>结构化解析</button>
-                </div>
-                
-                {previewActiveTab === 'yaml' ? (
-                  <textarea 
-                    className="afw-yaml-editor"
-                    value={editedYaml}
-                    onChange={e => setEditedYaml(e.target.value)}
-                    spellCheck={false}
-                  />
-                ) : (
-                  <div className="afw-structured-preview">
-                    <div className="afw-sp-field">
-                      <div className="afw-sp-label">System Prompt</div>
-                      <div className="afw-sp-val" style={{ whiteSpace: 'pre-wrap' }}>{(editedYaml.match(/system_prompt:\s*\|([\s\S]*?)(?=\ntools:|$)/) || [])[1]?.trim()}</div>
-                    </div>
-                  </div>
-                )}
+                <textarea 
+                  className="afw-yaml-editor"
+                  value={editedYaml}
+                  onChange={e => setEditedYaml(e.target.value)}
+                  spellCheck={false}
+                />
               </div>
             </div>
             
             <div className="afw-tpl-modal-footer">
-              <button className="action-btn" onClick={() => { setPreviewTemplate(null); startWizardEmpty(); }}>不使用模版 (Start blank)</button>
-              <button className="action-btn primary" onClick={startWizardFromTemplate}>使用模版创建配置</button>
+              {previewMode === 'task' ? (
+                <>
+                  <button className="action-btn" onClick={() => setPreviewTemplate(null)}>取消</button>
+                  <button className="action-btn primary" onClick={() => setPreviewTemplate(null)}>存为模板</button>
+                </>
+              ) : (
+                <>
+                  <button className="action-btn" onClick={() => { setPreviewTemplate(null); startWizardEmpty(); }}>不使用模版 (Start blank)</button>
+                  <button className="action-btn primary" onClick={startWizardFromTemplate}>使用模版创建配置</button>
+                </>
+              )}
             </div>
           </div>
         </div>
