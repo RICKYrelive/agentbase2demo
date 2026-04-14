@@ -213,7 +213,7 @@ export default function AFSession() {
                     </select>
                   </div>
                   <div className="af-field">
-                    <label className="af-field-label">注入凭证保险箱 (Passport)</label>
+                    <label className="af-field-label">注入凭证保险箱 (Vaults)</label>
                     <select className="af-input-select">
                       <option>不使用</option>
                       <option>vlt_aB3cD9eF (GitHub Production)</option>

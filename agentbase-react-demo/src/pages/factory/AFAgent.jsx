@@ -4,7 +4,7 @@ import './AF.css'
 
 const guideCards = [
   { title: '定义 Agent 蓝图', desc: '配置模型、系统提示词、工具集和技能，创建可复用的 Agent 定义。每次修改版本号自动递增。' },
-  { title: '启动 Session 运行', desc: '选择已创建的 Agent，组合 Environment、Passport、Filesystem 后启动运行实例。' },
+  { title: '启动 Session 运行', desc: '选择已创建的 Agent，组合 Environment、Vaults、Filesystem 后启动运行实例。' },
 ]
 
 const STATUS_COLORS = {

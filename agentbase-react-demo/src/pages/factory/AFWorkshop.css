@@ -97,9 +97,28 @@
   padding: 8px 16px 12px;
 }
 
+.afw-upload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--notion-gray-500);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.afw-upload-btn:hover {
+  background: var(--notion-bg-alt);
+  color: var(--notion-text);
+}
+
 .afw-action-left {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Templates Section */
@@ -149,7 +168,7 @@
 }
 
 .afw-template-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
 }
 

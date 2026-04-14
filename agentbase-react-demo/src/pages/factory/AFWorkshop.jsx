@@ -2,6 +2,20 @@ import { useState } from 'react'
 import PageLayout from '../../components/PageLayout'
 import './AFWorkshop.css'
 
+// SVGs for cleaner UI
+const IconPaperclip = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+  </svg>
+)
+
+const IconSend = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+)
+
 const MOCK_TEMPLATES = {
   'Agent Blueprint': [
     { id: 'at1', name: '数据分析专家', icon: '📈', desc: '擅长处理结构化数据并生成图表' },
@@ -101,16 +115,20 @@ export default function AFWorkshop() {
           </div>
           <div className="afw-input-actions">
             <div className="afw-action-left">
-              <button className="afw-upload-btn" title="上传附件">📎</button>
-              <button className="af-list-btn notion-body-medium" style={{ marginLeft: 8, color: 'var(--notion-blue)' }}>💡 获取灵感</button>
+              <button className="afw-upload-btn" title="上传附件">
+                <IconPaperclip />
+              </button>
+              <button className="af-list-btn notion-body-medium" style={{ marginLeft: 8, color: 'var(--notion-blue)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ fontSize: 16 }}>💡</span> 获取灵感
+              </button>
             </div>
             <button 
               className="afw-send-btn action-btn primary" 
               disabled={!prompt.trim()} 
               onClick={startWizard}
-              style={{ width: 44, height: 44, borderRadius: '50%', padding: 0 }}
+              style={{ width: 44, height: 44, borderRadius: '50%', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              ↑
+              <IconSend />
             </button>
           </div>
         </div>

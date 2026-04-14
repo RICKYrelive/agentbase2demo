@@ -39,7 +39,7 @@ import SkillDetail from './pages/SkillDetail'
 import AFWorkshop from './pages/factory/AFWorkshop'
 import AFAgent from './pages/factory/AFAgent'
 import AFSession from './pages/factory/AFSession'
-import AFPassport from './pages/factory/AFPassport'
+import AFVaults from './pages/factory/AFVaults'
 
 // Agent Console (Managed Agent)
 import { ManagedAgentProvider } from './store/managedAgentStore.jsx'
@@ -154,7 +154,7 @@ function AppLayout() {
           <Route path="/af-workshop" element={<AFWorkshop />} />
           <Route path="/af-agent" element={<AFAgent />} />
           <Route path="/af-session" element={<AFSession />} />
-          <Route path="/af-passport" element={<AFPassport />} />
+          <Route path="/af-passport" element={<AFVaults />} />
           {Object.entries(systemPages).map(([key, cfg]) => (
             <Route key={key} path={`/${key}`} element={
               <SystemManagePage onAlert={handleAlert} pageTitle={cfg.title} columns={cfg.columns} />
