@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import PageLayout from '../../components/PageLayout'
 import './AFWorkshop.css'
+import ShapeGrid from '../../components/effects/ShapeGrid'
 
-// SVGs for cleaner UI
+// Professional SVG Icons (Lucide-style)
 const IconPaperclip = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
@@ -16,16 +17,71 @@ const IconSend = () => (
   </svg>
 )
 
+const IconDatabase = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+  </svg>
+)
+
+const IconTerminal = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="4 17 10 11 4 5"></polyline>
+    <line x1="12" y1="19" x2="20" y2="19"></line>
+  </svg>
+)
+
+const IconEdit = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+  </svg>
+)
+
+const IconSearch = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+)
+
+const IconFileText = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="16" y1="13" x2="8" y2="13"></line>
+    <line x1="16" y1="17" x2="8" y2="17"></line>
+    <polyline points="10 9 9 9 8 9"></polyline>
+  </svg>
+)
+
+const IconImage = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+    <polyline points="21 15 16 10 5 21"></polyline>
+  </svg>
+)
+
+const IconBarChart = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="20" x2="12" y2="10"></line>
+    <line x1="18" y1="20" x2="18" y2="4"></line>
+    <line x1="6" y1="20" x2="6" y2="16"></line>
+  </svg>
+)
+
 const MOCK_TEMPLATES = {
   'Agent Blueprint': [
-    { id: 'at1', name: '数据分析专家', icon: '📈', desc: '擅长处理结构化数据并生成图表' },
-    { id: 'at2', name: '全栈开发助手', icon: '💻', desc: '协助编写前端与后端业务代码' },
-    { id: 'at3', name: '文案策划专家', icon: '✍️', desc: '高效生成市场文案与创意内容' },
+    { id: 'at1', name: '数据分析专家', icon: <IconBarChart />, desc: '擅长处理结构化数据并生成图表' },
+    { id: 'at2', name: '全栈开发助手', icon: <IconTerminal />, desc: '协助编写前端与后端业务代码' },
+    { id: 'at3', name: '文案策划专家', icon: <IconEdit />, desc: '高效生成市场文案与创意内容' },
   ],
   Skill: [
-    { id: 'st1', name: '网页抓取器', icon: '🕷️', desc: '解析网页 HTML 并提取关键信息' },
-    { id: 'st2', name: 'PDF 转换工具', icon: '📄', desc: '将各种文档格式转换为 PDF' },
-    { id: 'st3', name: '图片处理脚本', icon: '🖼️', desc: '自动调整图片大小与水印' },
+    { id: 'st1', name: '网页抓取器', icon: <IconSearch />, desc: '解析网页 HTML 并提取关键信息' },
+    { id: 'st2', name: 'PDF 转换工具', icon: <IconFileText />, desc: '将各种文档格式转换为 PDF' },
+    { id: 'st3', name: '图片处理脚本', icon: <IconImage />, desc: '自动调整图片大小与水印' },
   ]
 }
 
@@ -38,7 +94,7 @@ const MOCK_TASKS = [
     expiryAt: '2026-04-13 22:02:35',
     status: 'completed',
     type: 'Skill',
-    icon: '📊'
+    icon: <IconBarChart />
   },
   {
     id: 't_002',
@@ -48,7 +104,7 @@ const MOCK_TASKS = [
     expiryAt: '2026-04-13 10:15:00',
     status: 'generating',
     type: 'Agent Blueprint',
-    icon: '🔍'
+    icon: <IconSearch />
   }
 ]
 
@@ -81,11 +137,24 @@ export default function AFWorkshop() {
   // --- RENDERING HELPERS ---
 
   const renderHome = () => (
-    <div className="af-workshop afw-home">
+    <div className="af-workshop-container">
+      {/* Dynamic Background Effect */}
+      <div className="afw-bg-wrap">
+        <ShapeGrid 
+          speed={0.24}
+          squareSize={38}
+          direction="up"
+          borderColor="#c5c6c8"
+          hoverFillColor="#000000"
+          hoverTrailAmount={5}
+        />
+      </div>
+
+      <div className="af-workshop afw-home">
       {/* Centered Hero Section */}
       <div className="afw-hero">
         <h1 className="afw-hero-title notion-h1" style={{ justifyContent: 'center', marginBottom: '24px' }}>
-          <span style={{ fontSize: 44 }}>⌨️</span> Agent 工坊
+          Agent 工坊
         </h1>
         <p className="afw-hero-subtitle notion-body-large" style={{ color: 'var(--notion-gray-500)', fontSize: 20, marginBottom: '48px' }}>
           高效构建 AI Agent 与 Skill，让能力从设想变为现实
@@ -117,9 +186,6 @@ export default function AFWorkshop() {
             <div className="afw-action-left">
               <button className="afw-upload-btn" title="上传附件">
                 <IconPaperclip />
-              </button>
-              <button className="af-list-btn notion-body-medium" style={{ marginLeft: 8, color: 'var(--notion-blue)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ fontSize: 16 }}>💡</span> 获取灵感
               </button>
             </div>
             <button 
@@ -168,7 +234,7 @@ export default function AFWorkshop() {
               <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => handleTaskClick(task)}>
                 <td>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span>{task.icon}</span>
+                    <span style={{ color: 'var(--notion-blue)' }}>{task.icon}</span>
                     <span style={{ fontWeight: 600 }}>{task.name}</span>
                   </div>
                 </td>
@@ -186,7 +252,8 @@ export default function AFWorkshop() {
         </table>
       </div>
     </div>
-  )
+  </div>
+)
 
   const renderWizard = () => (
     <div className="afw-wizard">
@@ -252,7 +319,11 @@ export default function AFWorkshop() {
           )}
           {wizardStep === 4 && (
             <div style={{ textAlign: 'center', paddingTop: 60 }}>
-              <div style={{ fontSize: 48, marginBottom: 20 }}>🤖</div>
+              <div style={{ marginBottom: 20, color: 'var(--notion-blue)' }}>
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path>
+                </svg>
+              </div>
               <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>一切就绪！</h1>
               <p style={{ color: 'var(--text-secondary)', marginBottom: 40 }}>AI 正在根据你的指令生成初始模块、文档和脚本...</p>
               <div style={{ width: '100%', height: 4, background: '#f0f0f0', borderRadius: 2, position: 'relative', overflow: 'hidden' }}>
@@ -324,11 +395,11 @@ export default function AFWorkshop() {
             />
             <div className="afw-test-actions">
               <button className="afw-eval-btn" title="调用系统评估功能">
-                ⚖️ 提测评估
+                <IconBarChart /> 提测评估
               </button>
               <div style={{ display: 'flex', gap: 8 }}>
-                 <button className="afw-upload-btn">📎</button>
-                 <button className="afw-send-btn">↑</button>
+                 <button className="afw-upload-btn"><IconPaperclip /></button>
+                 <button className="afw-send-btn"><IconSend /></button>
               </div>
             </div>
           </div>
@@ -341,19 +412,24 @@ export default function AFWorkshop() {
            <span style={{ fontSize: 12, fontWeight: 600 }}>预览区域：{activeFile}</span>
            <button className="action-btn primary" style={{ height: 28, fontSize: 11, padding: '0 12px', marginLeft: 'auto' }}>发布资产</button>
         </div>
-        <div className="afw-preview-body">
-          <div className="afw-explorer">
-            <div className="afw-exp-item afw-exp-folder">📁 skills1/research</div>
-            {['SKILL.md', 'competitor_analysis.py', 'data_guide.md', 'template.csv'].map(f => (
-              <div 
-                key={f} 
-                className={`afw-exp-item ${activeFile === f ? 'active' : ''}`}
-                onClick={() => setActiveFile(f)}
-              >
-                {f.endsWith('.py') ? '🐍' : '📄'} {f}
+          <div className="afw-preview-body">
+            <div className="afw-explorer">
+              <div className="afw-exp-item afw-exp-folder">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
+                  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path>
+                </svg>
+                skills1/research
               </div>
-            ))}
-          </div>
+              {['SKILL.md', 'competitor_analysis.py', 'data_guide.md', 'template.csv'].map(f => (
+                <div 
+                  key={f} 
+                  className={`afw-exp-item ${activeFile === f ? 'active' : ''}`}
+                  onClick={() => setActiveFile(f)}
+                >
+                  {f.endsWith('.py') ? <IconTerminal /> : <IconFileText />} {f}
+                </div>
+              ))}
+            </div>
           <div className="afw-code-content">
              {activeFile === 'SKILL.md' ? (
                <div className="markdown-body">
@@ -396,7 +472,7 @@ if __name__ == "__main__":
   if (view === 'workspace') return renderWorkspace()
   
   return (
-    <PageLayout title="Agent 工坊">
+    <PageLayout title="">
       {renderHome()}
     </PageLayout>
   )

@@ -3,13 +3,15 @@ import './PageLayout.css'
 export default function PageLayout({ title, rightAction, children }) {
   return (
     <div className="page-layout">
-      <div className="page-header">
-        <div className="page-header-left">
-          <div className="page-title-bar"></div>
-          <h1 className="page-title notion-h3">{title}</h1>
+      {(title || rightAction) && (
+        <div className="page-header">
+          <div className="page-header-left">
+            <div className="page-title-bar"></div>
+            <h1 className="page-title notion-h3">{title}</h1>
+          </div>
+          {rightAction && <div className="page-header-right">{rightAction}</div>}
         </div>
-        {rightAction && <div className="page-header-right">{rightAction}</div>}
-      </div>
+      )}
       <div className="page-body">
         {children}
       </div>
