@@ -10,71 +10,17 @@ const seedComments = [
   {
     id: 'cmt-001',
     page: '/overview',
-    text: '首页概览卡片的数据需要更直观，建议加上同比环比指标',
-    author: '张经理',
+    text: '[演示样例] 首页概览卡片的数据建议增加对比指标（如环比/同比），以便于用户更直观地感知性能趋势。',
+    author: 'Ricky',
     type: 'comment',
     status: 'open',
     pinnedPosition: { x: 35, y: 22 },
     linkedSelector: 'div.section-card',
     linkedLabel: '应用状态概览卡片',
-    createdAt: '2026-04-08 14:30',
+    createdAt: '2026-04-14 10:30',
     replies: [
-      { author: '李开发', text: '好的，下个迭代加上', createdAt: '2026-04-08 15:10' }
+      { author: 'AgentBase', text: '非常有用的建议，我们会在后续版本中进行排期。', createdAt: '2026-04-14 11:10' }
     ]
-  },
-  {
-    id: 'cmt-002',
-    page: '/super-agent',
-    text: '超级代理列表页缺少批量操作功能，需要加上全选和批量删除',
-    author: '王总监',
-    type: 'feature',
-    status: 'open',
-    pinnedPosition: null,
-    linkedSelector: null,
-    linkedLabel: null,
-    createdAt: '2026-04-08 16:00',
-    replies: []
-  },
-  {
-    id: 'cmt-003',
-    page: '/overview',
-    text: 'Token 消耗图表的 Y 轴刻度不太合理，建议自适应',
-    author: '张经理',
-    type: 'bug',
-    status: 'resolved',
-    pinnedPosition: null,
-    linkedSelector: 'div.token-section',
-    linkedLabel: 'Token 消耗统计区域',
-    createdAt: '2026-04-07 10:20',
-    replies: [
-      { author: '陈前端', text: '已修复，Y轴已改为自适应', createdAt: '2026-04-07 11:30' }
-    ]
-  },
-  {
-    id: 'cmt-004',
-    page: '/overview',
-    text: 'K8s 集群卡片需要增加节点详情展开功能',
-    author: '赵PM',
-    type: 'comment',
-    status: 'open',
-    pinnedPosition: null,
-    linkedSelector: 'div.k8s-section',
-    linkedLabel: 'K8s 集群状态区域',
-    createdAt: '2026-04-09 09:15',
-    replies: []
-  },
-  {
-    id: 'cmt-005',
-    page: '/managed-agent',
-    text: '托管代理创建流程步骤太多，建议简化为3步以内',
-    author: '王总监',
-    type: 'note',
-    status: 'open',
-    pinnedPosition: null,
-    linkedSelector: null,
-    linkedLabel: null,
-    createdAt: '2026-04-09 10:00',
-    replies: []
   }
 ];
 

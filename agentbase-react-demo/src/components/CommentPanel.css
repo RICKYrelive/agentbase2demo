@@ -44,8 +44,8 @@
 
 .cp-header-left {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .cp-title {
@@ -55,12 +55,24 @@
   color: #1a1a1a;
 }
 
+.cp-header-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .cp-count {
   font-size: 12px;
   color: #999;
-  background: #f5f5f5;
-  padding: 2px 8px;
-  border-radius: 10px;
+}
+
+.cp-hint {
+  font-size: 11px;
+  color: #0075de;
+  background: #f2f9ff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .cp-close {

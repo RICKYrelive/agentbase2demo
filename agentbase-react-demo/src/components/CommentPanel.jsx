@@ -116,7 +116,10 @@ export default function CommentPanel({ open, onClose, currentPage, navigate }) {
         <div className="cp-header">
           <div className="cp-header-left">
             <h3 className="cp-title">评论 & 备注</h3>
-            <span className="cp-count">{displayComments.length} 条</span>
+            <div className="cp-header-subtitle">
+              <span className="cp-count">{displayComments.length} 条评论</span>
+              <span className="cp-hint">提示：鼠标中键点击页面任一位置可创建评论</span>
+            </div>
           </div>
           <button className="cp-close" onClick={onClose}>✕</button>
         </div>

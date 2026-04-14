@@ -13,41 +13,54 @@
 }
 
 .modal-card {
-  background: #fff;
+  background: var(--notion-bg);
   border-radius: 12px;
   padding: 32px 40px;
-  min-width: 320px;
+  min-width: 360px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  animation: scaleIn 0.25s ease-out;
+  border: var(--notion-border);
+  box-shadow: var(--notion-shadow-deep);
+  animation: scaleIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.modal-icon {
-  font-size: 40px;
-  margin-bottom: 16px;
+.modal-icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .modal-message {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+  color: var(--notion-text);
+  padding: 0 20px;
 }
 
-.modal-btn {
-  width: 120px;
-  height: 36px;
+.alert-modal-btn {
+  width: 140px;
+  height: 40px;
   border: none;
   border-radius: 6px;
-  background: var(--color-blue);
-  color: #fff;
+  background: #0075de !important; /* Force solid blue background */
+  color: #ffffff !important;      /* Force solid white text */
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;                 /* Critical: Centers the flex element */
 }
-.modal-btn:hover {
-  background: #3570e0;
+
+.alert-modal-btn:hover {
+  background: #005bab !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);
+}
+
+.alert-modal-btn:active {
+  transform: translateY(0);
 }
 
 @keyframes fadeIn {
