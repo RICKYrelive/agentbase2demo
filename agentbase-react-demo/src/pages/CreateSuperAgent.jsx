@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSuperAgents, VERSIONS, IM_TYPES } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
 import SkillSelectionModal from '../components/SkillSelectionModal'
+import { IconArrowLeft, IconChevronRight } from '../components/Icons'
 import './CreateSuperAgent.css'
 
 export default function CreateSuperAgent() {
@@ -99,10 +100,10 @@ export default function CreateSuperAgent() {
   return (
     <div className="create-app-page">
       <div className="create-app-header">
-        <button className="back-btn" onClick={goBack}>⬅</button>
+        <button className="back-btn" onClick={goBack} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconArrowLeft size={16} /></button>
         <div className="breadcrumb">
           <span className="bc-item" onClick={goBack}>Super Agent</span>
-          <span className="bc-separator"> &gt; </span>
+          <span className="bc-separator"> <IconChevronRight size={12} /> </span>
           <span className="bc-current">创建 Super Agent</span>
         </div>
       </div>

@@ -1,36 +1,12 @@
 import { useState } from 'react'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { 
+  IconInfo, IconSearch, IconVault, IconCopy, 
+  IconChevronRight, IconChevronDown, IconX, IconPlus
+} from '../../components/Icons'
 import './AF.css'
 
-// SVG Icons
-const IconInfo = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <circle cx="12" cy="12" r="10"></circle>
-    <line x1="12" y1="16" x2="12" y2="12"></line>
-    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-  </svg>
-)
-
-const IconSearch = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-)
-
-const IconVault = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-  </svg>
-)
-
-const IconCopy = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-  </svg>
-)
+// SVG Icons removed and replaced by central Icons library
 
 const MOCK_VAULTS = [
   { id: 'vlt_aB3cD9eF', name: 'GitHub Production', status: 'active', credCount: 2, createdAt: '2026-04-01 10:00', creds: [
@@ -90,7 +66,7 @@ export default function AFVaults() {
   return (
     <PageLayout
       title="Vaults"
-      rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ New Vault</button>}
+      rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> New Vault</button>}
     >
       <div className="info-alert">
         <span className="info-alert-icon"><IconInfo /></span>
@@ -129,7 +105,7 @@ export default function AFVaults() {
                 <div className="afp-vault-right">
                   <span className="status-badge" style={{ background: 'var(--notion-blue-bg)', color: 'var(--notion-blue-text)', borderRadius: '9999px', padding: '2px 10px', fontWeight: 600 }}>{sc.label}</span>
                   <span className="afp-cred-count">{v.credCount} 个凭证</span>
-                  <span className={`afp-arrow ${isOpen ? 'open' : ''}`}>›</span>
+                  {isOpen ? <IconChevronDown size={16} /> : <IconChevronRight size={16} />}
                 </div>
               </div>
               {isOpen && (
@@ -145,7 +121,7 @@ export default function AFVaults() {
                     </div>
                   ))}
                   <div className="afp-cred-actions">
-                    <button className="action-btn" onClick={() => setShowDrawer(true)}>+ 添加凭证</button>
+                    <button className="action-btn" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={14} /> 添加凭证</button>
                   </div>
                 </div>
               )}
@@ -162,7 +138,9 @@ export default function AFVaults() {
               <div className="af-drawer-title-wrap">
                 <div className="af-drawer-title notion-h3">添加凭证</div>
               </div>
-              <button className="af-drawer-close" onClick={() => { setShowDrawer(false); resetForm(); }}>×</button>
+              <button className="af-drawer-close" onClick={() => { setShowDrawer(false); resetForm(); }}>
+                <IconX size={20} />
+              </button>
             </div>
             
             <div style={{ padding: '0 40px', color: '#64748b', fontSize: '14px', marginBottom: '10px' }}>
@@ -184,7 +162,7 @@ export default function AFVaults() {
 
               {/* Type Toggle */}
               <div className="af-field">
-                <label className="af-field-label">类型 <span style={{ color: '#94a3b8', marginLeft: 4 }}>ⓘ</span></label>
+                <label className="af-field-label">类型 <IconInfo size={12} style={{ color: '#94a3b8', marginLeft: 4, display: 'inline' }} /></label>
                 <div className="af-type-toggle">
                   <button 
                     className={`af-type-btn ${credType === 'oauth' ? 'active' : ''}`}
@@ -218,10 +196,10 @@ export default function AFVaults() {
                   {/* Collapsible: Access Token */}
                   <div className="af-collapsible">
                     <button className="af-collapsible-head" onClick={() => setOpenAccessToken(!openAccessToken)}>
-                      <span className={`af-collapsible-arrow ${openAccessToken ? 'open' : ''}`}>›</span>
+                      {openAccessToken ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
                       <span className="af-collapsible-label">Access token</span>
                       <span className="af-optional-badge">可选</span>
-                      <span style={{ color: '#94a3b8', marginLeft: 8 }}>ⓘ</span>
+                      <IconInfo size={12} style={{ color: '#94a3b8', marginLeft: 8, display: 'inline' }} />
                     </button>
                     {openAccessToken && (
                       <div className="af-collapsible-body">
@@ -233,10 +211,10 @@ export default function AFVaults() {
                   {/* Collapsible: Client Credentials */}
                   <div className="af-collapsible">
                     <button className="af-collapsible-head" onClick={() => setOpenClientCreds(!openClientCreds)}>
-                      <span className={`af-collapsible-arrow ${openClientCreds ? 'open' : ''}`}>›</span>
+                      {openClientCreds ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
                       <span className="af-collapsible-label">OAuth 客户端凭证</span>
                       <span className="af-optional-badge">可选</span>
-                      <span style={{ color: '#94a3b8', marginLeft: 8 }}>ⓘ</span>
+                      <IconInfo size={12} style={{ color: '#94a3b8', marginLeft: 8, display: 'inline' }} />
                     </button>
                     {openClientCreds && (
                       <div className="af-collapsible-body">

@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { 
+  IconInfo, IconSearch, IconRefresh, 
+  IconNotebook, IconClipboard, IconEdit 
+} from '../../components/Icons'
 import './AF.css'
 
 const MOCK_DIARIES = [
@@ -33,17 +37,21 @@ export default function AFDiary() {
   return (
     <PageLayout title="Diary">
       <div className="info-alert">
-        <span className="info-alert-icon">ℹ️</span>
-        Diary 记录每个 Session 实例在执行过程中积累的<strong>本地记忆</strong>，生命周期与 Session 绑定。
-        区别于全局「记忆体」模块（跨会话持久化），Diary 仅在单次 Session 内有效，用于追踪 Agent 的观察与学习。
+        <IconInfo size={18} style={{ color: 'var(--notion-blue)', flexShrink: 0 }} />
+        <span style={{ marginLeft: 8 }}>
+          Diary 记录每个 Session 实例在执行过程中积累的<strong>本地记忆</strong>，生命周期与 Session 绑定。
+          区别于全局「记忆体」模块（跨会话持久化），Diary 仅在单次 Session 内有效，用于追踪 Agent 的观察与学习。
+        </span>
       </div>
 
       <DataToolbar buttons={null} filters={null}>
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索路径、内容或标签" value={entrySearch} onChange={e => setEntrySearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm">
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       <div className="afd-layout">
@@ -75,19 +83,25 @@ export default function AFDiary() {
                     <span>来自 Session 实例，非全局记忆体</span>
                   </div>
                 </div>
-                <span className="status-badge" style={{ background: 'var(--notion-bg-alt)', color: 'var(--notion-gray-500)', border: 'var(--notion-border)', borderRadius: '9999px', padding: '2px 10px', fontSize: 11, fontWeight: 600 }}>📓 Local Diary</span>
+                <div className="status-badge" style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--notion-bg-alt)', color: 'var(--notion-gray-500)', border: 'var(--notion-border)', borderRadius: '9999px', padding: '2px 10px', fontSize: 11, fontWeight: 600 }}>
+                  <IconNotebook size={12} />
+                  Local Diary
+                </div>
               </div>
 
               <div className="afd-entries">
                 {filteredEntries.length === 0 ? (
                   <div className="empty-state" style={{ padding: '24px 0' }}>
-                    <div className="empty-icon">📋</div>
+                    <IconClipboard size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
                     <span>无匹配记录</span>
                   </div>
                 ) : filteredEntries.map((e, i) => (
                   <div key={i} className="afd-entry" style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 8, background: 'var(--notion-bg)' }}>
                     <div className="afd-entry-header">
-                      <span className="afd-entry-path notion-body-medium" style={{ color: 'var(--notion-blue)' }}>📝 {e.path}</span>
+                      <span className="afd-entry-path notion-body-medium" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--notion-blue)' }}>
+                        <IconEdit size={14} />
+                        {e.path}
+                      </span>
                       <span className="afd-entry-time notion-caption">{e.time}</span>
                     </div>
                     <div className="afd-entry-content notion-body">{e.content}</div>
@@ -100,7 +114,7 @@ export default function AFDiary() {
             </>
           ) : (
             <div className="empty-state" style={{ padding: '48px 0' }}>
-              <div className="empty-icon">📓</div>
+              <IconNotebook size={48} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
               <span>选择左侧的 Session 日记本查看记录</span>
             </div>
           )}

@@ -1,6 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useManagedAgents, SESSION_STATUS_COLORS, AGENT_STATUS_COLORS } from '../../store/managedAgentStore'
 import PageLayout from '../../components/PageLayout'
+import { 
+  IconBot, IconZap, IconPackage, IconTool, 
+  IconGlobe, IconLock, IconBarChart, IconKey, 
+  IconClipboard, IconSettings, IconDollarSign 
+} from '../../components/Icons'
 import './MAC.css'
 
 // Generate mock activity data for last 7 days
@@ -16,16 +21,16 @@ function generateActivityData() {
 }
 
 const NAV_ITEMS = [
-  { key: 'agents', label: 'Agents', icon: '🤖', path: '/managed-agent/agents' },
-  { key: 'sessions', label: 'Sessions', icon: '⚡', path: '/managed-agent/sessions' },
-  { key: 'environments', label: '环境', icon: '📦', path: '/managed-agent/environments' },
-  { key: 'tools', label: '工具', icon: '🔧', path: '/managed-agent/tools' },
-  { key: 'integrations', label: '集成', icon: '🌐', path: '/managed-agent/integrations' },
-  { key: 'approvals', label: '审批', icon: '🔒', path: '/managed-agent/approvals' },
-  { key: 'analytics', label: '分析', icon: '📊', path: '/managed-agent/analytics' },
-  { key: 'secrets', label: '凭证', icon: '🔑', path: '/managed-agent/secrets' },
-  { key: 'audit', label: '审计', icon: '📋', path: '/managed-agent/audit' },
-  { key: 'settings', label: '设置', icon: '⚙️', path: '/managed-agent/settings/roles' },
+  { key: 'agents', label: 'Agents', icon: <IconBot size={20} />, path: '/managed-agent/agents' },
+  { key: 'sessions', label: 'Sessions', icon: <IconZap size={20} />, path: '/managed-agent/sessions' },
+  { key: 'environments', label: '环境', icon: <IconPackage size={20} />, path: '/managed-agent/environments' },
+  { key: 'tools', label: '工具', icon: <IconTool size={20} />, path: '/managed-agent/tools' },
+  { key: 'integrations', label: '集成', icon: <IconGlobe size={20} />, path: '/managed-agent/integrations' },
+  { key: 'approvals', label: '审批', icon: <IconLock size={20} />, path: '/managed-agent/approvals' },
+  { key: 'analytics', label: '分析', icon: <IconBarChart size={20} />, path: '/managed-agent/analytics' },
+  { key: 'secrets', label: '凭证', icon: <IconKey size={20} />, path: '/managed-agent/secrets' },
+  { key: 'audit', label: '审计', icon: <IconClipboard size={20} />, path: '/managed-agent/audit' },
+  { key: 'settings', label: '设置', icon: <IconSettings size={20} />, path: '/managed-agent/settings/roles' },
 ]
 
 export default function MACOverview() {
@@ -41,10 +46,10 @@ export default function MACOverview() {
   const failedSessions = sessions.filter(s => s.status === 'failed').length
 
   const cards = [
-    { label: '活跃 Agent', value: agents.filter(a => a.status === 'published').length, icon: '🤖', color: '#1890ff', onClick: () => navigate('/managed-agent/agents') },
-    { label: '活跃 Session', value: activeSessions, icon: '⚡', color: '#52c41a', onClick: () => navigate('/managed-agent/sessions') },
-    { label: '待审批', value: pendingApprovals, icon: '🔒', color: pendingApprovals > 0 ? '#fa8c16' : '#d9d9d9', onClick: () => navigate('/managed-agent/approvals') },
-    { label: '今日成本', value: `$${todayCost}`, icon: '💰', color: '#722ed1', onClick: () => navigate('/managed-agent/analytics') },
+    { label: '活跃 Agent', value: agents.filter(a => a.status === 'published').length, icon: <IconBot size={24} />, color: '#1890ff', onClick: () => navigate('/managed-agent/agents') },
+    { label: '活跃 Session', value: activeSessions, icon: <IconZap size={24} />, color: '#52c41a', onClick: () => navigate('/managed-agent/sessions') },
+    { label: '待审批', value: pendingApprovals, icon: <IconLock size={24} />, color: pendingApprovals > 0 ? '#fa8c16' : '#d9d9d9', onClick: () => navigate('/managed-agent/approvals') },
+    { label: '今日成本', value: `$${todayCost}`, icon: <IconDollarSign size={24} />, color: '#722ed1', onClick: () => navigate('/managed-agent/analytics') },
   ]
 
   const recentSessions = sessions.slice(0, 5)

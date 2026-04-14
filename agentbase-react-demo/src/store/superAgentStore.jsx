@@ -101,8 +101,8 @@ const INITIAL_AGENTS = [
         id: 'conv-001', title: '每日简报生成', createdAt: ts(0, 2),
         messages: [
           { role: 'user', content: '请帮我生成今天的新闻简报', time: ts(0, 2) },
-          { role: 'tool', content: '🔧 调用 web-search … 搜索到 15 条相关新闻\n🔧 调用 doc-parser … 解析完成\n🔧 调用 summarizer … 生成摘要', time: ts(0, 2) },
-          { role: 'assistant', content: '# 每日简报 — 2026-04-06\n\n## 🔥 热点要闻\n1. **AI 领域**: Google DeepMind 发布 Gemini 3 Pro，支持原生多模态推理\n2. **科技产业**: 苹果宣布 M5 芯片产线完成\n3. **金融市场**: A 股三大指数集体高开，AI 概念股领涨\n\n## 📊 数据摘要\n- 共抓取 15 条新闻源\n- 覆盖 5 个领域\n- 关键实体 12 个\n\n如需了解某条新闻的详细内容，请告诉我。', time: ts(0, 2) },
+          { role: 'tool', content: '[Tool] 调用 web-search … 搜索到 15 条相关新闻\n[Tool] 调用 doc-parser … 解析完成\n[Tool] 调用 summarizer … 生成摘要', time: ts(0, 2) },
+          { role: 'assistant', content: '# 每日简报 — 2026-04-06\n\n## 热点要闻\n1. **AI 领域**: Google DeepMind 发布 Gemini 3 Pro，支持原生多模态推理\n2. **科技产业**: 苹果宣布 M5 芯片产线完成\n3. **金融市场**: A 股三大指数集体高开，AI 概念股领涨\n\n## 数据摘要\n- 共抓取 15 条新闻源\n- 覆盖 5 个领域\n- 关键实体 12 个\n\n如需了解某条新闻的详细内容，请告诉我。', time: ts(0, 2) },
         ]
       },
       {
@@ -195,8 +195,8 @@ const INITIAL_AGENTS = [
         id: 'conv-003', title: 'PR #142 代码审查', createdAt: ts(3, 1),
         messages: [
           { role: 'user', content: '请审查 PR #142', time: ts(3, 1) },
-          { role: 'tool', content: '🔧 调用 code-analysis … 分析 12 个文件变更\n🔧 调用 security-scan … 未发现安全风险', time: ts(3, 1) },
-          { role: 'assistant', content: '## PR #142 审查结果\n\n✅ 无安全风险\n⚠️ 2 个建议优化项\n\n### 建议\n1. `utils.js:45` — 建议使用 `const` 替代 `let`\n2. `api.js:120` — 建议添加错误边界处理', time: ts(3, 1) },
+          { role: 'tool', content: '[Tool] 调用 code-analysis … 分析 12 个文件变更\n[Tool] 调用 security-scan … 未发现安全风险', time: ts(3, 1) },
+          { role: 'assistant', content: '## PR #142 审查结果\n\n[OK] 无安全风险\n[Warning] 2 个建议优化项\n\n### 建议\n1. `utils.js:45` — 建议使用 `const` 替代 `let`\n2. `api.js:120` — 建议添加错误边界处理', time: ts(3, 1) },
         ]
       },
     ],

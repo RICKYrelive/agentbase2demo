@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useManagedAgents, SESSION_STATUS_COLORS } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { IconPlus, IconSearch, IconRotateCcw, IconZap, IconChevronLeft, IconChevronRight } from '../../components/Icons'
 import './MAC.css'
 
 export default function MACSessionList() {
@@ -40,8 +41,8 @@ export default function MACSessionList() {
     <PageLayout title="Sessions" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{sessions.length} 个会话</span>}>
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => navigate('/managed-agent/agents')}>
-            + 新建会话
+          <button className="action-btn primary" onClick={() => navigate('/managed-agent/agents')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <IconPlus size={16} /> 新建会话
           </button>
         }
         filters={
@@ -62,10 +63,10 @@ export default function MACSessionList() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索 Agent 或 Thread" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新')}><IconRotateCcw size={14} /></button>
       </DataToolbar>
 
       <div className="data-table-wrap">
@@ -89,7 +90,7 @@ export default function MACSessionList() {
             {paged.length === 0 ? (
               <tr><td colSpan={11} className="data-table-empty">
                 <div className="empty-state ha-empty">
-                  <div className="empty-icon">⚡</div>
+                  <div className="empty-icon"><IconZap size={48} style={{ opacity: 0.2 }} /></div>
                   <div className="ha-empty-title">没有匹配的会话</div>
                   <div className="ha-empty-desc">尝试调整筛选条件或创建新会话</div>
                 </div>
@@ -125,11 +126,11 @@ export default function MACSessionList() {
           <span>共 {filtered.length} 条</span>
           {totalPages > 1 && (
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <button className="pagination-btn" disabled={page <= 1} onClick={() => setPage(page - 1)}>‹</button>
+              <button className="pagination-btn" disabled={page <= 1} onClick={() => setPage(page - 1)}><IconChevronLeft size={14} /></button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
                 <button key={p} className={`pagination-btn ${p === page ? 'active' : ''}`} onClick={() => setPage(p)}>{p}</button>
               ))}
-              <button className="pagination-btn" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>›</button>
+              <button className="pagination-btn" disabled={page >= totalPages} onClick={() => setPage(page + 1)}><IconChevronRight size={14} /></button>
               <select className="pagination-select" value={pageSize} onChange={e => { setPageSize(Number(e.target.value)); setPage(1) }} style={{ marginLeft: 8 }}>
                 <option value={10}>10条/页</option>
                 <option value={20}>20条/页</option>

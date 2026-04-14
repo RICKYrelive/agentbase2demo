@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSkills } from '../store/skillStore'
 import TagSelectModal from '../components/TagSelectModal'
+import { IconArrowLeft } from '../components/Icons'
 
 export default function CreateSkillPackage() {
   const navigate = useNavigate()
@@ -57,7 +58,9 @@ export default function CreateSkillPackage() {
   return (
     <div className="create-app-page">
       <div className="create-app-header">
-        <button className="back-btn" onClick={goBack}>⬅</button>
+        <button className="back-btn" onClick={goBack} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <IconArrowLeft size={16} />
+        </button>
         <div className="breadcrumb">
           <span className="bc-item" onClick={goBack}>Skill 中心</span>
           <span className="bc-separator"> &gt; </span>

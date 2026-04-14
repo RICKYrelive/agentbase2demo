@@ -3,6 +3,14 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSuperAgents, VERSIONS, IM_TYPES } from '../store/superAgentStore.jsx'
 import TagSelectModal from '../components/TagSelectModal'
 import SkillSelectionModal from '../components/SkillSelectionModal'
+import { 
+  IconEdit, IconSearch, IconArrowLeft, IconPlay, 
+  IconSquare, IconGlobe, IconAlertTriangle, IconCheck,
+  IconTrash, IconDownload, IconClock, IconCalendar,
+  IconPlus, IconX, IconTerminal, IconSettings,
+  IconPackage, IconChevronRight, IconMoreHorizontal,
+  IconLink, IconSparkles, IconInfo, IconMonitor
+} from '../components/Icons'
 import './SuperAgentDetail.css'
 
 const STATUS_COLORS = {
@@ -71,7 +79,7 @@ function InlineEditable({ label, value, type = 'text', options = [], onChange, r
         <span>{label}</span>
         <div className="ie-val-box">
           {renderValue ? renderValue(value) : (value || '-')}
-          <span className="ie-hint">✏️ 编辑</span>
+          <span className="ie-hint" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><IconEdit size={12} /> 编辑</span>
         </div>
       </div>
     )
@@ -418,7 +426,7 @@ function SuperAgentDetail() {
   if (!agent) {
     return (
       <div className="had-not-found">
-        <div className="had-not-found-icon">🔍</div>
+        <IconSearch size={48} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
         <div>Agent 不存在</div>
         <button className="action-btn primary" onClick={() => navigate('/super-agent')}>返回列表</button>
       </div>
@@ -609,10 +617,10 @@ function SuperAgentDetail() {
     <div className="had-page">
       {/* Header */}
       <div className="create-app-header">
-        <button className="back-btn" onClick={() => navigate('/super-agent')}>⬅</button>
+        <button className="back-btn" onClick={() => navigate('/super-agent')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconArrowLeft size={16} /></button>
         <div className="breadcrumb">
           <span className="bc-item" onClick={() => navigate('/super-agent')}>Super Agent</span>
-          <span className="bc-separator"> &gt; </span>
+          <span className="bc-separator"> <IconChevronRight size={12} /> </span>
           <span className="bc-current">{agent.name}</span>
         </div>
       </div>
@@ -640,12 +648,18 @@ function SuperAgentDetail() {
         </div>
         <div className="had-overview-actions">
           {['停止', '启动中'].includes(agent.status) && (
-            <button className="action-btn primary" disabled={agent.status === '启动中'} onClick={() => doStatusChange('启动中')}>▶ 启动</button>
+            <button className="action-btn primary" disabled={agent.status === '启动中'} onClick={() => doStatusChange('启动中')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <IconPlay size={14} /> 启动
+            </button>
           )}
           {['运行中', '关闭中'].includes(agent.status) && (
-            <button className="action-btn" disabled={agent.status === '关闭中'} onClick={() => doStatusChange('关闭中')}>⏹ 停止</button>
+            <button className="action-btn" disabled={agent.status === '关闭中'} onClick={() => doStatusChange('关闭中')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <IconSquare size={12} /> 停止
+            </button>
           )}
-          <button className="action-btn" onClick={() => navigate(`/super-agent/${agent.id}/webui`)}>🌐 WebUI</button>
+          <button className="action-btn" onClick={() => navigate(`/super-agent/${agent.id}/webui`)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <IconGlobe size={14} /> WebUI
+          </button>
         </div>
       </div>
 
@@ -754,7 +768,7 @@ function SuperAgentDetail() {
             </div>
             {agent.status === 'Error' && agent.events.length > 0 && (
               <div className="had-section had-error-summary">
-                <h4>⚠️ 最近错误</h4>
+                <h4><IconAlertTriangle size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#ff4d4f' }} /> 最近错误</h4>
                 <p>{agent.events.filter(e => e.action === '错误').pop()?.detail || '无'}</p>
               </div>
             )}
@@ -838,7 +852,7 @@ function SuperAgentDetail() {
                   <tbody>
                     {(agent.snapshots || []).map(snap => (
                       <tr key={snap.id}>
-                        <td>{snap.isKept && <span style={{ marginRight: 4 }} title="已保留（不计入滚动，不可删除）">📌</span>}{snap.name}</td>
+                        <td>{snap.isKept && <IconPin size={12} style={{ marginRight: 6, color: '#1890ff', verticalAlign: 'middle' }} title="已保留（不计入滚动，不可删除）" />}{snap.name}</td>
                         <td style={{ color: '#8c8c8c' }}>{snap.createdAt}</td>
                         <td>{snap.version || agent.version}</td>
                         <td>{snap.size || '未知'}</td>
@@ -983,7 +997,7 @@ function SuperAgentDetail() {
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                   <div className="mcp-badge">{p.models?.length || 0} Models</div>
-                                  <button className="mcp-del" onClick={(e) => handleDeleteCustomProvider(e, p.id)}>🗑️</button>
+                                  <button className="mcp-del" onClick={(e) => handleDeleteCustomProvider(e, p.id)}><IconTrash size={14} /></button>
                                 </div>
                               </div>
                             ))}
@@ -1001,9 +1015,9 @@ function SuperAgentDetail() {
                     </div>
 
                     {[
-                      { key: 'chat', label: 'Agent 模型', icon: '🤖' },
-                      { key: 'vision', label: '图像理解模型', icon: '🎨' },
-                      { key: 'imageGen', label: '图像生成模型', icon: '✨' }
+                      { key: 'chat', label: 'Agent 模型', icon: <IconBot size={18} /> },
+                      { key: 'vision', label: '图像理解模型', icon: <IconBrush size={18} /> },
+                      { key: 'imageGen', label: '图像生成模型', icon: <IconSparkles size={18} /> }
                     ].map(cat => {
                       const config = modelDraft.defaultModelConfig[cat.key] || { mainId: '', fallbacks: [] }
                       const availableOptions = getAllAvailableModels()
@@ -1047,8 +1061,7 @@ function SuperAgentDetail() {
                                 />
                                 <button className="dmc-del-btn" onClick={() => {
                                   const nextFbs = config.fallbacks.filter((_, i) => i !== fidx)
-                                  handleUpdateDefaultModel(cat.key, { ...config, fallbacks: nextFbs })
-                                }}>🗑️</button>
+                                  }}><IconTrash size={14} /></button>
                               </div>
                             </div>
                           ))}
@@ -1107,7 +1120,9 @@ function SuperAgentDetail() {
                     {(agent.channels || []).map(ch => (
                       <div key={ch.id} className="channel-item">
                         <div className="channel-info">
-                          <div className="channel-icon">{ch.type === '企业微信' ? '🏢' : ch.type === '飞书' ? '🕊️' : ch.type === '钉钉' ? '📌' : '🔗'}</div>
+                          <div className="channel-icon">
+                            {ch.type === '企业微信' ? <IconBuilding size={20} /> : ch.type === '飞书' ? <IconBird size={20} /> : ch.type === '钉钉' ? <IconPin size={20} /> : <IconLink size={20} />}
+                          </div>
                           <div>
                             <div style={{ fontWeight: 500 }}>{ch.name}</div>
                             <div style={{ fontSize: 12, color: '#999' }}>{ch.type}</div>
@@ -1159,8 +1174,8 @@ function SuperAgentDetail() {
                 <div className="had-markdown-editor">
                   <div className="md-sidebar">
                     {Object.keys(agent.markdownFiles || {}).map(f => (
-                      <div key={f} className={`md-file-item ${activeMdFile === f ? 'active' : ''}`} onClick={() => setActiveMdFile(f)}>
-                        📄 {f}
+                      <div key={f} className={`md-file-item ${activeMdFile === f ? 'active' : ''}`} onClick={() => setActiveMdFile(f)} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <IconFile size={14} /> {f}
                       </div>
                     ))}
                   </div>
@@ -1383,7 +1398,7 @@ function SuperAgentDetail() {
                   <h5>配置恢复</h5>
                   <p>将当前 Agent 配置状态强制回滚至上一个已标记的“可用”版本。</p>
                   <div className="recovery-tips">
-                    <span>💡</span>
+                    <IconInfo size={14} style={{ color: '#1890ff' }} />
                     <span>小i提示：建议由于误配置导致服务异常时使用。</span>
                   </div>
                   <button className="action-btn" style={{ marginTop: 'auto' }} onClick={() => showToast('正在回滚配置，请稍候...', 'success')}>立即恢复</button>
@@ -1419,10 +1434,10 @@ function SuperAgentDetail() {
             <div className="ha-modal-body" style={{ padding: '24px' }}>
               <div className="ch-type-selector">
                 {[
-                  { id: '企业微信', icon: '🏢' },
-                  { id: '飞书', icon: '🕊️' },
-                  { id: '钉钉', icon: '📌' },
-                  { id: '自定义', icon: '🔗' }
+                  { id: '企业微信', icon: <IconBuilding size={20} /> },
+                  { id: '飞书', icon: <IconBird size={20} /> },
+                  { id: '钉钉', icon: <IconPin size={20} /> },
+                  { id: '自定义', icon: <IconLink size={20} /> }
                 ].map(type => (
                   <div 
                     key={type.id}
@@ -1452,7 +1467,10 @@ function SuperAgentDetail() {
                           </div>
                         ) : (
                           <div className="ch-qr-success">
-                            <div className="qr-mock-light">📱<br/>管理员扫码</div>
+                            <div className="qr-mock-light">
+                              <IconSmartphone size={48} style={{ color: '#1890ff' }} />
+                              <div style={{ marginTop: 8, fontSize: 12 }}>管理员扫码</div>
+                            </div>
                             <p style={{ fontSize: 13, color: '#52c41a', margin: '16px 0' }}>扫描成功，正在获取企业信息...</p>
                             <button className="action-btn primary" onClick={() => confirmAddChannel({ name: `${channelType}连接` })}>完成绑定</button>
                           </div>
@@ -1590,12 +1608,13 @@ function SuperAgentDetail() {
                   <div className="mcp-badge" style={{ padding: '6px 12px', fontSize: 13 }}>
                     已配置 {tempProvider.models?.length || 0} 个模型
                   </div>
-                  <button 
-                    className="action-btn" 
-                    onClick={handleOpenModelsModal}
-                  >
-                    ⚙️ 配置模型列表
-                  </button>
+                    <button 
+                      className="action-btn" 
+                      onClick={handleOpenModelsModal}
+                      style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                    >
+                      <IconSettings size={14} /> 配置模型列表
+                    </button>
                 </div>
               </div>
             </div>
@@ -1726,7 +1745,7 @@ function SuperAgentDetail() {
                             onClick={() => handleDeleteTempModel(m.id)}
                             style={{ opacity: 1, color: '#ff4d4f' }}
                           >
-                            🗑️
+                            <IconTrash size={14} />
                           </button>
                         </td>
                       </tr>

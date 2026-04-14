@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
+import { IconMinus, IconPlus, IconX, IconWrench, IconSearch, IconRotateCcw } from '../components/Icons'
 import SelectionModal from '../components/SelectionModal'
 
 const guideCards = [
@@ -61,8 +62,8 @@ export default function AgentRuntime({ onAlert }) {
     <PageLayout
       title="Agent 应用运行时"
       rightAction={
-        <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
-          {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
+        <button className="action-btn" onClick={() => setShowGuide(!showGuide)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          {showGuide ? <><IconMinus size={14} /> 收起指引</> : <><IconPlus size={14} /> 展开指引</>}
         </button>
       }
     >
@@ -74,11 +75,11 @@ export default function AgentRuntime({ onAlert }) {
       <div className="info-alert">
         <span className="info-alert-icon">ℹ️</span>
         <span>平台暂仅支持创建高码 Agent 应用。如需创建低代码应用请前往 FastGPT 等平台，创建后的应用将自动同步至下方，可统一管理。</span>
-        <span className="info-alert-close">×</span>
+        <span className="info-alert-close" onClick={() => {}} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}><IconX size={14} /></span>
       </div>
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => navigate('/agent-runtime/create')}>+ 创建 Agent 应用</button>
+          <button className="action-btn primary" onClick={() => navigate('/agent-runtime/create')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建 Agent 应用</button>
         }
         filters={
           <>
@@ -86,15 +87,15 @@ export default function AgentRuntime({ onAlert }) {
               <button className={`radio-btn ${codeType === 'high' ? 'active' : ''}`} onClick={() => setCodeType('high')}>高代码应用</button>
               <button className={`radio-btn ${codeType === 'low' ? 'active' : ''}`} onClick={() => setCodeType('low')}>低代码应用</button>
             </div>
-            <button className="action-btn" onClick={onAlert}>🔧 筛选</button>
+            <button className="action-btn" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconWrench size={14} /> 筛选</button>
           </>
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="名称" />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => {}}><IconRotateCcw size={14} /></button>
       </DataToolbar>
       <DataTable columns={columns} data={mockData} />
 

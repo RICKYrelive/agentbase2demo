@@ -1,4 +1,5 @@
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
+import { IconMinus, IconPlus, IconChevronDown, IconWrench, IconSearch, IconRotateCcw } from '../components/Icons'
 
 const guideCards = [
   { title: '创建数据库', desc: '支持创建 PGVector、Milvus、Redis、NebulaGraph 四类数据库，可根据业务场景选择单机、集群等部署模式，完成资源配置，自动生成连接信息与多语言集成代码。' },
@@ -21,25 +22,25 @@ export default function AIDatabase({ onAlert }) {
   return (
     <PageLayout
       title="AI 数据库"
-      rightAction={<button className="action-btn" onClick={onAlert}>⊙ 收起教程</button>}
+      rightAction={<button className="action-btn" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconMinus size={14} /> 收起教程</button>}
     >
       <GuideCards cards={guideCards} />
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={onAlert}>+ 创建</button>
+          <button className="action-btn primary" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建</button>
         }
         filters={
           <>
-            <button className="filter-select" onClick={onAlert}>全部类型 ▾</button>
-            <button className="action-btn" onClick={onAlert}>🔧 筛选</button>
+            <button className="filter-select" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>全部类型 <IconChevronDown size={12} /></button>
+            <button className="action-btn" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconWrench size={14} /> 筛选</button>
           </>
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="名称" />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => {}}><IconRotateCcw size={14} /></button>
       </DataToolbar>
       <DataTable columns={columns} />
     </PageLayout>

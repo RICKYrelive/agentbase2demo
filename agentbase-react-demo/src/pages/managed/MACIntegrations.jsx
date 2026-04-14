@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useManagedAgents } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { IconPlus, IconSearch } from '../../components/Icons'
 import './MAC.css'
 
 export default function MACIntegrations() {
@@ -29,11 +30,11 @@ export default function MACIntegrations() {
   return (
     <PageLayout title="Integrations" rightAction={<span style={{ fontSize: 12, color: '#999' }}>MCP Providers</span>}>
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => setShowAdd(true)}>+ 添加 Provider</button>}
+        buttons={<button className="action-btn primary" onClick={() => setShowAdd(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 添加 Provider</button>}
         filters={<></>}
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索 Provider" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
       </DataToolbar>

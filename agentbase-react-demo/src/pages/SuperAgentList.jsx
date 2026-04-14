@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useSuperAgents, STATUS_LIST } from '../store/superAgentStore.jsx'
 import PageLayout, { GuideCards, DataToolbar } from '../components/PageLayout'
 import TagSelectModal from '../components/TagSelectModal'
+import { 
+  IconEye, IconEyeOff, IconPlus, IconList, 
+  IconGrid, IconTag, IconSearch, IconRefresh, 
+  IconSort, IconLink, IconPlay, IconSquare, 
+  IconGlobe, IconZap, IconImage, IconTrash, 
+  IconAlertTriangle, IconX 
+} from '../components/Icons'
 import './SuperAgentList.css'
 
 const STATUS_COLORS = {
@@ -134,8 +141,8 @@ export default function SuperAgentList() {
     <PageLayout
       title="Super Agent"
       rightAction={
-        <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
-          {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
+        <button className="action-btn" onClick={() => setShowGuide(!showGuide)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          {showGuide ? <><IconEyeOff size={14} /> 收起指引</> : <><IconEye size={14} /> 展开指引</>}
         </button>
       }
     >
@@ -148,12 +155,12 @@ export default function SuperAgentList() {
         filters={
           <div className="ha-filter-group">
             <div className="ha-view-toggle">
-              <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')} title="列表视图">☰</button>
-              <button className={`view-btn ${viewMode === 'card' ? 'active' : ''}`} onClick={() => setViewMode('card')} title="卡片视图">▦</button>
+              <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')} title="列表视图" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconList size={16} /></button>
+              <button className={`view-btn ${viewMode === 'card' ? 'active' : ''}`} onClick={() => setViewMode('card')} title="卡片视图" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconGrid size={16} /></button>
             </div>
             <div className="ha-tag-filter-wrap">
-              <button className={`action-btn ${selectedTags.length > 0 ? 'primary' : ''}`} onClick={() => setFilterOpen(!filterOpen)}>
-                🏷 标签筛选 {selectedTags.length > 0 && `(${selectedTags.length})`}
+              <button className={`action-btn ${selectedTags.length > 0 ? 'primary' : ''}`} onClick={() => setFilterOpen(!filterOpen)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <IconTag size={14} /> 标签筛选 {selectedTags.length > 0 && `(${selectedTags.length})`}
               </button>
               {filterOpen && (
                 <div className="ha-tag-dropdown">
@@ -181,17 +188,21 @@ export default function SuperAgentList() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索名称" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       {/* Active tag chips */}
       {selectedTags.length > 0 && (
         <div className="ha-active-tags">
           {selectedTags.map(t => (
-            <span key={t} className="ha-active-tag" onClick={() => toggleTag(t)}>{t} ×</span>
+            <span key={t} className="ha-active-tag" onClick={() => toggleTag(t)} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+              {t} <IconX size={10} />
+            </span>
           ))}
         </div>
       )}
@@ -203,7 +214,7 @@ export default function SuperAgentList() {
             <thead>
               <tr>
                 {columns.map((col, i) => (
-                  <th key={i}>{col.label} {col.sortable && <span className="sort-icon">↕</span>}</th>
+                  <th key={i}>{col.label} {col.sortable && <IconSort size={12} style={{ display: 'inline', marginLeft: 4 }} />}</th>
                 ))}
               </tr>
             </thead>
@@ -212,7 +223,7 @@ export default function SuperAgentList() {
                 <tr>
                   <td colSpan={columns.length} className="data-table-empty">
                     <div className="empty-state ha-empty">
-                      <div className="empty-icon">🔗</div>
+                      <IconLink size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
                       <div className="ha-empty-title">还没有 Super Agent</div>
                       <div className="ha-empty-desc">创建一个 Super Agent，配置后即可通过 WebUI 或 IM 与其对话</div>
                       <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/super-agent/create')}>+ 创建 Super Agent</button>
@@ -277,7 +288,7 @@ export default function SuperAgentList() {
         <div className="ha-card-grid">
           {filtered.length === 0 ? (
             <div className="ha-empty-card-state">
-              <div className="empty-icon">🔗</div>
+              <IconLink size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
               <div className="ha-empty-title">还没有 Super Agent</div>
               <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/super-agent/create')}>+ 创建</button>
             </div>
@@ -310,15 +321,15 @@ export default function SuperAgentList() {
                   </div>
                   <div className="ha-card-actions" onClick={e => e.stopPropagation()}>
                     {['停止', '启动中'].includes(agent.status) && (
-                      <button disabled={agent.status === '启动中'} onClick={() => handleAction(agent, 'start')}>▶</button>
+                      <button disabled={agent.status === '启动中'} onClick={() => handleAction(agent, 'start')}><IconPlay size={12} /></button>
                     )}
                     {['运行中', '关闭中'].includes(agent.status) && (
-                      <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}>⏹</button>
+                      <button disabled={agent.status === '关闭中'} onClick={() => handleAction(agent, 'stop')}><IconSquare size={10} /></button>
                     )}
-                    <button onClick={() => handleAction(agent, 'webui')} title="WebUI">🌐</button>
-                    <button onClick={() => handleAction(agent, 'connect')} title="连接管理">🔌</button>
-                    <button onClick={() => handleAction(agent, 'snapshot')} title="快照">📸</button>
-                    <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')} title="删除">🗑</button>
+                    <button onClick={() => handleAction(agent, 'webui')} title="WebUI"><IconGlobe size={14} /></button>
+                    <button onClick={() => handleAction(agent, 'connect')} title="连接管理"><IconZap size={14} /></button>
+                    <button onClick={() => handleAction(agent, 'snapshot')} title="快照"><IconImage size={14} /></button>
+                    <button className="ha-delete-btn" onClick={() => handleAction(agent, 'delete')} title="删除"><IconTrash size={14} /></button>
                   </div>
                 </div>
               )
@@ -336,7 +347,7 @@ export default function SuperAgentList() {
       {confirmDelete && (
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">⚠️</div>
+            <IconAlertTriangle size={40} style={{ color: '#ff4d4f', margin: '0 auto 16px', display: 'block' }} />
             <div className="modal-message">确定要删除 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
             <div style={{display:'flex', gap: 12, justifyContent:'center'}}>
               <button className="action-btn primary" style={{background:'#ff4d4f', borderColor:'#ff4d4f'}} onClick={doDelete}>删除</button>

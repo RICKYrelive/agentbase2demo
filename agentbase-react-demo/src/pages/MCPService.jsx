@@ -1,4 +1,5 @@
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
+import { IconMinus, IconPlus, IconSearch, IconRotateCcw } from '../components/Icons'
 
 const guideCards = [
   { title: '创建 MCP 服务', desc: '根据业务需求创建 MCP 服务实例，配置访问方式和资源参数，自动生成连接信息供 Agent 应用集成使用。' },
@@ -17,19 +18,19 @@ export default function MCPService({ onAlert }) {
   return (
     <PageLayout
       title="MCP 服务"
-      rightAction={<button className="action-btn" onClick={onAlert}>⊙ 功能指引</button>}
+      rightAction={<button className="action-btn" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconMinus size={14} /> 功能指引</button>}
     >
       <GuideCards cards={guideCards} />
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={onAlert}>+ 创建</button>
+          <button className="action-btn primary" onClick={onAlert} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建</button>
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="名称" />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => {}}><IconRotateCcw size={14} /></button>
       </DataToolbar>
       <DataTable columns={columns} />
     </PageLayout>

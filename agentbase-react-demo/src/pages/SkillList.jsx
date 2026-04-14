@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DataToolbar } from '../components/PageLayout'
 import { useSkills } from '../store/skillStore'
+import { IconSearch, IconRefresh, IconPuzzle } from '../components/Icons'
 
 // Add to package modal
 function AddToPackageModal({ skill, onClose, onAdd }) {
@@ -124,16 +125,18 @@ export default function SkillList() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索名称或ID" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       <div className="skill-card-grid">
         {filtered.length === 0 ? (
           <div className="ha-empty-card-state" style={{ gridColumn: '1 / -1', minHeight: 300 }}>
-            <div className="empty-icon">🧩</div>
+            <IconPuzzle size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
             <div className="ha-empty-title">没有找到符合条件的 Skill</div>
             <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/skill-center/skill/create')}>+ 去创建</button>
           </div>

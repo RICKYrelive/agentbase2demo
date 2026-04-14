@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSkills } from '../store/skillStore'
 import PageLayout from '../components/PageLayout'
+import { IconArrowLeft, IconRefresh } from '../components/Icons'
 
 export default function SkillDetail() {
   const { id } = useParams()
@@ -28,7 +29,9 @@ export default function SkillDetail() {
     <PageLayout
       title={
         <div style={{display:'flex', alignItems:'center', gap:12}}>
-          <button className="back-btn" onClick={() => navigate('/skill-center')}>⬅</button>
+          <button className="back-btn" onClick={() => navigate('/skill-center')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <IconArrowLeft size={16} />
+          </button>
           <span>{skill.name}</span>
           <span className="ha-status-tag" style={{ marginLeft: 8, background: skill.status === '已发布' ? '#f6ffed' : '#f5f5f5', color: skill.status === '已发布' ? '#52c41a' : '#595959', borderColor: skill.status === '已发布' ? '#b7eb8f' : '#d9d9d9', fontSize: 13, height: 22, lineHeight: '20px' }}>
             {skill.status}
@@ -37,7 +40,9 @@ export default function SkillDetail() {
       }
       rightAction={
         <div style={{display:'flex', gap: 8}}>
-          <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻ 刷新</button>
+          <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <IconRefresh size={14} /> 刷新
+          </button>
         </div>
       }
     >

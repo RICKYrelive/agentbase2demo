@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSkills } from '../store/skillStore'
 import PageLayout, { DataToolbar } from '../components/PageLayout'
+import { IconSearch, IconArrowLeft, IconRefresh, IconPuzzle, IconAlertTriangle } from '../components/Icons'
 
 // Modify Version Modal
 function ModifyVersionModal({ pkg, skillItem, onClose, onChangeVersion }) {
@@ -58,7 +59,7 @@ function AddSkillToPkgModal({ pkg, onClose, onAdd }) {
         <h3 style={{ marginTop: 0, marginBottom: 16 }}>添加 Skill 到技能包</h3>
         
         <div className="search-input" style={{marginBottom: 16, width: '100%'}}>
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索 Skill 名称" value={search} onChange={e => setSearch(e.target.value)} style={{width: '90%'}} />
         </div>
 
@@ -146,14 +147,18 @@ export default function SkillPackageDetail() {
     <PageLayout
       title={
         <div style={{display:'flex', alignItems:'center', gap:12}}>
-          <button className="back-btn" onClick={() => navigate('/skill-center')}>⬅</button>
+          <button className="back-btn" onClick={() => navigate('/skill-center')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <IconArrowLeft size={16} />
+          </button>
           <span>{pkg.name}</span>
           <span className="ha-status-tag" style={{ marginLeft: 8, background: '#f6ffed', color: '#52c41a', borderColor: '#b7eb8f', fontSize: 13, height: 22, lineHeight: '20px' }}>{pkg.status}</span>
         </div>
       }
       rightAction={
         <div style={{display:'flex', gap: 8}}>
-          <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻ 刷新</button>
+          <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <IconRefresh size={14} /> 刷新
+          </button>
           <button className="ha-delete-btn" style={{padding: '4px 12px'}} onClick={() => setConfirmDelete(pkg)}>删除</button>
         </div>
       }
@@ -195,7 +200,7 @@ export default function SkillPackageDetail() {
             }
           >
             <div className="search-input">
-              <span className="search-icon">🔍</span>
+              <IconSearch className="search-icon" size={16} />
               <input placeholder="搜索 Skill 名称" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
           </DataToolbar>
@@ -216,7 +221,7 @@ export default function SkillPackageDetail() {
                   <tr>
                     <td colSpan={5} className="data-table-empty">
                       <div className="empty-state ha-empty">
-                        <div className="empty-icon">🧩</div>
+                        <IconPuzzle size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
                         <div className="ha-empty-title">暂无关联的 Skill</div>
                         <button className="action-btn primary" style={{marginTop: 12}} onClick={() => setAddSkillModal(true)}>+ 添加 Skill</button>
                       </div>
@@ -273,7 +278,7 @@ export default function SkillPackageDetail() {
       {confirmDelete && (
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">⚠️</div>
+            <IconAlertTriangle size={40} style={{ color: '#ff4d4f', margin: '0 auto 16px', display: 'block' }} />
             <div className="modal-message">确定要删除技能包 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
             <div style={{display:'flex', gap: 12, justifyContent:'center'}}>
               <button className="action-btn primary" style={{background:'#ff4d4f', borderColor:'#ff4d4f'}} onClick={doDelete}>删除</button>

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useManagedAgents } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { IconSearch, IconDownload, IconCheck, IconX, IconClipboard } from '../../components/Icons'
 import './MAC.css'
 
 export default function MACAuditLog() {
@@ -53,7 +54,9 @@ export default function MACAuditLog() {
       <DataToolbar
         buttons={
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="action-btn" onClick={handleExport}>📥 导出 CSV</button>
+            <button className="action-btn" onClick={handleExport} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <IconDownload size={14} /> 导出 CSV
+            </button>
             <span style={{ fontSize: 12, color: '#999', alignSelf: 'center' }}>{filtered.length} 条记录</span>
           </div>
         }
@@ -71,7 +74,7 @@ export default function MACAuditLog() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索操作、资源" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
       </DataToolbar>
@@ -91,7 +94,7 @@ export default function MACAuditLog() {
                 <td><span className="ha-mini-tag">{actionLabels[log.action] || log.action}</span></td>
                 <td>{log.resourceType}</td>
                 <td>{log.resourceName}</td>
-                <td><span style={{ color: resultColors[log.result] }}>{log.result === 'success' ? '✓' : '✗'}</span></td>
+                 <td><span style={{ color: resultColors[log.result], display: 'flex', alignItems: 'center' }}>{log.result === 'success' ? <IconCheck size={14} /> : <IconX size={14} />}</span></td>
                 <td style={{ fontSize: 12, fontFamily: 'monospace', color: '#999' }}>{log.ipAddress}</td>
               </tr>
             ))}
@@ -100,8 +103,8 @@ export default function MACAuditLog() {
         <div className="data-pagination"><span>共 {filtered.length} 条</span></div>
       </div>
 
-      <div className="mac-notice" style={{ marginTop: 16 }}>
-        📋 审计日志记录所有关键操作，包括 Agent 创建、版本发布、Session 管理、凭证操作和工具审批。日志不可篡改。
+      <div className="mac-notice" style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <IconClipboard size={14} /> 审计日志记录所有关键操作，包括 Agent 创建、版本发布、Session 管理、凭证操作和工具审批。日志不可篡改。
       </div>
     </PageLayout>
   )

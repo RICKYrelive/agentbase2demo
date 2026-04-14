@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useManagedAgents, AGENT_STATUS_COLORS, SESSION_STATUS_COLORS } from '../../store/managedAgentStore'
+import { IconArrowLeft, IconEdit, IconZap, IconUpload, IconCopy } from '../../components/Icons'
 import './MAC.css'
 
 export default function MACAgentDetail() {
@@ -59,7 +60,7 @@ export default function MACAgentDetail() {
       {/* Header */}
       <div className="mac-detail-header">
         <div className="mac-detail-top">
-          <button className="back-btn" onClick={() => navigate('/managed-agent/agents')}>← 返回</button>
+          <button className="back-btn" onClick={() => navigate('/managed-agent/agents')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconArrowLeft size={16} /> 返回</button>
           <div className="breadcrumb">
             <span className="bc-item" onClick={() => navigate('/managed-agent')}>Agent Console</span>
             <span className="bc-sep">/</span>
@@ -88,8 +89,8 @@ export default function MACAgentDetail() {
                 <button className="action-btn" style={{ padding: '4px 12px' }} onClick={() => setEditingField(null)}>取消</button>
               </div>
             ) : (
-              <span onClick={() => startEdit('description', agent.description)} style={{ cursor: 'pointer' }}>
-                {agent.description} <span style={{ color: '#ccc', fontSize: 12 }}>✏️</span>
+              <span onClick={() => startEdit('description', agent.description)} style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                {agent.description} <IconEdit size={12} style={{ color: 'var(--primary-color)', opacity: 0.6 }} />
               </span>
             )}
           </div>
@@ -98,10 +99,10 @@ export default function MACAgentDetail() {
           </div>
         </div>
         <div className="mac-detail-actions">
-          <button className="action-btn primary" onClick={() => navigate('/managed-agent/sessions', { state: { agentId: agent.id } })}>⚡ 新建会话</button>
-          {agent.status === 'draft' && <button className="action-btn" onClick={handlePublish}>📤 发布</button>}
-          <button className="action-btn" onClick={handleClone}>📋 克隆</button>
-          <button className="action-btn" onClick={() => navigate('/managed-agent/agents')}>← 返回列表</button>
+          <button className="action-btn primary" onClick={() => navigate('/managed-agent/sessions', { state: { agentId: agent.id } })} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconZap size={14} /> 新建会话</button>
+          {agent.status === 'draft' && <button className="action-btn" onClick={handlePublish} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconUpload size={14} /> 发布</button>}
+          <button className="action-btn" onClick={handleClone} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconCopy size={14} /> 克隆</button>
+          <button className="action-btn" onClick={() => navigate('/managed-agent/agents')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconArrowLeft size={14} /> 返回列表</button>
         </div>
       </div>
 
@@ -162,7 +163,7 @@ export default function MACAgentDetail() {
               ) : (
                 <div style={{ position: 'relative' }}>
                   <pre className="mac-prompt-preview">{agent.systemPrompt}</pre>
-                  <button className="action-btn" style={{ position: 'absolute', top: 8, right: 8, padding: '2px 8px', fontSize: 11 }} onClick={() => startEdit('systemPrompt', agent.systemPrompt)}>✏️ 编辑</button>
+                  <button className="action-btn" style={{ position: 'absolute', top: 8, right: 8, padding: '4px 10px', fontSize: 11, display: 'inline-flex', alignItems: 'center', gap: 4 }} onClick={() => startEdit('systemPrompt', agent.systemPrompt)}><IconEdit size={12} /> 编辑</button>
                 </div>
               )}
             </div>

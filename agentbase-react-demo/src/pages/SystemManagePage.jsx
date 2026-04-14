@@ -1,4 +1,5 @@
 import PageLayout, { DataToolbar, DataTable } from '../components/PageLayout'
+import { IconSearch, IconRotateCcw } from '../components/Icons'
 
 export default function SystemManagePage({ onAlert, pageTitle, columns }) {
   return (
@@ -9,10 +10,10 @@ export default function SystemManagePage({ onAlert, pageTitle, columns }) {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="名称" />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => {}}><IconRotateCcw size={14} /></button>
       </DataToolbar>
       <DataTable columns={columns} />
     </PageLayout>

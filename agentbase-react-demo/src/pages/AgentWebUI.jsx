@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect, Fragment } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSuperAgents } from '../store/superAgentStore.jsx'
+import { 
+  IconMessageSquare, IconWrench, IconClock, IconPackage, 
+  IconArrowLeft, IconFolderOpen, IconFolder, IconFile, 
+  IconMoreHorizontal, IconPlus, IconBot, IconTerminal,
+  IconPaperclip, IconArrowUp, IconCheck, IconTrash,
+  IconEdit, IconSparkles, IconMonitor, IconCalendar,
+  IconUpload, IconDownload, IconSettings, IconSearch
+} from '../components/Icons'
 import './AgentWebUI.css'
 
 export default function AgentWebUI() {
@@ -228,7 +236,7 @@ export default function AgentWebUI() {
     // Simulate tool calls + response
     setTimeout(() => {
       const skillsUsed = agent.skills.slice(0, Math.min(2, agent.skills.length))
-      const toolLog = skillsUsed.map(s => `🔧 调用 ${s} … 执行完成`).join('\n')
+      const toolLog = skillsUsed.map(s => `调用 ${s} … 执行完成`).join('\n')
       if (toolLog) {
         dispatch({
           type: 'ADD_MESSAGE',
@@ -241,7 +249,7 @@ export default function AgentWebUI() {
       setTimeout(() => {
         const responses = [
           `根据您的请求，我已完成分析。以下是处理结果：\n\n1. 已从数据源获取相关信息\n2. 完成内容整理与摘要\n3. 结果已保存至工作区\n\n如需进一步处理，请告诉我。`,
-          `任务已完成 ✅\n\n### 处理摘要\n- 输入分析完毕\n- 调用了 ${skillsUsed.join('、')} 等能力\n- 耗时约 ${Math.floor(Math.random() * 20 + 5)} 秒\n\n是否需要对结果进行调整？`,
+          `任务已完成\n\n### 处理摘要\n- 输入分析完毕\n- 调用了 ${skillsUsed.join('、')} 等能力\n- 耗时约 ${Math.floor(Math.random() * 20 + 5)} 秒\n\n是否需要对结果进行调整？`,
           `我已经处理了您的请求。\n\n**关键发现：**\n- 检测到 ${Math.floor(Math.random() * 10 + 3)} 个相关条目\n- 数据质量评分: ${(Math.random() * 20 + 80).toFixed(1)}%\n- 已生成结构化输出\n\n请查看工作区中的输出文件。`,
         ]
         dispatch({
@@ -281,10 +289,10 @@ export default function AgentWebUI() {
           style={{ paddingLeft: depth * 16 + 12 }}
           onClick={() => item.type === 'folder' && toggleFolder(item.name)}
         >
-          <span className="webui-file-icon">
+          <span className="webui-file-icon" style={{ display: 'flex', alignItems: 'center' }}>
             {item.type === 'folder' 
-              ? (expandedFolders.has(item.name) ? '📂' : '📁') 
-              : '📄'
+              ? (expandedFolders.has(item.name) ? <IconFolderOpen size={14} /> : <IconFolder size={14} />) 
+              : <IconFile size={14} />
             }
           </span>
           <span className="webui-file-name">{item.name}</span>
@@ -293,7 +301,7 @@ export default function AgentWebUI() {
             className="row-action-btn visible" 
             onClick={(e) => { e.stopPropagation(); handleActionClick(e, item.type === 'folder' ? 'folder' : 'file', item, depth === 0); }}
           >
-            ⋮
+            <IconMoreHorizontal size={14} />
           </button>
         </div>
         {item.type === 'folder' && expandedFolders.has(item.name) && item.children && renderFileTree(item.children, depth + 1)}
@@ -306,15 +314,17 @@ export default function AgentWebUI() {
       {/* ========== LEFT: Conversation List ========== */}
       <div className="webui-sidebar">
         <div className="webui-sidebar-header">
-          <button className="webui-back-btn" onClick={() => navigate(-1)}>← 返回</button>
+          <button className="webui-back-btn" onClick={() => navigate(-1)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <IconArrowLeft size={14} /> 返回
+          </button>
           <div className="webui-agent-name">{queryTitle || agent.name}</div>
         </div>
         
         <div className="webui-sidebar-menu">
-          <div className={`webui-menu-item ${activeView === 'chat' ? 'active' : ''}`} onClick={() => setActiveView('chat')}>💬 会话</div>
-          <div className={`webui-menu-item ${activeView === 'skills' ? 'active' : ''}`} onClick={() => setActiveView('skills')}>🔧 技能配置</div>
-          <div className={`webui-menu-item ${activeView === 'cron' ? 'active' : ''}`} onClick={() => setActiveView('cron')}>⏱️ 定时任务</div>
-          <div className={`webui-menu-item ${activeView === 'artifacts' ? 'active' : ''}`} onClick={() => setActiveView('artifacts')}>📦 制品管理</div>
+          <div className={`webui-menu-item ${activeView === 'chat' ? 'active' : ''}`} onClick={() => setActiveView('chat')} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconMessageSquare size={16} /> 会话</div>
+          <div className={`webui-menu-item ${activeView === 'skills' ? 'active' : ''}`} onClick={() => setActiveView('skills')} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconWrench size={16} /> 技能配置</div>
+          <div className={`webui-menu-item ${activeView === 'cron' ? 'active' : ''}`} onClick={() => setActiveView('cron')} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconClock size={16} /> 定时任务</div>
+          <div className={`webui-menu-item ${activeView === 'artifacts' ? 'active' : ''}`} onClick={() => setActiveView('artifacts')} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconPackage size={16} /> 制品管理</div>
         </div>
         
         <div className="webui-menu-divider" />
@@ -340,9 +350,9 @@ export default function AgentWebUI() {
               <button 
                 className={`action-btn small ${showWorkspace ? 'active' : ''}`} 
                 onClick={() => setShowWorkspace(!showWorkspace)}
-                style={{ fontSize: '12px', padding: '4px 10px' }}
+                style={{ fontSize: '12px', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: 6 }}
               >
-                {showWorkspace ? '📂 隐藏工作区' : '📁 显示工作区'}
+                {showWorkspace ? <><IconFolderOpen size={14} /> 隐藏工作区</> : <><IconFolder size={14} /> 显示工作区</>}
               </button>
             </div>
           </div>
@@ -350,7 +360,7 @@ export default function AgentWebUI() {
           <div className="webui-messages">
             {!currentConv || currentConv.messages.length === 0 ? (
               <div className="webui-welcome">
-                <div className="webui-welcome-icon">💬</div>
+                <div className="webui-welcome-icon"><IconMessageSquare size={48} style={{ color: 'var(--notion-gray-300)' }} /></div>
                 <div className="webui-welcome-title">开始对话</div>
                 <div className="webui-welcome-desc">已为您开启专属会话。输入你的需求，Agent 将为你处理。</div>
               </div>
@@ -365,7 +375,9 @@ export default function AgentWebUI() {
                   )}
                   {msg.role === 'tool' && (
                     <div className="webui-msg-row webui-msg-tool-row">
-                      <div className="webui-msg-avatar webui-avatar-tool">⚙</div>
+                      <div className="webui-msg-avatar webui-avatar-tool">
+                        <IconTerminal size={12} />
+                      </div>
                       <div className="webui-tool-log">
                         <div className="webui-tool-header">工具执行过程</div>
                         <pre>{msg.content}</pre>
@@ -374,7 +386,9 @@ export default function AgentWebUI() {
                   )}
                   {msg.role === 'assistant' && (
                     <div className="webui-msg-row webui-msg-assistant-row">
-                      <div className="webui-msg-avatar webui-avatar-agent">🤖</div>
+                      <div className="webui-msg-avatar webui-avatar-agent">
+                        <IconBot size={18} />
+                      </div>
                       <div className="webui-msg-bubble webui-msg-agent-bubble">
                         {msg.content.split('\n').map((line, li) => (
                           <span key={li}>{line}<br/></span>
@@ -388,7 +402,7 @@ export default function AgentWebUI() {
             {isTyping && (
               <div className="webui-msg webui-msg-assistant">
                 <div className="webui-msg-row webui-msg-assistant-row">
-                  <div className="webui-msg-avatar webui-avatar-agent">🤖</div>
+                  <div className="webui-msg-avatar webui-avatar-agent"><IconBot size={18} /></div>
                   <div className="webui-typing">
                     <span /><span /><span />
                   </div>
@@ -402,12 +416,16 @@ export default function AgentWebUI() {
             {fileNames.length > 0 && (
               <div className="webui-attached-files">
                 {fileNames.map(f => (
-                  <span key={f} className="webui-attached-file">📎 {f} <span className="webui-file-remove" onClick={() => removeFile(f)}>×</span></span>
+                  <span key={f} className="webui-attached-file">
+                    <IconPaperclip size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> 
+                    {f} 
+                    <span className="webui-file-remove" onClick={() => removeFile(f)}><IconX size={10} /></span>
+                  </span>
                 ))}
               </div>
             )}
             <div className="webui-input-row">
-              <button className="webui-attach-btn" onClick={() => fileInputRef.current?.click()} title="上传文件">+</button>
+              <button className="webui-attach-btn" onClick={() => fileInputRef.current?.click()} title="上传文件"><IconPlus size={18} /></button>
               <input type="file" ref={fileInputRef} style={{display:'none'}} multiple onChange={handleFileSelect} />
               <textarea
                 className="webui-textarea"
@@ -417,7 +435,9 @@ export default function AgentWebUI() {
                 placeholder="请输入你的需求"
                 rows={1}
               />
-              <button className="webui-send-btn" onClick={sendMessage} disabled={!inputText.trim() && fileNames.length === 0}>↑</button>
+              <button className="webui-send-btn" onClick={sendMessage} disabled={!inputText.trim() && fileNames.length === 0}>
+                <IconArrowUp size={18} />
+              </button>
             </div>
           </div>
         </div>
@@ -425,24 +445,24 @@ export default function AgentWebUI() {
         <div className="cron-mgmt-content">
           <div className="cron-header-row">
             <h2 className="cron-main-title">定时任务</h2>
-            <button className="cron-btn-new" onClick={() => { setEditingCron({ name: '', prompt: '', time: '10:00', days: [1,2,3,4,5], icon: '📄', schedType: 'daily' }); setShowCronModal(true); }}>
-              <span>+</span> 新任务
+            <button className="cron-btn-new" onClick={() => { setEditingCron({ name: '', prompt: '', time: '10:00', days: [1,2,3,4,5], icon: 'file', schedType: 'daily' }); setShowCronModal(true); }} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <IconPlus size={14} /> 新任务
             </button>
           </div>
 
           <div className="cron-template-grid">
             <div className="cron-template-card">
-              <div className="cron-card-icon" style={{ background: '#f6ffed', color: '#52c41a' }}>📄</div>
+              <div className="cron-card-icon" style={{ background: '#f6ffed', color: '#52c41a' }}><IconFile size={20} /></div>
               <div className="cron-card-title">每日行业资讯</div>
               <div className="cron-card-desc">每天上午 9 点 25 分，给我推送当天新语资讯...</div>
             </div>
             <div className="cron-template-card">
-              <div className="cron-card-icon" style={{ background: '#e6f7ff', color: '#1890ff' }}>⏱️</div>
+              <div className="cron-card-icon" style={{ background: '#e6f7ff', color: '#1890ff' }}><IconClock size={20} /></div>
               <div className="cron-card-title">市场舆情追踪</div>
               <div className="cron-card-desc">每天中午 13 点 30 分，帮我搜索并汇总舆情...</div>
             </div>
             <div className="cron-template-card">
-              <div className="cron-card-icon" style={{ background: '#f9f0ff', color: '#722ed1' }}>📅</div>
+              <div className="cron-card-icon" style={{ background: '#f9f0ff', color: '#722ed1' }}><IconCalendar size={20} /></div>
               <div className="cron-card-title">工作周报</div>
               <div className="cron-card-desc">每周五下午 17 点 45 分，帮我生成周报...</div>
             </div>
@@ -475,17 +495,17 @@ export default function AgentWebUI() {
                       </label>
                     </td>
                     <td style={{ textAlign: 'right', position: 'relative' }}>
-                      <button className="cron-more-btn" onClick={() => setPopoverId(popoverId === item.id ? null : item.id)}>•••</button>
+                      <button className="cron-more-btn" onClick={() => setPopoverId(popoverId === item.id ? null : item.id)}><IconMoreHorizontal size={14} /></button>
                       {popoverId === item.id && (
                         <div className="cron-popover">
-                          <div className="popover-item" onClick={handleRunNow}>▶ 立即运行</div>
-                          <div className="popover-item" onClick={() => { setEditingCron({ name: item.name, prompt: '请搜索并汇总 "agent infra" 在过去24小时内的全网最新动态...', time: '10:00', days: [1,2,3,4,5], icon: '📄', schedType: 'daily', cron: '0 0/15 * * * ?' }); setShowCronModal(true); setPopoverId(null); }}>✏️ 编辑</div>
+                          <div className="popover-item" onClick={handleRunNow} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconRocket size={14} /> 立即运行</div>
+                          <div className="popover-item" onClick={() => { setEditingCron({ name: item.name, prompt: '请搜索并汇总 "agent infra" 在过去24小时内的全网最新动态...', time: '10:00', days: [1,2,3,4,5], icon: 'file', schedType: 'daily', cron: '0 0/15 * * * ?' }); setShowCronModal(true); setPopoverId(null); }} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconEdit size={14} /> 编辑</div>
                           <div className="popover-item danger" onClick={() => {
                             if (window.confirm('确定要删除该定时任务吗？')) {
                               alert('已删除');
                               setActiveActionItem(null);
                             }
-                          }}>🗑️ 删除</div>
+                          }} style={{ display: 'flex', alignItems: 'center', gap: 8 }}><IconTrash size={14} /> 删除</div>
                         </div>
                       )}
                     </td>
@@ -503,8 +523,8 @@ export default function AgentWebUI() {
               <p>管理 Agent 已绑定的技能，或使用 AI 生成新技能</p>
             </div>
             <div className="skill-actions">
-              <button className="action-btn" onClick={() => alert('从技能中心添加')}>+ 库添加</button>
-              <button className="btn-ai-gen" onClick={() => setShowAIGenModal(true)}>✨ AI 生成技能</button>
+              <button className="action-btn" onClick={() => alert('从技能中心添加')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}><IconPlus size={14} /> 库添加</button>
+              <button className="btn-ai-gen" onClick={() => setShowAIGenModal(true)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}><IconSparkles size={14} /> AI 生成技能</button>
             </div>
           </div>
 
@@ -513,7 +533,7 @@ export default function AgentWebUI() {
               <div key={idx} className="skill-card">
                 <div className="skill-card-header">
                   <div className="skill-icon-box">
-                    {skillName === 'web_search' ? '🔍' : skillName === 'interpreter' ? '💻' : skillName === 'file_manager' ? '📂' : '🛠️'}
+                    {skillName === 'web_search' ? <IconSearch size={20} /> : skillName === 'interpreter' ? <IconMonitor size={20} /> : skillName === 'file_manager' ? <IconFolder size={20} /> : <IconSettings size={20} />}
                   </div>
                   <button 
                     className="btn-remove-skill" 
@@ -528,7 +548,7 @@ export default function AgentWebUI() {
                       }
                     }}
                   >
-                    ×
+                    <IconX size={14} />
                   </button>
                 </div>
                 <div className="skill-card-name">{skillName}</div>
@@ -553,7 +573,9 @@ export default function AgentWebUI() {
               <h2>制品管理</h2>
               <p style={{ color: '#999', fontSize: '14px', margin: '4px 0 0' }}>查看和维护 Agent 生成的各类数字化制品及版本</p>
             </div>
-            <button className="action-btn primary" onClick={() => setShowCreateArtModal(true)}>+ 创建制品</button>
+            <button className="action-btn primary" onClick={() => setShowCreateArtModal(true)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <IconPlus size={14} /> 创建制品
+            </button>
           </div>
 
           <table className="artifact-table">
@@ -571,7 +593,9 @@ export default function AgentWebUI() {
                 <Fragment key={art.id}>
                   <tr>
                     <td>
-                      <div className="artifact-name">📦 {art.name}</div>
+                      <div className="artifact-name" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <IconPackage size={16} style={{ color: '#6366f1' }} /> {art.name}
+                      </div>
                     </td>
                     <td>
                       <span className="artifact-version-pill">{art.versions[0]?.version}</span>
@@ -621,7 +645,7 @@ export default function AgentWebUI() {
       {showCronModal && editingCron && (
         <div className="cron-modal-overlay">
           <div className="cron-modal">
-            <button className="cron-modal-close" onClick={() => setShowCronModal(false)}>×</button>
+            <button className="cron-modal-close" onClick={() => setShowCronModal(false)}><IconX size={20} /></button>
             <div>
               <h3 className="cron-modal-title">编辑定时任务</h3>
               <p className="cron-modal-subtitle">设置定时任务名称、图标、提示词和执行计划。</p>
@@ -637,13 +661,24 @@ export default function AgentWebUI() {
             <div className="cron-form-item">
               <label className="cron-form-label">任务图标</label>
               <div className="icon-selector-grid">
-                {['📄', '⏱️', '📅', '🔍', '📊', '📰', '🤖', '💡', '🔔', '♻️', '🚀', '🔥', '🛠️', '📡', '📁', '🛡️'].map(emoji => (
+                {[
+                  { key: 'file', icon: <IconFile /> },
+                  { key: 'clock', icon: <IconClock /> },
+                  { key: 'calendar', icon: <IconCalendar /> },
+                  { key: 'search', icon: <IconSearch /> },
+                  { key: 'monitor', icon: <IconMonitor /> },
+                  { key: 'package', icon: <IconPackage /> },
+                  { key: 'bot', icon: <IconBot /> },
+                  { key: 'sparkles', icon: <IconSparkles /> },
+                  { key: 'settings', icon: <IconSettings /> },
+                  { key: 'zap', icon: <IconPlus /> }
+                ].map(opt => (
                   <div 
-                    key={emoji} 
-                    className={`icon-opt ${editingCron.icon === emoji ? 'active' : ''}`}
-                    onClick={() => setEditingCron({...editingCron, icon: emoji})}
+                    key={opt.key} 
+                    className={`icon-opt ${editingCron.icon === opt.key ? 'active' : ''}`}
+                    onClick={() => setEditingCron({...editingCron, icon: opt.key})}
                   >
-                    {emoji}
+                    {opt.icon}
                   </div>
                 ))}
               </div>
@@ -682,17 +717,17 @@ export default function AgentWebUI() {
             <h3 className="run-progress-title">正在执行定时任务</h3>
             <div className="run-timeline">
               <div className={`run-step ${runStep >= 0 ? 'active' : ''} ${runStep > 0 ? 'done' : ''}`}>
-                <div className="run-step-icon">{runStep > 0 ? '✓' : '1'}</div>
+                <div className="run-step-icon">{runStep > 0 ? <IconCheck size={14} /> : '1'}</div>
                 <div className="run-step-label">连接 Agent</div>
                 <div className={`run-line ${runStep > 0 ? 'done' : ''}`} />
               </div>
               <div className={`run-step ${runStep >= 1 ? 'active' : ''} ${runStep > 1 ? 'done' : ''}`}>
-                <div className="run-step-icon">{runStep > 1 ? '✓' : '2'}</div>
+                <div className="run-step-icon">{runStep > 1 ? <IconCheck size={14} /> : '2'}</div>
                 <div className="run-step-label">运行定时任务</div>
                 <div className={`run-line ${runStep > 1 ? 'done' : ''}`} />
               </div>
               <div className={`run-step ${runStep >= 2 ? 'active' : ''}`}>
-                <div className="run-step-icon">{runStep >= 2 ? '✓' : '3'}</div>
+                <div className="run-step-icon">{runStep >= 2 ? <IconCheck size={14} /> : '3'}</div>
                 <div className="run-step-label">执行成功</div>
               </div>
             </div>
@@ -703,8 +738,8 @@ export default function AgentWebUI() {
       {showAIGenModal && (
         <div className="ai-modal-overlay">
           <div className="ai-modal">
-            <button className="cron-modal-close" onClick={() => setShowAIGenModal(false)}>×</button>
-            <h3 className="ai-gen-title">✨ AI 生成智能技能</h3>
+            <button className="cron-modal-close" onClick={() => setShowAIGenModal(false)}><IconX size={20} /></button>
+            <h3 className="ai-gen-title"><IconSparkles size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#6366f1' }} /> AI 生成智能技能</h3>
             <textarea 
               className="ai-prompt-area"
               placeholder="例如: 帮我写一个能查询当前主要数字货币价格的工具..."
@@ -738,21 +773,21 @@ export default function AgentWebUI() {
         >
           {activeActionItem.type === 'folder' ? (
             <>
-              <div className="cm-item" onClick={() => alert('上传文件')}>📤 上传文件</div>
-              <div className="cm-item" onClick={() => alert('新建文件夹')}>📁 新建子目录</div>
+              <div className="cm-item" onClick={() => alert('上传文件')}><IconUpload size={14} style={{ marginRight: 10 }} /> 上传文件</div>
+              <div className="cm-item" onClick={() => alert('新建文件夹')}><IconFolder size={14} style={{ marginRight: 10 }} /> 新建子目录</div>
             </>
           ) : (
             <>
-              <div className="cm-item" onClick={() => alert('下载文件')}>⬇️ 下载文件</div>
+              <div className="cm-item" onClick={() => alert('下载文件')}><IconDownload size={14} style={{ marginRight: 10 }} /> 下载文件</div>
               <div className="cm-divider" />
-              <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}>📦 存为制品</div>
+              <div className="cm-item" onClick={() => { setLinkFile(activeActionItem.item); setShowArtifactLinkModal(true); setActiveActionItem(null); }}><IconPackage size={14} style={{ marginRight: 10 }} /> 存为制品</div>
               <div className="cm-divider" />
               <div className="cm-item danger" onClick={() => {
                 if (window.confirm(`确定要删除文件 "${activeActionItem.item.name}" 吗？`)) {
                   alert('文件已删除');
                   setActiveActionItem(null);
                 }
-              }}>🗑️ 删除文件</div>
+              }}><IconTrash size={14} style={{ marginRight: 10 }} /> 删除文件</div>
             </>
           )}
         </div>
@@ -784,9 +819,9 @@ export default function AgentWebUI() {
       <div className={`webui-workspace ${activeView === 'cron' || activeView === 'skills' || activeView === 'artifacts' || !showWorkspace ? 'hidden' : ''}`}>
         <div className="webui-workspace-header">
           <span>工作区文件</span>
-          <div className="workspace-header-actions">
-            <button className="ws-header-btn" onClick={expandAll} title="全部展开">📂</button>
-            <button className="ws-header-btn" onClick={collapseAll} title="全部折叠">📁</button>
+          <div className="workspace-header-actions" style={{ display: 'flex', gap: 4 }}>
+            <button className="ws-header-btn" onClick={expandAll} title="全部展开" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconFolderOpen size={14} /></button>
+            <button className="ws-header-btn" onClick={collapseAll} title="全部折叠" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconFolder size={14} /></button>
           </div>
         </div>
         <div className="webui-file-tree">
@@ -898,8 +933,8 @@ function ArtifactLinkModal({ file, artifacts, onClose, onSave }) {
   return (
     <div className="ai-modal-overlay">
       <div className="ai-modal modal-artifact-link">
-        <button className="cron-modal-close" onClick={onClose}>×</button>
-        <h3>📦 存为制品</h3>
+        <button className="cron-modal-close" onClick={onClose}><IconX size={20} /></button>
+        <h3><IconPackage size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#6366f1' }} /> 存为制品</h3>
         <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>
           将文件 <strong>{file?.name}</strong> 发布为制品版本
         </p>
@@ -921,7 +956,7 @@ function ArtifactLinkModal({ file, artifacts, onClose, onSave }) {
                   <div style={{ fontWeight: 600 }}>{art.name}</div>
                   <div style={{ fontSize: '11px', color: '#999' }}>当前版本: {art.versions[0]?.version}</div>
                 </div>
-                {selectedArtId === art.id && <span style={{ color: '#6366f1' }}>✓</span>}
+                {selectedArtId === art.id && <span style={{ color: '#6366f1' }}><IconCheck size={14} /></span>}
               </div>
             ))}
           </div>
@@ -953,7 +988,7 @@ function ArtifactLinkModal({ file, artifacts, onClose, onSave }) {
             value={version}
             onChange={e => setVersion(e.target.value)}
           />
-          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>⚠️ {error}</div>}
+          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', display: 'flex', alignItems: 'center', gap: 4 }}><IconAlertTriangle size={12} /> {error}</div>}
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>
@@ -985,8 +1020,8 @@ function CreateArtModal({ onClose, onSave }) {
   return (
     <div className="ai-modal-overlay">
       <div className="ai-modal modal-artifact-link">
-        <button className="cron-modal-close" onClick={onClose}>×</button>
-        <h3>📦 创建新制品</h3>
+        <button className="cron-modal-close" onClick={onClose}><IconX size={20} /></button>
+        <h3><IconPackage size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#6366f1' }} /> 创建新制品</h3>
         <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '24px' }}>
           为您的 Agent 产出物创建一个新的分类容器。
         </p>
@@ -1009,7 +1044,7 @@ function CreateArtModal({ onClose, onSave }) {
             onChange={e => setDesc(e.target.value)}
             rows={4}
           />
-          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>⚠️ {error}</div>}
+          {error && <div className="version-error-msg" style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', display: 'flex', alignItems: 'center', gap: 4 }}><IconAlertTriangle size={12} /> {error}</div>}
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>

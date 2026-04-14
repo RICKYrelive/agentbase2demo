@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DataToolbar } from '../components/PageLayout'
 import { useSkills } from '../store/skillStore'
+import { IconSearch, IconRefresh, IconPackage, IconAlertTriangle } from '../components/Icons'
 
 const STATUS_COLORS = {
   '运行中': { bg: '#f6ffed', color: '#52c41a', border: '#b7eb8f' },
@@ -52,10 +53,12 @@ export default function SkillPackageList() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索名称或ID" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')}>
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       <div className="data-table-wrap">
@@ -72,7 +75,7 @@ export default function SkillPackageList() {
               <tr>
                 <td colSpan={columns.length} className="data-table-empty">
                   <div className="empty-state ha-empty">
-                    <div className="empty-icon">📦</div>
+                    <IconPackage size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
                     <div className="ha-empty-title">还没有技能包</div>
                     <div className="ha-empty-desc">创建一个技能包，将多个相关的 Skill 组织在一起</div>
                     <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/skill-center/package/create')}>+ 创建技能包</button>
@@ -124,7 +127,7 @@ export default function SkillPackageList() {
       {confirmDelete && (
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">⚠️</div>
+            <IconAlertTriangle size={40} style={{ color: '#ff4d4f', margin: '0 auto 16px', display: 'block' }} />
             <div className="modal-message">确定要删除技能包 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
             <div style={{display:'flex', gap: 12, justifyContent:'center'}}>
               <button className="action-btn primary" style={{background:'#ff4d4f', borderColor:'#ff4d4f'}} onClick={doDelete}>删除</button>

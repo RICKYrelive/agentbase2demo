@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import PageLayout from '../../components/PageLayout'
+import { 
+  IconFile, IconGithub, IconFolder, IconFolderOpen, 
+  IconInfo, IconX, IconChevronDown, IconChevronRight 
+} from '../../components/Icons'
 import './AF.css'
 
 const MOUNT_TYPES = {
-  file:      { label: '文件',   icon: '📄' },
-  github:    { label: 'GitHub', icon: '🐙' },
-  workspace: { label: '工作区', icon: '📁' },
+  file:      { label: '文件',   icon: <IconFile size={14} /> },
+  github:    { label: 'GitHub', icon: <IconGithub size={14} /> },
+  workspace: { label: '工作区', icon: <IconFolder size={14} /> },
 }
 
 const MOCK_FS = [
@@ -55,8 +59,10 @@ export default function AFFilesystem() {
       rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ New Filesystem</button>}
     >
       <div className="info-alert">
-        <span className="info-alert-icon">ℹ️</span>
-        Filesystem 定义可挂载到 Session 工作区的文件系统快照，支持 GitHub 仓库、Files API 文件和本地目录三种挂载类型。在创建 Session 时引用，确保工作环境一致性。
+        <IconInfo size={18} style={{ color: 'var(--notion-blue)', flexShrink: 0 }} />
+        <span style={{ marginLeft: 8 }}>
+          Filesystem 定义可挂载到 Session 工作区的文件系统快照，支持 GitHub 仓库、Files API 文件和本地目录三种挂载类型。在创建 Session 时引用，确保工作环境一致性。
+        </span>
       </div>
 
       <div className="affs-list">
@@ -66,7 +72,7 @@ export default function AFFilesystem() {
             <div key={fs.id} className="affs-card">
               <div className="affs-head" onClick={() => setExpanded(isOpen ? null : fs.id)}>
                 <div className="affs-head-left">
-                  <span className="affs-icon">📂</span>
+                  {isOpen ? <IconFolderOpen size={20} style={{ color: 'var(--notion-blue)' }} /> : <IconFolder size={20} style={{ color: 'var(--notion-blue)' }} />}
                   <div>
                     <div className="affs-name notion-body-medium">{fs.name}</div>
                     <div className="affs-meta">
@@ -80,7 +86,7 @@ export default function AFFilesystem() {
                 </div>
                 <div className="affs-head-right">
                   <span className="affs-created">{fs.createdAt}</span>
-                  <span className={`affs-arrow ${isOpen ? 'open' : ''}`}>›</span>
+                  {isOpen ? <IconChevronDown size={16} /> : <IconChevronRight size={16} />}
                 </div>
               </div>
               {isOpen && (
@@ -114,10 +120,12 @@ export default function AFFilesystem() {
           <div className="af-drawer" onClick={e => e.stopPropagation()}>
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
-                <div className="af-drawer-icon">📂</div>
+                <IconFolderOpen size={24} style={{ color: 'var(--notion-blue)' }} />
                 <div className="af-drawer-title notion-h3">新建 Filesystem</div>
               </div>
-              <button className="af-drawer-close" onClick={() => setShowDrawer(false)}>×</button>
+              <button className="af-drawer-close" onClick={() => setShowDrawer(false)}>
+                <IconX size={20} />
+              </button>
             </div>
 
             <div className="af-drawer-body">

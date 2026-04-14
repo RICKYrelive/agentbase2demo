@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useManagedAgents, RISK_LEVEL_COLORS } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { IconCheckCircle, IconTool } from '../../components/Icons'
 import './MAC.css'
 
 export default function MACApprovals() {
@@ -52,7 +53,7 @@ export default function MACApprovals() {
       <div className="mac-approvals-list">
         {filtered.length === 0 ? (
           <div className="mac-empty-state-full">
-            <div className="empty-icon">✅</div>
+            <div className="empty-icon"><IconCheckCircle size={48} style={{ opacity: 0.2 }} /></div>
             <div className="ha-empty-title">{statusFilter === 'pending' ? '没有待审批的请求' : '没有匹配的审批记录'}</div>
           </div>
         ) : filtered.map(appr => {
@@ -65,7 +66,7 @@ export default function MACApprovals() {
               <div className="mac-approval-main" onClick={() => setExpandedApproval(isExpanded ? null : appr.id)}>
                 <div className="mac-approval-left">
                   <div className="mac-approval-tool">
-                    <span className="mac-approval-icon">🔧</span>
+                    <span className="mac-approval-icon"><IconTool size={16} /></span>
                     <strong>{appr.toolName}</strong>
                     <span className="ha-status-tag" style={{ background: rc.bg, color: rc.color, borderColor: rc.border, fontSize: 11, padding: '1px 6px' }}>{rc.label}风险</span>
                   </div>

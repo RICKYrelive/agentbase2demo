@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import PageLayout, { GuideCards, DataToolbar } from '../../components/PageLayout'
+import { 
+  IconBot, IconSearch, IconRefresh, IconCopy, 
+  IconDrama, IconZap, IconBrain, IconSparkles, IconX, IconPlus, IconMinus
+} from '../../components/Icons'
 import './AF.css'
 
 const guideCards = [
@@ -19,9 +23,9 @@ const MOCK_AGENTS = [
 ]
 
 const MOCK_MODELS = [
-  { id: 'sonnet', name: 'Claude 3.5 Sonnet', desc: '智能与速度的最佳平衡，适合复杂任务。', icon: '🎭' },
-  { id: 'haiku', name: 'Claude 3.5 Haiku', desc: '极速响应，适合简单分类与路由。', icon: '⚡' },
-  { id: 'opus', name: 'Claude 3 Opus', desc: '极致推理能力，处理深层科学与数学问题。', icon: '🧠' },
+  { id: 'sonnet', name: 'Claude 3.5 Sonnet', desc: '智能与速度的最佳平衡，适合复杂任务。', icon: <IconDrama size={24} /> },
+  { id: 'haiku', name: 'Claude 3.5 Haiku', desc: '极速响应，适合简单分类与路由。', icon: <IconZap size={24} /> },
+  { id: 'opus', name: 'Claude 3 Opus', desc: '极致推理能力，处理深层科学与数学问题。', icon: <IconBrain size={24} /> },
 ]
 
 const columns = ['ID', '名称', '模型', '版本', '状态', '工具集', '技能', '创建时间', '创建人', '操作']
@@ -66,8 +70,8 @@ export default function AFAgent() {
     <PageLayout
       title="Agent Blueprint"
       rightAction={
-        <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
-          {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}
+        <button className="action-btn" onClick={() => setShowGuide(!showGuide)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          {showGuide ? <><IconMinus size={14} /> 收起指引</> : <><IconPlus size={14} /> 展开指引</>}
         </button>
       }
     >
@@ -75,7 +79,7 @@ export default function AFAgent() {
 
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ 新建 Blueprint</button>
+          <button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 新建 Blueprint</button>
         }
         filters={
           <label className="af-toggle-label">
@@ -85,10 +89,12 @@ export default function AFAgent() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索名称或 ID" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm" onClick={() => showToast('已刷新')}>↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新')}>
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       <div className="data-table-wrap">
@@ -100,7 +106,7 @@ export default function AFAgent() {
             {filtered.length === 0 ? (
               <tr><td colSpan={columns.length} className="data-table-empty">
                 <div className="empty-state">
-                  <div className="empty-icon">🤖</div>
+                  <IconBot size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
                   <span>暂无 Blueprint — 点击「新建 Blueprint」进行创建</span>
                 </div>
               </td></tr>
@@ -108,7 +114,12 @@ export default function AFAgent() {
               const sc = STATUS_COLORS[a.status]
               return (
                 <tr key={a.id}>
-                  <td><span className="af-id-cell">{a.id}</span><button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(a.id); showToast('已复制') }}>⎘</button></td>
+                  <td>
+                    <span className="af-id-cell">{a.id}</span>
+                    <button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(a.id); showToast('已复制') }}>
+                      <IconCopy size={12} />
+                    </button>
+                  </td>
                   <td><span className="af-name-link">{a.name}</span></td>
                   <td><span className="af-model-badge">{a.model}</span></td>
                   <td><span className="ha-version-badge notion-caption">v{a.version}</span></td>
@@ -143,10 +154,12 @@ export default function AFAgent() {
           <div className="af-drawer" onClick={e => e.stopPropagation()}>
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
-                <div className="af-drawer-icon" style={{ background: 'var(--notion-bg-alt)' }}>🤖</div>
+                <IconBot size={24} style={{ color: 'var(--notion-blue)' }} />
                 <div className="af-drawer-title notion-h3">新建 Blueprint</div>
               </div>
-              <button className="af-drawer-close" onClick={resetAndClose}>×</button>
+              <button className="af-drawer-close" onClick={resetAndClose}>
+                <IconX size={20} />
+              </button>
             </div>
             
             <div className="af-drawer-body">
@@ -232,7 +245,7 @@ export default function AFAgent() {
                     </div>
                   </div>
                   <div className="af-success-state">
-                    <div className="af-success-icon">🎉</div>
+                    <IconSparkles size={48} style={{ color: '#f5a623', marginBottom: 12 }} />
                     <h3 className="notion-card-title">一切准备就绪</h3>
                     <p className="notion-body" style={{ color: 'var(--notion-gray-500)', marginTop: 8 }}>您可以立即创建此 Agent 或返回修改配置。</p>
                   </div>

@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { 
+  IconSearch, IconRefresh, IconX, IconRocket, 
+  IconFlask, IconBarChart, IconActivity, IconPlus
+} from '../../components/Icons'
 import './AF.css'
 
 const STATUS = {
@@ -17,9 +21,9 @@ const MOCK_SESSIONS = [
 ]
 
 const MOCK_AGENTS_LIBRARY = [
-  { id: 'ha-001', name: 'Insight Agent', desc: 'Expert in GitHub PR analysis and security auditing.', icon: '🔍' },
-  { id: 'ha-002', name: 'Code Reviewer', desc: 'Performs deep web research and document synthesis.', icon: '🧪' },
-  { id: 'ha-004', name: 'Data Pipeline', desc: 'Parses complex CSV/Excel and generates insights.', icon: '📊' },
+  { id: 'ha-001', name: 'Insight Agent', desc: 'Expert in GitHub PR analysis and security auditing.', icon: <IconSearch size={22} /> },
+  { id: 'ha-002', name: 'Code Reviewer', desc: 'Performs deep web research and document synthesis.', icon: <IconFlask size={22} /> },
+  { id: 'ha-004', name: 'Data Pipeline', desc: 'Parses complex CSV/Excel and generates insights.', icon: <IconBarChart size={22} /> },
 ]
 
 const MOCK_EVENTS = [
@@ -65,7 +69,7 @@ export default function AFSession() {
   return (
     <PageLayout title="Session">
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => setShowLauncher(true)}>+ New Session</button>}
+        buttons={<button className="action-btn primary" onClick={() => setShowLauncher(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> New Session</button>}
         filters={
           <select className="filter-select" value={agentFilter} onChange={e => setAgentFilter(e.target.value)}>
             <option value="all">所有 Agent</option>
@@ -74,10 +78,12 @@ export default function AFSession() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <IconSearch className="search-icon" size={16} />
           <input placeholder="搜索 Session ID 或标题" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm">
+          <IconRefresh size={14} />
+        </button>
       </DataToolbar>
 
       <div className="afs-layout">
@@ -90,7 +96,10 @@ export default function AFSession() {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr><td colSpan={columns.length} className="data-table-empty">
-                    <div className="empty-state"><div className="empty-icon">▶️</div><span>暂无 Session</span></div>
+                    <div className="empty-state">
+                      <IconActivity size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
+                      <span>暂无 Session</span>
+                    </div>
                   </td></tr>
                 ) : filtered.map(s => {
                   const st = STATUS[s.status]
@@ -132,7 +141,9 @@ export default function AFSession() {
                 <div className="afs-panel-title notion-body-medium">{selected.title}</div>
                 <div className="afs-panel-id">{selected.id}</div>
               </div>
-              <button className="afs-close-btn" onClick={() => setSelected(null)}>✕</button>
+              <button className="afs-close-btn" onClick={() => setSelected(null)}>
+                <IconX size={18} />
+              </button>
             </div>
             <div className="afs-stats">
               <div className="afs-stat"><span className="afs-stat-label">输入 Token</span><span className="afs-stat-val">{selected.inputTokens.toLocaleString()}</span></div>
@@ -159,10 +170,12 @@ export default function AFSession() {
           <div className="af-drawer" onClick={e => e.stopPropagation()}>
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
-                <div className="af-drawer-icon">🚀</div>
-                <div className="af-drawer-title">启动新会话</div>
+                <IconRocket size={24} style={{ color: 'var(--notion-blue)' }} />
+                <div className="af-drawer-title notion-h3">启动新会话</div>
               </div>
-              <button className="af-drawer-close" onClick={() => setShowLauncher(false)}>×</button>
+              <button className="af-drawer-close" onClick={() => setShowLauncher(false)}>
+                <IconX size={20} />
+              </button>
             </div>
 
             <div className="af-drawer-body">

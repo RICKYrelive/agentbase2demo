@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { useManagedAgents } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { 
+  IconPlus, IconSearch, IconRotateCcw, IconKey, 
+  IconEye, IconEyeOff, IconLock, IconAlertTriangle, 
+  IconTrash 
+} from '../../components/Icons'
 import './MAC.css'
 
 export default function MACSecrets() {
@@ -55,7 +60,7 @@ export default function MACSecrets() {
   return (
     <PageLayout title="Secrets" rightAction={<span style={{ fontSize: 12, color: '#999' }}>凭证管理 — 永不显示明文</span>}>
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => setShowAdd(true)}>+ 创建凭证</button>}
+        buttons={<button className="action-btn primary" onClick={() => setShowAdd(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建凭证</button>}
         filters={
           <select className="pagination-select" value={scopeFilter} onChange={e => setScopeFilter(e.target.value)}>
             <option value="all">全部范围</option>
@@ -65,10 +70,10 @@ export default function MACSecrets() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索凭证名称" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新')}><IconRotateCcw size={14} /></button>
       </DataToolbar>
 
       <div className="data-table-wrap">
@@ -80,7 +85,7 @@ export default function MACSecrets() {
             {filtered.length === 0 ? (
               <tr><td colSpan={8} className="data-table-empty">
                 <div className="empty-state ha-empty">
-                  <div className="empty-icon">🔑</div>
+                  <div className="empty-icon"><IconKey size={48} style={{ opacity: 0.2 }} /></div>
                   <div className="ha-empty-title">没有凭证</div>
                   <div className="ha-empty-desc">安全地存储 API Key、Token 等敏感信息</div>
                 </div>
@@ -93,8 +98,8 @@ export default function MACSecrets() {
                 <td style={{ fontFamily: 'monospace', color: '#999' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span>{revealedIds.has(s.id) ? 'sk-••••••••••••••••' : s.maskedValue}</span>
-                    <button style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: '#999' }} onClick={() => toggleReveal(s.id)} title={revealedIds.has(s.id) ? '隐藏' : '显示'}>
-                      {revealedIds.has(s.id) ? '🙈' : '👁'}
+                    <button style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', color: '#999' }} onClick={() => toggleReveal(s.id)} title={revealedIds.has(s.id) ? '隐藏' : '显示'}>
+                      {revealedIds.has(s.id) ? <IconEyeOff size={14} /> : <IconEye size={14} />}
                     </button>
                   </div>
                 </td>
@@ -104,7 +109,7 @@ export default function MACSecrets() {
                 <td>
                   <div className="ha-row-actions">
                     <button onClick={() => setRotateTarget(s)}>轮换</button>
-                    <button className="ha-delete-btn" onClick={() => setConfirmDelete(s)}>删除</button>
+                    <button className="ha-delete-btn" onClick={() => setConfirmDelete(s)}><IconTrash size={14} /></button>
                   </div>
                 </td>
               </tr>
@@ -114,9 +119,8 @@ export default function MACSecrets() {
         <div className="data-pagination"><span>共 {filtered.length} 条</span></div>
       </div>
 
-      {/* Security Notice */}
-      <div className="mac-notice" style={{ marginTop: 16 }}>
-        🔒 凭证以 AES-256 加密存储，仅在运行时通过环境变量注入，永远不会在 UI 中显示明文。工具调用使用引用而非明文传递。
+      <div className="mac-notice" style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <IconLock size={14} /> 凭证以 AES-256 加密存储，仅在运行时通过环境变量注入，永远不会在 UI 中显示明文。工具调用使用引用而非明文传递。
       </div>
 
       {/* Add Modal */}
@@ -160,7 +164,7 @@ export default function MACSecrets() {
       {rotateTarget && (
         <div className="modal-overlay" onClick={() => setRotateTarget(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">🔄</div>
+            <div className="modal-icon"><IconRotateCcw size={32} style={{ color: 'var(--primary-color)' }} /></div>
             <div className="modal-message">确定要轮换凭证 <strong>{rotateTarget.name}</strong> 吗？旧值将立即失效。</div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button className="action-btn primary" onClick={() => {
@@ -177,7 +181,7 @@ export default function MACSecrets() {
       {confirmDelete && (
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">⚠️</div>
+            <div className="modal-icon"><IconAlertTriangle size={32} style={{ color: '#faad14' }} /></div>
             <div className="modal-message">确定要删除凭证 <strong>{confirmDelete.name}</strong> 吗？正在使用的 Agent 将会运行失败。</div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button className="action-btn primary" style={{ background: '#ff4d4f', borderColor: '#ff4d4f' }} onClick={handleDelete}>删除</button>

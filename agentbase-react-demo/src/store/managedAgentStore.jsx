@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from 'react'
+import React, { createContext, useContext, useReducer } from 'react'
+import { IconUser, IconBot, IconWrench, IconClipboard, IconBarChart, IconLock, IconZap } from '../components/Icons'
 
 // ========== Helpers ==========
 let _agentNextId = 1
@@ -506,13 +507,13 @@ export const RISK_LEVEL_COLORS = {
 }
 
 export const EVENT_TYPE_ICONS = {
-  'user.message': '👤',
-  'agent.message': '🤖',
-  'tool_use': '🔧',
-  'tool_result': '📋',
-  'status': '📊',
-  'approval': '🔒',
-  'custom': '⚡',
+  'user.message': <IconUser size={14} />,
+  'agent.message': <IconBot size={14} />,
+  'tool_use': <IconWrench size={14} />,
+  'tool_result': <IconClipboard size={14} />,
+  'status': <IconBarChart size={14} />,
+  'approval': <IconLock size={14} />,
+  'custom': <IconZap size={14} />,
 }
 
 export const EVENT_TYPE_LABELS = {

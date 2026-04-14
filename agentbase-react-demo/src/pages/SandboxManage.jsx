@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
+import { IconArrowLeft, IconPlus, IconSearch, IconRotateCcw, IconInbox, IconInfo, IconX } from '../components/Icons'
 import './SandboxManage.css'
 
 const guideCards = [
@@ -167,7 +168,7 @@ export default function SandboxManage({ onAlert }) {
       <PageLayout 
         title={
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <button className="back-btn" onClick={() => navigate('/sandbox-manage')}>←</button>
+            <button className="back-btn" onClick={() => navigate('/sandbox-manage')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconArrowLeft size={16} /></button>
             <span>实例管理 - {activeTemplate?.name || '未知模板'}</span>
           </div>
         }
@@ -186,21 +187,21 @@ export default function SandboxManage({ onAlert }) {
 
         <DataToolbar
           buttons={
-            <button className="action-btn primary" onClick={() => onAlert('正在启动新实例...')}>+ 启动新实例</button>
+            <button className="action-btn primary" onClick={() => onAlert('正在启动新实例...')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 启动新实例</button>
           }
         >
           <div className="search-input">
-            <span className="search-icon">🔍</span>
+            <span className="search-icon"><IconSearch size={14} /></span>
             <input placeholder="搜索实例 ID" />
           </div>
-          <button className="refresh-btn-sm" onClick={() => onAlert('已刷新')}>↻</button>
+          <button className="refresh-btn-sm" onClick={() => onAlert('已刷新')}><IconRotateCcw size={14} /></button>
         </DataToolbar>
 
         {currentInstances.length > 0 ? (
           <DataTable columns={instanceColumns} data={currentInstances} />
         ) : (
           <div className="af-success-state">
-            <span style={{ fontSize: 40 }}>📭</span>
+            <IconInbox size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
             <p>该模板下暂无活跃实例</p>
           </div>
         )}
@@ -212,8 +213,8 @@ export default function SandboxManage({ onAlert }) {
     <PageLayout
       title="沙箱管理"
       rightAction={
-        <button className="action-btn" onClick={() => onAlert('展开/收起指引')}>
-          ⊙ 指引记录
+        <button className="action-btn" onClick={() => onAlert('展开/收起指引')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <IconInfo size={14} /> 指引记录
         </button>
       }
     >
@@ -241,14 +242,14 @@ export default function SandboxManage({ onAlert }) {
 
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => setShowCreateDrawer(true)}>+ 创建沙箱模板</button>
+          <button className="action-btn primary" onClick={() => setShowCreateDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建沙箱模板</button>
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索模板名称" />
         </div>
-        <button className="refresh-btn-sm" onClick={() => onAlert('刷新完成')}>↻</button>
+        <button className="refresh-btn-sm" onClick={() => onAlert('刷新完成')}><IconRotateCcw size={14} /></button>
       </DataToolbar>
 
       <DataTable columns={templateColumns} data={MOCK_TEMPLATES} />
@@ -261,7 +262,7 @@ export default function SandboxManage({ onAlert }) {
               <div className="af-drawer-title-wrap">
                 <div className="af-drawer-title">创建沙箱模板</div>
               </div>
-              <button className="af-drawer-close" onClick={() => setShowCreateDrawer(false)}>×</button>
+              <button className="af-drawer-close" onClick={() => setShowCreateDrawer(false)}><IconX size={20} /></button>
             </div>
             
             <div className="af-drawer-body">
@@ -344,7 +345,7 @@ export default function SandboxManage({ onAlert }) {
                 <div className="af-drawer-title">编辑沙箱模板</div>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>ID: {editingTmpl.id}</div>
               </div>
-              <button className="af-drawer-close" onClick={() => setShowEditDrawer(false)}>×</button>
+              <button className="af-drawer-close" onClick={() => setShowEditDrawer(false)}><IconX size={20} /></button>
             </div>
             
             <div className="af-drawer-body">

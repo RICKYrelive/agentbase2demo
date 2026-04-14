@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useManagedAgents, RISK_LEVEL_COLORS } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { IconPlus, IconSearch, IconTool, IconSettings } from '../../components/Icons'
 import './MAC.css'
 
 const BUILTIN_TOOLS = [
@@ -47,7 +48,7 @@ export default function MACToolCatalog() {
   return (
     <PageLayout title="Tool Catalog" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{allTools.length} 个工具</span>}>
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => navigate('/managed-agent/tools/create')}>+ 注册 Custom Tool</button>}
+        buttons={<button className="action-btn primary" onClick={() => navigate('/managed-agent/tools/create')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 注册 Custom Tool</button>}
         filters={
           <div className="ha-filter-group">
             {categories.map(cat => (
@@ -59,7 +60,7 @@ export default function MACToolCatalog() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索工具名称" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
       </DataToolbar>
@@ -72,7 +73,7 @@ export default function MACToolCatalog() {
           return (
             <div key={tool.id} className="mac-catalog-item" onClick={() => setExpandedTool(isExpanded ? null : tool.id)}>
               <div className="mac-catalog-header">
-                <span className="mac-catalog-icon">{tool.category === 'Custom' ? '⚙️' : '🔧'}</span>
+                <span className="mac-catalog-icon">{tool.category === 'Custom' ? <IconSettings size={18} /> : <IconTool size={18} />}</span>
                 <span className="mac-catalog-name">{tool.name}</span>
                 <span className="ha-status-tag" style={{ background: rc.bg, color: rc.color, borderColor: rc.border, fontSize: 11, padding: '1px 6px' }}>{rc.label}风险</span>
                 {tool.approvalRequired && <span className="ha-mini-tag" style={{ background: '#fff2e8', borderColor: '#ffd8bf', color: '#fa8c16' }}>需审批</span>}

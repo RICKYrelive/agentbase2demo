@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useManagedAgents } from '../../store/managedAgentStore'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
+import { 
+  IconPlus, IconSearch, IconRotateCcw, IconList, IconGrid, 
+  IconPackage, IconTool, IconClipboard, IconLock, IconZap, 
+  IconAlertTriangle, IconTrash 
+} from '../../components/Icons'
 import './MAC.css'
 
 export default function MACEnvironmentList() {
@@ -30,19 +35,19 @@ export default function MACEnvironmentList() {
   return (
     <PageLayout title="Environments" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{environments.length} 个环境</span>}>
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => showToast('创建环境功能开发中', 'info')}>+ 创建环境</button>}
+        buttons={<button className="action-btn primary" onClick={() => showToast('创建环境功能开发中', 'info')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建环境</button>}
         filters={
           <div className="ha-view-toggle">
-            <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')}>☰</button>
-            <button className={`view-btn ${viewMode === 'card' ? 'active' : ''}`} onClick={() => setViewMode('card')}>▦</button>
+            <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')}><IconList size={16} /></button>
+            <button className={`view-btn ${viewMode === 'card' ? 'active' : ''}`} onClick={() => setViewMode('card')}><IconGrid size={16} /></button>
           </div>
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch size={14} /></span>
           <input placeholder="搜索环境名称" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <button className="refresh-btn-sm">↻</button>
+        <button className="refresh-btn-sm" onClick={() => showToast('已刷新')}><IconRotateCcw size={14} /></button>
       </DataToolbar>
 
       {viewMode === 'list' && (
@@ -64,7 +69,7 @@ export default function MACEnvironmentList() {
             {filtered.length === 0 ? (
               <tr><td colSpan={8} className="data-table-empty">
                 <div className="empty-state ha-empty">
-                  <div className="empty-icon">📦</div>
+                  <div className="empty-icon"><IconPackage size={48} style={{ opacity: 0.2 }} /></div>
                   <div className="ha-empty-title">还没有环境</div>
                   <div className="ha-empty-desc">创建一个运行环境，为 Agent 提供容器化沙箱</div>
                 </div>
@@ -90,7 +95,7 @@ export default function MACEnvironmentList() {
                   <td>
                     <div className="ha-row-actions">
                       <button onClick={() => navigate(`/managed-agent/environments/${env.id}`)}>详情</button>
-                      <button className="ha-delete-btn" onClick={() => setConfirmDelete(env)}>删除</button>
+                      <button className="ha-delete-btn" onClick={() => setConfirmDelete(env)}><IconTrash size={14} /></button>
                     </div>
                   </td>
                 </tr>
@@ -115,10 +120,10 @@ export default function MACEnvironmentList() {
                 </div>
                 <div className="mac-mcp-card-desc">{env.description}</div>
                 <div className="mac-card-capabilities" style={{ marginTop: 6 }}>
-                  <span className="mac-cap-pill">🛠 {env.runtime}</span>
-                  <span className="mac-cap-pill">📋 {env.dependencies.length} deps</span>
-                  <span className="mac-cap-pill">🔒 {env.networkPolicy.mode}</span>
-                  <span className="mac-cap-pill">⚡ {envSessionCount} sessions</span>
+                  <span className="mac-cap-pill"><IconTool size={12} style={{ marginRight: 4 }} /> {env.runtime}</span>
+                  <span className="mac-cap-pill"><IconClipboard size={12} style={{ marginRight: 4 }} /> {env.dependencies.length} deps</span>
+                  <span className="mac-cap-pill"><IconLock size={12} style={{ marginRight: 4 }} /> {env.networkPolicy.mode}</span>
+                  <span className="mac-cap-pill"><IconZap size={12} style={{ marginRight: 4 }} /> {envSessionCount} sessions</span>
                 </div>
                 <div className="mac-mcp-card-meta" style={{ marginTop: 8 }}>
                   <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{env.baseImage}</span>
@@ -134,7 +139,7 @@ export default function MACEnvironmentList() {
       {confirmDelete && (
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
-            <div className="modal-icon">⚠️</div>
+            <div className="modal-icon"><IconAlertTriangle size={32} style={{ color: '#faad14' }} /></div>
             <div className="modal-message">确定要删除环境 <strong>{confirmDelete.name}</strong> 吗？</div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button className="action-btn primary" style={{ background: '#ff4d4f', borderColor: '#ff4d4f' }} onClick={handleDelete}>删除</button>

@@ -1,76 +1,15 @@
 import { useState } from 'react'
 import PageLayout from '../../components/PageLayout'
+import { 
+  IconPaperclip, IconSend, IconDatabase, IconTerminal, 
+  IconEdit, IconSearch, IconFile, IconImage, IconBarChart, 
+  IconChevronRight, IconChevronDown, IconArrowLeft, IconCheck, IconX,
+  IconBot, IconFolder, IconFileText
+} from '../../components/Icons'
 import './AFWorkshop.css'
 import ShapeGrid from '../../components/effects/ShapeGrid'
 
-// Professional SVG Icons (Lucide-style)
-const IconPaperclip = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-  </svg>
-)
-
-const IconSend = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="19" x2="12" y2="5"></line>
-    <polyline points="5 12 12 5 19 12"></polyline>
-  </svg>
-)
-
-const IconDatabase = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-  </svg>
-)
-
-const IconTerminal = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="4 17 10 11 4 5"></polyline>
-    <line x1="12" y1="19" x2="20" y2="19"></line>
-  </svg>
-)
-
-const IconEdit = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-  </svg>
-)
-
-const IconSearch = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-)
-
-const IconFileText = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-    <polyline points="14 2 14 8 20 8"></polyline>
-    <line x1="16" y1="13" x2="8" y2="13"></line>
-    <line x1="16" y1="17" x2="8" y2="17"></line>
-    <polyline points="10 9 9 9 8 9"></polyline>
-  </svg>
-)
-
-const IconImage = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-    <polyline points="21 15 16 10 5 21"></polyline>
-  </svg>
-)
-
-const IconBarChart = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="20" x2="12" y2="10"></line>
-    <line x1="18" y1="20" x2="18" y2="4"></line>
-    <line x1="6" y1="20" x2="6" y2="16"></line>
-  </svg>
-)
+// Local icons removed and replaced by central Icons library
 
 const MOCK_TEMPLATES = {
   'Agent Blueprint': [
@@ -80,7 +19,7 @@ const MOCK_TEMPLATES = {
   ],
   Skill: [
     { id: 'st1', name: '网页抓取器', icon: <IconSearch />, desc: '解析网页 HTML 并提取关键信息' },
-    { id: 'st2', name: 'PDF 转换工具', icon: <IconFileText />, desc: '将各种文档格式转换为 PDF' },
+    { id: 'st2', name: 'PDF 转换工具', icon: <IconFile />, desc: '将各种文档格式转换为 PDF' },
     { id: 'st3', name: '图片处理脚本', icon: <IconImage />, desc: '自动调整图片大小与水印' },
   ]
 }
@@ -262,11 +201,11 @@ export default function AFWorkshop() {
         {[
           { step: 1, title: '基础定义', desc: '设定名称与核心目标' },
           { step: 2, title: '详细指令', desc: '编写系统级运行提示词' },
-          { step: 3, title: '能力扩展', desc: '添加工具或外部数据' },
+          { step: 3, title: '能力扩展', desc: '添加工具 or 外部数据' },
           { step: 4, title: '生成并初始化', desc: 'AI 生成初始代码与文档' },
         ].map(s => (
           <div key={s.step} className={`afw-wizard-step ${wizardStep === s.step ? 'active' : ''} ${wizardStep > s.step ? 'completed' : ''}`}>
-            <div className="afw-step-num">{wizardStep > s.step ? '✓' : s.step}</div>
+            <div className="afw-step-num">{wizardStep > s.step ? <IconCheck size={12} /> : s.step}</div>
             <div className="afw-step-info">
               <div className="afw-step-title">{s.title}</div>
               <div style={{ fontSize: 11, color: '#b0aca8' }}>{s.desc}</div>
@@ -320,9 +259,7 @@ export default function AFWorkshop() {
           {wizardStep === 4 && (
             <div style={{ textAlign: 'center', paddingTop: 60 }}>
               <div style={{ marginBottom: 20, color: 'var(--notion-blue)' }}>
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path>
-                </svg>
+                <IconBot size={64} />
               </div>
               <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>一切就绪！</h1>
               <p style={{ color: 'var(--text-secondary)', marginBottom: 40 }}>AI 正在根据你的指令生成初始模块、文档和脚本...</p>
@@ -347,7 +284,9 @@ export default function AFWorkshop() {
       {/* Left: Chat Area */}
       <div className="afw-ws-left">
         <div className="afw-header" style={{ borderBottom: '1px solid var(--card-border)', background: '#fff' }}>
-          <div className="afw-back-btn" onClick={() => setView('home')}>←</div>
+          <div className="afw-back-btn" onClick={() => setView('home')}>
+            <IconArrowLeft size={18} />
+          </div>
           <div className="page-header-left" style={{ margin: 0 }}>
             <div className="page-title-bar"></div>
             <h1 className="page-title">{selectedTask?.name || '创建中...'}</h1>
@@ -415,9 +354,7 @@ export default function AFWorkshop() {
           <div className="afw-preview-body">
             <div className="afw-explorer">
               <div className="afw-exp-item afw-exp-folder">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
-                  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path>
-                </svg>
+                <IconFolder size={14} style={{ marginRight: 6 }} />
                 skills1/research
               </div>
               {['SKILL.md', 'competitor_analysis.py', 'data_guide.md', 'template.csv'].map(f => (

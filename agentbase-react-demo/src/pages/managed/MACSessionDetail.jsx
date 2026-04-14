@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useManagedAgents, SESSION_STATUS_COLORS, EVENT_TYPE_ICONS } from '../../store/managedAgentStore'
+import { 
+  IconArrowLeft, IconPause, IconSquare, IconRotateCcw, 
+  IconMessageSquare, IconTool, IconClock, IconLock, 
+  IconCheckCircle, IconXCircle, IconSend, IconFolder, 
+  IconFile, IconX, IconMoreHorizontal, IconAlertTriangle, 
+  IconPaperclip, IconChevronDown, IconChevronRight, IconWrench,
+  IconCheck
+} from '../../components/Icons'
 import './MAC.css'
 
 export default function MACSessionDetail() {
@@ -87,7 +95,7 @@ export default function MACSessionDetail() {
       {/* Top Status Bar */}
       <div className="mac-console-header">
         <div className="mac-console-header-left">
-          <button className="back-btn" onClick={() => navigate('/managed-agent/sessions')}>←</button>
+          <button className="back-btn" onClick={() => navigate('/managed-agent/sessions')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IconArrowLeft size={16} /></button>
           <span className="mac-console-id">{session.id}</span>
           <span className="ha-status-tag" style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}>{sc.label}</span>
           <span className="mac-console-agent">
@@ -104,13 +112,13 @@ export default function MACSessionDetail() {
           <div className="mac-metric-pill">Dur: {session.duration ? `${Math.floor(session.duration / 60)}m${session.duration % 60}s` : '-'}</div>
           <div className="mac-console-controls">
             {['running', 'waiting_approval'].includes(session.status) && (
-              <button className="mac-ctrl-btn warn" onClick={handleInterrupt}>⏸ Interrupt</button>
+              <button className="mac-ctrl-btn warn" onClick={handleInterrupt} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPause size={14} /> Interrupt</button>
             )}
             {['running', 'idle', 'waiting_approval'].includes(session.status) && (
-              <button className="mac-ctrl-btn danger" onClick={handleStop}>⏹ Stop</button>
+              <button className="mac-ctrl-btn danger" onClick={handleStop} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconSquare size={14} /> Stop</button>
             )}
             {session.status === 'failed' && (
-              <button className="mac-ctrl-btn primary" onClick={() => showToast('重试功能开发中', 'info')}>↻ Retry</button>
+              <button className="mac-ctrl-btn primary" onClick={() => showToast('重试功能开发中', 'info')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconRotateCcw size={14} /> Retry</button>
             )}
           </div>
         </div>
@@ -153,13 +161,13 @@ export default function MACSessionDetail() {
             <button className={`mac-filter-btn ${toolFilter === 'messages' ? 'active' : ''}`} onClick={() => setToolFilter('messages')}>Messages ({msgCount})</button>
             <button className={`mac-filter-btn ${toolFilter === 'tools' ? 'active' : ''}`} onClick={() => setToolFilter('tools')}>Tools ({toolUseCount})</button>
             <div style={{ flex: 1 }} />
-            <button className={`mac-filter-btn ${showWorkspace ? 'active' : ''}`} onClick={() => setShowWorkspace(!showWorkspace)}>📁 Workspace</button>
+            <button className={`mac-filter-btn ${showWorkspace ? 'active' : ''}`} onClick={() => setShowWorkspace(!showWorkspace)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconFolder size={14} /> Workspace</button>
           </div>
 
           <div className="mac-stream-events">
             {events.length === 0 ? (
               <div className="mac-stream-empty">
-                <div style={{ fontSize: 32, marginBottom: 8 }}>💬</div>
+                <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.2 }}><IconMessageSquare size={48} /></div>
                 等待事件... 发送消息开始对话
               </div>
             ) : events.map(evt => {
@@ -189,9 +197,9 @@ export default function MACSessionDetail() {
                     {isToolUse && (
                       <div className="mac-tool-card-console">
                         <div className="mac-tool-header">
-                          <span className="mac-tool-name">🔧 {evt.payload.tool}</span>
-                          <span className={`mac-tool-status ${evt.payload.status}`}>
-                            {evt.payload.status === 'running' ? '⏳ 运行中' : evt.payload.status === 'waiting_approval' ? '🔒 等待审批' : '✓ 完成'}
+                          <span className="mac-tool-name" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><IconWrench size={14} /> {evt.payload.tool}</span>
+                          <span className={`mac-tool-status ${evt.payload.status}`} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                            {evt.payload.status === 'running' ? <>运行中</> : evt.payload.status === 'waiting_approval' ? <><IconLock size={12} /> 等待审批</> : <><IconCheck size={12} /> 完成</>}
                           </span>
                         </div>
                         <div className="mac-tool-args">
@@ -209,7 +217,7 @@ export default function MACSessionDetail() {
                     {isToolResult && (
                       <div className={`mac-tool-result ${evt.payload.error ? 'error' : ''}`}>
                         {evt.payload.error ? (
-                          <span>❌ {evt.payload.error}</span>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><IconXCircle size={14} /> {evt.payload.error}</span>
                         ) : (
                           <span>{typeof evt.payload.result === 'string' ? evt.payload.result : JSON.stringify(evt.payload.result)}</span>
                         )}
@@ -232,7 +240,7 @@ export default function MACSessionDetail() {
           <div className="mac-console-input">
             {session.status === 'waiting_approval' && (
               <div className="mac-approval-banner">
-                ⚠️ 有工具调用等待审批。请批准或拒绝以继续。
+                <IconAlertTriangle size={14} style={{ marginRight: 6 }} /> 有工具调用等待审批。请批准或拒绝以继续。
               </div>
             )}
             <div className="mac-input-row">
@@ -245,8 +253,8 @@ export default function MACSessionDetail() {
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() } }}
                 rows={1}
               />
-              <button className="mac-send-btn" onClick={handleSend} disabled={!inputMsg.trim() || session.status === 'completed' || session.status === 'failed'}>
-                ➤
+              <button className="mac-send-btn" onClick={handleSend} disabled={!inputMsg.trim() || session.status === 'completed' || session.status === 'failed'} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <IconSend size={16} />
               </button>
             </div>
           </div>
@@ -256,13 +264,13 @@ export default function MACSessionDetail() {
         {showWorkspace && (
           <div className="mac-console-workspace">
             <div className="mac-drawer-header">
-              <span>📁 工作区文件</span>
-              <button onClick={() => setShowWorkspace(false)}>✕</button>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><IconFolder size={14} /> 工作区文件</span>
+              <button onClick={() => setShowWorkspace(false)}><IconX size={16} /></button>
             </div>
             <div className="mac-workspace-content">
               {workspaceFiles.map((f, i) => (
                 <div key={i} className={`mac-ws-file ${f.type === 'folder' ? 'mac-ws-folder' : ''}`}>
-                  <span>{f.type === 'folder' ? '📂' : '📄'}</span>
+                  <span>{f.type === 'folder' ? <IconFolder size={14} /> : <IconFile size={14} />}</span>
                   <span className="mac-ws-name">{f.name.trim()}</span>
                   {f.size && <span className="mac-ws-size">{f.size}</span>}
                 </div>
@@ -274,7 +282,7 @@ export default function MACSessionDetail() {
                 <div style={{ fontSize: 11, color: '#999', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Artifacts</div>
                 {session.artifacts.map(a => (
                   <div key={a.id} className="mac-ws-file">
-                    <span>📎</span>
+                    <span><IconPaperclip size={12} /></span>
                     <span className="mac-ws-name">{a.name}</span>
                     <span className="mac-ws-size">{a.size}</span>
                   </div>
@@ -289,7 +297,7 @@ export default function MACSessionDetail() {
           <div className="mac-console-drawer">
             <div className="mac-drawer-header">
               <span>事件详情</span>
-              <button onClick={() => setShowDrawer(null)}>✕</button>
+              <button onClick={() => setShowDrawer(null)}><IconX size={16} /></button>
             </div>
             <div className="mac-drawer-content">
               <div className="mac-kv-list">
