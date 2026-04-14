@@ -232,10 +232,23 @@ const ShapeGrid = ({
       }
     };
 
+    // Attach to window so events fire even when content panels are on top
     const handleMouseMove = event => {
       const rect = canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
+
+      // Only process if mouse is within the canvas bounds
+      if (mouseX < 0 || mouseY < 0 || mouseX > canvas.width || mouseY > canvas.height) {
+        if (hoveredSquare.current) {
+          if (hoverTrailAmount > 0) {
+            trailCells.current.unshift({ ...hoveredSquare.current });
+            if (trailCells.current.length > hoverTrailAmount) trailCells.current.length = hoverTrailAmount;
+          }
+          hoveredSquare.current = null;
+        }
+        return;
+      }
 
       const offsetX = ((gridOffset.current.x % squareSize) + squareSize) % squareSize;
       const offsetY = ((gridOffset.current.y % squareSize) + squareSize) % squareSize;
@@ -274,15 +287,16 @@ const ShapeGrid = ({
       hoveredSquare.current = null;
     };
 
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
+    // Use window-level listener to capture events even through overlaid panels
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
     requestRef.current = requestAnimationFrame(updateAnimation);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(requestRef.current);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [direction, speed, borderColor, hoverFillColor, squareSize, shape, hoverTrailAmount]);
 
