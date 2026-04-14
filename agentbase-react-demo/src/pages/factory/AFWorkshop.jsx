@@ -3,166 +3,84 @@ import PageLayout from '../../components/PageLayout'
 import { 
   IconPaperclip, IconSend, IconDatabase, IconTerminal, 
   IconEdit, IconSearch, IconFile, IconImage, IconBarChart, 
-  IconChevronRight, IconChevronDown, IconArrowLeft, IconCheck, IconX,
+  IconChevronRight, IconChevronDown, IconArrowLeft, IconArrowUp, IconCheck, IconX,
   IconBot, IconFolder, IconFileText, IconCopy, IconCheckCircle, IconPlay,
-  IconAlertTriangle, IconActivity, IconGithub, IconGlobe, IconLock, IconPlus
+  IconAlertTriangle, IconActivity, IconGithub, IconGlobe, IconLock, IconPlus, IconMessageSquare
 } from '../../components/Icons'
 import './AFWorkshop.css'
 import ShapeGrid from '../../components/effects/ShapeGrid'
 
 const MOCK_TEMPLATES = {
-  'Agent Blueprint': [
+  'Agent蓝图': [
     { 
       id: 'at1', name: 'Blank agent config', icon: <IconFileText />, desc: 'A blank starting point with the core toolset.',
       envTemplate: 'default',
       tags: ['Core'],
       tools: ['bash', 'web_fetch'],
-      yaml: `name: blank-agent
-description: A blank starting point with the core toolset.
-system_prompt: |
-  You are a helpful assistant. Use your tools to solve problems.
-tools:
-  - bash
-  - web_fetch
-`
+      yaml: "name: blank-agent\ndescription: A blank starting point with the core toolset.\nsystem_prompt: |\n  You are a helpful assistant. Use your tools to solve problems.\ntools:\n  - bash\n  - web_fetch"
     },
     { 
       id: 'at2', name: 'Data analyst', icon: <IconBarChart />, desc: 'Load, explore, and visualize data; build reports and answer questions from datasets.',
       envTemplate: 'data-analyst',
       tags: ['Data', 'Python'],
       tools: ['bash', 'web_fetch', 'python'],
-      yaml: `name: data-analyst
-description: Load, explore, and visualize data.
-system_prompt: |
-  You are an expert data analyst. You write Python code to load datasets, 
-  clean data, perform statistical analysis, and generate charts using matplotlib.
-tools:
-  - bash
-  - web_fetch
-  - python
-`
+      yaml: "name: data-analyst\ndescription: Load, explore, and visualize data.\nsystem_prompt: |\n  You are an expert data analyst. You write Python code to load datasets, \n  clean data, perform statistical analysis, and generate charts using matplotlib.\ntools:\n  - bash\n  - web_fetch\n  - python"
     },
     { 
       id: 'at3', name: 'Deep researcher', icon: <IconSearch />, desc: 'Conducts multi-step web research with source synthesis and citations.',
       envTemplate: 'researcher',
       tags: ['Web', 'Research'],
       tools: ['web_fetch', 'search'],
-      yaml: `name: deep-researcher
-description: Conducts multi-step web research with source synthesis and citations.
-system_prompt: |
-  You are a meticulous researcher. You conduct comprehensive web searches, 
-  synthesize information from multiple sources, and always provide citations.
-tools:
-  - web_fetch
-  - search
-`
+      yaml: "name: deep-researcher\ndescription: Conducts multi-step web research with source synthesis and citations.\nsystem_prompt: |\n  You are a meticulous researcher. You conduct comprehensive web searches, \n  synthesize information from multiple sources, and always provide citations.\ntools:\n  - web_fetch\n  - search"
     },
     { 
       id: 'at4', name: 'Software Developer', icon: <IconTerminal />, desc: 'Full-stack software developer capable of writing, reviewing, and testing code.',
       envTemplate: 'developer',
       tags: ['Code', 'Development'],
       tools: ['bash', 'github'],
-      yaml: `name: software-developer
-description: Assists with software development tasks.
-system_prompt: |
-  You are an experienced full-stack developer. You write clean, testable code,
-  perform code reviews, and can execute bash commands to run tests.
-tools:
-  - bash
-  - github
-`
+      yaml: "name: software-developer\ndescription: Assists with software development tasks.\nsystem_prompt: |\n  You are an experienced full-stack developer. You write clean, testable code,\n  perform code reviews, and can execute bash commands to run tests.\ntools:\n  - bash\n  - github"
     },
     { 
       id: 'at5', name: 'Incident commander', icon: <IconAlertTriangle />, desc: 'Triages alerts, opens incident tickets, and runs the war room.',
       envTemplate: 'ops',
       tags: ['DevOps', 'SRE'],
       tools: ['pagerduty', 'slack', 'jira'],
-      yaml: `name: incident-commander
-description: Triages alerts and manages incidents.
-system_prompt: |
-  You are an incident commander. You investigate alerts, coordinate communication
-  in Slack, and ensure tickets are tracked and updated.
-tools:
-  - pagerduty
-  - slack
-  - jira
-`
+      yaml: "name: incident-commander\ndescription: Triages alerts and manages incidents.\nsystem_prompt: |\n  You are an incident commander. You investigate alerts, coordinate communication\n  in Slack, and ensure tickets are tracked and updated.\ntools:\n  - pagerduty\n  - slack\n  - jira"
     },
     { 
       id: 'at6', name: 'Support-to-eng escalator', icon: <IconMessageSquare />, desc: 'Reads customer conversations, reproduces bugs, and files Jira issues.',
       envTemplate: 'support',
       tags: ['Support', 'Engineering'],
       tools: ['intercom', 'jira', 'github'],
-      yaml: `name: support-escalator
-description: Escalates support tickets to engineering.
-system_prompt: |
-  You read customer support conversations, identify reproducible bugs,
-  and create detailed engineering tickets with reproduction steps.
-tools:
-  - intercom
-  - jira
-  - github
-`
+      yaml: "name: support-escalator\ndescription: Escalates support tickets to engineering.\nsystem_prompt: |\n  You read customer support conversations, identify reproducible bugs,\n  and create detailed engineering tickets with reproduction steps.\ntools:\n  - intercom\n  - jira\n  - github"
     },
     { 
       id: 'at7', name: 'Structured extractor', icon: <IconDatabase />, desc: 'Parses unstructured text into a typed JSON schema.',
       envTemplate: 'default',
       tags: ['Data', 'Parsing'],
       tools: ['json_schema'],
-      yaml: `name: structured-extractor
-description: Extracts structured JSON from unstructured text.
-system_prompt: |
-  You parse large blocks of unstructured text and extract entities matching
-  the provided JSON schema exactly.
-tools:
-  - json_schema
-`
+      yaml: "name: structured-extractor\ndescription: Extracts structured JSON from unstructured text.\nsystem_prompt: |\n  You parse large blocks of unstructured text and extract entities matching\n  the provided JSON schema exactly.\ntools:\n  - json_schema"
     },
     { 
       id: 'at8', name: 'Feedback miner', icon: <IconEdit />, desc: 'Clusters raw feedback from Slack and Notion into themes and drafts Asana tasks.',
       envTemplate: 'product',
       tags: ['Product', 'Analysis'],
       tools: ['slack', 'notion', 'asana'],
-      yaml: `name: feedback-miner
-description: Clusters user feedback into actionable themes.
-system_prompt: |
-  You are a product manager analyzing user feedback. You cluster feedback into
-  themes and create actionable tasks for the engineering team.
-tools:
-  - slack
-  - notion
-  - asana
-`
+      yaml: "name: feedback-miner\ndescription: Clusters user feedback into actionable themes.\nsystem_prompt: |\n  You are a product manager analyzing user feedback. You cluster feedback into\n  themes and create actionable tasks for the engineering team.\ntools:\n  - slack\n  - notion\n  - asana"
     },
     { 
       id: 'at9', name: 'Field monitor', icon: <IconGlobe />, desc: 'Scans software blogs for a topic and writes a weekly what-changed brief.',
       envTemplate: 'researcher',
       tags: ['News', 'Monitoring'],
       tools: ['web_fetch', 'rss'],
-      yaml: `name: field-monitor
-description: Monitors industry blogs and writes summaries.
-system_prompt: |
-  You monitor specified industry blogs and RSS feeds. You compile a weekly
-  brief summarizing the most important changes and announcements.
-tools:
-  - web_fetch
-  - rss
-`
+      yaml: "name: field-monitor\ndescription: Monitors industry blogs and writes summaries.\nsystem_prompt: |\n  You monitor specified industry blogs and RSS feeds. You compile a weekly\n  brief summarizing the most important changes and announcements.\ntools:\n  - web_fetch\n  - rss"
     },
     { 
       id: 'at10', name: 'Sprint retro facilitator', icon: <IconActivity />, desc: 'Pulls a closed sprint from Linear, synthesizes themes, and writes the retro doc.',
       envTemplate: 'agile',
       tags: ['Agile', 'Docs'],
       tools: ['linear', 'notion'],
-      yaml: `name: sprint-retro
-description: Facilitates sprint retrospectives.
-system_prompt: |
-  You analyze completed sprints in Linear, identifying bottlenecks and successes.
-  You generate a comprehensive retrospective document.
-tools:
-  - linear
-  - notion
-`
+      yaml: "name: sprint-retro\ndescription: Facilitates sprint retrospectives.\nsystem_prompt: |\n  You analyze completed sprints in Linear, identifying bottlenecks and successes.\n  You generate a comprehensive retrospective document.\ntools:\n  - linear\n  - notion"
     }
   ],
   Skill: [
@@ -198,7 +116,7 @@ const MOCK_TASKS = [
 export default function AFWorkshop() {
   const [view, setView] = useState('home') // 'home' | 'wizard' | 'workspace'
   const [wizardStep, setWizardStep] = useState(1)
-  const [activeTab, setActiveTab] = useState('Agent Blueprint')
+  const [activeTab, setActiveTab] = useState('Agent蓝图')
   const [prompt, setPrompt] = useState('')
   const [selectedTask, setSelectedTask] = useState(null)
   
@@ -212,22 +130,24 @@ export default function AFWorkshop() {
     name: '',
     description: '',
     systemPrompt: '',
-    envTemplate: 'default',
-    network: 'unrestricted',
-    yaml: ''
+    tools: ['bash', 'web_fetch']
   })
 
-  // Test Run State
+  // Meta Agent Chat State (for Step 1)
+  const [metaSession, setMetaSession] = useState({
+    input: '',
+    messages: []
+  })
+
+  // Test Run State (for Step 2)
   const [testSession, setTestSession] = useState({
-    running: false,
+    input: '',
     messages: [],
-    events: [],
-    input: ''
+    events: []
   })
   
   // Workspace specific states (for Skill)
   const [activeFile, setActiveFile] = useState('SKILL.md')
-  const [testInput, setTestInput] = useState('')
 
   const handleTaskClick = (task) => {
     setSelectedTask(task)
@@ -241,14 +161,21 @@ export default function AFWorkshop() {
   }
 
   const startWizardFromTemplate = () => {
+    const sysPromptMatch = editedYaml.match(/system_prompt:\s*\|([\s\S]*?)(?=\ntools:|$)/);
     setAgentConfig({
       name: previewTemplate.name,
       description: previewTemplate.desc,
-      systemPrompt: (editedYaml.match(/system_prompt:\\s*\\|([\\s\\S]*?)(?=\\ntools:|$)/) || [])[1]?.trim() || '',
-      envTemplate: previewTemplate.envTemplate || 'default',
-      network: 'unrestricted',
-      yaml: editedYaml
+      systemPrompt: sysPromptMatch ? sysPromptMatch[1].trim() : '',
+      tools: previewTemplate.tools || ['bash', 'web_fetch']
     })
+    
+    setMetaSession({
+      input: '',
+      messages: [
+        { role: 'agent', content: "你选择了【" + previewTemplate.name + "】模板。我已为你预填好右侧的参数配置。你可以直接在右侧手动调整，或者在这里告诉我你还有哪些改动需求，我会帮你自动化润色。" }
+      ]
+    })
+    
     setPreviewTemplate(null)
     setWizardStep(1)
     setView('wizard')
@@ -256,35 +183,64 @@ export default function AFWorkshop() {
   
   const startWizardEmpty = () => {
     setAgentConfig({
-      name: '', description: '', systemPrompt: '', envTemplate: 'default', network: 'unrestricted', yaml: ''
+      name: '自定义 Agent蓝图', description: '', systemPrompt: '', tools: ['bash']
     })
+    
+    const initialMessages = [{
+      role: 'agent',
+      content: prompt ? "我收到你的需求了：“" + prompt + "”。我帮你先初始化了一个草稿配置，让我们开始细化这个 Agent 吧！告诉我在专业领域它需要负责什么核心任务？" : "你好！我是你的造物助手 Meta-Agent。你想打造一款什么样的 Agent？告诉我它的用途，我会帮你一步步生成右侧所有的核心配置。"
+    }]
+    
+    if (prompt) {
+      initialMessages.unshift({ role: 'user', content: prompt })
+    }
+    
+    setMetaSession({ input: '', messages: initialMessages })
+    setPrompt('')
     setWizardStep(1)
     setView('wizard')
   }
 
+  const sendMetaMessage = () => {
+    if (!metaSession.input.trim()) return
+    const txt = metaSession.input
+    setMetaSession(prev => ({
+      ...prev,
+      messages: [...prev.messages, { role: 'user', content: txt }],
+      input: ''
+    }))
+    
+    setTimeout(() => {
+      setMetaSession(prev => ({
+        ...prev,
+        messages: [...prev.messages, { role: 'agent', content: "好的，我已经根据你的描述优化了 System Prompt 并帮你预设了所需的新工具，请查看右侧的变更。" }]
+      }))
+    }, 1000)
+  }
+
   const runTestMessage = () => {
     if (!testSession.input.trim()) return
-    const newMsg = { role: 'user', content: testSession.input }
+    const txt = testSession.input
     setTestSession(prev => ({
       ...prev,
-      messages: [...prev.messages, newMsg],
+      messages: [...prev.messages, { role: 'user', content: txt }],
       input: '',
-      events: [...prev.events, { type: 'user', text: `User request: ${testSession.input}`, time: new Date().toLocaleTimeString() }]
+      events: [...prev.events, { type: 'user', text: "User request: " + txt, time: new Date().toLocaleTimeString() }]
     }))
 
     // Simulate Agent Processing
     setTimeout(() => {
       setTestSession(prev => ({
         ...prev,
-        events: [...prev.events, { type: 'tool', text: `Tool bash called. 14 tokens / 120ms`, time: new Date().toLocaleTimeString() }]
+        events: [...prev.events, { type: 'tool', text: "Tool bash called. 14 tokens / 120ms", time: new Date().toLocaleTimeString() }]
       }))
     }, 800)
 
     setTimeout(() => {
       setTestSession(prev => ({
         ...prev,
-        messages: [...prev.messages, { role: 'agent', content: 'I have executed the necessary commands and gathered the results for you.' }],
-        events: [...prev.events, { type: 'agent', text: `Response generated. 45 tokens / 450ms`, time: new Date().toLocaleTimeString() }]
+        messages: [...prev.messages, { role: 'agent', content: '我已经为你执行对应的工具提取了结果并完成分析。' }],
+        events: [...prev.events, { type: 'agent', text: "Response generated. 45 tokens / 450ms", time: new Date().toLocaleTimeString() }]
       }))
     }, 1500)
   }
@@ -307,18 +263,18 @@ export default function AFWorkshop() {
       <div className="af-workshop afw-home">
       <div className="afw-hero">
         <h1 className="afw-hero-title notion-h1" style={{ justifyContent: 'center', marginBottom: '24px' }}>
-          Agent Blueprint Quickstart
+          Agent工坊
         </h1>
         <p className="afw-hero-subtitle notion-body-large" style={{ color: 'var(--notion-gray-500)', fontSize: 18, marginBottom: '48px' }}>
-          What do you want to build? Describe your agent or start with a template.
+          你需要构建哪些能力？描述你构想的智能体或从模版开始。
         </p>
 
         <div className="afw-input-card" style={{ boxShadow: 'var(--notion-shadow-card)', border: 'var(--notion-border)' }}>
           <div className="afw-tabs notion-font">
-            {['Agent Blueprint', 'Skill'].map(t => (
+            {['Agent蓝图', 'Skill'].map(t => (
               <button 
                 key={t} 
-                className={`afw-tab ${activeTab === t ? 'active' : ''}`}
+                className={"afw-tab " + (activeTab === t ? 'active' : '')}
                 onClick={() => setActiveTab(t)}
                 style={{ fontSize: 15 }}
               >
@@ -329,7 +285,7 @@ export default function AFWorkshop() {
           <div className="afw-textarea-wrap">
             <textarea 
               className="afw-textarea notion-body" 
-              placeholder={`Describe your ${activeTab.toLowerCase()}...`}
+              placeholder={"请一句话描述你的 " + activeTab + " 需要做什么..."}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               style={{ fontSize: 16 }}
@@ -337,7 +293,7 @@ export default function AFWorkshop() {
           </div>
           <div className="afw-input-actions">
             <div className="afw-action-left">
-              <button className="afw-upload-btn" title="Upload file">
+              <button className="afw-upload-btn" title="上传附件">
                 <IconPaperclip />
               </button>
             </div>
@@ -354,13 +310,13 @@ export default function AFWorkshop() {
       </div>
 
       <div className="afw-templates-section">
-        <h2 className="afw-section-title notion-card-title">Browse templates</h2>
-        <div className="afw-template-grid" style={{ gridTemplateColumns: activeTab === 'Agent Blueprint' ? 'repeat(auto-fill, minmax(340px, 1fr))' : 'repeat(auto-fill, minmax(220px, 1fr))' }}>
+        <h2 className="afw-section-title notion-card-title">浏览模版库</h2>
+        <div className="afw-template-grid" style={{ gridTemplateColumns: activeTab === 'Agent蓝图' ? 'repeat(auto-fill, minmax(340px, 1fr))' : 'repeat(auto-fill, minmax(220px, 1fr))' }}>
           {MOCK_TEMPLATES[activeTab].map(tpl => (
             <div 
               key={tpl.id} 
               className="afw-template-card" 
-              onClick={() => activeTab === 'Agent Blueprint' ? openTemplatePreview(tpl) : startWizardEmpty()} 
+              onClick={() => activeTab === 'Agent蓝图' ? openTemplatePreview(tpl) : startWizardEmpty()} 
               style={{ border: 'var(--notion-border)', boxShadow: 'var(--notion-shadow-card)', borderRadius: 12, alignItems: 'flex-start' }}
             >
               <div className="afw-template-icon" style={{ background: 'var(--notion-bg-alt)' }}>{tpl.icon}</div>
@@ -431,17 +387,17 @@ export default function AFWorkshop() {
             <div className="afw-tpl-modal-body">
               <div className="afw-tpl-info-pane">
                 <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Description</div>
-                  <div style={{ fontSize: 15, lineHeight: 1.5 }}>{previewTemplate.desc}</div>
-                </div>
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Environment Template</div>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>环境模板 / Env Template</div>
                   <div style={{ fontSize: 14, fontWeight: 600, display: 'inline-block', background: '#f8fafc', padding: '4px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
                     {previewTemplate.envTemplate}
                   </div>
                 </div>
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>详细描述 / Description</div>
+                  <div style={{ fontSize: 14, lineHeight: 1.5, color: '#334155' }}>{previewTemplate.desc}</div>
+                </div>
                 <div>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>Default Tools</div>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>挂载工具 / Default Tools</div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {previewTemplate.tools?.map(t => (
                       <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 8px', borderRadius: 4, fontWeight: 600 }}>{t}</span>
@@ -452,8 +408,8 @@ export default function AFWorkshop() {
               
               <div className="afw-tpl-editor-pane">
                 <div className="afw-tab-switch">
-                  <button className={`afw-ts-btn ${previewActiveTab === 'yaml' ? 'active' : ''}`} onClick={() => setPreviewActiveTab('yaml')}>YAML</button>
-                  <button className={`afw-ts-btn ${previewActiveTab === 'structured' ? 'active' : ''}`} onClick={() => setPreviewActiveTab('structured')}>Preview</button>
+                  <button className={"afw-ts-btn " + (previewActiveTab === 'yaml' ? 'active' : '')} onClick={() => setPreviewActiveTab('yaml')}>YAML 源码</button>
+                  <button className={"afw-ts-btn " + (previewActiveTab === 'structured' ? 'active' : '')} onClick={() => setPreviewActiveTab('structured')}>结构化解析</button>
                 </div>
                 
                 {previewActiveTab === 'yaml' ? (
@@ -475,8 +431,8 @@ export default function AFWorkshop() {
             </div>
             
             <div className="afw-tpl-modal-footer">
-              <button className="action-btn" onClick={() => { setPreviewTemplate(null); startWizardEmpty(); }}>Start blank</button>
-              <button className="action-btn primary" onClick={startWizardFromTemplate}>Use this template</button>
+              <button className="action-btn" onClick={() => { setPreviewTemplate(null); startWizardEmpty(); }}>不使用模版 (Start blank)</button>
+              <button className="action-btn primary" onClick={startWizardFromTemplate}>使用模版创建配置</button>
             </div>
           </div>
         </div>
@@ -489,258 +445,253 @@ export default function AFWorkshop() {
       <div className="afw-wv2-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <button className="afw-back-btn" onClick={() => setView('home')} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}><IconArrowLeft size={20} /></button>
-          <span style={{ fontSize: 16, fontWeight: 600 }}>Quickstart</span>
+          <span style={{ fontSize: 16, fontWeight: 600 }}>配置 Agent 蓝图</span>
         </div>
         
         <div className="afw-stepper">
           {[
-            { step: 1, label: 'Create agent', path: 'POST /v1/agents' },
-            { step: 2, label: 'Configure environment' },
-            { step: 3, label: 'Start session', path: 'POST /v1/sessions' },
-            { step: 4, label: 'Integrate' }
+            { step: 1, label: '创排蓝图内容', path: 'Define & Setup' },
+            { step: 2, label: '沙盒环境测试', path: 'Sandbox Session' },
+            { step: 3, label: '部署验证集成', path: 'Integrate API' }
           ].map(s => (
             <React.Fragment key={s.step}>
-              <div className={`afw-step-item ${wizardStep === s.step ? 'active' : ''} ${wizardStep > s.step ? 'completed' : ''}`}>
+              <div className={"afw-step-item " + (wizardStep === s.step ? 'active' : '') + " " + (wizardStep > s.step ? 'completed' : '')}>
                 <div className="afw-step-circle">{wizardStep > s.step ? <IconCheck size={12} /> : s.step}</div>
                 <div className="afw-step-label">{s.label}</div>
-                {s.path && <div className="afw-step-path">{s.path}</div>}
               </div>
-              {s.step < 4 && <div className="afw-step-line" />}
+              {s.step < 3 && <div className="afw-step-line" />}
             </React.Fragment>
           ))}
         </div>
         
         <div className="afw-wv2-actions">
-           {wizardStep < 4 && (
+           {wizardStep < 3 && (
              <button className="action-btn primary" onClick={() => setWizardStep(wizardStep + 1)}>
-               {wizardStep === 3 ? 'Stop session' : `Next step`}
+               {wizardStep === 2 ? '结束沙盒' : '保存并进入沙盒'}
              </button>
            )}
-           {wizardStep === 4 && (
-             <button className="action-btn primary" onClick={() => setView('home')}>Done</button>
+           {wizardStep === 3 && (
+             <button className="action-btn primary" onClick={() => setView('home')}>确认完成</button>
            )}
         </div>
       </div>
 
-      <div className="afw-wv2-body">
-        {/* Left pane for form/instructions */}
-        <div className="afw-wv2-left">
-          {wizardStep === 1 && (
-            <div className="afw-step-content fade-in">
-              <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Create your agent</h2>
-              
-              <div className="af-field">
-                <label className="af-field-label">Agent Name</label>
-                <input 
-                  type="text" 
-                  className="af-input-text" 
-                  value={agentConfig.name}
-                  onChange={e => setAgentConfig({...agentConfig, name: e.target.value})}
-                  placeholder="e.g. Data analyst" 
-                />
+      <div className="afw-wv2-body" style={{ background: '#f1f5f9' }}>
+        {wizardStep === 1 && (
+          <>
+            <div className="afw-wv2-left" style={{ width: '450px', display: 'flex', flexDirection: 'column', borderRight: '1px solid #e2e8f0', background: '#fff', padding: 0 }}>
+              <div style={{ padding: '16px 20px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
+                 <div style={{ fontWeight: 600, fontSize: 14, color: '#334155' }}>Meta-Agent (辅助架构师)</div>
+                 <div style={{ fontSize: 12, color: '#64748b' }}>用自然语言调优你的 Agent 蓝图</div>
               </div>
               
-              <div className="af-field">
-                <label className="af-field-label">System Prompt</label>
-                <div className="af-field-hint">Instructs the agent on its persona and how to use tools.</div>
-                <textarea 
-                  className="af-input-textarea" 
-                  value={agentConfig.systemPrompt}
-                  onChange={e => setAgentConfig({...agentConfig, systemPrompt: e.target.value})}
-                  style={{ height: 260, fontFamily: 'monospace', fontSize: 13 }}
-                  placeholder="You are an expert data analyst..."
-                />
-              </div>
-              
-              <div className="af-field">
-                <label className="af-field-label">MCP Servers & Tools</label>
-                <div className="af-field-hint">Tools the agent has access to automatically.</div>
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                   {['bash', 'web_fetch', 'python', 'github'].map(t => (
-                     <div key={t} style={{ padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: '#f8fafc' }}>
-                       <IconCheck size={14} color="#10b981" /> {t}
-                     </div>
-                   ))}
-                   <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-                     <IconPlus size={14}/> Add Tool
-                   </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {wizardStep === 2 && (
-            <div className="afw-step-content fade-in">
-              <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 24 }}>Configure environment</h2>
-              <p style={{ color: '#64748b', marginBottom: 24 }}>Set up the execution sandbox and network permissions for this agent.</p>
-              
-              <div className="af-field">
-                <label className="af-field-label">Environment Variables</label>
-                <div className="af-field-hint">Required for some MCP servers (e.g. AMPLITUDE_API_KEY).</div>
-                <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 16, background: '#f8fafc' }}>
-                  <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
-                    <input type="text" className="af-input-text" placeholder="Key (e.g. API_KEY)" style={{ flex: 1 }} />
-                    <input type="password" className="af-input-text" placeholder="Value" style={{ flex: 2 }} />
-                  </div>
-                  <button style={{ color: '#3b82f6', fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>+ Add variable</button>
-                </div>
-              </div>
-
-              <div className="af-field">
-                <label className="af-field-label">Network Access</label>
-                <div className="af-field-hint">Internet routing policies for the sandbox.</div>
-                <div className="af-card-grid">
-                  {[
-                    { id: 'unrestricted', name: 'Unrestricted', icon: <IconGlobe />, desc: 'Full internet access' },
-                    { id: 'restricted', name: 'Restricted', icon: <IconAlertTriangle />, desc: 'Specific domains only' },
-                    { id: 'none', name: 'None', icon: <IconLock />, desc: 'No outbound traffic' }
-                  ].map(opt => (
-                    <div 
-                      key={opt.id} 
-                      className={`af-option-card ${agentConfig.network === opt.id ? 'selected' : ''}`}
-                      onClick={() => setAgentConfig({...agentConfig, network: opt.id})}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                         <div className="af-option-icon">{opt.icon}</div>
-                         <div className="af-option-name">{opt.name}</div>
-                      </div>
-                      <div className="af-option-desc">{opt.desc}</div>
+              <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {metaSession.messages.map((m, i) => (
+                    <div key={i} style={{ 
+                      alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                      background: m.role === 'user' ? '#e0e7ff' : '#f8fafc',
+                      color: m.role === 'user' ? '#3730A3' : '#334155',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      border: m.role === 'agent' ? '1px solid #e2e8f0' : 'none',
+                      maxWidth: '90%',
+                      fontSize: '13px',
+                      lineHeight: '1.5'
+                    }}>
+                      {m.content}
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          )}
-
-          {wizardStep === 3 && (
-            <div className="afw-step-content fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%', paddingBottom: 0 }}>
-              <div style={{ marginBottom: 16 }}>
-                <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Your session is live</h2>
-                <p style={{ color: '#64748b', fontSize: 14 }}>Send your first message in the test run panel to kick things off!</p>
-              </div>
-
-              <div className="afw-curl-box">
-                <div className="afw-cb-header">
-                  <span style={{ fontSize: 11, fontWeight: 600, color: '#64748b' }}>cURL</span>
-                  <button className="af-copy-btn" title="Copy"><IconCopy size={14}/></button>
-                </div>
-                <div className="afw-cb-code">
-{`curl -X POST https://api.anthropic.com/v1/sessions/sesn_test123/events \\
-  -H "Content-Type: application/json" \\
-  -H "x-api-key: $ANTHROPIC_API_KEY" \\
-  -H "anthropic-beta: managed-agents-2026-04-01" \\
-  -d '{
-    "events": [{"type": "user", "text": "${testSession.input || '...'}"}]
-  }'`}
-                </div>
-              </div>
               
-              <div style={{ flex: 1, borderTop: '1px solid #e2e8f0', marginTop: 16, paddingTop: 16, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: '#94a3b8', marginBottom: 12, textTransform: 'uppercase' }}>Session Event Sent</div>
+              <div style={{ padding: '16px', borderTop: '1px solid #e2e8f0', background: '#fff' }}>
+                <div className="afw-chat-input-area">
+                  <textarea 
+                    value={metaSession.input}
+                    onChange={e => setMetaSession({...metaSession, input: e.target.value})}
+                    placeholder="向 Meta-Agent 提出修改需求..."
+                    onKeyDown={e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMetaMessage(); } }}
+                    style={{ background: 'transparent' }}
+                  />
+                  <button onClick={sendMetaMessage} disabled={!metaSession.input.trim()} className="afw-send-circle"><IconArrowUp size={16}/></button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="afw-wv2-right" style={{ flex: 1, padding: '32px 48px', overflowY: 'auto' }}>
+              <div className="afw-preview-pane" style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '32px' }}>
+                <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, color: '#0f172a' }}>Agent 蓝图属性配置</h2>
+                
+                <div className="af-field">
+                  <label className="af-field-label">应用名称 (Name)</label>
+                  <input 
+                    type="text" 
+                    className="af-input-text" 
+                    value={agentConfig.name}
+                    onChange={e => setAgentConfig({...agentConfig, name: e.target.value})}
+                  />
+                </div>
+                
+                <div className="af-field">
+                  <label className="af-field-label">功能详述 (Description)</label>
+                  <input 
+                    type="text" 
+                    className="af-input-text" 
+                    value={agentConfig.description}
+                    onChange={e => setAgentConfig({...agentConfig, description: e.target.value})}
+                  />
+                </div>
+                
+                <div className="af-field">
+                  <label className="af-field-label">系统设定指令 (System Prompt)</label>
+                  <div className="af-field-hint">这里定义该 Agent 的性格、目标以及执行逻辑底座。</div>
+                  <textarea 
+                    className="af-input-textarea" 
+                    value={agentConfig.systemPrompt}
+                    onChange={e => setAgentConfig({...agentConfig, systemPrompt: e.target.value})}
+                    style={{ height: 220, fontFamily: 'monospace', fontSize: 13 }}
+                  />
+                </div>
+                
+                <div className="af-field">
+                  <label className="af-field-label">挂载能力池 (MCP Tools)</label>
+                  <div className="af-field-hint">为 Agent 授权本地或外部服务。通过左侧 Meta-Agent 也可以快速添加。</div>
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                     {agentConfig.tools.map(t => (
+                       <div key={t} style={{ padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: '#f8fafc' }}>
+                         <IconCheck size={14} color="#10b981" /> {t}
+                       </div>
+                     ))}
+                     <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                       <IconPlus size={14}/> Add Tool
+                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {wizardStep === 2 && (
+          <>
+            <div className="afw-wv2-left" style={{ width: '500px', display: 'flex', flexDirection: 'column', borderRight: '1px solid #e2e8f0', background: '#fff' }}>
+              <div style={{ padding: '16px 20px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
+                 <div style={{ fontWeight: 600, fontSize: 14, color: '#334155' }}>测试代理台</div>
+                 <div style={{ fontSize: 12, color: '#64748b' }}>正在与【{agentConfig.name || '全新蓝图'}】进行会话联调</div>
+              </div>
+
+              <div style={{ flex: 1, padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+                <div className="afw-curl-box" style={{ marginBottom: 16 }}>
+                  <div className="afw-cb-header">
+                    <span style={{ fontSize: 11, fontWeight: 600, color: '#64748b' }}>REST cURL 参考</span>
+                    <button className="af-copy-btn"><IconCopy size={13}/></button>
+                  </div>
+                  <div className="afw-cb-code">
+{"curl -X POST https://api.workspace.com/v1/sessions/sesn_test123/events \\\n  -d '{\"events\": [{\"type\": \"user\", \"text\": \"" + (testSession.input || '...') + "\"}]}'"}
+                  </div>
+                </div>
                 
                 {testSession.messages.length > 0 ? (
-                  <div className="afw-msg-list">
-                    <p style={{ fontSize: 14, color: '#334155', lineHeight: 1.6 }}>The agent received your message. See the transcript and debug stream on the right for intermediate outputs!</p>
+                  <div className="afw-msg-list" style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
+                    {testSession.messages.map((m, i) => (
+                      <div key={i} style={{ 
+                        alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                        background: m.role === 'user' ? '#1e293b' : '#f1f5f9',
+                        color: m.role === 'user' ? '#f8fafc' : '#334155',
+                        padding: '12px 16px',
+                        borderRadius: '8px',
+                        maxWidth: '85%',
+                        fontSize: '13px',
+                        lineHeight: '1.5'
+                      }}>
+                        {m.content}
+                      </div>
+                    ))}
                   </div>
                 ) : (
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: 14 }}>
-                    Waiting for input...
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: 13 }}>
+                    发送一条消息开始触发链路...
                   </div>
                 )}
-                
-                <div className="afw-chat-input-area" style={{ marginTop: 'auto' }}>
+              </div>
+              
+              <div style={{ padding: '16px', borderTop: '1px solid #e2e8f0', background: '#fff' }}>
+                <div className="afw-chat-input-area">
                   <textarea 
                     value={testSession.input}
                     onChange={e => setTestSession({...testSession, input: e.target.value})}
-                    placeholder="E.g. Load the Titanic CSV and analyze survival rates..."
+                    placeholder="向新蓝图下发任务..."
                     onKeyDown={e => { if(e.key === 'Enter') { e.preventDefault(); runTestMessage(); } }}
                   />
                   <button onClick={runTestMessage} disabled={!testSession.input.trim()} className="afw-send-circle"><IconArrowUp size={16}/></button>
                 </div>
               </div>
             </div>
-          )}
+            
+            <div className="afw-wv2-right" style={{ flex: 1, padding: 24, background: '#f8fafc' }}>
+              <div className="afw-preview-pane debug">
+                 <div className="afw-pp-header" style={{ justifyContent: 'space-between' }}>
+                   <div className="afw-pp-tabs">
+                     <div className="afw-pp-tab active">观测面板 (Debug Stream)</div>
+                   </div>
+                   <div style={{ fontSize: 12, color: '#64748b', display: 'flex', alignItems: 'center', gap: 6 }}>
+                     <IconActivity size={14}/> Event Trace
+                   </div>
+                 </div>
+                 <div className="afw-pp-body debug-view">
+                   {testSession.events.length === 0 ? (
+                     <div style={{ color: '#94a3b8', textAlign: 'center', marginTop: 60, fontSize: 13 }}>暂无调度事件产生...</div>
+                   ) : (
+                     <div className="afw-event-stream">
+                       {testSession.events.map((ev, i) => (
+                         <div key={i} className={"afw-event-row " + ev.type}>
+                           <div className={"afw-er-badge " + ev.type}>{ev.type}</div>
+                           <div className="afw-er-text">{ev.text}</div>
+                           <div className="afw-er-time">{ev.time}</div>
+                         </div>
+                       ))}
+                     </div>
+                   )}
+                 </div>
+              </div>
+            </div>
+          </>
+        )}
 
-          {wizardStep === 4 && (
-            <div className="afw-step-content fade-in">
+        {wizardStep === 3 && (
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: '64px', background: '#fff' }}>
+            <div className="afw-step-content fade-in" style={{ width: 640 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
                 <div style={{ width: 48, height: 48, background: '#ecfdf5', color: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <IconCheckCircle size={28} />
                 </div>
                 <div>
-                  <h2 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>All set!</h2>
-                  <p style={{ color: '#64748b', margin: '4px 0 0 0' }}>Your agent is ready for integration.</p>
+                  <h2 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>应用配置完成！</h2>
+                  <p style={{ color: '#64748b', margin: '4px 0 0 0' }}>该 Agent 蓝图处于 Ready 状态，你可以随时通过后端接入。</p>
                 </div>
               </div>
               
               <div className="afw-integrate-card">
-                <div className="afw-ic-header">Agent ID</div>
+                <div className="afw-ic-header">唯一资源标识符 (Agent Blueprint ID)</div>
                 <div className="afw-ic-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <code style={{ fontSize: 14, color: '#334155' }}>agnt_011Ca3fmseBwu2FAXJyPqo2v</code>
+                  <code style={{ fontSize: 14, color: '#334155', fontWeight: 600 }}>ab_098KxOq2PLmswN88s9AOp1</code>
                   <button className="af-copy-btn"><IconCopy size={16}/></button>
                 </div>
               </div>
 
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginTop: 32, marginBottom: 16 }}>Integration Code</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginTop: 32, marginBottom: 16 }}>直接调用代码片段</h3>
               <div className="afw-code-tabs">
                 <div className="afw-code-tab active">cURL</div>
                 <div className="afw-code-tab">Python</div>
                 <div className="afw-code-tab">Node.js</div>
               </div>
               <div className="afw-code-container" style={{ background: '#1e293b', padding: 16, borderRadius: '0 0 8px 8px', color: '#f8fafc', fontFamily: 'monospace', fontSize: 13, overflowX: 'auto' }}>
-{`curl -X POST https://api.anthropic.com/v1/sessions \\
-  -H "x-api-key: $ANTHROPIC_API_KEY" \\
-  -d '{
-    "agent_id": "agnt_011Ca3fmse..." 
-  }'`}
+{"curl -X POST https://api.workspace.com/v1/meta/sessions \\\n  -H \"x-api-key: $WORKSPACE_API_KEY\" \\\n  -d '{\n    \"blueprint_id\": \"ab_098KxOq2PLmswN88s9AOp1\" \n  }'"}
               </div>
             </div>
-          )}
-        </div>
-        
-        {/* Right pane for preview/debug */}
-        <div className="afw-wv2-right">
-          {wizardStep < 3 ? (
-            <div className="afw-preview-pane">
-              <div className="afw-pp-header">
-                <div className="afw-pp-tabs">
-                  <div className="afw-pp-tab active">Config</div>
-                  <div className="afw-pp-tab">Preview</div>
-                </div>
-              </div>
-              <div className="afw-pp-body yaml-view">
-                <pre>{agentConfig.yaml || 'name: ' + agentConfig.name + '\ndescription: ' + agentConfig.description + '\n...'}</pre>
-              </div>
-            </div>
-          ) : (
-            <div className="afw-preview-pane debug">
-               <div className="afw-pp-header" style={{ justifyContent: 'space-between' }}>
-                 <div className="afw-pp-tabs">
-                   <div className="afw-pp-tab active">Transcript</div>
-                   <div className="afw-pp-tab">Debug</div>
-                 </div>
-                 <div style={{ fontSize: 12, color: '#64748b', display: 'flex', alignItems: 'center', gap: 6 }}>
-                   <IconActivity size={14}/> Event Stream
-                 </div>
-               </div>
-               <div className="afw-pp-body debug-view">
-                 {testSession.events.length === 0 ? (
-                   <div style={{ color: '#94a3b8', textAlign: 'center', marginTop: 60, fontSize: 13 }}>Waiting for session events...</div>
-                 ) : (
-                   <div className="afw-event-stream">
-                     {testSession.events.map((ev, i) => (
-                       <div key={i} className={`afw-event-row ${ev.type}`}>
-                         <div className={`afw-er-badge ${ev.type}`}>{ev.type}</div>
-                         <div className="afw-er-text">{ev.text}</div>
-                         <div className="afw-er-time">{ev.time}</div>
-                       </div>
-                     ))}
-                   </div>
-                 )}
-               </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   )
