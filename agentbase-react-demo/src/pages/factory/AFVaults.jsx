@@ -2,6 +2,36 @@ import { useState } from 'react'
 import PageLayout, { DataToolbar } from '../../components/PageLayout'
 import './AF.css'
 
+// SVG Icons
+const IconInfo = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" y1="16" x2="12" y2="12"></line>
+    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+  </svg>
+)
+
+const IconSearch = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+)
+
+const IconVault = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </svg>
+)
+
+const IconCopy = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  </svg>
+)
+
 const MOCK_VAULTS = [
   { id: 'vlt_aB3cD9eF', name: 'GitHub Production', status: 'active', credCount: 2, createdAt: '2026-04-01 10:00', creds: [
     { id: 'c1', type: 'static_bearer', target: 'https://api.github.com/mcp/', masked: 'ghp_●●●●●●1a2b' },
@@ -63,7 +93,7 @@ export default function AFVaults() {
       rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)}>+ New Vault</button>}
     >
       <div className="info-alert">
-        <span className="info-alert-icon">ℹ️</span>
+        <span className="info-alert-icon"><IconInfo /></span>
         Vaults 是凭证保险箱，在 Session 创建时通过 <code>vault_ids</code> 注入，用于 MCP 服务器的 OAuth 和 Bearer Token 认证。Vaults 作用域为当前工作空间，具有 API 访问权限的成员均可使用。
       </div>
 
@@ -77,7 +107,7 @@ export default function AFVaults() {
         }
       >
         <div className="search-input">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><IconSearch /></span>
           <input placeholder="搜索 Vault 名称或 ID" />
         </div>
       </DataToolbar>
@@ -90,7 +120,7 @@ export default function AFVaults() {
             <div key={v.id} className="afp-vault-card">
               <div className="afp-vault-head" onClick={() => setExpanded(isOpen ? null : v.id)}>
                 <div className="afp-vault-left">
-                  <span className="afp-vault-icon">🔐</span>
+                  <span className="afp-vault-icon"><IconVault /></span>
                   <div>
                     <div className="afp-vault-name notion-body-medium">{v.name}</div>
                     <div className="afp-vault-id">{v.id}</div>
@@ -111,7 +141,7 @@ export default function AFVaults() {
                       <span className={`afp-cred-type afp-cred-${c.type} notion-badge-text`}>{c.type === 'oauth' ? 'OAuth' : 'Bearer'}</span>
                       <span className="afp-cred-target notion-caption">{c.target}</span>
                       <span className="afp-cred-masked notion-caption">{c.masked}</span>
-                      <button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(c.masked); showToast('已复制') }}>⎘</button>
+                      <button className="af-copy-btn" onClick={() => { navigator.clipboard.writeText(c.masked); showToast('已复制') }}><IconCopy /></button>
                     </div>
                   ))}
                   <div className="afp-cred-actions">
