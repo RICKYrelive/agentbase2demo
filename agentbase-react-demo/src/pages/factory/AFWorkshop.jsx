@@ -17,70 +17,70 @@ const MOCK_TEMPLATES = {
       envTemplate: 'default',
       tags: ['Core'],
       tools: ['bash', 'web_fetch'],
-      yaml: "name: blank-agent\ndescription: A blank starting point with the core toolset.\nsystem_prompt: |\n  You are a helpful assistant. Use your tools to solve problems.\ntools:\n  - bash\n  - web_fetch"
+      yaml: "---\nname: blank-agent\ndescription: A blank starting point with the core toolset.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a helpful assistant. Use your tools to solve problems.\ntools:\n  - type: agent_toolset_20260401\n  - type: bash\n  - type: web_fetch\n---"
     },
     { 
       id: 'at2', name: 'Data analyst', icon: <IconBarChart />, desc: 'Load, explore, and visualize data; build reports and answer questions from datasets.',
       envTemplate: 'data-analyst',
       tags: ['Data', 'Python'],
       tools: ['bash', 'web_fetch', 'python'],
-      yaml: "name: data-analyst\ndescription: Load, explore, and visualize data.\nsystem_prompt: |\n  You are an expert data analyst. You write Python code to load datasets, \n  clean data, perform statistical analysis, and generate charts using matplotlib.\ntools:\n  - bash\n  - web_fetch\n  - python"
+      yaml: "---\nname: data-analyst\ndescription: Load, explore, and visualize data.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an expert data analyst. You write Python code to load datasets, \n  clean data, perform statistical analysis, and generate charts using matplotlib.\ntools:\n  - type: agent_toolset_20260401\n  - type: python\n  - type: bash\n---"
     },
     { 
       id: 'at3', name: 'Deep researcher', icon: <IconSearch />, desc: 'Conducts multi-step web research with source synthesis and citations.',
       envTemplate: 'researcher',
       tags: ['Web', 'Research'],
       tools: ['web_fetch', 'search'],
-      yaml: "name: deep-researcher\ndescription: Conducts multi-step web research with source synthesis and citations.\nsystem_prompt: |\n  You are a meticulous researcher. You conduct comprehensive web searches, \n  synthesize information from multiple sources, and always provide citations.\ntools:\n  - web_fetch\n  - search"
+      yaml: "---\nname: deep-researcher\ndescription: Conducts multi-step web research with source synthesis and citations.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a meticulous researcher. You conduct comprehensive web searches, \n  synthesize information from multiple sources, and always provide citations.\ntools:\n  - type: agent_toolset_20260401\n  - type: web_fetch\n  - type: search\n---"
     },
     { 
       id: 'at4', name: 'Software Developer', icon: <IconTerminal />, desc: 'Full-stack software developer capable of writing, reviewing, and testing code.',
       envTemplate: 'developer',
       tags: ['Code', 'Development'],
       tools: ['bash', 'github'],
-      yaml: "name: software-developer\ndescription: Assists with software development tasks.\nsystem_prompt: |\n  You are an experienced full-stack developer. You write clean, testable code,\n  perform code reviews, and can execute bash commands to run tests.\ntools:\n  - bash\n  - github"
+      yaml: "---\nname: software-developer\ndescription: Assists with software development tasks.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced full-stack developer. You write clean, testable code,\n  perform code reviews, and can execute bash commands to run tests.\ntools:\n  - type: agent_toolset_20260401\n  - type: bash\n  - type: github\n---"
     },
     { 
       id: 'at5', name: 'Incident commander', icon: <IconAlertTriangle />, desc: 'Triages alerts, opens incident tickets, and runs the war room.',
       envTemplate: 'ops',
       tags: ['DevOps', 'SRE'],
       tools: ['pagerduty', 'slack', 'jira'],
-      yaml: "name: incident-commander\ndescription: Triages alerts and manages incidents.\nsystem_prompt: |\n  You are an incident commander. You investigate alerts, coordinate communication\n  in Slack, and ensure tickets are tracked and updated.\ntools:\n  - pagerduty\n  - slack\n  - jira"
+      yaml: "---\nname: incident-commander\ndescription: Triages alerts and manages incidents.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an incident commander. You investigate alerts, coordinate communication\n  in Slack, and ensure tickets are tracked and updated.\nmcp_servers:\n  - name: slack\n    type: url\n    url: https://mcp.slack.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: slack\n---"
     },
     { 
       id: 'at6', name: 'Support-to-eng escalator', icon: <IconMessageSquare />, desc: 'Reads customer conversations, reproduces bugs, and files Jira issues.',
       envTemplate: 'support',
       tags: ['Support', 'Engineering'],
       tools: ['intercom', 'jira', 'github'],
-      yaml: "name: support-escalator\ndescription: Escalates support tickets to engineering.\nsystem_prompt: |\n  You read customer support conversations, identify reproducible bugs,\n  and create detailed engineering tickets with reproduction steps.\ntools:\n  - intercom\n  - jira\n  - github"
+      yaml: "---\nname: support-escalator\ndescription: Escalates support tickets to engineering.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You read customer support conversations, identify reproducible bugs,\n  and create detailed engineering tickets with reproduction steps.\ntools:\n  - type: agent_toolset_20260401\n  - type: intercom\n  - type: jira\n---"
     },
     { 
       id: 'at7', name: 'Structured extractor', icon: <IconDatabase />, desc: 'Parses unstructured text into a typed JSON schema.',
       envTemplate: 'default',
       tags: ['Data', 'Parsing'],
       tools: ['json_schema'],
-      yaml: "name: structured-extractor\ndescription: Extracts structured JSON from unstructured text.\nsystem_prompt: |\n  You parse large blocks of unstructured text and extract entities matching\n  the provided JSON schema exactly.\ntools:\n  - json_schema"
+      yaml: "---\nname: structured-extractor\ndescription: Extracts structured JSON from unstructured text.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You parse large blocks of unstructured text and extract entities matching\n  the provided JSON schema exactly.\ntools:\n  - type: json_schema\n---"
     },
     { 
       id: 'at8', name: 'Feedback miner', icon: <IconEdit />, desc: 'Clusters raw feedback from Slack and Notion into themes and drafts Asana tasks.',
       envTemplate: 'product',
       tags: ['Product', 'Analysis'],
       tools: ['slack', 'notion', 'asana'],
-      yaml: "name: feedback-miner\ndescription: Clusters user feedback into actionable themes.\nsystem_prompt: |\n  You are a product manager analyzing user feedback. You cluster feedback into\n  themes and create actionable tasks for the engineering team.\ntools:\n  - slack\n  - notion\n  - asana"
+      yaml: "---\nname: feedback-miner\ndescription: Clusters user feedback into actionable themes.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a product manager analyzing user feedback. You cluster feedback into\n  themes and create actionable tasks for the engineering team.\nmcp_servers:\n  - name: notion\n    type: url\n    url: https://mcp.notion.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: notion\n---"
     },
     { 
       id: 'at9', name: 'Field monitor', icon: <IconGlobe />, desc: 'Scans software blogs for a topic and writes a weekly what-changed brief.',
       envTemplate: 'researcher',
       tags: ['News', 'Monitoring'],
       tools: ['web_fetch', 'rss'],
-      yaml: "name: field-monitor\ndescription: Monitors industry blogs and writes summaries.\nsystem_prompt: |\n  You monitor specified industry blogs and RSS feeds. You compile a weekly\n  brief summarizing the most important changes and announcements.\ntools:\n  - web_fetch\n  - rss"
+      yaml: "---\nname: field-monitor\ndescription: Monitors industry blogs and writes summaries.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You monitor specified industry blogs and RSS feeds. You compile a weekly\n  brief summarizing the most important changes and announcements.\ntools:\n  - type: web_fetch\n  - type: rss\n---"
     },
     { 
       id: 'at10', name: 'Sprint retro facilitator', icon: <IconActivity />, desc: 'Pulls a closed sprint from Linear, synthesizes themes, and writes the retro doc.',
       envTemplate: 'agile',
       tags: ['Agile', 'Docs'],
       tools: ['linear', 'notion'],
-      yaml: "name: sprint-retro\ndescription: Facilitates sprint retrospectives.\nsystem_prompt: |\n  You analyze completed sprints in Linear, identifying bottlenecks and successes.\n  You generate a comprehensive retrospective document.\ntools:\n  - linear\n  - notion"
+      yaml: "---\nname: sprint-retro\ndescription: Facilitates sprint retrospectives.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You analyze completed sprints in Linear, identifying bottlenecks and successes.\n  You generate a comprehensive retrospective document.\ntools:\n  - type: linear\n  - type: notion\n---"
     }
   ],
   Skill: [
@@ -112,7 +112,7 @@ const MOCK_TASKS = [
     icon: <IconSearch />,
     envTemplate: 'developer',
     tools: ['bash', 'github'],
-    yaml: "name: 代码审查 Agent\ndescription: 用于自动化审查 PR 并在 GitHub 留言报告\nsystem_prompt: |\n  You are an experienced code reviewer...\ntools:\n  - bash\n  - github"
+    yaml: "---\nname: 代码审查 Agent\ndescription: 用于自动化审查 PR 并在 GitHub 留言报告\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced code reviewer...\ntools:\n  - type: agent_toolset_20260401\n  - type: github\n---"
   }
 ]
 
@@ -132,7 +132,8 @@ export default function AFWorkshop() {
   const [agentConfig, setAgentConfig] = useState({
     name: '',
     description: '',
-    systemPrompt: '',
+    model: 'claude-sonnet-4-6',
+    system: '',
     tools: ['bash', 'web_fetch']
   })
 
@@ -175,11 +176,17 @@ export default function AFWorkshop() {
   }
 
   const startWizardFromTemplate = () => {
-    const sysPromptMatch = editedYaml.match(/system_prompt:\s*\|([\s\S]*?)(?=\ntools:|$)/);
+    const yaml = editedYaml || ''
+    const nameMatch = yaml.match(/name:\s*(.*)/)
+    const descMatch = yaml.match(/description:\s*(.*)/)
+    const modelMatch = yaml.match(/model:\s*(.*)/)
+    const systemMatch = yaml.match(/system:\s*\|-\s*([\s\S]*?)(?=\n\w+:|$)/)
+    
     setAgentConfig({
-      name: previewTemplate.name,
-      description: previewTemplate.desc,
-      systemPrompt: sysPromptMatch ? sysPromptMatch[1].trim() : '',
+      name: nameMatch ? nameMatch[1].trim() : previewTemplate.name,
+      description: descMatch ? descMatch[1].trim() : previewTemplate.desc,
+      model: modelMatch ? modelMatch[1].trim() : 'claude-sonnet-4-6',
+      system: systemMatch ? systemMatch[1].trim() : '',
       tools: previewTemplate.tools || ['bash', 'web_fetch']
     })
     
@@ -197,7 +204,11 @@ export default function AFWorkshop() {
   
   const startWizardEmpty = () => {
     setAgentConfig({
-      name: '自定义 Agent蓝图', description: '', systemPrompt: '', tools: ['bash']
+      name: '自定义 Agent蓝图', 
+      description: '', 
+      model: 'claude-sonnet-4-6',
+      system: '', 
+      tools: ['bash']
     })
     
     const initialMessages = [{
@@ -557,12 +568,22 @@ export default function AFWorkshop() {
                 </div>
                 
                 <div className="af-field">
-                  <label className="af-field-label">系统设定指令 (System Prompt)</label>
+                  <label className="af-field-label">推理模型 (Model)</label>
+                  <input 
+                    type="text" 
+                    className="af-input-text" 
+                    value={agentConfig.model}
+                    onChange={e => setAgentConfig({...agentConfig, model: e.target.value})}
+                  />
+                </div>
+                
+                <div className="af-field">
+                  <label className="af-field-label">系统设定指令 (System)</label>
                   <div className="af-field-hint">这里定义该 Agent 的性格、目标以及执行逻辑底座。</div>
                   <textarea 
                     className="af-input-textarea" 
-                    value={agentConfig.systemPrompt}
-                    onChange={e => setAgentConfig({...agentConfig, systemPrompt: e.target.value})}
+                    value={agentConfig.system}
+                    onChange={e => setAgentConfig({...agentConfig, system: e.target.value})}
                     style={{ height: 220, fontFamily: 'monospace', fontSize: 13 }}
                   />
                 </div>

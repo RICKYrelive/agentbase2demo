@@ -5,6 +5,7 @@ import {
   IconDrama, IconZap, IconBrain, IconSparkles, IconX, IconPlus, IconMinus
 } from '../../components/Icons'
 import './AF.css'
+import './AFWorkshop.css'
 
 const guideCards = [
   { title: '定义 Agent 蓝图', desc: '配置模型、系统提示词、工具集和技能，创建可复用的 Agent 定义。每次修改版本号自动递增。' },
@@ -37,6 +38,8 @@ export default function AFAgent() {
   const [showDrawer, setShowDrawer] = useState(false)
   const [drawerStep, setDrawerStep] = useState(1)
   const [toast, setToast] = useState(null)
+  const [detailAgent, setDetailAgent] = useState(null)
+  const [editAgent, setEditAgent] = useState(null)
 
   // Drawer Form State
   const [formData, setFormData] = useState({
@@ -64,6 +67,26 @@ export default function AFAgent() {
   const handleCreate = () => {
     showToast('Blueprint 创建成功')
     resetAndClose()
+  }
+
+  const openDetail = (agent) => {
+    setDetailAgent({
+      ...agent,
+      desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
+      envTemplate: 'default-env',
+      toolsList: agent.tools ? agent.tools.split(', ') : [],
+      yaml: `---\nname: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\nmcp_servers:\n  - name: example-mcp\n    type: url\n    url: https://mcp.example.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: example-mcp\nskills: \n  - type: general\n    skill_id: base_logic\n---`
+    })
+  }
+
+  const openEdit = (agent) => {
+    setEditAgent({
+      ...agent,
+      desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
+      envTemplate: 'default-env',
+      toolsList: agent.tools ? agent.tools.split(', ') : [],
+      yaml: `---\nname: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\nmcp_servers:\n  - name: example-mcp\n    type: url\n    url: https://mcp.example.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: example-mcp\nskills: \n  - type: general\n    skill_id: base_logic\n---`
+    })
   }
 
   return (
@@ -130,9 +153,8 @@ export default function AFAgent() {
                   <td className="af-muted">{a.owner}</td>
                   <td>
                     <div className="ha-row-actions">
-                      <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }}>详情</button>
-                      <button className="notion-body-medium">编辑</button>
-                      <button className="ha-delete-btn notion-body-medium" style={{ color: 'var(--notion-warning)' }}>归档</button>
+                      <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }} onClick={() => { console.log('Detail clicked', a); openDetail(a); }}>详情</button>
+                      <button className="ha-delete-btn notion-body-medium" style={{ color: 'var(--notion-warning)' }} onClick={() => showToast('已将 ' + a.name + ' 归档')}>归档</button>
                     </div>
                   </td>
                 </tr>
@@ -263,6 +285,100 @@ export default function AFAgent() {
               ) : (
                 <button className="action-btn primary" onClick={handleCreate}>保存并创建</button>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Detail Modal */}
+      {detailAgent && (
+        <div className="afw-tpl-modal-overlay">
+          <div className="afw-tpl-modal">
+            <div className="afw-tpl-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className="afw-template-icon" style={{ background: '#f1f5f9' }}><IconBot /></div>
+                <div style={{ fontSize: 18, fontWeight: 700 }}>{detailAgent.name} <span style={{ fontSize: 12, color: '#64748b', fontWeight: 400, marginLeft: 8 }}>v{detailAgent.version}</span></div>
+              </div>
+              <button className="afw-tpl-close" onClick={() => setDetailAgent(null)}><IconX /></button>
+            </div>
+            
+            <div className="afw-tpl-modal-body">
+              <div className="afw-tpl-info-pane">
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>环境模板 / Env Template</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, display: 'inline-block', background: '#f8fafc', padding: '4px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
+                    {detailAgent.envTemplate}
+                  </div>
+                </div>
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>详细描述 / Description</div>
+                  <div style={{ fontSize: 14, lineHeight: 1.5, color: '#334155' }}>{detailAgent.desc}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>挂载工具 / Default Tools</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {detailAgent.toolsList?.map(t => (
+                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 8px', borderRadius: 4, fontWeight: 600 }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="afw-tpl-editor-pane">
+                <textarea 
+                  className="afw-yaml-editor"
+                  value={detailAgent.yaml}
+                  readOnly
+                />
+              </div>
+            </div>
+            
+            <div className="afw-tpl-modal-footer">
+              <button className="action-btn" onClick={() => setDetailAgent(null)}>关闭详情</button>
+              <button className="action-btn" onClick={() => showToast('模板保存成功')}>保存为模板</button>
+              <button className="action-btn primary" onClick={() => { setEditAgent(detailAgent); setDetailAgent(null); }}>进入编辑</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {editAgent && (
+        <div className="afw-tpl-modal-overlay">
+          <div className="afw-tpl-modal">
+            <div className="afw-tpl-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className="afw-template-icon" style={{ background: '#f1f5f9' }}><IconBot /></div>
+                <div style={{ fontSize: 18, fontWeight: 700 }}>编辑: {editAgent.name}</div>
+              </div>
+              <button className="afw-tpl-close" onClick={() => setEditAgent(null)}><IconX /></button>
+            </div>
+            
+            <div className="afw-tpl-modal-body">
+              <div className="afw-tpl-info-pane">
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>环境模板 / Env Template</div>
+                  <input className="af-input-text" value={editAgent.envTemplate} onChange={e => setEditAgent({...editAgent, envTemplate: e.target.value})} />
+                </div>
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>详细描述 / Description</div>
+                  <textarea className="af-input-textarea" style={{minHeight: 120}} value={editAgent.desc} onChange={e => setEditAgent({...editAgent, desc: e.target.value})} />
+                </div>
+              </div>
+              
+              <div className="afw-tpl-editor-pane">
+                <textarea 
+                  className="afw-yaml-editor"
+                  value={editAgent.yaml}
+                  onChange={e => setEditAgent({...editAgent, yaml: e.target.value})}
+                  spellCheck={false}
+                />
+              </div>
+            </div>
+            
+            <div className="afw-tpl-modal-footer">
+              <button className="action-btn" onClick={() => setEditAgent(null)}>取消修改</button>
+              <button className="action-btn primary" onClick={() => { showToast('保存配置成功'); setEditAgent(null); }}>保存配置变更</button>
             </div>
           </div>
         </div>
