@@ -349,7 +349,7 @@ export default function MACEnvironmentDetail() {
               </thead>
               <tbody>
                 {envSessions.map(s => (
-                  <tr key={s.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/managed-agent/sessions/${s.id}`)}>
+                  <tr key={s.id}>
                     <td><span className="ha-name-link">{s.id}</span></td>
                     <td>{s.agentName}</td>
                     <td>{s.status}</td>

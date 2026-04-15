@@ -43,14 +43,8 @@ import AFVaults from './pages/factory/AFVaults'
 
 // Agent Console (Managed Agent)
 import { ManagedAgentProvider } from './store/managedAgentStore.jsx'
-import MACOverview from './pages/managed/MACOverview'
-import MACAgentList from './pages/managed/MACAgentList'
-import MACCreateAgent from './pages/managed/MACCreateAgent'
-import MACAgentDetail from './pages/managed/MACAgentDetail'
 import MACEnvironmentList from './pages/managed/MACEnvironmentList'
 import MACEnvironmentDetail from './pages/managed/MACEnvironmentDetail'
-import MACSessionList from './pages/managed/MACSessionList'
-import MACSessionDetail from './pages/managed/MACSessionDetail'
 import MACEventTimeline from './pages/managed/MACEventTimeline'
 import MACToolCatalog from './pages/managed/MACToolCatalog'
 import MACCustomToolBuilder from './pages/managed/MACCustomToolBuilder'
@@ -133,14 +127,8 @@ function AppLayout() {
           <Route path="/trace" element={<Trace onAlert={handleAlert} />} />
           <Route path="/cluster-manage" element={<ClusterManage onAlert={handleAlert} />} />
           {/* Agent Console (Managed Agent) Routes */}
-          <Route path="/managed-agent" element={<MACOverview />} />
-          <Route path="/managed-agent/agents" element={<MACAgentList />} />
-          <Route path="/managed-agent/agents/create" element={<MACCreateAgent />} />
-          <Route path="/managed-agent/agents/:id" element={<MACAgentDetail />} />
           <Route path="/managed-agent/environments" element={<MACEnvironmentList />} />
           <Route path="/managed-agent/environments/:id" element={<MACEnvironmentDetail />} />
-          <Route path="/managed-agent/sessions" element={<MACSessionList />} />
-          <Route path="/managed-agent/sessions/:id" element={<MACSessionDetail />} />
           <Route path="/managed-agent/events" element={<MACEventTimeline />} />
           <Route path="/managed-agent/tools" element={<MACToolCatalog />} />
           <Route path="/managed-agent/tools/create" element={<MACCustomToolBuilder />} />
