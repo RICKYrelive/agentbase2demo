@@ -42,6 +42,7 @@ const agentFactoryItems = [
   { key: 'af-workshop', label: 'Agent 工坊', icon: <IconTerminal />, desc: 'AI 生成' },
   { key: 'af-agent', label: 'Agent Blueprint', icon: <IconCompass />, desc: 'Agent 定义库' },
   { key: 'af-session', label: 'Session', icon: <IconActivity />, desc: '运行实例' },
+  { key: 'af-environment', label: 'Environment', icon: <IconGlobe />, desc: '运行环境' },
   { key: 'af-passport', label: 'Vaults', icon: <IconShield />, desc: '凭证保险箱' },
 ]
 

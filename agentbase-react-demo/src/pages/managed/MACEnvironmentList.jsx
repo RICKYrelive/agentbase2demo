@@ -5,9 +5,16 @@ import PageLayout, { DataToolbar } from '../../components/PageLayout'
 import { 
   IconPlus, IconSearch, IconRotateCcw, IconList, IconGrid, 
   IconPackage, IconTool, IconClipboard, IconLock, IconZap, 
-  IconAlertTriangle, IconTrash 
+  IconAlertTriangle, IconTrash, IconX
 } from '../../components/Icons'
 import './MAC.css'
+
+const HOSTING_TYPES = [
+  { value: 'cloud', label: 'Cloud' },
+  { value: 'self_hosted', label: 'Self-hosted' },
+]
+
+const RUNTIME_MAP = { cloud: 'python', self_hosted: 'docker' }
 
 export default function MACEnvironmentList() {
   const navigate = useNavigate()
@@ -16,10 +23,44 @@ export default function MACEnvironmentList() {
   const [toast, setToast] = useState(null)
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [viewMode, setViewMode] = useState('list')
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [createForm, setCreateForm] = useState({ name: '', hostingType: 'cloud', description: '' })
+  const [createErrors, setCreateErrors] = useState({})
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type })
     setTimeout(() => setToast(null), 2500)
+  }
+
+  const handleOpenCreate = () => {
+    setCreateForm({ name: '', hostingType: 'cloud', description: '' })
+    setCreateErrors({})
+    setShowCreateModal(true)
+  }
+
+  const handleCreate = () => {
+    const errs = {}
+    if (!createForm.name.trim()) errs.name = '名称不能为空'
+    if (createForm.name.length > 50) errs.name = '名称不超过 50 字符'
+    if (Object.keys(errs).length) { setCreateErrors(errs); return }
+
+    dispatch({
+      type: 'CREATE_ENVIRONMENT',
+      payload: {
+        name: createForm.name.trim(),
+        description: createForm.description,
+        runtime: RUNTIME_MAP[createForm.hostingType],
+        hostingType: createForm.hostingType,
+        baseImage: createForm.hostingType === 'cloud' ? 'python:3.12-slim' : 'custom',
+        dependencies: [],
+        networkPolicy: { mode: 'limited', allowDomains: [], allowIPs: [] },
+        fileMounts: [],
+        envVars: [],
+        workDir: '/workspace',
+      },
+    })
+    setShowCreateModal(false)
+    showToast(`环境 "${createForm.name}" 创建成功`)
   }
 
   const filtered = environments.filter(e => !search || e.name.toLowerCase().includes(search.toLowerCase()))
@@ -35,7 +76,7 @@ export default function MACEnvironmentList() {
   return (
     <PageLayout title="Environments" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{environments.length} 个环境</span>}>
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => showToast('创建环境功能开发中', 'info')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建环境</button>}
+        buttons={<button className="action-btn primary" onClick={handleOpenCreate} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建环境</button>}
         filters={
           <div className="ha-view-toggle">
             <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')}><IconList size={16} /></button>
@@ -59,7 +100,6 @@ export default function MACEnvironmentList() {
               <th>Runtime</th>
               <th>基础镜像</th>
               <th>网络策略</th>
-              <th>健康状态</th>
               <th>Session 数</th>
               <th>创建时间</th>
               <th>操作</th>
@@ -67,34 +107,28 @@ export default function MACEnvironmentList() {
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={8} className="data-table-empty">
+              <tr><td colSpan={7} className="data-table-empty">
                 <div className="empty-state ha-empty">
                   <div className="empty-icon"><IconPackage size={48} style={{ opacity: 0.2 }} /></div>
                   <div className="ha-empty-title">还没有环境</div>
-                  <div className="ha-empty-desc">创建一个运行环境，为 Agent 提供容器化沙箱</div>
+                  <div className="ha-empty-desc">创建一个业务沙箱，为 Agent 提供安全且隔离的运行能力</div>
                 </div>
               </td></tr>
             ) : filtered.map(env => {
-              const healthColor = env.status === 'healthy' ? '#52c41a' : env.status === 'unhealthy' ? '#ff4d4f' : '#999'
               return (
                 <tr key={env.id}>
                   <td>
-                    <span className="ha-name-link" onClick={() => navigate(`/managed-agent/environments/${env.id}`)}>{env.name}</span>
+                    <span className="ha-name-link" onClick={() => navigate(`/af-environment/${env.id}`)}>{env.name}</span>
                     <div style={{ fontSize: 12, color: '#999', marginTop: 2 }}>{env.description}</div>
                   </td>
                   <td><span className="ha-mini-tag">{env.runtime}</span></td>
                   <td style={{ fontSize: 13, fontFamily: 'monospace' }}>{env.baseImage}</td>
                   <td><span className="ha-mini-tag">{env.networkPolicy.mode}</span></td>
-                  <td>
-                    <span style={{ color: healthColor }}>
-                      ● {env.status === 'healthy' ? '健康' : env.status === 'unhealthy' ? '异常' : '未知'}
-                    </span>
-                  </td>
                   <td>{env.sessionsCount}</td>
                   <td>{env.createdAt?.slice(0, 10)}</td>
                   <td>
                     <div className="ha-row-actions">
-                      <button onClick={() => navigate(`/managed-agent/environments/${env.id}`)}>详情</button>
+                      <button onClick={() => navigate(`/af-environment/${env.id}`)}>详情</button>
                       <button className="ha-delete-btn" onClick={() => setConfirmDelete(env)}><IconTrash size={14} /></button>
                     </div>
                   </td>
@@ -110,13 +144,11 @@ export default function MACEnvironmentList() {
       {viewMode === 'card' && (
         <div className="mac-mcp-grid">
           {filtered.map(env => {
-            const healthColor = env.status === 'healthy' ? '#52c41a' : '#ff4d4f'
             const envSessionCount = sessions.filter(s => s.environmentId === env.id).length
             return (
-              <div key={env.id} className="mac-mcp-card" onClick={() => navigate(`/managed-agent/environments/${env.id}`)}>
+              <div key={env.id} className="mac-mcp-card" onClick={() => navigate(`/af-environment/${env.id}`)}>
                 <div className="mac-mcp-card-header">
                   <span className="mac-mcp-card-name">{env.name}</span>
-                  <span style={{ color: healthColor, fontSize: 12 }}>● {env.status === 'healthy' ? '健康' : '异常'}</span>
                 </div>
                 <div className="mac-mcp-card-desc">{env.description}</div>
                 <div className="mac-card-capabilities" style={{ marginTop: 6 }}>
@@ -144,6 +176,69 @@ export default function MACEnvironmentList() {
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button className="action-btn primary" style={{ background: '#ff4d4f', borderColor: '#ff4d4f' }} onClick={handleDelete}>删除</button>
               <button className="action-btn" onClick={() => setConfirmDelete(null)}>取消</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Create Environment Modal */}
+      {showCreateModal && (
+        <div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
+          <div className="mac-create-env-modal" onClick={e => e.stopPropagation()}>
+            <div className="mac-create-env-modal-header">
+              <h2>Add environment</h2>
+              <button className="mac-create-env-close" onClick={() => setShowCreateModal(false)}><IconX size={20} /></button>
+            </div>
+
+            <div className="mac-create-env-modal-body">
+              <div className="mac-create-env-row">
+                <div className="mac-create-env-field" style={{ flex: 1 }}>
+                  <label className="mac-env-label">Name</label>
+                  <input
+                    className={`mac-env-text-input ${createErrors.name ? 'error' : ''}`}
+                    placeholder="E.g. My Environment"
+                    value={createForm.name}
+                    maxLength={50}
+                    onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))}
+                  />
+                  {createErrors.name
+                    ? <div className="mac-create-env-error">{createErrors.name}</div>
+                    : <div className="mac-create-env-hint">50 characters or fewer.</div>
+                  }
+                </div>
+                <div className="mac-create-env-field" style={{ width: 220 }}>
+                  <label className="mac-env-label">Hosting Type</label>
+                  <select
+                    className="mac-env-select"
+                    value={createForm.hostingType}
+                    onChange={e => setCreateForm(f => ({ ...f, hostingType: e.target.value }))}
+                  >
+                    {HOSTING_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                  </select>
+                  <div className="mac-create-env-hint">This cannot be changed after creation.</div>
+                </div>
+              </div>
+
+              <div className="mac-create-env-field">
+                <label className="mac-env-label">Description</label>
+                <textarea
+                  className="mac-env-textarea"
+                  rows={4}
+                  placeholder="Optional description for this environment"
+                  value={createForm.description}
+                  onChange={e => setCreateForm(f => ({ ...f, description: e.target.value }))}
+                />
+              </div>
+            </div>
+
+            <div className="mac-create-env-modal-footer">
+              <button
+                className="mac-create-env-submit"
+                disabled={!createForm.name.trim()}
+                onClick={handleCreate}
+              >
+                Create
+              </button>
             </div>
           </div>
         </div>

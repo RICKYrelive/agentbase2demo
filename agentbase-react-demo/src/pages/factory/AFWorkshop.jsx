@@ -23,7 +23,7 @@ const MOCK_TEMPLATES = {
     { 
       id: 'at2', name: 'Data analyst', icon: <IconBarChart />, desc: 'Load, explore, and visualize data; build reports and answer questions from datasets.',
       envTemplate: 'data-analyst',
-      tags: ['Data', 'Python'],
+      tags: ['Data', 'Analytics'],
       tools: ['bash', 'web_fetch', 'python'],
       yaml: "name: data-analyst\ndescription: Load, explore, and visualize data; build reports and answer questions from datasets.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an expert data analyst. For each data exploration task:\n\n  1. Load the dataset using provided tools.\n  2. Perform initial analysis and generate summary statistics.\n  3. Create visualizations if requested.\n  \n  Be precise in your findings.\nmcp_servers:\n  - name: data-vault\n    type: url\n    url: https://mcp.data.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: data-vault\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
@@ -37,14 +37,14 @@ const MOCK_TEMPLATES = {
     { 
       id: 'at4', name: 'Software Developer', icon: <IconTerminal />, desc: 'Full-stack software developer capable of writing, reviewing, and testing code.',
       envTemplate: 'developer',
-      tags: ['Code', 'Development'],
+      tags: ['Engineering', 'Automation'],
       tools: ['bash', 'github'],
       yaml: "name: software-developer\ndescription: Assists with software development tasks.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced software developer. For each coding task:\n\n  1. Review existing code architecture.\n  2. Write clean, idiomatic code with tests.\n  3. Execute bash commands to verify the build.\n  \n  Follow industry best practices.\nmcp_servers:\n  - name: github-bridge\n    type: url\n    url: https://mcp.github.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: github-bridge\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at5', name: 'Incident commander', icon: <IconAlertTriangle />, desc: 'Triages alerts, opens incident tickets, and runs the war room.',
       envTemplate: 'ops',
-      tags: ['DevOps', 'SRE'],
+      tags: ['Operations', 'SRE'],
       tools: ['pagerduty', 'slack', 'jira'],
       yaml: "name: incident-commander\ndescription: Triages alerts and manages incidents.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an incident commander. When an alert occurs:\n\n  1. Triage the severity and scope.\n  2. Coordinate communication across Slack channels.\n  3. Ensure a post-mortem is drafted after resolution.\n  \n  Prioritize stability over speed.\nmcp_servers:\n  - name: ops-toolkit\n    type: url\n    url: https://mcp.ops.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: ops-toolkit\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
@@ -79,7 +79,7 @@ const MOCK_TEMPLATES = {
     { 
       id: 'at10', name: 'Sprint retro facilitator', icon: <IconActivity />, desc: 'Pulls a closed sprint from Linear, synthesizes themes, and writes the retro doc.',
       envTemplate: 'agile',
-      tags: ['Agile', 'Docs'],
+      tags: ['Management', 'Docs'],
       tools: ['linear', 'notion'],
       yaml: "name: sprint-retro\ndescription: Pulls a closed sprint and writes retro doc.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an agile facilitator. To run a sprint retro:\n\n  1. Fetch all closed issues and PRs from the sprint.\n  2. Categorize wins, challenges, and action items.\n  3. Draft a retrospective document in the Wiki.\n  \n  Be objective and encouraging.\nmcp_servers: []\ntools:\n  - type: linear\n  - type: notion\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     }

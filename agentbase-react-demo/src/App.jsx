@@ -154,6 +154,8 @@ function AppLayout() {
           <Route path="/af-workshop" element={<AFWorkshop />} />
           <Route path="/af-agent" element={<AFAgent />} />
           <Route path="/af-session" element={<AFSession />} />
+          <Route path="/af-environment" element={<MACEnvironmentList />} />
+          <Route path="/af-environment/:id" element={<MACEnvironmentDetail />} />
           <Route path="/af-passport" element={<AFVaults />} />
           {Object.entries(systemPages).map(([key, cfg]) => (
             <Route key={key} path={`/${key}`} element={
