@@ -2,7 +2,8 @@ import { useState } from 'react'
 import PageLayout, { GuideCards, DataToolbar } from '../../components/PageLayout'
 import { 
   IconBot, IconSearch, IconRefresh, IconCopy, 
-  IconDrama, IconZap, IconBrain, IconSparkles, IconX, IconPlus, IconMinus
+  IconDrama, IconZap, IconBrain, IconSparkles, IconX, IconPlus, IconMinus,
+  IconRocket, IconPuzzle, IconWrench, IconTarget, IconShield, IconCpu, IconLayers, IconFlask, IconVault, IconGlobe, IconAlertTriangle, IconTerminal, IconDatabase, IconFileText, IconEdit
 } from '../../components/Icons'
 import './AF.css'
 import './AFWorkshop.css'
@@ -49,11 +50,23 @@ export default function AFAgent() {
     'Analysis': <IconZap />, // MapZap for Analysis in this file
     'Dev': <IconBot />,
     'Database': <IconBrain />,
-    'Gov': <IconSparkles />,
-    'Global': <IconDrama />,
-    'Alert': <IconBot />,
-    'Edit': <IconSearch />,
-    'File': <IconBot />
+    'Gov': <IconShield />,
+    'Global': <IconGlobe />,
+    'Alert': <IconAlertTriangle />,
+    'Edit': <IconEdit />,
+    'File': <IconFileText />,
+    'Rocket': <IconRocket />,
+    'Puzzle': <IconPuzzle />,
+    'Wrench': <IconWrench />,
+    'Target': <IconTarget />,
+    'Shield': <IconShield />,
+    'Cpu': <IconCpu />,
+    'Layers': <IconLayers />,
+    'Flask': <IconFlask />,
+    'Sparkles': <IconSparkles />,
+    'Vault': <IconVault />,
+    'Dev': <IconTerminal />,
+    'Database': <IconDatabase />
   }
 
   // Drawer Form State

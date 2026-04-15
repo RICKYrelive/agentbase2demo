@@ -5,7 +5,8 @@ import {
   IconEdit, IconSearch, IconFile, IconImage, IconBarChart, 
   IconChevronRight, IconChevronDown, IconArrowLeft, IconArrowUp, IconCheck, IconX,
   IconBot, IconFolder, IconFileText, IconCopy, IconCheckCircle, IconPlay,
-  IconAlertTriangle, IconActivity, IconGithub, IconGlobe, IconLock, IconPlus, IconMessageSquare
+  IconAlertTriangle, IconActivity, IconGithub, IconGlobe, IconLock, IconPlus, IconMessageSquare,
+  IconRocket, IconPuzzle, IconWrench, IconTarget, IconShield, IconCpu, IconLayers, IconFlask, IconSparkles, IconVault
 } from '../../components/Icons'
 import './AFWorkshop.css'
 import ShapeGrid from '../../components/effects/ShapeGrid'
@@ -140,7 +141,17 @@ export default function AFWorkshop() {
     'Global': <IconGlobe />,
     'Alert': <IconAlertTriangle />,
     'Edit': <IconEdit />,
-    'File': <IconFileText />
+    'File': <IconFileText />,
+    'Rocket': <IconRocket />,
+    'Puzzle': <IconPuzzle />,
+    'Wrench': <IconWrench />,
+    'Target': <IconTarget />,
+    'Shield': <IconShield />,
+    'Cpu': <IconCpu />,
+    'Layers': <IconLayers />,
+    'Flask': <IconFlask />,
+    'Sparkles': <IconSparkles />,
+    'Vault': <IconVault />
   }
 
   // Wizard state
