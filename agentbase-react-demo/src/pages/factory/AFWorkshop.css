@@ -98,17 +98,78 @@
   width: 320px; border-right: 1px solid var(--color-divider);
   padding: 24px; background: #fafafa; overflow-y: auto;
 }
-.afw-tpl-editor-pane {
-  flex: 1; display: flex; flex-direction: column; background: #fff;
-}
-.afw-tab-switch {
-  display: flex; padding: 12px 24px 0; border-bottom: 1px solid var(--color-divider); background: #f8fafc;
-}
-.afw-ts-btn {
-  padding: 8px 16px; border: none; background: none; font-size: 13px; font-weight: 600;
-  color: #64748b; cursor: pointer; border-bottom: 2px solid transparent;
-}
 .afw-ts-btn.active { color: #0f172a; border-bottom-color: var(--color-blue); }
+
+/* Icon Picker */
+.afw-icon-picker-popover {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  z-index: 100;
+  animation: slideDown 0.2s ease-out;
+}
+@keyframes slideDown { 
+  from { transform: translateY(-10px); opacity: 0; } 
+  to { transform: translateY(0); opacity: 1; } 
+}
+
+.afw-icon-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.afw-icon-picker-item {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+}
+.afw-icon-picker-item:hover {
+  background: #f1f5f9;
+  color: var(--color-blue);
+}
+.afw-icon-picker-item.active {
+  background: #e0e7ff;
+  color: var(--color-blue);
+}
+
+.afw-template-icon.clickable {
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.afw-template-icon.clickable:hover {
+  border-color: var(--color-blue);
+  background: #fff !important;
+  color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Modal Body Layout Refinement */
+.afw-tpl-info-pane {
+  width: 380px; /* Slightly wider for better readability */
+  border-right: 1px solid var(--color-divider);
+  padding: 28px 32px;
+  background: #fff; /* White background for a cleaner "card" feel */
+  overflow-y: auto;
+}
+.afw-tpl-editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc; /* Subtle contrast with the info pane */
+}
 
 .afw-yaml-editor {
   flex: 1; width: 100%; border: none; outline: none; resize: none;

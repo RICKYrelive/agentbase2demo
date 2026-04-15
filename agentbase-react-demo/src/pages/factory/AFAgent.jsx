@@ -40,6 +40,21 @@ export default function AFAgent() {
   const [toast, setToast] = useState(null)
   const [detailAgent, setDetailAgent] = useState(null)
   const [editAgent, setEditAgent] = useState(null)
+  const [selectedIconKey, setSelectedIconKey] = useState('Bot')
+  const [showIconPicker, setShowIconPicker] = useState(false)
+
+  const PRESET_ICONS = {
+    'Bot': <IconBot />,
+    'Search': <IconSearch />,
+    'Analysis': <IconZap />, // MapZap for Analysis in this file
+    'Dev': <IconBot />,
+    'Database': <IconBrain />,
+    'Gov': <IconSparkles />,
+    'Global': <IconDrama />,
+    'Alert': <IconBot />,
+    'Edit': <IconSearch />,
+    'File': <IconBot />
+  }
 
   // Drawer Form State
   const [formData, setFormData] = useState({
@@ -75,8 +90,9 @@ export default function AFAgent() {
       desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
       envTemplate: 'default-env',
       toolsList: agent.tools ? agent.tools.split(', ') : [],
-      yaml: `---\nname: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\nmcp_servers:\n  - name: example-mcp\n    type: url\n    url: https://mcp.example.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: example-mcp\nskills: \n  - type: general\n    skill_id: base_logic\n---`
+      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest`
     })
+    setSelectedIconKey('Bot')
   }
 
   const openEdit = (agent) => {
@@ -85,7 +101,7 @@ export default function AFAgent() {
       desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
       envTemplate: 'default-env',
       toolsList: agent.tools ? agent.tools.split(', ') : [],
-      yaml: `---\nname: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\nmcp_servers:\n  - name: example-mcp\n    type: url\n    url: https://mcp.example.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: example-mcp\nskills: \n  - type: general\n    skill_id: base_logic\n---`
+      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest`
     })
   }
 
@@ -296,30 +312,68 @@ export default function AFAgent() {
           <div className="afw-tpl-modal">
             <div className="afw-tpl-modal-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div className="afw-template-icon" style={{ background: '#f1f5f9' }}><IconBot /></div>
+                <div style={{ position: 'relative' }}>
+                  <div 
+                    className="afw-template-icon clickable" 
+                    style={{ background: '#f1f5f9', cursor: 'pointer' }}
+                    onClick={() => setShowIconPicker(!showIconPicker)}
+                  >
+                    {PRESET_ICONS[selectedIconKey]}
+                    {/* Reuse Icons mapping from AFWorkshop if possible, but localized here for now */}
+                  </div>
+                  {showIconPicker && (
+                    <div className="afw-icon-picker-popover">
+                       <div className="afw-icon-picker-grid">
+                          {Object.keys(PRESET_ICONS).map(key => (
+                            <div 
+                              key={key} 
+                              className={"afw-icon-picker-item " + (selectedIconKey === key ? 'active' : '')}
+                              onClick={() => { setSelectedIconKey(key); setShowIconPicker(false); }}
+                            >
+                              {PRESET_ICONS[key]}
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+                  )}
+                </div>
                 <div style={{ fontSize: 18, fontWeight: 700 }}>{detailAgent.name} <span style={{ fontSize: 12, color: '#64748b', fontWeight: 400, marginLeft: 8 }}>v{detailAgent.version}</span></div>
               </div>
-              <button className="afw-tpl-close" onClick={() => setDetailAgent(null)}><IconX /></button>
+              <button className="afw-tpl-close" onClick={() => { setDetailAgent(null); setShowIconPicker(false); }}><IconX /></button>
             </div>
             
             <div className="afw-tpl-modal-body">
               <div className="afw-tpl-info-pane">
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>环境模板 / Env Template</div>
-                  <div style={{ fontSize: 14, fontWeight: 600, display: 'inline-block', background: '#f8fafc', padding: '4px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
-                    {detailAgent.envTemplate}
+                <div style={{ marginBottom: 28 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    详细描述 / Description
+                  </div>
+                  <div style={{ fontSize: 14, lineHeight: 1.6, color: '#334155' }}>
+                    {detailAgent.desc}
                   </div>
                 </div>
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>详细描述 / Description</div>
-                  <div style={{ fontSize: 14, lineHeight: 1.5, color: '#334155' }}>{detailAgent.desc}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>挂载工具 / Default Tools</div>
+
+                <div style={{ marginBottom: 28 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    挂载工具 / MCP and Tools
+                  </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {detailAgent.toolsList?.map(t => (
-                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 8px', borderRadius: 4, fontWeight: 600 }}>{t}</span>
-                    ))}
+                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 10px', borderRadius: 6, fontWeight: 600, border: '1px solid #c7d2fe' }}>
+                        {t}
+                      </span>
+                    )) || <span style={{ color: '#94a3b8', fontSize: 13 }}>无预设工具</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    挂载技能 / Skills
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 12, background: '#f0fdf4', color: '#16a34a', padding: '4px 10px', borderRadius: 6, fontWeight: 600, border: '1px solid #bbf7d0' }}>
+                      core_skills
+                    </span>
                   </div>
                 </div>
               </div>

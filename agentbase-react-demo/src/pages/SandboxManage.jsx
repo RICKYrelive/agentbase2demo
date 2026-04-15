@@ -6,7 +6,6 @@ import './SandboxManage.css'
 
 const guideCards = [
   { title: '沙箱模板定义', desc: '沙箱模板对应集群中的资源定义（Template）。创建模板即意味着在集群中预置环境规格、运行时镜像及预留池策略，为 Agent 提供安全隔离的运行空间。' },
-  { title: '预热池策略', desc: '通过配置预热池目标数，系统将自动维持一定数量的“热节点”。当 Agent 逻辑需要执行代码时，可实现秒级冷启动，显著提升响应速度。' },
   { title: '实例监控与调试', desc: '从模板派生的运行实例具备独立的访问链接。您可以实时监控实例的资源消耗（CPU/内存），并通过控制台直接进行底层调试。' },
 ]
 
@@ -226,12 +225,6 @@ export default function SandboxManage({ onAlert }) {
           onClick={() => setTab('template')}
         >
           沙箱模板
-        </div>
-        <div 
-          className={`page-tab ${tab === 'pool' ? 'active' : ''}`} 
-          onClick={() => setTab('pool')}
-        >
-          预热池策略
         </div>
       </div>
 

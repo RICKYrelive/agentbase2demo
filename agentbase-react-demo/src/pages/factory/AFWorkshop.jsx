@@ -17,70 +17,70 @@ const MOCK_TEMPLATES = {
       envTemplate: 'default',
       tags: ['Core'],
       tools: ['bash', 'web_fetch'],
-      yaml: "---\nname: blank-agent\ndescription: A blank starting point with the core toolset.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a helpful assistant. Use your tools to solve problems.\ntools:\n  - type: agent_toolset_20260401\n  - type: bash\n  - type: web_fetch\n---"
+      yaml: "name: blank-agent\ndescription: A blank starting point with the core toolset.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a helpful assistant. For each inbound request:\n  \n  1. Analyze the user query.\n  2. Use tools to fetch necessary data.\n  3. Provide a clear response.\nmcp_servers:\n  - name: core-server\n    type: url\n    url: https://mcp.core.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: core-server\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at2', name: 'Data analyst', icon: <IconBarChart />, desc: 'Load, explore, and visualize data; build reports and answer questions from datasets.',
       envTemplate: 'data-analyst',
       tags: ['Data', 'Python'],
       tools: ['bash', 'web_fetch', 'python'],
-      yaml: "---\nname: data-analyst\ndescription: Load, explore, and visualize data.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an expert data analyst. You write Python code to load datasets, \n  clean data, perform statistical analysis, and generate charts using matplotlib.\ntools:\n  - type: agent_toolset_20260401\n  - type: python\n  - type: bash\n---"
+      yaml: "name: data-analyst\ndescription: Load, explore, and visualize data; build reports and answer questions from datasets.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an expert data analyst. For each data exploration task:\n\n  1. Load the dataset using provided tools.\n  2. Perform initial analysis and generate summary statistics.\n  3. Create visualizations if requested.\n  \n  Be precise in your findings.\nmcp_servers:\n  - name: data-vault\n    type: url\n    url: https://mcp.data.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: data-vault\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at3', name: 'Deep researcher', icon: <IconSearch />, desc: 'Conducts multi-step web research with source synthesis and citations.',
       envTemplate: 'researcher',
       tags: ['Web', 'Research'],
       tools: ['web_fetch', 'search'],
-      yaml: "---\nname: deep-researcher\ndescription: Conducts multi-step web research with source synthesis and citations.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a meticulous researcher. You conduct comprehensive web searches, \n  synthesize information from multiple sources, and always provide citations.\ntools:\n  - type: agent_toolset_20260401\n  - type: web_fetch\n  - type: search\n---"
+      yaml: "name: deep-researcher\ndescription: Conducts multi-step web research with source synthesis and citations.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a meticulous researcher. When searching the web:\n\n  1. Use multiple sources to verify facts.\n  2. Synthesize information into a coherent report.\n  3. Always provide clear citations for every fact.\n  \n  Focus on source quality.\nmcp_servers:\n  - name: search-gateway\n    type: url\n    url: https://mcp.search.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: search-gateway\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at4', name: 'Software Developer', icon: <IconTerminal />, desc: 'Full-stack software developer capable of writing, reviewing, and testing code.',
       envTemplate: 'developer',
       tags: ['Code', 'Development'],
       tools: ['bash', 'github'],
-      yaml: "---\nname: software-developer\ndescription: Assists with software development tasks.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced full-stack developer. You write clean, testable code,\n  perform code reviews, and can execute bash commands to run tests.\ntools:\n  - type: agent_toolset_20260401\n  - type: bash\n  - type: github\n---"
+      yaml: "name: software-developer\ndescription: Assists with software development tasks.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced software developer. For each coding task:\n\n  1. Review existing code architecture.\n  2. Write clean, idiomatic code with tests.\n  3. Execute bash commands to verify the build.\n  \n  Follow industry best practices.\nmcp_servers:\n  - name: github-bridge\n    type: url\n    url: https://mcp.github.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: github-bridge\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at5', name: 'Incident commander', icon: <IconAlertTriangle />, desc: 'Triages alerts, opens incident tickets, and runs the war room.',
       envTemplate: 'ops',
       tags: ['DevOps', 'SRE'],
       tools: ['pagerduty', 'slack', 'jira'],
-      yaml: "---\nname: incident-commander\ndescription: Triages alerts and manages incidents.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an incident commander. You investigate alerts, coordinate communication\n  in Slack, and ensure tickets are tracked and updated.\nmcp_servers:\n  - name: slack\n    type: url\n    url: https://mcp.slack.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: slack\n---"
+      yaml: "name: incident-commander\ndescription: Triages alerts and manages incidents.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an incident commander. When an alert occurs:\n\n  1. Triage the severity and scope.\n  2. Coordinate communication across Slack channels.\n  3. Ensure a post-mortem is drafted after resolution.\n  \n  Prioritize stability over speed.\nmcp_servers:\n  - name: ops-toolkit\n    type: url\n    url: https://mcp.ops.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: ops-toolkit\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at6', name: 'Support-to-eng escalator', icon: <IconMessageSquare />, desc: 'Reads customer conversations, reproduces bugs, and files Jira issues.',
       envTemplate: 'support',
       tags: ['Support', 'Engineering'],
       tools: ['intercom', 'jira', 'github'],
-      yaml: "---\nname: support-escalator\ndescription: Escalates support tickets to engineering.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You read customer support conversations, identify reproducible bugs,\n  and create detailed engineering tickets with reproduction steps.\ntools:\n  - type: agent_toolset_20260401\n  - type: intercom\n  - type: jira\n---"
+      yaml: "name: support-escalator\ndescription: Escalates support tickets to engineering.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a support engineer. For each customer report:\n\n  1. Reproduce the bug in the sandbox environment.\n  2. Document the steps clearly in a Jira ticket.\n  3. Hand off to the correct engineering team.\n  \n  Include full context and logs.\nmcp_servers:\n  - name: support-connector\n    type: url\n    url: https://mcp.support.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: support-connector\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at7', name: 'Structured extractor', icon: <IconDatabase />, desc: 'Parses unstructured text into a typed JSON schema.',
       envTemplate: 'default',
       tags: ['Data', 'Parsing'],
       tools: ['json_schema'],
-      yaml: "---\nname: structured-extractor\ndescription: Extracts structured JSON from unstructured text.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You parse large blocks of unstructured text and extract entities matching\n  the provided JSON schema exactly.\ntools:\n  - type: json_schema\n---"
+      yaml: "name: structured-extractor\ndescription: Extracts structured JSON from unstructured text.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a data parsing agent. From the input text:\n\n  1. Identify all entities defined in the schema.\n  2. Extract data points without altering the original values.\n  3. Output a valid, minified JSON object.\n  \n  Strictly adhere to the schema.\nmcp_servers: []\ntools:\n  - type: json_schema\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at8', name: 'Feedback miner', icon: <IconEdit />, desc: 'Clusters raw feedback from Slack and Notion into themes and drafts Asana tasks.',
       envTemplate: 'product',
       tags: ['Product', 'Analysis'],
       tools: ['slack', 'notion', 'asana'],
-      yaml: "---\nname: feedback-miner\ndescription: Clusters user feedback into actionable themes.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a product manager analyzing user feedback. You cluster feedback into\n  themes and create actionable tasks for the engineering team.\nmcp_servers:\n  - name: notion\n    type: url\n    url: https://mcp.notion.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: notion\n---"
+      yaml: "name: feedback-miner\ndescription: Clusters raw feedback from Slack and Notion into themes and drafts Asana tasks.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a feedback analysis agent. On every feedback batch:\n\n  1. Cluster raw inputs into semantic themes.\n  2. Rank themes by frequency and sentiment.\n  3. Generate actionable tasks in the project management tool.\n  \n  Focus on user pain points.\nmcp_servers:\n  - name: notion-feedback\n    type: url\n    url: https://mcp.notion.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: notion-feedback\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at9', name: 'Field monitor', icon: <IconGlobe />, desc: 'Scans software blogs for a topic and writes a weekly what-changed brief.',
       envTemplate: 'researcher',
       tags: ['News', 'Monitoring'],
       tools: ['web_fetch', 'rss'],
-      yaml: "---\nname: field-monitor\ndescription: Monitors industry blogs and writes summaries.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You monitor specified industry blogs and RSS feeds. You compile a weekly\n  brief summarizing the most important changes and announcements.\ntools:\n  - type: web_fetch\n  - type: rss\n---"
+      yaml: "name: field-monitor\ndescription: Scans software blogs and writes summaries.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are a trend monitoring agent. Weekly:\n\n  1. Scan all provided RSS feeds and blog URLs.\n  2. Identify the top 3 most impactful tech changes.\n  3. Write a concise brief for stakeholders.\n  \n  Avoid marketing fluff.\nmcp_servers: []\ntools:\n  - type: web_fetch\n  - type: rss\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     },
     { 
       id: 'at10', name: 'Sprint retro facilitator', icon: <IconActivity />, desc: 'Pulls a closed sprint from Linear, synthesizes themes, and writes the retro doc.',
       envTemplate: 'agile',
       tags: ['Agile', 'Docs'],
       tools: ['linear', 'notion'],
-      yaml: "---\nname: sprint-retro\ndescription: Facilitates sprint retrospectives.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You analyze completed sprints in Linear, identifying bottlenecks and successes.\n  You generate a comprehensive retrospective document.\ntools:\n  - type: linear\n  - type: notion\n---"
+      yaml: "name: sprint-retro\ndescription: Pulls a closed sprint and writes retro doc.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an agile facilitator. To run a sprint retro:\n\n  1. Fetch all closed issues and PRs from the sprint.\n  2. Categorize wins, challenges, and action items.\n  3. Draft a retrospective document in the Wiki.\n  \n  Be objective and encouraging.\nmcp_servers: []\ntools:\n  - type: linear\n  - type: notion\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
     }
   ],
   Skill: [
@@ -112,7 +112,7 @@ const MOCK_TASKS = [
     icon: <IconSearch />,
     envTemplate: 'developer',
     tools: ['bash', 'github'],
-    yaml: "---\nname: 代码审查 Agent\ndescription: 用于自动化审查 PR 并在 GitHub 留言报告\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced code reviewer...\ntools:\n  - type: agent_toolset_20260401\n  - type: github\n---"
+    yaml: "name: 代码审查 Agent\ndescription: 用于自动化审查 PR 并在 GitHub 留言报告\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an experienced code reviewer. For each assigned PR:\n\n  1. Review the logic for edge cases.\n  2. Suggest performance optimizations.\n  3. Comment directly on the GitHub PR line-by-line.\nmcp_servers:\n  - name: github\n    type: url\n    url: https://mcp.github.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: github\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
   }
 ]
 
@@ -127,6 +127,21 @@ export default function AFWorkshop() {
   const [previewTemplate, setPreviewTemplate] = useState(null)
   const [previewMode, setPreviewMode] = useState('template') // 'template' | 'task'
   const [editedYaml, setEditedYaml] = useState('')
+  const [selectedIconKey, setSelectedIconKey] = useState('Bot')
+  const [showIconPicker, setShowIconPicker] = useState(false)
+
+  const PRESET_ICONS = {
+    'Bot': <IconBot />,
+    'Search': <IconSearch />,
+    'Analysis': <IconBarChart />,
+    'Dev': <IconTerminal />,
+    'Database': <IconDatabase />,
+    'Gov': <IconLock />,
+    'Global': <IconGlobe />,
+    'Alert': <IconAlertTriangle />,
+    'Edit': <IconEdit />,
+    'File': <IconFileText />
+  }
 
   // Wizard state
   const [agentConfig, setAgentConfig] = useState({
@@ -173,6 +188,8 @@ export default function AFWorkshop() {
     setPreviewMode('template')
     setPreviewTemplate(tpl)
     setEditedYaml(tpl.yaml || '')
+    // Try to match preset icon based on current icon component if possible, default to Bot
+    setSelectedIconKey('Bot')
   }
 
   const startWizardFromTemplate = () => {
@@ -407,30 +424,70 @@ export default function AFWorkshop() {
           <div className="afw-tpl-modal">
             <div className="afw-tpl-modal-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div className="afw-template-icon" style={{ background: '#f1f5f9' }}>{previewTemplate.icon}</div>
+                <div style={{ position: 'relative' }}>
+                  <div 
+                    className="afw-template-icon clickable" 
+                    style={{ background: '#f1f5f9', cursor: 'pointer' }}
+                    onClick={() => setShowIconPicker(!showIconPicker)}
+                  >
+                    {PRESET_ICONS[selectedIconKey]}
+                  </div>
+                  {showIconPicker && (
+                    <div className="afw-icon-picker-popover">
+                       <div className="afw-icon-picker-grid">
+                          {Object.keys(PRESET_ICONS).map(key => (
+                            <div 
+                              key={key} 
+                              className={"afw-icon-picker-item " + (selectedIconKey === key ? 'active' : '')}
+                              onClick={() => { setSelectedIconKey(key); setShowIconPicker(false); }}
+                            >
+                              {PRESET_ICONS[key]}
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+                  )}
+                </div>
                 <div style={{ fontSize: 18, fontWeight: 700 }}>{previewTemplate.name}</div>
               </div>
-              <button className="afw-tpl-close" onClick={() => setPreviewTemplate(null)}><IconX /></button>
+              <button className="afw-tpl-close" onClick={() => { setPreviewTemplate(null); setShowIconPicker(false); }}><IconX /></button>
             </div>
             
             <div className="afw-tpl-modal-body">
               <div className="afw-tpl-info-pane">
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>环境模板 / Env Template</div>
-                  <div style={{ fontSize: 14, fontWeight: 600, display: 'inline-block', background: '#f8fafc', padding: '4px 8px', borderRadius: 6, border: '1px solid #e2e8f0' }}>
-                    {previewTemplate.envTemplate}
+                <div style={{ marginBottom: 28 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    详细描述 / Description
+                  </div>
+                  <div style={{ fontSize: 14, lineHeight: 1.6, color: '#334155' }}>
+                    {previewTemplate.desc}
                   </div>
                 </div>
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>详细描述 / Description</div>
-                  <div style={{ fontSize: 14, lineHeight: 1.5, color: '#334155' }}>{previewTemplate.desc}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 14, color: '#64748b', marginBottom: 8 }}>挂载工具 / Default Tools</div>
+
+                <div style={{ marginBottom: 28 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    挂载工具 / MCP and Tools
+                  </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {previewTemplate.tools?.map(t => (
-                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 8px', borderRadius: 4, fontWeight: 600 }}>{t}</span>
-                    ))}
+                      <span key={t} style={{ fontSize: 12, background: '#e0e7ff', color: '#4338ca', padding: '4px 10px', borderRadius: 6, fontWeight: 600, border: '1px solid #c7d2fe' }}>
+                        {t}
+                      </span>
+                    )) || <span style={{ color: '#94a3b8', fontSize: 13 }}>无预设工具</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>
+                    挂载技能 / Skills
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 12, background: '#f0fdf4', color: '#16a34a', padding: '4px 10px', borderRadius: 6, fontWeight: 600, border: '1px solid #bbf7d0' }}>
+                      core_skills
+                    </span>
+                    <span style={{ fontSize: 12, background: '#f8fafc', color: '#64748b', padding: '4px 10px', borderRadius: 6, fontWeight: 600, border: '1px solid #e2e8f0' }}>
+                      custom_logic
+                    </span>
                   </div>
                 </div>
               </div>
