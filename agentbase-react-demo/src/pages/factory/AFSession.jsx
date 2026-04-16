@@ -130,7 +130,11 @@ export default function AFSession() {
                       <td className="af-muted notion-caption">{s.startedAt?.slice(0, 16) || '-'}</td>
                       <td>
                         <div className="ha-row-actions">
-                          <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }} onClick={e => { e.stopPropagation(); navigate(`/super-agent/${s.agentId}/webui?title=${encodeURIComponent(title)}`) }}>WebUI</button>
+                          <button className="notion-body-medium" style={{ color: 'var(--notion-blue)' }} onClick={e => { 
+                            e.stopPropagation(); 
+                            const targetId = s.agentId.startsWith('ma-') ? s.agentId.replace('ma-', 'ha-') : s.agentId;
+                            navigate(`/super-agent/${targetId}/webui?title=${encodeURIComponent(title)}`) 
+                          }}>WebUI</button>
                         </div>
                       </td>
                     </tr>
