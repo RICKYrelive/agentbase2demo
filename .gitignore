@@ -31,3 +31,8 @@ Thumbs.db
 
 # Added by ggshield
 .cache_ggshield
+
+# Documentation
+doc/
+docs/
+raw_docs/
