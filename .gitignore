@@ -26,8 +26,10 @@ Thumbs.db
 .env.local
 .env.*.local
 
-# Added by ggshield
-.cache_ggshield
+# Local Environments
+.venv/
+.context/
+excel_dump.md
 
 # Added by ggshield
 .cache_ggshield
