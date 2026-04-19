@@ -33,6 +33,7 @@ import { getElementSelector, getElementLabel, highlightElement, locateElement } 
 import CreateSkillPackage from './pages/CreateSkillPackage'
 import SkillPackageDetail from './pages/SkillPackageDetail'
 import CreateSkill from './pages/CreateSkill'
+import UpdateSkill from './pages/UpdateSkill'
 import SkillDetail from './pages/SkillDetail'
 
 // Agent Factory
@@ -119,6 +120,7 @@ function AppLayout() {
           <Route path="/skill-center/package/create" element={<CreateSkillPackage />} />
           <Route path="/skill-center/package/:id" element={<SkillPackageDetail />} />
           <Route path="/skill-center/skill/create" element={<CreateSkill />} />
+          <Route path="/skill-center/skill/update/:id" element={<UpdateSkill />} />
           <Route path="/skill-center/skill/:id" element={<SkillDetail />} />
           <Route path="/sandbox-manage" element={<SandboxManage onAlert={handleAlert} />} />
           <Route path="/sandbox-manage/:id/instances" element={<SandboxManage onAlert={handleAlert} />} />

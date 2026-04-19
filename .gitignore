@@ -34,6 +34,11 @@ excel_dump.md
 # Added by ggshield
 .cache_ggshield
 
+# Value demo (Remotion)
+value-demo/node_modules/
+value-demo/dist/
+value-demo/out/
+
 # Documentation
 doc/
 docs/

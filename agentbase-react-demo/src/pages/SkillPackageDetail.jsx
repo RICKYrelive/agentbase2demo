@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSkills } from '../store/skillStore'
 import PageLayout, { DataToolbar } from '../components/PageLayout'
-import { IconSearch, IconArrowLeft, IconRefresh, IconPuzzle, IconAlertTriangle } from '../components/Icons'
+import { IconSearch, IconArrowLeft, IconRefresh, IconPuzzle, IconAlertTriangle, IconTrash, IconChevronDown } from '../components/Icons'
 
 // Modify Version Modal
 function ModifyVersionModal({ pkg, skillItem, onClose, onChangeVersion }) {
@@ -55,31 +55,51 @@ function AddSkillToPkgModal({ pkg, onClose, onAdd }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-card" onClick={e => e.stopPropagation()} style={{ width: 480 }}>
-        <h3 style={{ marginTop: 0, marginBottom: 16 }}>添加 Skill 到技能包</h3>
-        
-        <div className="search-input" style={{marginBottom: 16, width: '100%'}}>
-          <IconSearch className="search-icon" size={16} />
-          <input placeholder="搜索 Skill 名称" value={search} onChange={e => setSearch(e.target.value)} style={{width: '90%'}} />
+      <div className="modal-card premium-modal" onClick={e => e.stopPropagation()} style={{ width: 480, padding: '40px 32px' }}>
+        <div className="modal-icon-header">
+          <div className="icon-circle">
+            <IconPuzzle size={32} />
+          </div>
         </div>
 
-        <div className="ha-form-item">
-          <label className="ha-form-label">选择 Skill</label>
-          <select 
-            className="ha-form-input" 
-            value={selectedSkillId} 
-            onChange={(e) => setSelectedSkillId(e.target.value)}
-          >
-            <option value="">-- 请选择 Skill --</option>
-            {availableSkills.map(s => (
-              <option key={s.id} value={s.id}>{s.name} ({s.sourceType})</option>
-            ))}
-          </select>
+        <h3 style={{ marginTop: 20, marginBottom: 8, fontSize: 20, fontWeight: 600 }}>添加 Skill 到技能包</h3>
+        <p style={{ color: '#86909c', fontSize: 13, marginBottom: 24 }}>
+          从库中选择 Skill 并关联到 <span style={{ color: '#1d2129', fontWeight: 500 }}>{pkg.name}</span>
+        </p>
+        
+        <div className="search-input" style={{ marginBottom: 16, width: '100%', height: 40, border: '1px solid #e5e6eb', borderRadius: 8 }}>
+          <IconSearch className="search-icon" size={16} />
+          <input 
+            placeholder="搜索 Skill 名称" 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            style={{ width: '100%', border: 'none', background: 'transparent' }} 
+          />
         </div>
-        <div style={{display:'flex', gap: 12, justifyContent:'flex-end', marginTop: 24}}>
-          <button className="action-btn" onClick={onClose}>取消</button>
+
+        <div className="ha-form-item" style={{ textAlign: 'left', marginBottom: 32 }}>
+          <label className="ha-form-label" style={{ marginBottom: 8, display: 'block', color: '#4e5969' }}>选择目标 Skill</label>
+          <div className="ha-select-custom" style={{ width: '100%' }}>
+            <select 
+              className="ha-form-input" 
+              value={selectedSkillId} 
+              onChange={(e) => setSelectedSkillId(e.target.value)}
+              style={{ width: '100%', paddingRight: 32 }}
+            >
+              <option value="">-- 请选择 Skill --</option>
+              {availableSkills.map(s => (
+                <option key={s.id} value={s.id}>{s.name} ({s.sourceType})</option>
+              ))}
+            </select>
+            <IconChevronDown size={14} className="select-arrow" style={{ right: 12 }} />
+          </div>
+        </div>
+
+        <div style={{display:'flex', gap: 12, width: '100%'}}>
+          <button className="ha-btn-secondary" style={{ flex: 1 }} onClick={onClose}>取消</button>
           <button 
-            className="action-btn primary" 
+            className="ha-btn-primary" 
+            style={{ flex: 1.5 }}
             disabled={!selectedSkillId}
             onClick={() => onAdd(pkg.id, skills.find(s => s.id === selectedSkillId))}
           >
@@ -146,21 +166,25 @@ export default function SkillPackageDetail() {
   return (
     <PageLayout
       title={
-        <div style={{display:'flex', alignItems:'center', gap:12}}>
-          <button className="back-btn" onClick={() => navigate('/skill-center')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <IconArrowLeft size={16} />
+        <div style={{display:'flex', alignItems:'center', gap:16}}>
+          <button className="ha-back-button" onClick={() => navigate('/skill-center')} title="返回列表">
+            <IconArrowLeft size={18} />
           </button>
-          <span>{pkg.name}</span>
-          <span className="ha-status-tag" style={{ marginLeft: 8, background: '#f6ffed', color: '#52c41a', borderColor: '#b7eb8f', fontSize: 13, height: 22, lineHeight: '20px' }}>{pkg.status}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 18, fontWeight: 600, color: '#1d2129' }}>{pkg.name}</span>
+              <span className="ha-status-tag-v2" style={{ background: '#f6ffed', color: '#52c41a', border: '1px solid #b7eb8f' }}>
+                {pkg.status}
+              </span>
+            </div>
+            <div style={{ fontSize: 12, color: '#86909c' }}>ID: {pkg.id}</div>
+          </div>
         </div>
       }
       rightAction={
-        <div style={{display:'flex', gap: 8}}>
-          <button className="refresh-btn-sm" onClick={() => showToast('已刷新', 'info')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <IconRefresh size={14} /> 刷新
-          </button>
-          <button className="ha-delete-btn" style={{padding: '4px 12px'}} onClick={() => setConfirmDelete(pkg)}>删除</button>
-        </div>
+        <button className="ha-btn-danger-ghost" onClick={() => setConfirmDelete(pkg)} title="删除技能包">
+          <IconTrash size={16} />
+        </button>
       }
     >
       <div className="skill-center-tabs" style={{marginTop: -8}}>

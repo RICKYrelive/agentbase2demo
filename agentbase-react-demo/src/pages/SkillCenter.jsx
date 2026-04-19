@@ -16,7 +16,7 @@ export default function SkillCenter() {
 
   return (
     <PageLayout
-      title="Skill 中心"
+      title="Skills 空间"
       rightAction={
         <button className="action-btn" onClick={() => setShowGuide(!showGuide)}>
           {showGuide ? '⊙ 收起指引' : '⊕ 展开指引'}

@@ -88,12 +88,23 @@ export default function CreateSkillPackage() {
                 </div>
               </div>
               <div className="form-row">
-                <label>所属项目：</label>
+                <label>工作空间：</label>
                 <div style={{flex: 1}}>
-                  <select name="project" value={form.project} onChange={handleChange} style={{width:'100%'}}>
-                    <option value="Demo项目">Demo项目</option>
-                    <option value="默认项目">默认项目</option>
-                  </select>
+                  <input 
+                    type="text" 
+                    value={form.project} 
+                    readOnly 
+                    disabled 
+                    style={{
+                      width:'100%', 
+                      background: '#f7f8fa', 
+                      border: '1px solid #e5e6eb',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      color: '#86909c',
+                      cursor: 'not-allowed'
+                    }} 
+                  />
                 </div>
               </div>
               <div className="form-row">
