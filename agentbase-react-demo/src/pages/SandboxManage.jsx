@@ -210,7 +210,7 @@ export default function SandboxManage({ onAlert }) {
 
   return (
     <PageLayout
-      title="沙箱管理"
+      title="沙箱管理 (已废弃)"
       rightAction={
         <button className="action-btn" onClick={() => onAlert('展开/收起指引')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           <IconInfo size={14} /> 指引记录
@@ -228,9 +228,9 @@ export default function SandboxManage({ onAlert }) {
         </div>
       </div>
 
-      <div className="info-alert">
-        <span className="info-alert-icon">ℹ️</span>
-        <span>沙箱环境为 Agent 应用提供了高度隔离的标准运行时。您可以在此管理资源模板映射及实例生命周期。</span>
+      <div className="info-alert" style={{ background: '#fff2f0', border: '1px solid #ffccc7' }}>
+        <span className="info-alert-icon">⚠️</span>
+        <span style={{ color: '#ff4d4f', fontWeight: 500 }}>提示：该模块已废弃。下个版本将不再独立展示，其功能已整合至 Environment 模块，此处仅供 Agent Factory 兼容性参考。</span>
       </div>
 
       <DataToolbar

@@ -146,7 +146,7 @@ export default function MACEnvironmentDetail() {
             onChange={e => patch(() => ({ name: e.target.value }))}
             maxLength={50}
           />
-          <span className="mac-env-type-badge">{env.runtime || 'Cloud'}</span>
+          <span className="ha-status-tag" style={{ background: '#f6ffed', color: '#52c41a', border: '1px solid #b7eb8f', padding: '2px 10px', borderRadius: 12, fontSize: 12, fontWeight: 500 }}>可用</span>
           <IconGlobe size={16} style={{ color: '#94a3b8', marginLeft: 4 }} />
         </div>
       </div>

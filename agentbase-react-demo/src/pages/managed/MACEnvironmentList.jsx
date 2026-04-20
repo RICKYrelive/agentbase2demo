@@ -9,12 +9,8 @@ import {
 } from '../../components/Icons'
 import './MAC.css'
 
-const HOSTING_TYPES = [
-  { value: 'cloud', label: 'Cloud' },
-  { value: 'self_hosted', label: 'Self-hosted' },
-]
 
-const RUNTIME_MAP = { cloud: 'python', self_hosted: 'docker' }
+
 
 export default function MACEnvironmentList() {
   const navigate = useNavigate()
@@ -33,7 +29,7 @@ export default function MACEnvironmentList() {
   }
 
   const handleOpenCreate = () => {
-    setCreateForm({ name: '', hostingType: 'cloud', description: '' })
+    setCreateForm({ name: '', description: '' })
     setCreateErrors({})
     setShowCreateModal(true)
   }
@@ -49,9 +45,8 @@ export default function MACEnvironmentList() {
       payload: {
         name: createForm.name.trim(),
         description: createForm.description,
-        runtime: RUNTIME_MAP[createForm.hostingType],
-        hostingType: createForm.hostingType,
-        baseImage: createForm.hostingType === 'cloud' ? 'python:3.12-slim' : 'custom',
+        runtime: 'python', // Use default or remove if not needed
+        baseImage: '',     // Remove or set to empty
         dependencies: [],
         networkPolicy: { mode: 'limited', allowDomains: [], allowIPs: [] },
         fileMounts: [],
@@ -97,9 +92,7 @@ export default function MACEnvironmentList() {
           <thead>
             <tr>
               <th>名称</th>
-              <th>Runtime</th>
-              <th>基础镜像</th>
-              <th>网络策略</th>
+              <th>状态</th>
               <th>Session 数</th>
               <th>创建时间</th>
               <th>操作</th>
@@ -107,7 +100,7 @@ export default function MACEnvironmentList() {
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={7} className="data-table-empty">
+              <tr><td colSpan={5} className="data-table-empty">
                 <div className="empty-state ha-empty">
                   <div className="empty-icon"><IconPackage size={48} style={{ opacity: 0.2 }} /></div>
                   <div className="ha-empty-title">还没有环境</div>
@@ -121,10 +114,10 @@ export default function MACEnvironmentList() {
                     <span className="ha-name-link" onClick={() => navigate(`/af-environment/${env.id}`)}>{env.name}</span>
                     <div style={{ fontSize: 12, color: '#999', marginTop: 2 }}>{env.description}</div>
                   </td>
-                  <td><span className="ha-mini-tag">{env.runtime}</span></td>
-                  <td style={{ fontSize: 13, fontFamily: 'monospace' }}>{env.baseImage}</td>
-                  <td><span className="ha-mini-tag">{env.networkPolicy.mode}</span></td>
-                  <td>{env.sessionsCount}</td>
+                  <td>
+                    <span className="ha-status-tag" style={{ background: '#f6ffed', color: '#52c41a', border: '1px solid #b7eb8f', padding: '2px 8px', borderRadius: 12, fontSize: 12 }}>可用</span>
+                  </td>
+                  <td>{env.sessionsCount || 0}</td>
                   <td>{env.createdAt?.slice(0, 10)}</td>
                   <td>
                     <div className="ha-row-actions">
@@ -149,16 +142,14 @@ export default function MACEnvironmentList() {
               <div key={env.id} className="mac-mcp-card" onClick={() => navigate(`/af-environment/${env.id}`)}>
                 <div className="mac-mcp-card-header">
                   <span className="mac-mcp-card-name">{env.name}</span>
+                  <span style={{ fontSize: 11, color: '#52c41a', fontWeight: 500 }}>● 可用</span>
                 </div>
                 <div className="mac-mcp-card-desc">{env.description}</div>
                 <div className="mac-card-capabilities" style={{ marginTop: 6 }}>
-                  <span className="mac-cap-pill"><IconTool size={12} style={{ marginRight: 4 }} /> {env.runtime}</span>
-                  <span className="mac-cap-pill"><IconClipboard size={12} style={{ marginRight: 4 }} /> {env.dependencies.length} deps</span>
-                  <span className="mac-cap-pill"><IconLock size={12} style={{ marginRight: 4 }} /> {env.networkPolicy.mode}</span>
+                  <span className="mac-cap-pill"><IconClipboard size={12} style={{ marginRight: 4 }} /> {env.dependencies?.length || 0} deps</span>
                   <span className="mac-cap-pill"><IconZap size={12} style={{ marginRight: 4 }} /> {envSessionCount} sessions</span>
                 </div>
                 <div className="mac-mcp-card-meta" style={{ marginTop: 8 }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{env.baseImage}</span>
                   <span>{env.createdAt?.slice(0, 10)}</span>
                 </div>
               </div>
@@ -191,32 +182,19 @@ export default function MACEnvironmentList() {
             </div>
 
             <div className="mac-create-env-modal-body">
-              <div className="mac-create-env-row">
-                <div className="mac-create-env-field" style={{ flex: 1 }}>
-                  <label className="mac-env-label">Name</label>
-                  <input
-                    className={`mac-env-text-input ${createErrors.name ? 'error' : ''}`}
-                    placeholder="E.g. My Environment"
-                    value={createForm.name}
-                    maxLength={50}
-                    onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))}
-                  />
-                  {createErrors.name
-                    ? <div className="mac-create-env-error">{createErrors.name}</div>
-                    : <div className="mac-create-env-hint">50 characters or fewer.</div>
-                  }
-                </div>
-                <div className="mac-create-env-field" style={{ width: 220 }}>
-                  <label className="mac-env-label">Hosting Type</label>
-                  <select
-                    className="mac-env-select"
-                    value={createForm.hostingType}
-                    onChange={e => setCreateForm(f => ({ ...f, hostingType: e.target.value }))}
-                  >
-                    {HOSTING_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-                  </select>
-                  <div className="mac-create-env-hint">This cannot be changed after creation.</div>
-                </div>
+              <div className="mac-create-env-field">
+                <label className="mac-env-label">Name</label>
+                <input
+                  className={`mac-env-text-input ${createErrors.name ? 'error' : ''}`}
+                  placeholder="E.g. My Environment"
+                  value={createForm.name}
+                  maxLength={50}
+                  onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))}
+                />
+                {createErrors.name
+                  ? <div className="mac-create-env-error">{createErrors.name}</div>
+                  : <div className="mac-create-env-hint">50 characters or fewer.</div>
+                }
               </div>
 
               <div className="mac-create-env-field">

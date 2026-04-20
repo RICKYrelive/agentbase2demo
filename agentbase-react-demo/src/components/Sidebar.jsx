@@ -39,7 +39,6 @@ const navItems = [
 ]
 
 const agentFactoryItems = [
-  { key: 'af-workshop', label: 'Agent 工坊', icon: <IconTerminal />, desc: 'AI 生成' },
   { key: 'af-agent', label: 'Agent Blueprint', icon: <IconCompass />, desc: 'Agent 定义库' },
   { key: 'af-session', label: 'Session', icon: <IconActivity />, desc: '运行实例' },
   { key: 'af-environment', label: 'Environment', icon: <IconGlobe />, desc: '运行环境' },
@@ -48,10 +47,16 @@ const agentFactoryItems = [
 
 const workspaceNavGroups = [
   {
-    title: '构建与运行时',
+    title: '高/低代码构建与运行时',
     items: [
       { key: 'agent-dev', label: 'Agent 应用开发', icon: <IconHammer /> },
       { key: 'agent-runtime', label: 'Agent 应用运行时', icon: <IconZap /> },
+      { key: 'super-agent', label: 'Super Agent (已废弃)', icon: <IconLink /> },
+    ]
+  },
+  {
+    title: 'Harness Agent',
+    items: [
       { 
         key: 'managed-agent', 
         label: 'Agent Factory', 
@@ -59,7 +64,6 @@ const workspaceNavGroups = [
         isSubmenu: true,
         subItems: agentFactoryItems
       },
-      { key: 'super-agent', label: 'Super Agent (已废弃)', icon: <IconLink /> },
     ]
   },
   {
@@ -70,7 +74,7 @@ const workspaceNavGroups = [
       { key: 'ai-model-service', label: 'AI 模型服务', icon: <IconAtom /> },
       { key: 'mcp-service', label: 'MCP 服务', icon: <IconGlobe /> },
       { key: 'skill-center', label: 'Skill 中心', icon: <IconPuzzle /> },
-      { key: 'sandbox-manage', label: '沙箱', icon: <IconPackage /> },
+      { key: 'sandbox-manage', label: '沙箱 (已废弃)', icon: <IconPackage /> },
       { key: 'api-routing', label: 'API 应用路由', icon: <IconSplit /> },
     ]
   },
@@ -137,6 +141,17 @@ export default function Sidebar({ activeNav, onNavClick }) {
             <span className="sidebar-workspace-caret">▾</span>
           </div>
         </div>
+
+        {/* Floating item below workspace */}
+        <ul className="sidebar-nav" style={{ marginTop: 4, marginBottom: 8 }}>
+          <li
+            className={`sidebar-nav-item ${activeNav === 'af-workshop' ? 'active' : ''}`}
+            onClick={() => onNavClick('af-workshop')}
+          >
+            <span className="sidebar-nav-icon"><IconTerminal /></span>
+            <span className="sidebar-nav-label">Agent 工坊</span>
+          </li>
+        </ul>
 
         {/* Workspace nav groups */}
         {workspaceNavGroups.map(group => (

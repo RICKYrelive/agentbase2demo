@@ -24,8 +24,6 @@ const INITIAL_ENVIRONMENTS = [
   {
     id: 'env-001',
     name: 'AI 智能分析集群',
-    baseImage: 'python:3.12-slim',
-    runtime: 'python',
     dependencies: ['requests', 'beautifulsoup4', 'pandas', 'numpy'],
     networkPolicy: { mode: 'allowlist', allowDomains: ['api.github.com', 'pypi.org'], allowIPs: [] },
     fileMounts: [{ source: '/data/shared', target: '/workspace/data', readOnly: true }],
@@ -38,8 +36,6 @@ const INITIAL_ENVIRONMENTS = [
   {
     id: 'env-002',
     name: '网页与接口连接中心',
-    baseImage: 'node:20-slim',
-    runtime: 'node',
     dependencies: ['axios', 'cheerio', 'lodash'],
     networkPolicy: { mode: 'allow_all', allowDomains: [], allowIPs: [] },
     fileMounts: [],
@@ -52,8 +48,6 @@ const INITIAL_ENVIRONMENTS = [
   {
     id: 'env-003',
     name: '系统审计与扫描引擎',
-    baseImage: 'golang:1.22-alpine',
-    runtime: 'go',
     dependencies: [],
     networkPolicy: { mode: 'deny_all', allowDomains: [], allowIPs: [] },
     fileMounts: [],
