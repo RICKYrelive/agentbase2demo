@@ -51,7 +51,6 @@ const workspaceNavGroups = [
     items: [
       { key: 'agent-dev', label: 'Agent 应用开发', icon: <IconHammer /> },
       { key: 'agent-runtime', label: 'Agent 应用运行时', icon: <IconZap /> },
-      { key: 'super-agent', label: 'Super Agent (已废弃)', icon: <IconLink /> },
     ]
   },
   {
@@ -64,6 +63,7 @@ const workspaceNavGroups = [
         isSubmenu: true,
         subItems: agentFactoryItems
       },
+      { key: 'super-agent', label: 'Super Agent (已废弃)', icon: <IconLink /> },
     ]
   },
   {
