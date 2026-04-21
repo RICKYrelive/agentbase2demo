@@ -1,7 +1,7 @@
 import './AlertModal.css'
 
 export default function AlertModal({ onClose, message = '非demo演示区域' }) {
-  const isDeprecated = message === '该部分已废弃';
+  const isDeprecated = message === '该部分已废弃' || message === '本次迭代暂不开放页面';
   
   return (
     <div className="modal-overlay" onClick={onClose}>

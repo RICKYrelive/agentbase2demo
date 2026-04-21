@@ -77,8 +77,8 @@ function AppLayout() {
   const currentPath = location.pathname.replace(/^\//, '') || 'overview'
 
   const handleNavClick = (key) => {
-    if (key === 'super-agent' || key === 'managed-agent') {
-      handleAlert('该部分已废弃')
+    if (key === 'super-agent' || key === 'managed-agent' || key === 'sandbox-manage') {
+      handleAlert('本次迭代暂不开放页面')
     }
     if (key.startsWith('agent-runtime/') || key.startsWith('super-agent/') || key.startsWith('skill-center/') || key.startsWith('managed-agent/')) {
         navigate('/' + key.split('/')[0])
@@ -87,10 +87,10 @@ function AppLayout() {
     }
   }
 
-  const handleAlert = (msg = '非demo演示区域') => {
+  const handleAlert = useCallback((msg = '非demo演示区域') => {
     setModalMessage(msg)
     setShowModal(true)
-  }
+  }, [setModalMessage, setShowModal])
 
   let activeNav = currentPath
   if (activeNav.startsWith('super-agent/')) activeNav = 'super-agent'

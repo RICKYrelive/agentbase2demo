@@ -74,7 +74,7 @@ const workspaceNavGroups = [
       { key: 'ai-model-service', label: 'AI 模型服务', icon: <IconAtom /> },
       { key: 'mcp-service', label: 'MCP 服务', icon: <IconGlobe /> },
       { key: 'skill-center', label: 'Skill 中心', icon: <IconPuzzle /> },
-      { key: 'sandbox-manage', label: '沙箱 (已废弃)', icon: <IconPackage /> },
+      { key: 'sandbox-manage', label: '沙箱 (待完善)', icon: <IconPackage /> },
       { key: 'api-routing', label: 'API 应用路由', icon: <IconSplit /> },
     ]
   },

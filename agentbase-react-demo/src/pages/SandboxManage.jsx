@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PageLayout, { GuideCards, DataToolbar, DataTable } from '../components/PageLayout'
 import { IconArrowLeft, IconPlus, IconSearch, IconRotateCcw, IconInbox, IconInfo, IconX } from '../components/Icons'
@@ -33,6 +33,12 @@ export default function SandboxManage({ onAlert }) {
   const [showCreateDrawer, setShowCreateDrawer] = useState(false)
   const [showEditDrawer, setShowEditDrawer] = useState(false)
   const [editingTmpl, setEditingTmpl] = useState(null)
+
+  useEffect(() => {
+    if (onAlert) {
+      onAlert('本次迭代暂不开放页面')
+    }
+  }, [onAlert])
 
   // Creation Form State
   const [newTmpl, setNewTmpl] = useState({
@@ -210,7 +216,7 @@ export default function SandboxManage({ onAlert }) {
 
   return (
     <PageLayout
-      title="沙箱管理 (已废弃)"
+      title="沙箱管理 (待完善)"
       rightAction={
         <button className="action-btn" onClick={() => onAlert('展开/收起指引')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           <IconInfo size={14} /> 指引记录
@@ -228,10 +234,6 @@ export default function SandboxManage({ onAlert }) {
         </div>
       </div>
 
-      <div className="info-alert" style={{ background: '#fff2f0', border: '1px solid #ffccc7' }}>
-        <span className="info-alert-icon">⚠️</span>
-        <span style={{ color: '#ff4d4f', fontWeight: 500 }}>提示：该模块已废弃。下个版本将不再独立展示，其功能已整合至 Environment 模块，此处仅供 Agent Factory 兼容性参考。</span>
-      </div>
 
       <DataToolbar
         buttons={
