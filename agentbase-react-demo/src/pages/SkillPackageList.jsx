@@ -10,7 +10,7 @@ const STATUS_COLORS = {
 }
 
 const columns = [
-  { key: 'name', label: '技能包名称/ID' },
+  { key: 'name', label: 'Skill 集名称/ID' },
   { key: 'status', label: '状态' },
   { key: 'description', label: '描述' },
   { key: 'tags', label: '标签' },
@@ -49,7 +49,7 @@ export default function SkillPackageList() {
     <div className="skill-package-list">
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => navigate('/skill-center/package/create')}>+ 创建技能包</button>
+          <button className="action-btn primary" onClick={() => navigate('/skill-center/package/create')}>+ 创建Skill 集</button>
         }
       >
         <div className="search-input">
@@ -76,9 +76,9 @@ export default function SkillPackageList() {
                 <td colSpan={columns.length} className="data-table-empty">
                   <div className="empty-state ha-empty">
                     <IconPackage size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 16 }} />
-                    <div className="ha-empty-title">还没有技能包</div>
-                    <div className="ha-empty-desc">创建一个技能包，将多个相关的 Skill 组织在一起</div>
-                    <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/skill-center/package/create')}>+ 创建技能包</button>
+                    <div className="ha-empty-title">还没有Skill 集</div>
+                    <div className="ha-empty-desc">创建一个Skill 集，将多个相关的 Skill 组织在一起</div>
+                    <button className="action-btn primary" style={{marginTop: 12}} onClick={() => navigate('/skill-center/package/create')}>+ 创建Skill 集</button>
                   </div>
                 </td>
               </tr>
@@ -128,7 +128,7 @@ export default function SkillPackageList() {
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
             <IconAlertTriangle size={40} style={{ color: '#ff4d4f', margin: '0 auto 16px', display: 'block' }} />
-            <div className="modal-message">确定要删除技能包 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
+            <div className="modal-message">确定要删除Skill 集 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
             <div style={{display:'flex', gap: 12, justifyContent:'center'}}>
               <button className="action-btn primary" style={{background:'#ff4d4f', borderColor:'#ff4d4f'}} onClick={doDelete}>删除</button>
               <button className="action-btn" onClick={() => setConfirmDelete(null)}>取消</button>

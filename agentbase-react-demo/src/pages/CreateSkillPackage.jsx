@@ -49,7 +49,7 @@ export default function CreateSkillPackage() {
         tags: form.tags,
       },
     })
-    showToast('技能包创建成功')
+    showToast('Skill 集创建成功')
     setTimeout(() => navigate('/skill-center'), 800)
   }
 
@@ -64,7 +64,7 @@ export default function CreateSkillPackage() {
         <div className="breadcrumb">
           <span className="bc-item" onClick={goBack}>Skill 中心</span>
           <span className="bc-separator"> &gt; </span>
-          <span className="bc-current">创建技能包</span>
+          <span className="bc-current">创建Skill 集</span>
         </div>
       </div>
 
@@ -76,14 +76,14 @@ export default function CreateSkillPackage() {
               <div className="form-row">
                 <label>名称：<span className="required">*</span></label>
                 <div style={{flex: 1}}>
-                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="请输入技能包名称" style={{width:'100%'}} />
+                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="请输入Skill 集名称" style={{width:'100%'}} />
                   {errors.name && <div className="cha-field-error">{errors.name}</div>}
                 </div>
               </div>
               <div className="form-row align-start">
                 <label>描述：</label>
                 <div className="textarea-wrapper" style={{flex: 1}}>
-                  <textarea name="description" value={form.description} onChange={handleChange} placeholder="选填，描述该技能包的用途" maxLength={512} style={{width:'100%', minHeight: 80, padding: 8}} />
+                  <textarea name="description" value={form.description} onChange={handleChange} placeholder="选填，描述该Skill 集的用途" maxLength={512} style={{width:'100%', minHeight: 80, padding: 8}} />
                   <div style={{textAlign: 'right', fontSize: 12, color: '#8c8c8c'}}>{form.description.length}/512</div>
                 </div>
               </div>

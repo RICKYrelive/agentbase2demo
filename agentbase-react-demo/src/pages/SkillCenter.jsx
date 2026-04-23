@@ -6,8 +6,8 @@ import './SkillCenter.css'
 
 const guideCards = [
   { title: '01 创建 Skill', desc: '将单个 API 或脚本等基础能力封装成可执行的 Skill。' },
-  { title: '02 创建技能包并添加 Skills', desc: '根据业务场景将多个 Skill 组合到同一个技能包中进行统一管理和分发。' },
-  { title: '03 在智能体中集成技能包', desc: '在 Agent 配置页选择技能包，为智能体赋予相应的工具调用能力。' },
+  { title: '02 创建Skill 集并添加 Skills', desc: '根据业务场景将多个 Skill 组合到同一个Skill 集中进行统一管理和分发。' },
+  { title: '03 在智能体中集成Skill 集', desc: '在 Agent 配置页选择Skill 集，为智能体赋予相应的工具调用能力。' },
 ]
 
 export default function SkillCenter() {
@@ -25,7 +25,7 @@ export default function SkillCenter() {
     >
       {/* 描述文案 */}
       <div className="skill-center-desc">
-        Skill 中心是 Agent 的可复用能力资产入口，支持通过技能包组织和管理 Skills，方便 Agent 集成调用。
+        Skill 中心是 Agent 的可复用能力资产入口，支持通过Skill 集组织和管理 Skills，方便 Agent 集成调用。
       </div>
 
       {showGuide && <GuideCards cards={guideCards} />}
@@ -35,7 +35,7 @@ export default function SkillCenter() {
           className={`skill-tab ${activeTab === 'packages' ? 'active' : ''}`}
           onClick={() => setActiveTab('packages')}
         >
-          技能包
+          Skill 集
         </div>
         <div 
           className={`skill-tab ${activeTab === 'skills' ? 'active' : ''}`}

@@ -18,13 +18,13 @@ function AddToPackageModal({ skill, onClose, onAdd }) {
           </div>
         </div>
         
-        <h3 style={{ marginTop: 20, marginBottom: 8, fontSize: 20, fontWeight: 600 }}>添加到技能包</h3>
+        <h3 style={{ marginTop: 20, marginBottom: 8, fontSize: 20, fontWeight: 600 }}>添加到Skill 集</h3>
         <p style={{ color: '#86909c', fontSize: 13, marginBottom: 24 }}>
           将 <span style={{ color: '#1d2129', fontWeight: 500 }}>{skill.name}</span> ({skill.latestVersion}) 添加到指定项目
         </p>
 
         <div className="ha-form-item" style={{ textAlign: 'left', marginBottom: 32 }}>
-          <label className="ha-form-label" style={{ marginBottom: 8, display: 'block', color: '#4e5969' }}>选择目标技能包</label>
+          <label className="ha-form-label" style={{ marginBottom: 8, display: 'block', color: '#4e5969' }}>选择目标Skill 集</label>
           <div className="ha-select-custom" style={{ width: '100%' }}>
             <select 
               className="ha-form-input" 
@@ -32,7 +32,7 @@ function AddToPackageModal({ skill, onClose, onAdd }) {
               onChange={(e) => setSelectedPkgId(e.target.value)}
               style={{ width: '100%', paddingRight: 32 }}
             >
-              <option value="">-- 请选择技能包 --</option>
+              <option value="">-- 请选择Skill 集 --</option>
               {packages.map(p => (
                 <option key={p.id} value={p.id}>{p.name} ({p.project})</option>
               ))}
@@ -97,7 +97,7 @@ export default function SkillList() {
   const handleAddToPackage = (pkgId, skill) => {
     const pkg = packages.find(p => p.id === pkgId)
     if (pkg && pkg.skills.find(s => s.skillId === skill.id)) {
-      showToast('该技能已在目标技能包中', 'error')
+      showToast('该技能已在目标Skill 集中', 'error')
       return
     }
 
@@ -106,7 +106,7 @@ export default function SkillList() {
       packageId: pkgId,
       skill: skill
     })
-    showToast(`已成功添加至技能包 ${pkg?.name || pkgId}`)
+    showToast(`已成功添加至Skill 集 ${pkg?.name || pkgId}`)
     setAddSkillModal(null)
   }
 
@@ -197,7 +197,7 @@ export default function SkillList() {
                   <div className="skill-card-actions">
                     <button onClick={(e) => { e.stopPropagation(); navigate(`/skill-center/skill/${skill.id}`) }}>查看</button>
                     <button onClick={(e) => handleUpdate(e, skill)}>更新</button>
-                    <button onClick={(e) => { e.stopPropagation(); setAddSkillModal(skill) }}>+ 加入技能包</button>
+                    <button onClick={(e) => { e.stopPropagation(); setAddSkillModal(skill) }}>+ 加入Skill 集</button>
                   </div>
                 </div>
               )
@@ -250,7 +250,7 @@ export default function SkillList() {
                       <div className="ha-row-actions">
                         <button onClick={() => navigate(`/skill-center/skill/${skill.id}`)}>查看</button>
                         <button onClick={(e) => handleUpdate(e, skill)}>更新</button>
-                        <button onClick={() => setAddSkillModal(skill)}>+ 加入技能包</button>
+                        <button onClick={() => setAddSkillModal(skill)}>+ 加入Skill 集</button>
                       </div>
                     </td>
                   </tr>

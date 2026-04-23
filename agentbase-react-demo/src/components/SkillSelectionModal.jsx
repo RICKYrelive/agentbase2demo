@@ -58,14 +58,14 @@ export default function SkillSelectionModal({ value = [], onChange }) {
             </div>
             
             <div className="ssm-tabs">
-              <div className={`ssm-tab ${tab === 'packages' ? 'active' : ''}`} onClick={() => setTab('packages')}>技能包</div>
+              <div className={`ssm-tab ${tab === 'packages' ? 'active' : ''}`} onClick={() => setTab('packages')}>Skill 集</div>
               <div className={`ssm-tab ${tab === 'individual' ? 'active' : ''}`} onClick={() => setTab('individual')}>独立技能</div>
             </div>
 
             <div className="ssm-search" style={{marginBottom:16}}>
               <input 
                 type="text" 
-                placeholder={tab === 'packages' ? "搜索技能包..." : "搜索独立技能..."}
+                placeholder={tab === 'packages' ? "搜索Skill 集..." : "搜索独立技能..."}
                 value={search} 
                 onChange={e => setSearch(e.target.value)} 
                 style={{width:'100%',padding:'8px 12px',border:'1px solid var(--color-border)',borderRadius:4, fontSize:14}}
@@ -75,7 +75,7 @@ export default function SkillSelectionModal({ value = [], onChange }) {
             <div className="ssm-list-container">
               {tab === 'packages' && (
                 <div className="ssm-package-list">
-                  {filteredPackages.length === 0 ? <div className="ssm-empty">无匹配技能包</div> : (
+                  {filteredPackages.length === 0 ? <div className="ssm-empty">无匹配Skill 集</div> : (
                     filteredPackages.map(pkg => {
                       const pkgSkillNames = pkg.skills.map(s => s.skillName)
                       const selectedCount = pkgSkillNames.filter(sn => value.includes(sn)).length

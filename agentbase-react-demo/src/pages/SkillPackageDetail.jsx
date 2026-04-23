@@ -62,7 +62,7 @@ function AddSkillToPkgModal({ pkg, onClose, onAdd }) {
           </div>
         </div>
 
-        <h3 style={{ marginTop: 20, marginBottom: 8, fontSize: 20, fontWeight: 600 }}>添加 Skill 到技能包</h3>
+        <h3 style={{ marginTop: 20, marginBottom: 8, fontSize: 20, fontWeight: 600 }}>添加 Skill 到Skill 集</h3>
         <p style={{ color: '#86909c', fontSize: 13, marginBottom: 24 }}>
           从库中选择 Skill 并关联到 <span style={{ color: '#1d2129', fontWeight: 500 }}>{pkg.name}</span>
         </p>
@@ -132,7 +132,7 @@ export default function SkillPackageDetail() {
   if (!pkg) {
     return (
       <div className="create-app-page">
-        <div className="ha-empty-card-state" style={{marginTop: 60}}>未找到该技能包</div>
+        <div className="ha-empty-card-state" style={{marginTop: 60}}>未找到该Skill 集</div>
       </div>
     )
   }
@@ -143,7 +143,7 @@ export default function SkillPackageDetail() {
   }
 
   const handleRemoveSkill = (skillId) => {
-    if (window.confirm('确定要从该技能包中移除此技能吗？')) {
+    if (window.confirm('确定要从该Skill 集中移除此技能吗？')) {
       dispatch({ type: 'REMOVE_SKILL_FROM_PACKAGE', packageId: pkg.id, skillId })
       showToast('已移除关联的 Skill')
     }
@@ -158,7 +158,7 @@ export default function SkillPackageDetail() {
   const handleAddSkill = (pkgId, skill) => {
     dispatch({ type: 'ADD_SKILL_TO_PACKAGE', packageId: pkgId, skill })
     setAddSkillModal(false)
-    showToast('Skill 已成功添加到技能包')
+    showToast('Skill 已成功添加到Skill 集')
   }
 
   const filteredSkills = (pkg.skills || []).filter(s => !search || s.skillName.toLowerCase().includes(search.toLowerCase()))
@@ -182,7 +182,7 @@ export default function SkillPackageDetail() {
         </div>
       }
       rightAction={
-        <button className="ha-btn-danger-ghost" onClick={() => setConfirmDelete(pkg)} title="删除技能包">
+        <button className="ha-btn-danger-ghost" onClick={() => setConfirmDelete(pkg)} title="删除Skill 集">
           <IconTrash size={16} />
         </button>
       }
@@ -303,7 +303,7 @@ export default function SkillPackageDetail() {
         <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
             <IconAlertTriangle size={40} style={{ color: '#ff4d4f', margin: '0 auto 16px', display: 'block' }} />
-            <div className="modal-message">确定要删除技能包 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
+            <div className="modal-message">确定要删除Skill 集 <strong>{confirmDelete.name}</strong> 吗？此操作不可恢复。</div>
             <div style={{display:'flex', gap: 12, justifyContent:'center'}}>
               <button className="action-btn primary" style={{background:'#ff4d4f', borderColor:'#ff4d4f'}} onClick={doDelete}>删除</button>
               <button className="action-btn" onClick={() => setConfirmDelete(null)}>取消</button>
