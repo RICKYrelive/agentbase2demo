@@ -54,7 +54,7 @@ const workspaceNavGroups = [
     ]
   },
   {
-    title: 'Harness Agent',
+    title: 'Harness 托管',
     items: [
       { 
         key: 'managed-agent', 
