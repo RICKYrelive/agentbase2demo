@@ -41,6 +41,7 @@ import AFWorkshop from './pages/factory/AFWorkshop'
 import AFAgent from './pages/factory/AFAgent'
 import AFSession from './pages/factory/AFSession'
 import AFVaults from './pages/factory/AFVaults'
+import AFExternalRegister from './pages/factory/AFExternalRegister'
 
 // Agent Console (Managed Agent)
 import { ManagedAgentProvider } from './store/managedAgentStore.jsx'
@@ -147,6 +148,7 @@ function AppLayout() {
           <Route path="/af-environment" element={<MACEnvironmentList />} />
           <Route path="/af-environment/:id" element={<MACEnvironmentDetail />} />
           <Route path="/af-passport" element={<AFVaults />} />
+          <Route path="/af-external" element={<AFExternalRegister />} />
           {Object.entries(systemPages).map(([key, cfg]) => (
             <Route key={key} path={`/${key}`} element={
               <SystemManagePage onAlert={handleAlert} pageTitle={cfg.title} columns={cfg.columns} />

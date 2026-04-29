@@ -82,6 +82,13 @@ const MOCK_TEMPLATES = {
       tags: ['Management', 'Docs'],
       tools: ['linear', 'notion'],
       yaml: "name: sprint-retro\ndescription: Pulls a closed sprint and writes retro doc.\nmodel: claude-sonnet-4-6\nsystem: |-\n  You are an agile facilitator. To run a sprint retro:\n\n  1. Fetch all closed issues and PRs from the sprint.\n  2. Categorize wins, challenges, and action items.\n  3. Draft a retrospective document in the Wiki.\n  \n  Be objective and encouraging.\nmcp_servers: []\ntools:\n  - type: linear\n  - type: notion\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest"
+    },
+    { 
+      id: 'at11', name: 'Engineering Lead', icon: <IconLayers />, desc: 'Coordinates engineering work by delegating to specialized agents.',
+      envTemplate: 'developer',
+      tags: ['Engineering', 'Coordination'],
+      tools: ['agent_toolset_20260401'],
+      yaml: "name: Engineering Lead\nmodel: claude-opus-4-7\nsystem: You coordinate engineering work. Delegate code review to the reviewer agent and test writing to the test agent.\ntools:\n  - type: agent_toolset_20260401\ncallable_agents:\n  - type: agent\n    id: agt_reviewer_1\n    version: v1.0.0\n  - type: agent\n    id: agt_test_writer_1\n    version: v1.0.0"
     }
   ],
   Skill: [
@@ -160,7 +167,8 @@ export default function AFWorkshop() {
     description: '',
     model: 'claude-sonnet-4-6',
     system: '',
-    tools: ['bash', 'web_fetch']
+    tools: ['bash', 'web_fetch'],
+    callableAgents: []
   })
 
   // Meta Agent Chat State (for Step 1)
@@ -680,6 +688,26 @@ export default function AFWorkshop() {
                      ))}
                      <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                        <IconPlus size={14}/> Add Tool
+                     </button>
+                  </div>
+                </div>
+
+                <div className="af-field">
+                  <label className="af-field-label">下级 Agent 调用 (Callable Agents)</label>
+                  <div className="af-field-hint">配置该 Agent 可调用的其他子 Agent，实现多 Agent 协同。</div>
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                     {['Reviewer Agent', 'Test Agent', 'Support Agent'].map(agt => (
+                       <div key={agt} style={{ padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, background: agentConfig.callableAgents.includes(agt) ? '#f0fdf4' : '#fff', cursor: 'pointer' }} onClick={() => {
+                          const next = agentConfig.callableAgents.includes(agt)
+                            ? agentConfig.callableAgents.filter(x => x !== agt)
+                            : [...agentConfig.callableAgents, agt];
+                          setAgentConfig({...agentConfig, callableAgents: next});
+                       }}>
+                         <input type="checkbox" checked={agentConfig.callableAgents.includes(agt)} readOnly style={{ pointerEvents: 'none' }} /> {agt}
+                       </div>
+                     ))}
+                     <button style={{ padding: '6px 12px', border: '1px dashed #cbd5e1', borderRadius: 6, fontSize: 13, background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                       <IconPlus size={14}/> Add Agent
                      </button>
                   </div>
                 </div>

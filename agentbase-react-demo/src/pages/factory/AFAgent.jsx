@@ -75,7 +75,8 @@ export default function AFAgent() {
     desc: '',
     model: 'sonnet',
     systemPrompt: '',
-    tools: []
+    tools: [],
+    callableAgents: []
   })
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(null), 2000) }
@@ -89,7 +90,7 @@ export default function AFAgent() {
   const resetAndClose = () => {
     setShowDrawer(false)
     setDrawerStep(1)
-    setFormData({ name: '', desc: '', model: 'sonnet', systemPrompt: '', tools: [] })
+    setFormData({ name: '', desc: '', model: 'sonnet', systemPrompt: '', tools: [], callableAgents: [] })
   }
 
   const handleCreate = () => {
@@ -103,7 +104,7 @@ export default function AFAgent() {
       desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
       envTemplate: 'default-env',
       toolsList: agent.tools ? agent.tools.split(', ') : [],
-      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest`
+      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest\ncallable_agents:\n  - type: agent\n    id: agt_reviewer_1\n    version: v1.0.0`
     })
     setSelectedIconKey('Bot')
   }
@@ -114,7 +115,7 @@ export default function AFAgent() {
       desc: '此为系统生成的详细描述。负责处理 ' + agent.name + ' 相关的核心逻辑。',
       envTemplate: 'default-env',
       toolsList: agent.tools ? agent.tools.split(', ') : [],
-      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest`
+      yaml: `name: ${agent.name}\ndescription: 此为系统生成的详细描述。负责处理 ${agent.name} 相关的核心逻辑。\nmodel: ${agent.model}\nsystem: |-\n  You are an expert helper for ${agent.name}. Match the user's tone.\n\n  1. Understand the core mission of ${agent.name}.\n  2. Respond accurately using available tools.\nmcp_servers:\n  - name: internal-db\n    type: url\n    url: https://mcp.db.com/mcp\ntools:\n  - type: agent_toolset_20260401\n  - type: mcp_toolset\n    mcp_server_name: internal-db\nskills: \n  - type: builtin\n    skill_id: xlsx\n  - type: custom\n    skill_id: skill_abc123\n    version: latest\ncallable_agents:\n  - type: agent\n    id: agt_reviewer_1\n    version: v1.0.0`
     })
   }
 
@@ -213,107 +214,101 @@ export default function AFAgent() {
               </button>
             </div>
             
-            <div className="af-drawer-body">
-              {/* Wizard Progress */}
-              <div className="af-wizard-progress">
-                <div className={`af-wizard-step-bubble ${drawerStep === 1 ? 'active' : (drawerStep > 1 ? 'completed' : '')}`}>1</div>
-                <div className={`af-wizard-step-line ${drawerStep > 1 ? 'completed' : ''}`}></div>
-                <div className={`af-wizard-step-bubble ${drawerStep === 2 ? 'active' : (drawerStep > 2 ? 'completed' : '')}`}>2</div>
-                <div className={`af-wizard-step-line ${drawerStep > 2 ? 'completed' : ''}`}></div>
-                <div className={`af-wizard-step-bubble ${drawerStep === 3 ? 'active' : (drawerStep > 3 ? 'completed' : '')}`}>3</div>
-              </div>
-
-              {drawerStep === 1 && (
-                <div className="af-wizard-content">
+            <div className="af-drawer-body" style={{ padding: '24px 32px' }}>
+              <div className="af-wizard-content">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: 32 }}>
                   <div className="af-field">
-                    <label className="af-field-label">名称</label>
+                    <label className="af-field-label">Agent 名称</label>
                     <input 
                       type="text" 
                       className="af-input-text notion-body" 
-                      placeholder="给你的 Agent 起个名字" 
+                      placeholder="例如: Engineering Lead" 
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                     />
                   </div>
                   <div className="af-field">
-                    <label className="af-field-label">描述</label>
-                    <textarea 
-                      className="af-input-textarea notion-body" 
-                      placeholder="简要描述这个 Agent 的职责内容…" 
-                      style={{ minHeight: 80 }}
-                      value={formData.desc}
-                      onChange={e => setFormData({...formData, desc: e.target.value})}
-                    />
-                  </div>
-                  <div className="af-field">
-                    <label className="af-field-label">选择推理模型</label>
-                    <div className="af-card-grid">
-                      {MOCK_MODELS.map(m => (
-                        <div 
-                          key={m.id} 
-                          className={`af-option-card ${formData.model === m.id ? 'selected' : ''}`}
-                          onClick={() => setFormData({...formData, model: m.id})}
-                        >
-                          <div className="af-option-icon">{m.icon}</div>
-                          <div className="af-option-name notion-body-medium">{m.name}</div>
-                          <div className="af-option-desc">{m.desc}</div>
-                        </div>
-                      ))}
-                    </div>
+                    <label className="af-field-label">推理模型 (Model)</label>
+                    <select 
+                      className="af-input-text"
+                      value={formData.model}
+                      onChange={e => setFormData({...formData, model: e.target.value})}
+                      style={{ height: '42px' }}
+                    >
+                      {MOCK_MODELS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
+                    </select>
                   </div>
                 </div>
-              )}
 
-              {drawerStep === 2 && (
-                <div className="af-wizard-content">
-                  <div className="af-field">
-                    <label className="af-field-label">系统提示词 (System Prompt)</label>
-                    <div className="af-field-hint">核心指令集，定义 Agent 的角色、语气、回复格式及行为约束。</div>
-                    <textarea 
-                      className="af-input-textarea notion-body" 
-                      placeholder="Enter system prompt instructions here..." 
-                      style={{ minHeight: 340, fontFamily: 'var(--notion-font-family)', fontSize: '15px' }}
-                      value={formData.systemPrompt}
-                      onChange={e => setFormData({...formData, systemPrompt: e.target.value})}
-                    />
-                  </div>
+                <div className="af-field" style={{ marginBottom: 32 }}>
+                  <label className="af-field-label">功能描述 (Description)</label>
+                  <input 
+                    type="text" 
+                    className="af-input-text notion-body" 
+                    placeholder="简要描述这个 Agent 的职责内容…" 
+                    value={formData.desc}
+                    onChange={e => setFormData({...formData, desc: e.target.value})}
+                  />
                 </div>
-              )}
 
-              {drawerStep === 3 && (
-                <div className="af-wizard-content">
+                <div className="af-field" style={{ marginBottom: 32 }}>
+                  <label className="af-field-label">系统设定 (System Prompt)</label>
+                  <div className="af-field-hint">核心指令集，定义 Agent 的角色、语气及行为约束。</div>
+                  <textarea 
+                    className="af-input-textarea notion-body" 
+                    placeholder="Enter system prompt instructions here..." 
+                    style={{ minHeight: 180, fontFamily: 'monospace', fontSize: '13px', lineHeight: '1.6' }}
+                    value={formData.systemPrompt}
+                    onChange={e => setFormData({...formData, systemPrompt: e.target.value})}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
                   <div className="af-field">
-                    <label className="af-field-label">功能扩展 (Tools & Skills)</label>
-                    <div className="af-field-hint">为 Agent 挂载必要的外部工具或业务技能（如 GitHub API、数据清洗脚本）。</div>
-                    <div className="af-card-grid">
+                    <label className="af-field-label">挂载能力 (Tools & Skills)</label>
+                    <div className="af-field-hint">选择必要的外部工具或业务技能。</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                       {['GitHub MCP', 'Slack Toolkit', 'Python Interpreter', 'Web Search'].map(tool => (
-                        <div key={tool} className="af-option-card">
-                          <div className="af-option-name" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <input type="checkbox" /> {tool}
-                          </div>
-                        </div>
+                        <label key={tool} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, cursor: 'pointer' }}>
+                          <input type="checkbox" /> {tool}
+                        </label>
                       ))}
                     </div>
                   </div>
-                  <div className="af-success-state">
-                    <IconSparkles size={48} style={{ color: '#f5a623', marginBottom: 12 }} />
-                    <h3 className="notion-card-title">一切准备就绪</h3>
-                    <p className="notion-body" style={{ color: 'var(--notion-gray-500)', marginTop: 8 }}>您可以立即创建此 Agent 或返回修改配置。</p>
+
+                  <div className="af-field">
+                    <label className="af-field-label">协同 Agent (Callable Agents)</label>
+                    <div className="af-field-hint">配置可调用的其他下级 Agent。</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
+                      {['Code Reviewer', 'Test Writer', 'Data Analyst'].map(agt => (
+                        <label key={agt} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, cursor: 'pointer' }}>
+                          <input 
+                            type="checkbox" 
+                            checked={formData.callableAgents.includes(agt)}
+                            onChange={e => {
+                              const next = e.target.checked 
+                                ? [...formData.callableAgents, agt]
+                                : formData.callableAgents.filter(x => x !== agt)
+                              setFormData({...formData, callableAgents: next})
+                            }}
+                          /> {agt}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              )}
+
+                <div className="af-success-state" style={{ marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--notion-gray-200)' }}>
+                  <IconSparkles size={32} style={{ color: '#f5a623', marginBottom: 12 }} />
+                  <h3 className="notion-card-title">一切准备就绪</h3>
+                  <p className="notion-body" style={{ color: 'var(--notion-gray-500)', marginTop: 4 }}>点击下方按钮即可保存并部署您的 Agent。</p>
+                </div>
+              </div>
             </div>
 
             <div className="af-drawer-footer">
               <button className="action-btn" onClick={resetAndClose}>取消</button>
-              {drawerStep > 1 && (
-                <button className="action-btn" onClick={() => setDrawerStep(drawerStep - 1)}>上一步</button>
-              )}
-              {drawerStep < 3 ? (
-                <button className="action-btn primary" onClick={() => setDrawerStep(drawerStep + 1)}>下一步</button>
-              ) : (
-                <button className="action-btn primary" onClick={handleCreate}>保存并创建</button>
-              )}
+              <button className="action-btn primary" onClick={handleCreate} style={{ padding: '0 32px' }}>保存并创建</button>
             </div>
           </div>
         </div>

@@ -63,6 +63,7 @@ const workspaceNavGroups = [
         isSubmenu: true,
         subItems: agentFactoryItems
       },
+      { key: 'af-external', label: '外部 Agent 注册', icon: <IconGlobe /> },
       { key: 'super-agent', label: 'Super Agent (已废弃)', icon: <IconLink /> },
     ]
   },
