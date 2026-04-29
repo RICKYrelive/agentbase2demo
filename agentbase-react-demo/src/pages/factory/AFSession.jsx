@@ -21,6 +21,12 @@ const MOCK_ENVIRONMENTS = [
   { id: 'env-003', name: '系统审计与扫描引擎', desc: 'Golang 沙箱，专为系统级任务设计', icon: <IconShield size={22} /> },
 ]
 
+const MOCK_CLUSTERS = [
+  { id: 'cls-001', name: '默认生产集群', region: '华东 1 (杭州)', type: '标准型' },
+  { id: 'cls-002', name: '海外加速节点', region: '美国 (硅谷)', type: '高吞吐型' },
+  { id: 'cls-003', name: '开发测试环境', region: '本地托管', type: '隔离型' },
+]
+
 const MOCK_VAULTS = [
   { id: 'vlt_aB3cD9eF', name: 'GitHub Production', status: 'active', credCount: 2 },
   { id: 'vlt_gH4iJ1kL', name: 'Slack Workspace', status: 'active', credCount: 1 },
@@ -45,6 +51,7 @@ export default function AFSession() {
   const [sessionForm, setSessionForm] = useState({
     agentId: '',
     environmentId: '',
+    clusterId: 'cls-001',
     vaultIds: [],
   })
 
@@ -60,6 +67,7 @@ export default function AFSession() {
   const handleLaunch = () => {
     const agent = MOCK_AGENTS_LIBRARY.find(a => a.id === sessionForm.agentId)
     const env = MOCK_ENVIRONMENTS.find(e => e.id === sessionForm.environmentId)
+    const cluster = MOCK_CLUSTERS.find(c => c.id === sessionForm.clusterId)
 
     dispatch({
       type: 'CREATE_SESSION',
@@ -69,13 +77,15 @@ export default function AFSession() {
         agentVersion: 'v1.0.0',
         environmentId: sessionForm.environmentId,
         environmentName: env?.name || '',
+        clusterId: sessionForm.clusterId,
+        clusterName: cluster?.name || '',
         createdBy: 'admin',
         tags: [],
       },
     })
 
     setShowLauncher(false)
-    setSessionForm({ agentId: '', environmentId: '', vaultIds: [] })
+    setSessionForm({ agentId: '', environmentId: '', clusterId: 'cls-001', vaultIds: [] })
   }
 
   return (
@@ -197,56 +207,86 @@ export default function AFSession() {
               </button>
             </div>
 
-            <div className="af-drawer-body">
-              {/* Agent */}
-              <div className="af-field">
+            <div className="af-drawer-body" style={{ padding: '24px 32px' }}>
+              {/* Cluster Selection */}
+              <div className="af-field" style={{ marginBottom: 32 }}>
+                <label className="af-field-label">选择集群 (Cluster)</label>
+                <div className="af-field-hint">选择任务运行的基础物理集群。单选。</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
+                  {MOCK_CLUSTERS.map(cls => (
+                    <div 
+                      key={cls.id} 
+                      className={`af-list-option ${sessionForm.clusterId === cls.id ? 'active' : ''}`}
+                      onClick={() => setSessionForm({ ...sessionForm, clusterId: cls.id })}
+                    >
+                      <div className="af-list-radio">
+                        <div className={sessionForm.clusterId === cls.id ? 'radio-inner active' : 'radio-inner'} />
+                      </div>
+                      <div className="af-list-info">
+                        <div className="af-list-name">{cls.name} <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 400, marginLeft: 8 }}>{cls.region} · {cls.type}</span></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Agent Selection */}
+              <div className="af-field" style={{ marginBottom: 32 }}>
                 <label className="af-field-label">选择 Agent</label>
                 <div className="af-field-hint">会话将继承此 Agent 的模型配置、提示词和工具集。</div>
-                <div className="af-card-grid">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                   {MOCK_AGENTS_LIBRARY.map(agt => (
-                    <div
-                      key={agt.id}
-                      className={`af-option-card ${sessionForm.agentId === agt.id ? 'selected' : ''}`}
+                    <div 
+                      key={agt.id} 
+                      className={`af-list-option ${sessionForm.agentId === agt.id ? 'active' : ''}`}
                       onClick={() => setSessionForm({ ...sessionForm, agentId: agt.id })}
                     >
-                      <div className="af-option-icon">{agt.icon}</div>
-                      <div className="af-option-name">{agt.name}</div>
-                      <div className="af-option-desc">{agt.desc}</div>
+                      <div className="af-list-radio">
+                        <div className={sessionForm.agentId === agt.id ? 'radio-inner active' : 'radio-inner'} />
+                      </div>
+                      <div className="af-list-info">
+                        <div className="af-list-name">{agt.name}</div>
+                        <div className="af-list-desc">{agt.desc}</div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Environment */}
-              <div className="af-field">
+              {/* Environment Selection */}
+              <div className="af-field" style={{ marginBottom: 32 }}>
                 <label className="af-field-label">运行环境 (Environment)</label>
                 <div className="af-field-hint">选择会话的运行时沙箱环境。</div>
-                <div className="af-card-grid">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                   {MOCK_ENVIRONMENTS.map(env => (
-                    <div
-                      key={env.id}
-                      className={`af-option-card ${sessionForm.environmentId === env.id ? 'selected' : ''}`}
+                    <div 
+                      key={env.id} 
+                      className={`af-list-option ${sessionForm.environmentId === env.id ? 'active' : ''}`}
                       onClick={() => setSessionForm({ ...sessionForm, environmentId: env.id })}
                     >
-                      <div className="af-option-icon">{env.icon}</div>
-                      <div className="af-option-name">{env.name}</div>
-                      <div className="af-option-desc">{env.desc}</div>
+                      <div className="af-list-radio">
+                        <div className={sessionForm.environmentId === env.id ? 'radio-inner active' : 'radio-inner'} />
+                      </div>
+                      <div className="af-list-info">
+                        <div className="af-list-name">{env.name}</div>
+                        <div className="af-list-desc">{env.desc}</div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Vaults (multi-select) */}
+              {/* Vaults Selection (multi-select) */}
               <div className="af-field">
                 <label className="af-field-label">注入凭证集</label>
-                <div className="af-field-hint">选择需要注入的凭证集，会话启动后将自动携带这些凭证。可多选。</div>
-                <div className="af-card-grid">
+                <div className="af-field-hint">选择需要注入的凭证集，可多选。</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
                   {MOCK_VAULTS.map(vault => {
                     const isSelected = sessionForm.vaultIds.includes(vault.id)
                     return (
-                      <div
-                        key={vault.id}
-                        className={`af-option-card ${isSelected ? 'selected' : ''}`}
+                      <div 
+                        key={vault.id} 
+                        className={`af-list-option ${isSelected ? 'active' : ''}`}
                         onClick={() => {
                           const newIds = isSelected
                             ? sessionForm.vaultIds.filter(id => id !== vault.id)
@@ -254,13 +294,12 @@ export default function AFSession() {
                           setSessionForm({ ...sessionForm, vaultIds: newIds })
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <div className="af-option-icon"><IconVault size={22} /></div>
-                          {isSelected && <IconCheck size={16} style={{ color: 'var(--color-blue)' }} />}
+                        <div className="af-list-checkbox">
+                          {isSelected && <IconCheck size={14} style={{ color: '#fff' }} />}
                         </div>
-                        <div className="af-option-name">{vault.name}</div>
-                        <div className="af-option-desc">
-                          {vault.credCount} 个凭证 · {vault.status === 'active' ? '活跃' : '未激活'}
+                        <div className="af-list-info">
+                          <div className="af-list-name">{vault.name}</div>
+                          <div className="af-list-desc">{vault.credCount} 个凭证 · {vault.status === 'active' ? '活跃' : '未激活'}</div>
                         </div>
                       </div>
                     )
