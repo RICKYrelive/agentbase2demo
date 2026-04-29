@@ -65,12 +65,12 @@ export default function AFVaults() {
 
   return (
     <PageLayout
-      title="Vaults"
-      rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> New Vault</button>}
+      title="凭证集"
+      rightAction={<button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 新建凭证集</button>}
     >
       <div className="info-alert">
         <span className="info-alert-icon"><IconInfo /></span>
-        Vaults 是凭证保险箱，在 Session 创建时通过 <code>vault_ids</code> 注入，用于 MCP 服务器的 OAuth 和 Bearer Token 认证。Vaults 作用域为当前工作空间，具有 API 访问权限的成员均可使用。
+        凭证集是凭证保险箱，在会话创建时通过 <code>vault_ids</code> 注入，用于 MCP 服务器的 OAuth 和 Bearer Token 认证。凭证集作用域为当前工作空间，具有 API 访问权限的成员均可使用。
       </div>
 
       <DataToolbar
@@ -84,7 +84,7 @@ export default function AFVaults() {
       >
         <div className="search-input">
           <span className="search-icon"><IconSearch /></span>
-          <input placeholder="搜索 Vault 名称或 ID" />
+          <input placeholder="搜索凭证集名称或 ID" />
         </div>
       </DataToolbar>
 

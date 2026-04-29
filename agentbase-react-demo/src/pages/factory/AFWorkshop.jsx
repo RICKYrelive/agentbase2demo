@@ -537,7 +537,7 @@ export default function AFWorkshop() {
       <div className="afw-wv2-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <button className="afw-back-btn" onClick={() => setView('home')} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}><IconArrowLeft size={20} /></button>
-          <span style={{ fontSize: 16, fontWeight: 600 }}>配置 Agent 蓝图</span>
+          <span style={{ fontSize: 16, fontWeight: 600 }}>配置 Agent</span>
         </div>
         
         <div className="afw-stepper">
@@ -574,7 +574,7 @@ export default function AFWorkshop() {
             <div className="afw-wv2-left" style={{ width: '450px', display: 'flex', flexDirection: 'column', borderRight: '1px solid #e2e8f0', background: '#fff', padding: 0 }}>
               <div style={{ padding: '16px 20px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
                  <div style={{ fontWeight: 600, fontSize: 14, color: '#334155' }}>Meta-Agent (辅助架构师)</div>
-                 <div style={{ fontSize: 12, color: '#64748b' }}>用自然语言调优你的 Agent 蓝图</div>
+                 <div style={{ fontSize: 12, color: '#64748b' }}>用自然语言调优你的 Agent</div>
               </div>
               
               <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
@@ -613,7 +613,7 @@ export default function AFWorkshop() {
             
             <div className="afw-wv2-right" style={{ flex: 1, padding: '32px 48px', overflowY: 'auto' }}>
               <div className="afw-preview-pane" style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '32px' }}>
-                <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, color: '#0f172a' }}>Agent 蓝图属性配置</h2>
+                <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, color: '#0f172a' }}>Agent 属性配置</h2>
                 
                 <div className="af-field">
                   <label className="af-field-label">应用名称 (Name)</label>
@@ -783,12 +783,12 @@ export default function AFWorkshop() {
                 </div>
                 <div>
                   <h2 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>应用配置完成！</h2>
-                  <p style={{ color: '#64748b', margin: '4px 0 0 0' }}>该 Agent 蓝图处于 Ready 状态，你可以随时通过后端接入。</p>
+                  <p style={{ color: '#64748b', margin: '4px 0 0 0' }}>该 Agent 处于 Ready 状态，你可以随时通过后端接入。</p>
                 </div>
               </div>
               
               <div className="afw-integrate-card">
-                <div className="afw-ic-header">唯一资源标识符 (Agent Blueprint ID)</div>
+                <div className="afw-ic-header">唯一资源标识符 (Agent ID)</div>
                 <div className="afw-ic-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <code style={{ fontSize: 14, color: '#334155', fontWeight: 600 }}>ab_098KxOq2PLmswN88s9AOp1</code>
                   <button className="af-copy-btn"><IconCopy size={16}/></button>

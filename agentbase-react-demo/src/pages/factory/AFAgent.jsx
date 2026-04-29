@@ -9,7 +9,7 @@ import './AF.css'
 import './AFWorkshop.css'
 
 const guideCards = [
-  { title: '定义 Agent 蓝图', desc: '配置模型、系统提示词、工具集和技能，创建可复用的 Agent 定义。每次修改版本号自动递增。' },
+  { title: '定义 Agent', desc: '配置模型、系统提示词、工具集和技能，创建可复用的 Agent 定义。每次修改版本号自动递增。' },
   { title: '启动 Session 运行', desc: '选择已创建的 Agent，组合 Environment、Vaults、Filesystem 后启动运行实例。' },
 ]
 
@@ -93,7 +93,7 @@ export default function AFAgent() {
   }
 
   const handleCreate = () => {
-    showToast('Blueprint 创建成功')
+    showToast('Agent 创建成功')
     resetAndClose()
   }
 
@@ -120,7 +120,7 @@ export default function AFAgent() {
 
   return (
     <PageLayout
-      title="Agent Blueprint"
+      title="Agent"
       rightAction={
         <button className="action-btn" onClick={() => setShowGuide(!showGuide)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           {showGuide ? <><IconMinus size={14} /> 收起指引</> : <><IconPlus size={14} /> 展开指引</>}
@@ -131,7 +131,7 @@ export default function AFAgent() {
 
       <DataToolbar
         buttons={
-          <button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 新建 Blueprint</button>
+          <button className="action-btn primary" onClick={() => setShowDrawer(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 新建 Agent</button>
         }
         filters={
           <label className="af-toggle-label">
@@ -152,14 +152,14 @@ export default function AFAgent() {
       <div className="data-table-wrap">
         <table className="data-table">
           <thead>
-            <tr>{columns.map(c => <th key={c}>{c === '名称' ? 'Blueprint 名称' : c}</th>)}</tr>
+            <tr>{columns.map(c => <th key={c}>{c === '名称' ? 'Agent 名称' : c}</th>)}</tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr><td colSpan={columns.length} className="data-table-empty">
                 <div className="empty-state">
                   <IconBot size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
-                  <span>暂无 Blueprint — 点击「新建 Blueprint」进行创建</span>
+                  <span>暂无 Agent — 点击「新建 Agent」进行创建</span>
                 </div>
               </td></tr>
             ) : filtered.map(a => {
@@ -206,7 +206,7 @@ export default function AFAgent() {
             <div className="af-drawer-header">
               <div className="af-drawer-title-wrap">
                 <IconBot size={24} style={{ color: 'var(--notion-blue)' }} />
-                <div className="af-drawer-title notion-h3">新建 Blueprint</div>
+                <div className="af-drawer-title notion-h3">新建 Agent</div>
               </div>
               <button className="af-drawer-close" onClick={resetAndClose}>
                 <IconX size={20} />

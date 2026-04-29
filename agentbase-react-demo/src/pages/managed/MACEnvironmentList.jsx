@@ -69,7 +69,7 @@ export default function MACEnvironmentList() {
   }
 
   return (
-    <PageLayout title="Environments" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{environments.length} 个环境</span>}>
+    <PageLayout title="沙箱环境" rightAction={<span style={{ fontSize: 12, color: '#999' }}>{environments.length} 个环境</span>}>
       <DataToolbar
         buttons={<button className="action-btn primary" onClick={handleOpenCreate} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 创建环境</button>}
         filters={

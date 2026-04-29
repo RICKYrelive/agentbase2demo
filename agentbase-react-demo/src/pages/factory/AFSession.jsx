@@ -79,9 +79,9 @@ export default function AFSession() {
   }
 
   return (
-    <PageLayout title="Session">
+    <PageLayout title="会话">
       <DataToolbar
-        buttons={<button className="action-btn primary" onClick={() => setShowLauncher(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> New Session</button>}
+        buttons={<button className="action-btn primary" onClick={() => setShowLauncher(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><IconPlus size={16} /> 新建会话</button>}
         filters={
           <select className="filter-select" value={agentFilter} onChange={e => setAgentFilter(e.target.value)}>
             <option value="all">所有 Agent</option>
@@ -91,7 +91,7 @@ export default function AFSession() {
       >
         <div className="search-input">
           <IconSearch className="search-icon" size={16} />
-          <input placeholder="搜索 Session ID 或标题" value={search} onChange={e => setSearch(e.target.value)} />
+          <input placeholder="搜索会话 ID 或标题" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
         <button className="refresh-btn-sm">
           <IconRefresh size={14} />
@@ -110,7 +110,7 @@ export default function AFSession() {
                   <tr><td colSpan={columns.length} className="data-table-empty">
                     <div className="empty-state">
                       <IconActivity size={40} style={{ color: 'var(--notion-gray-300)', marginBottom: 12 }} />
-                      <span>暂无 Session</span>
+                      <span>暂无会话</span>
                     </div>
                   </td></tr>
                 ) : filtered.map(s => {
@@ -198,9 +198,9 @@ export default function AFSession() {
             </div>
 
             <div className="af-drawer-body">
-              {/* Agent Blueprint */}
+              {/* Agent */}
               <div className="af-field">
-                <label className="af-field-label">选择 Agent 蓝图</label>
+                <label className="af-field-label">选择 Agent</label>
                 <div className="af-field-hint">会话将继承此 Agent 的模型配置、提示词和工具集。</div>
                 <div className="af-card-grid">
                   {MOCK_AGENTS_LIBRARY.map(agt => (
@@ -220,7 +220,7 @@ export default function AFSession() {
               {/* Environment */}
               <div className="af-field">
                 <label className="af-field-label">运行环境 (Environment)</label>
-                <div className="af-field-hint">选择 Session 的运行时沙箱环境。</div>
+                <div className="af-field-hint">选择会话的运行时沙箱环境。</div>
                 <div className="af-card-grid">
                   {MOCK_ENVIRONMENTS.map(env => (
                     <div
@@ -238,8 +238,8 @@ export default function AFSession() {
 
               {/* Vaults (multi-select) */}
               <div className="af-field">
-                <label className="af-field-label">注入凭证保险箱 (Vaults)</label>
-                <div className="af-field-hint">选择需要注入的 Vault，Session 启动后将自动携带这些凭证。可多选。</div>
+                <label className="af-field-label">注入凭证集</label>
+                <div className="af-field-hint">选择需要注入的凭证集，会话启动后将自动携带这些凭证。可多选。</div>
                 <div className="af-card-grid">
                   {MOCK_VAULTS.map(vault => {
                     const isSelected = sessionForm.vaultIds.includes(vault.id)

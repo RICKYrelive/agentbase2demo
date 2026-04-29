@@ -39,10 +39,10 @@ const navItems = [
 ]
 
 const agentFactoryItems = [
-  { key: 'af-agent', label: 'Agent Blueprint', icon: <IconCompass />, desc: 'Agent 定义库' },
-  { key: 'af-session', label: 'Session', icon: <IconActivity />, desc: '运行实例' },
-  { key: 'af-environment', label: 'Environment', icon: <IconGlobe />, desc: '运行环境' },
-  { key: 'af-passport', label: 'Vaults', icon: <IconShield />, desc: '凭证保险箱' },
+  { key: 'af-agent', label: '配置Agent', icon: <IconCompass />, desc: 'Agent 定义库' },
+  { key: 'af-session', label: '会话管理', icon: <IconActivity />, desc: '运行实例' },
+  { key: 'af-environment', label: '沙箱环境配置', icon: <IconGlobe />, desc: '运行环境' },
+  { key: 'af-passport', label: '凭证托管', icon: <IconShield />, desc: '凭证保险箱' },
 ]
 
 const workspaceNavGroups = [
